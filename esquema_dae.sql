@@ -286,56 +286,59 @@ INSERT INTO TIPO_EXAMEN (id, nombre) VALUES (15, 'Tomografía');
 
 
 INSERT INTO ESTADO_CITA (id, nombre_estado) VALUES
-(1, 'Pendiente'),
-(2, 'Por confirmar'),
-(3, 'Cancelada'),
-(4, 'Reprogramada'),
-(6, 'Finalizada'),
-(7, 'No asistió');
+  (1, 'Pendiente'),
+  (2, 'Por confirmar'),
+  (3, 'Cancelada'),
+  (4, 'Reprogramada'),
+  (6, 'Finalizada'),
+  (7, 'No asistió');
 
 INSERT INTO TIPO_MEDICAMENTO (id, nombre) VALUES 
-    (1, 'Antibiótico'),
-    (2, 'Analgésico'),
-    (3, 'Antiparasitario'),
-    (4, 'Antiinflamatorio'),
-    (5, 'Vacuna');
+  (1, 'Antibiótico'),
+  (2, 'Analgésico'),
+  (3, 'Antiparasitario'),
+  (4, 'Antiinflamatorio'),
+  (5, 'Vacuna');
 
 INSERT INTO MEDICAMENTO (id, nombre, costo, stock, presentacion, tipo_medicamento_id) VALUES 
-    (1, 'Amoxicilina 250mg', 15.50, 50, 'Cápsula', 1),
-    (2, 'Meloxicam 0.5mg', 25.00, 30, 'Comprimido', 2),
-    (3, 'Drontal Plus 150mg', 40.00, 100, 'Tableta', 3),
-    (4, 'Carprofeno 25mg', 35.00, 20, 'Comprimido', 4),
-    (5, 'Vacuna Triple Felina', 55.00, 10, 'Inyección', 5),
-    (6, 'Ivermectina 1%', 12.00, 80, 'Inyección', 3),
-    (7, 'Ketoprofeno 10mg', 20.00, 60, 'Inyección', 4),
-    (8, 'Vacuna Antirrábica', 60.00, 15, 'Inyección', 5),
-    (9, 'Tramadol 50mg', 30.00, 40, 'Tableta', 2),
-    (10, 'Doxiciclina 100mg', 22.00, 25, 'Cápsula', 1);
-    
-INSERT INTO DUEniO (numdoc, nombres, apePaterno, apeMaterno, telefono, telefonoAlt, correo, direccion, sexo, vigencia, codtipo) VALUES
-    ('71234567', 'Carlos', 'García', 'Pérez', '987654321', '912345678', 'cgarcia@example.com', 'Av. Siempre Viva 123', true, true, 1),
-    ('82765432', 'María', 'López', 'Sánchez', '976543210', NULL, 'mlopez@example.com', 'Jr. Los Pinos 456', false,true, 1),
-    ('65432189', 'José', 'Martínez', 'Guzmán', '964321098', '941234567', NULL, 'Calle Las Rosas 789', true, true, 1),
-    ('98651234', 'Ana', 'Rodríguez', 'Fernández', '932165478', NULL, 'arodriguez@example.com', 'Av. Las Palmeras 456', false, true,1),
-    ('73512368', 'Luis', 'Paredes', 'Zapata', '911234569', '998877665', 'lparedes@example.com', 'Jr. Las Lomas 234', true, true, 1),
-    ('84561234', 'Rosa', 'Chávez', 'Valverde', '945612378', NULL, 'rchavez@example.com', 'Calle Los Cedros 156', false,true, 1),
-    ('78912345', 'Pedro', 'Cruz', 'Huaman', '987123654', '954321876', 'pcruz@example.com', 'Av. Perú 789', true,true, 2),
-    ('62341234', 'Luisa', 'Ortiz', 'Pérez', '912345674', NULL, 'lortiz@example.com', 'Jr. San Juan 342', false, true, 3),
-    ('98123456', 'Miguel', 'Alvarado', 'Reyes', '987412356', '943215678', 'malvarado@example.com', 'Av. Colonial 342', true,true, 2),
-    ('81234567', 'Carmen', 'Salinas', 'Ríos', '965412378', '976543212', 'csalinas@example.com', 'Jr. Las Magnolias 765', false, true, 3);
-    
-INSERT INTO MASCOTA (id, nombre, fecha_nacimiento, altura, peso, notaAdicional, sexo, esterilizado, desparasitado, condicion, raza_id, especie_id, fecha_registro, estado) VALUES
-    (1, 'Luna', '2020-05-15', 35.50, 12.30, 'Tiene mucha energía y es muy activa.', false, true, true, 'S', 1, 1, '2020-05-15', true),
-    (2, 'Max', '2018-11-22', 45.20, 18.75, 'Le encanta correr largas distancias y es muy fuerte.', true, true, true, 'S', 2, 1, '2020-11-22', true),
-    (3, 'Bella', '2019-09-30', 38.10, 15.60, 'Padece artritis crónica, bajo tratamiento.', false, false, true, 'C', 3, 2, '2021-10-07', true),
-    (4, 'Simba', '2011-07-05', 50.00, 25.00, 'Un poco tímido al principio, pero muy juguetón.', true, false, false, 'S', 1, 1, '2020-12-07', true),
-    (5, 'Rocky', '2017-03-01', 42.50, 20.40, 'Sufre de insuficiencia renal crónica, requiere dieta especial.', true, true, true, 'C', 2, 1, '2017-10-07', true),
-    (6, 'Coco', '2022-01-10', 30.80, 10.20, 'Muy cariñosa con los niños y social.', false, true, true, 'S', 8, 4, '2022-01-10', true),
-    (7, 'Nala', '2016-06-18', 37.00, 14.50, 'Cáncer avanzado, en tratamiento paliativo.', false, false, false, 'T',10, 5, '2016-06-18', true),
-    (8, 'Charlie', '2020-12-09', 48.30, 22.10, 'Amigable con otras mascotas, le gusta nadar.', true, true, true, 'S', 2, 1, '2020-12-09', true),
-    (9, 'Milo', '2019-02-25', 39.20, 16.80, 'Alergia crónica a ciertos alimentos.', true, false, true, 'C', 1, 1, '2019-02-25', true),
-    (10, 'Chloe', '2015-10-28', 33.50, 11.90, 'Cáncer terminal, con pocos meses de vida.', false, true, true, 'T', 7, 4, '2015-10-28', true);
-
-insert into tipo_cliente (codtipo, nombre) values ( 1, 'DNI'), (2, 'Pasaporte'), (3, 'Carnet de Extranjeria')
+  (1, 'Amoxicilina 250mg', 15.50, 50, 'Cápsula', 1),
+  (2, 'Meloxicam 0.5mg', 25.00, 30, 'Comprimido', 2),
+  (3, 'Drontal Plus 150mg', 40.00, 100, 'Tableta', 3),
+  (4, 'Carprofeno 25mg', 35.00, 20, 'Comprimido', 4),
+  (5, 'Vacuna Triple Felina', 55.00, 10, 'Inyección', 5),
+  (6, 'Ivermectina 1%', 12.00, 80, 'Inyección', 3),
+  (7, 'Ketoprofeno 10mg', 20.00, 60, 'Inyección', 4),
+  (8, 'Vacuna Antirrábica', 60.00, 15, 'Inyección', 5),
+  (9, 'Tramadol 50mg', 30.00, 40, 'Tableta', 2),
+  (10, 'Doxiciclina 100mg', 22.00, 25, 'Cápsula', 1);
   
+INSERT INTO DUEniO (numdoc, nombres, apePaterno, apeMaterno, telefono, telefonoAlt, correo, direccion, sexo, vigencia, codtipo) VALUES
+  ('71234567', 'Carlos', 'García', 'Pérez', '987654321', '912345678', 'cgarcia@example.com', 'Av. Siempre Viva 123', true, true, 1),
+  ('82765432', 'María', 'López', 'Sánchez', '976543210', NULL, 'mlopez@example.com', 'Jr. Los Pinos 456', false,true, 1),
+  ('65432189', 'José', 'Martínez', 'Guzmán', '964321098', '941234567', NULL, 'Calle Las Rosas 789', true, true, 1),
+  ('98651234', 'Ana', 'Rodríguez', 'Fernández', '932165478', NULL, 'arodriguez@example.com', 'Av. Las Palmeras 456', false, true,1),
+  ('73512368', 'Luis', 'Paredes', 'Zapata', '911234569', '998877665', 'lparedes@example.com', 'Jr. Las Lomas 234', true, true, 1),
+  ('84561234', 'Rosa', 'Chávez', 'Valverde', '945612378', NULL, 'rchavez@example.com', 'Calle Los Cedros 156', false,true, 1),
+  ('78912345', 'Pedro', 'Cruz', 'Huaman', '987123654', '954321876', 'pcruz@example.com', 'Av. Perú 789', true,true, 2),
+  ('62341234', 'Luisa', 'Ortiz', 'Pérez', '912345674', NULL, 'lortiz@example.com', 'Jr. San Juan 342', false, true, 3),
+  ('98123456', 'Miguel', 'Alvarado', 'Reyes', '987412356', '943215678', 'malvarado@example.com', 'Av. Colonial 342', true,true, 2),
+  ('81234567', 'Carmen', 'Salinas', 'Ríos', '965412378', '976543212', 'csalinas@example.com', 'Jr. Las Magnolias 765', false, true, 3);
+  
+INSERT INTO MASCOTA (id, nombre, fecha_nacimiento, altura, peso, notaAdicional, sexo, esterilizado, desparasitado, condicion, raza_id, especie_id, fecha_registro, estado) VALUES
+  (1, 'Luna', '2020-05-15', 35.50, 12.30, 'Tiene mucha energía y es muy activa.', false, true, true, 'S', 1, 1, '2020-05-15', true),
+  (2, 'Max', '2018-11-22', 45.20, 18.75, 'Le encanta correr largas distancias y es muy fuerte.', true, true, true, 'S', 2, 1, '2020-11-22', true),
+  (3, 'Bella', '2019-09-30', 38.10, 15.60, 'Padece artritis crónica, bajo tratamiento.', false, false, true, 'C', 3, 2, '2021-10-07', true),
+  (4, 'Simba', '2011-07-05', 50.00, 25.00, 'Un poco tímido al principio, pero muy juguetón.', true, false, false, 'S', 1, 1, '2020-12-07', true),
+  (5, 'Rocky', '2017-03-01', 42.50, 20.40, 'Sufre de insuficiencia renal crónica, requiere dieta especial.', true, true, true, 'C', 2, 1, '2017-10-07', true),
+  (6, 'Coco', '2022-01-10', 30.80, 10.20, 'Muy cariñosa con los niños y social.', false, true, true, 'S', 8, 4, '2022-01-10', true),
+  (7, 'Nala', '2016-06-18', 37.00, 14.50, 'Cáncer avanzado, en tratamiento paliativo.', false, false, false, 'T',10, 5, '2016-06-18', true),
+  (8, 'Charlie', '2020-12-09', 48.30, 22.10, 'Amigable con otras mascotas, le gusta nadar.', true, true, true, 'S', 2, 1, '2020-12-09', true),
+  (9, 'Milo', '2019-02-25', 39.20, 16.80, 'Alergia crónica a ciertos alimentos.', true, false, true, 'C', 1, 1, '2019-02-25', true),
+  (10, 'Chloe', '2015-10-28', 33.50, 11.90, 'Cáncer terminal, con pocos meses de vida.', false, true, true, 'T', 7, 4, '2015-10-28', true);
+
+insert into tipo_cliente (codtipo, nombre) values 
+  (1, 'DNI'), 
+  (2, 'Pasaporte'), 
+  (3, 'Carnet de Extranjeria');
+
 

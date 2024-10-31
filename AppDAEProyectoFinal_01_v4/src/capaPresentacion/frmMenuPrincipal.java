@@ -593,9 +593,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void mnuTipoExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuTipoExamenActionPerformed
         // TODO add your handling code here:
-        jdMntTipoExamen objForm= new jdMntTipoExamen(this, true);
-        objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true);
     }//GEN-LAST:event_mnuTipoExamenActionPerformed
 
     private void mnuRazasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuRazasActionPerformed

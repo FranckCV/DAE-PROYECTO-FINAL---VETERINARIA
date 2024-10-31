@@ -28,8 +28,9 @@ public class clsJDBC {
         this.user = "postgres";
         
 //        this.password = "tirsarios123";
-
         this.password = "1234567890";
+        
+        
         this.con = null;
     }
     
@@ -41,6 +42,7 @@ public class clsJDBC {
             throw new Exception("Error al conectarse con la BD " +  ex.getMessage());
         }        
     }
+    
     
     public void desconectar() throws Exception{ 
         try {
