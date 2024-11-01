@@ -80,10 +80,12 @@ create table CITA (
   CUSTODIAMASCOTAid int4 not null, 
   CUSTODIADUEÑOid   int4, 
   primary key (id));
+  
 create table TIPO_MEDICAMENTO (
   id      int4 not null, 
   nomtipo varchar(255) not null, 
   primary key (id));
+  
 create table DETALLE_CITA (
   cita_id                  int4 not null, 
   detalle_servicio_serv_id int4 not null, 
@@ -211,7 +213,7 @@ INSERT INTO ESTADO_CITA (id, nombre_estado) VALUES
 (7, 'No asistió');
 
 
-INSERT INTO TIPO_MEDICAMENTO (id, nombre) VALUES 
+INSERT INTO TIPO_MEDICAMENTO (id, nomtipo) VALUES 
 (1, 'Antibiótico'),
 (2, 'Analgésico'),
 (3, 'Antiparasitario'),
@@ -234,7 +236,7 @@ INSERT INTO MEDICAMENTO (id, nombre, costo, stock, presentacion, vigencia, tipo_
 
 
 INSERT INTO RAZA (id, nombre, especie_id , disponibilidad) VALUES 
-(1, 'Labrador Retriever', 1 , true);
+(1, 'Labrador Retriever', 1 , true),
 (2, 'Pastor Alemán', 1 , true),
 (3, 'Siames', 2 , true),
 (4, 'Persa', 2 , true),
