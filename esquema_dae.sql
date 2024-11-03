@@ -258,6 +258,8 @@ INSERT INTO VACUNA (id, nombre, dosis_x_kgpeso, especie_id , disponibilidad) VAL
 
 
 
+<<<<<<< HEAD
+=======
 INSERT INTO MEDICO (id, doc_identidad, nombres, apePaterno, apeMaterno, sexo, disponibilidad, vigencia, especialidad_id) 
 VALUES 
     (1, '12345678', 'Juan', 'Pérez', 'García',        TRUE, TRUE, TRUE, 1),
@@ -267,6 +269,7 @@ VALUES
     (5, '98765432', 'Lucía', 'Rodríguez', 'Morales',  FALSE, TRUE, TRUE, 4);
 
 
+>>>>>>> d2a48d649f314e7ca670501bf9dd8496dfe0beb3
 INSERT INTO DUEniO (id, doc_identidad, nombres, apePaterno, apeMaterno, telefono, telefonoAlt, correo, direccion, sexo, vigencia) VALUES
    (1, '71234567', 'Carlos', 'García', 'Pérez', '987654321', '912345678', 'cgarcia@example.com', 'Av. Siempre Viva 123', true, true),
    (2, '82765432', 'María', 'López', 'Sánchez', '976543210', NULL, 'mlopez@example.com', 'Jr. Los Pinos 456', false, true),
@@ -308,6 +311,29 @@ INSERT INTO CUSTODIA (MASCOTAid, DUEniOid, fecha_adopción) VALUES
    (10, 2, '2017-05-20');  -- Chloe también adoptada por María
 
 
+INSERT INTO MEDICO (id, doc_identidad, nombres, apePaterno, apeMaterno, sexo, disponibilidad, vigencia, especialidad_id) 
+VALUES 
+    (1, '12345678', 'Juan', 'Pérez', 'García', TRUE, TRUE, TRUE, 1),
+    (2, '23456789', 'Carlos', 'Gómez', 'Sánchez', TRUE, FALSE, FALSE, 5),
+    (3, '34567890', 'Pedro', 'Hernández', 'Ramírez', TRUE, FALSE, TRUE, 5),
+    (4, '87654321', 'Ana', 'López', 'Martínez', FALSE, FALSE, TRUE, 2), 
+    (5, '98765432', 'Lucía', 'Rodríguez', 'Morales', FALSE, TRUE, TRUE, 4);
 
+INSERT INTO DETALLE_SERVICIO (servicio_id, MEDICOid) VALUES
+   (1, 1), -- Consulta General realizada por el médico con ID 1
+   (2, 1), -- Vacunación realizada por el médico con ID 1
+   (3, 2), -- Desparasitación realizada por el médico con ID 2
+   (4, 3), -- Cirugía menor realizada por el médico con ID 3
+   (5, 4), -- Emergencia realizada por el médico con ID 4
+   (1, 2), -- Consulta General realizada también por el médico con ID 2
+   (2, 3), -- Vacunación realizada por el médico con ID 3
+   (3, 4), -- Desparasitación realizada por el médico con ID 4
+   (4, 5), -- Cirugía menor realizada por el médico con ID 5
+   (5, 5); -- Emergencia realizada también por el médico con ID 5
 
+--select * from medicamento;
+
+--select * from duenio;
+
+select * from servicio;
 

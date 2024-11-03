@@ -928,14 +928,14 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtCodServicio" pref="64" max="32767" attributes="0"/>
-                              <Component id="txtCodMedico" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txtCodServicio" max="32767" attributes="0"/>
+                              <Component id="txtDocMedico" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtNombreServicio" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="txtNombreMedico" max="32767" attributes="0"/>
+                              <Component id="cboServicios" pref="192" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" attributes="0">
@@ -950,7 +950,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnAgregarServicio" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="btnBuscarServicio" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnBuscarDetalleServicio" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               </Group>
@@ -962,7 +962,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="btnBuscarServicio" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnBuscarDetalleServicio" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="btnAgregarServicio" min="-2" max="-2" attributes="0"/>
@@ -971,14 +971,14 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtNombreServicio" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtCodServicio" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cboServicios" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtCodMedico" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtDocMedico" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtNombreMedico" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
@@ -998,11 +998,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Servicio:"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtNombreServicio">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreServicioActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel22">
           <Properties>
@@ -1042,7 +1037,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarServicioActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtCodMedico">
+        <Component class="javax.swing.JTextField" name="txtDocMedico">
           <Properties>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[61, 22]"/>
@@ -1052,7 +1047,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCodMedicoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDocMedicoActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNombreMedico">
@@ -1060,14 +1055,14 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreMedicoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnBuscarServicio">
+        <Component class="javax.swing.JButton" name="btnBuscarDetalleServicio">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/conector/Recursos/buscar-peque&#xf1;o.png"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarServicioActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarDetalleServicioActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel27">
@@ -1079,6 +1074,24 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDescripcionServicioActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cboServicios">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboServiciosActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

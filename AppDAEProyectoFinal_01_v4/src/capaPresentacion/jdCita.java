@@ -12,6 +12,7 @@ import capaNegocio.clsMedico;
 import capaNegocio.clsServicio;
 import java.awt.Frame;
 import java.sql.*;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -33,8 +34,25 @@ public class jdCita extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
+        llenarCboServicios();
         this.setTitle("Gestión de Cita");
 
+    }
+
+    private void llenarCboServicios() {
+        ResultSet rsServicios = null;
+        DefaultComboBoxModel modeloSer = new DefaultComboBoxModel();
+        cboServicios.setModel(modeloSer);
+
+        try {
+            rsServicios = objServicio.listarServicios();
+
+            while (rsServicios.next()) {
+                modeloSer.addElement(rsServicios.getString("nom_servicio"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Error al listar en interfaz los servicios");
+        }
     }
 
     //para agregar medicamentos debe estar llena la parte de servicio en el formulario u.u
@@ -158,16 +176,16 @@ public class jdCita extends javax.swing.JDialog {
         txtTipo2 = new javax.swing.JTextField();
         jPanel10 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
-        txtNombreServicio = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         txtCodServicio = new javax.swing.JTextField();
         btnAgregarServicio = new javax.swing.JButton();
         btnEliminarServicio = new javax.swing.JButton();
-        txtCodMedico = new javax.swing.JTextField();
+        txtDocMedico = new javax.swing.JTextField();
         txtNombreMedico = new javax.swing.JTextField();
-        btnBuscarServicio = new javax.swing.JButton();
+        btnBuscarDetalleServicio = new javax.swing.JButton();
         jLabel27 = new javax.swing.JLabel();
         txtDescripcionServicio = new javax.swing.JTextField();
+        cboServicios = new javax.swing.JComboBox<>();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblDetalleServicio = new javax.swing.JTable();
@@ -704,12 +722,6 @@ public class jdCita extends javax.swing.JDialog {
 
         jLabel21.setText("Servicio:");
 
-        txtNombreServicio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreServicioActionPerformed(evt);
-            }
-        });
-
         jLabel22.setText("Médico:");
 
         txtCodServicio.setMinimumSize(new java.awt.Dimension(61, 22));
@@ -734,11 +746,11 @@ public class jdCita extends javax.swing.JDialog {
             }
         });
 
-        txtCodMedico.setMinimumSize(new java.awt.Dimension(61, 22));
-        txtCodMedico.setPreferredSize(new java.awt.Dimension(61, 22));
-        txtCodMedico.addActionListener(new java.awt.event.ActionListener() {
+        txtDocMedico.setMinimumSize(new java.awt.Dimension(61, 22));
+        txtDocMedico.setPreferredSize(new java.awt.Dimension(61, 22));
+        txtDocMedico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCodMedicoActionPerformed(evt);
+                txtDocMedicoActionPerformed(evt);
             }
         });
 
@@ -748,10 +760,10 @@ public class jdCita extends javax.swing.JDialog {
             }
         });
 
-        btnBuscarServicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar-pequeño.png"))); // NOI18N
-        btnBuscarServicio.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarDetalleServicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar-pequeño.png"))); // NOI18N
+        btnBuscarDetalleServicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarServicioActionPerformed(evt);
+                btnBuscarDetalleServicioActionPerformed(evt);
             }
         });
 
@@ -760,6 +772,13 @@ public class jdCita extends javax.swing.JDialog {
         txtDescripcionServicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDescripcionServicioActionPerformed(evt);
+            }
+        });
+
+        cboServicios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboServicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboServiciosActionPerformed(evt);
             }
         });
 
@@ -776,13 +795,13 @@ public class jdCita extends javax.swing.JDialog {
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtCodServicio, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                            .addComponent(txtCodMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombreServicio)
-                            .addComponent(txtNombreMedico)))
+                            .addComponent(txtCodServicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtDocMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtNombreMedico)
+                            .addComponent(cboServicios, 0, 192, Short.MAX_VALUE)))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(txtDescripcionServicio)))
@@ -792,7 +811,7 @@ public class jdCita extends javax.swing.JDialog {
                         .addComponent(btnEliminarServicio)
                         .addGap(18, 18, 18)
                         .addComponent(btnAgregarServicio))
-                    .addComponent(btnBuscarServicio))
+                    .addComponent(btnBuscarDetalleServicio))
                 .addGap(14, 14, 14))
         );
         jPanel10Layout.setVerticalGroup(
@@ -801,20 +820,20 @@ public class jdCita extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(btnBuscarServicio)
+                        .addComponent(btnBuscarDetalleServicio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnAgregarServicio)
                             .addComponent(btnEliminarServicio)))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombreServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel21)
-                            .addComponent(txtCodServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCodServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel22)
-                            .addComponent(txtCodMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDocMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtNombreMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -952,19 +971,23 @@ public class jdCita extends javax.swing.JDialog {
     }//GEN-LAST:event_txtCodProductoActionPerformed
 
     private void btnAgregarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMedicamentoActionPerformed
-        jdAniadirMedicamento objAniadirMedicamento
-                = new jdAniadirMedicamento((Frame) SwingUtilities.getWindowAncestor(this), true);
-        objAniadirMedicamento.setLocationRelativeTo(this);
-        objAniadirMedicamento.setVisible(true);
+        if (txtCodServicio.getText().isEmpty() || txtDocMedico.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Indicar el servicio y el médico por favor");
+        } else {
+            jdAniadirMedicamento objAniadirMedicamento
+                    = new jdAniadirMedicamento((Frame) SwingUtilities.getWindowAncestor(this), true);
+            objAniadirMedicamento.setLocationRelativeTo(this);
+            objAniadirMedicamento.setVisible(true);
 
-        int producto = objAniadirMedicamento.getCod();
-        int cantidad = objAniadirMedicamento.getCant();
-        float dosis = objAniadirMedicamento.getDosis();
+            int producto = objAniadirMedicamento.getCod();
+            int cantidad = objAniadirMedicamento.getCant();
+            float dosis = objAniadirMedicamento.getDosis();
 
-        try {
+            try {
 //            agregarProducto(producto, cantidad, descuento);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
         }
     }//GEN-LAST:event_btnAgregarMedicamentoActionPerformed
 
@@ -1085,9 +1108,9 @@ public class jdCita extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarProducto2ActionPerformed
 
-    private void txtCodMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodMedicoActionPerformed
+    private void txtDocMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDocMedicoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodMedicoActionPerformed
+    }//GEN-LAST:event_txtDocMedicoActionPerformed
 
     private void btnEliminarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarServicioActionPerformed
         // TODO add your handling code here:
@@ -1101,10 +1124,6 @@ public class jdCita extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodServicioActionPerformed
 
-    private void txtNombreServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreServicioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreServicioActionPerformed
-
     private void txtNombreMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreMedicoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreMedicoActionPerformed
@@ -1113,22 +1132,54 @@ public class jdCita extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIndicacionActionPerformed
 
-    private void btnBuscarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarServicioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscarServicioActionPerformed
+    private void btnBuscarDetalleServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarDetalleServicioActionPerformed
+        ResultSet rsServicio = null;
+
+        if (txtDocMedico.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Debe ingresar un DNI de médico");
+        } else {
+            try {
+
+                rsServicio = objServicio.obtenerDatosDetalleServicio(Integer.parseInt(txtCodServicio.getText()), txtDocMedico.getText());
+
+                if (rsServicio.next()) {
+                    txtNombreMedico.setText(String.valueOf(rsServicio.getString("nombres") + " " + rsServicio.getString("apepaterno")
+                            + " " + rsServicio.getString("apematerno")));
+                    txtDescripcionServicio.setText(String.valueOf(rsServicio.getString("descripcion")));
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Este veterinario no brinda dicho servicio");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnBuscarDetalleServicioActionPerformed
 
     private void txtDescripcionServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionServicioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDescripcionServicioActionPerformed
+
+    private void cboServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboServiciosActionPerformed
+        String nom_servicio = cboServicios.getSelectedItem().toString();
+
+        try {
+            Integer codServicio = objServicio.obtenerID(nom_servicio);
+            txtCodServicio.setText(codServicio.toString());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+
+    }//GEN-LAST:event_cboServiciosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarMedicamento;
     private javax.swing.JButton btnAgregarServicio;
     private javax.swing.JButton btnBuscarCita;
+    private javax.swing.JButton btnBuscarDetalleServicio;
     private javax.swing.JButton btnBuscarDuenio;
     private javax.swing.JButton btnBuscarMascota;
-    private javax.swing.JButton btnBuscarServicio;
     private javax.swing.JButton btnDarBaja;
     private javax.swing.JButton btnEliminarMedicamento;
     private javax.swing.JButton btnEliminarProducto2;
@@ -1136,6 +1187,7 @@ public class jdCita extends javax.swing.JDialog {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JComboBox<String> cboEstadoCita;
+    private javax.swing.JComboBox<String> cboServicios;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1182,12 +1234,12 @@ public class jdCita extends javax.swing.JDialog {
     private javax.swing.JTextArea txtANotaAdicional;
     private javax.swing.JTextField txtCodDuenio;
     private javax.swing.JTextField txtCodMascota;
-    private javax.swing.JTextField txtCodMedico;
     private javax.swing.JTextField txtCodProducto;
     private javax.swing.JTextField txtCodServicio;
     private javax.swing.JTextField txtDescripcionServicio;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtDniRuc;
+    private javax.swing.JTextField txtDocMedico;
     private javax.swing.JTextField txtDosis;
     private javax.swing.JTextField txtEdadMascota;
     private javax.swing.JTextField txtIgv;
@@ -1196,7 +1248,6 @@ public class jdCita extends javax.swing.JDialog {
     private javax.swing.JTextField txtNombreMascota;
     private javax.swing.JTextField txtNombreMedico;
     private javax.swing.JTextField txtNombreProducto;
-    private javax.swing.JTextField txtNombreServicio;
     private javax.swing.JTextField txtNotaMascota;
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtSubtotal;
