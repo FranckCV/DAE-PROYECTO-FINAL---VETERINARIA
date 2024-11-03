@@ -24,7 +24,7 @@ public class clsJDBC {
 
     public clsJDBC() {
         this.driver = "org.postgresql.Driver";
-        this.url = "jdbc:postgresql://localhost:5432/bd_veterinaria_v4"
+        this.url = "jdbc:postgresql://localhost:5432/bd_veterinaria"
                 + "";
         this.user = "postgres";
 
