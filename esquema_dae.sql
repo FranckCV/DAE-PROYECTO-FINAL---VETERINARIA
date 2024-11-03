@@ -268,43 +268,44 @@ VALUES
 
 
 INSERT INTO DUEniO (id, doc_identidad, nombres, apePaterno, apeMaterno, telefono, telefonoAlt, correo, direccion, sexo, vigencia) VALUES
-  (1, '71234567', 'Carlos', 'García', 'Pérez', '987654321', '912345678', 'cgarcia@example.com', 'Av. Siempre Viva 123', true, true),
-  (2, '82765432', 'María', 'López', 'Sánchez', '976543210', NULL, 'mlopez@example.com', 'Jr. Los Pinos 456', false,true),
-  (3, '65432189', 'José', 'Martínez', 'Guzmán', '964321098', '941234567', NULL, 'Calle Las Rosas 789', true, true),
-  (4, '98651234', 'Ana', 'Rodríguez', 'Fernández', '932165478', NULL, 'arodriguez@example.com', 'Av. Las Palmeras 456', false, true),
-  (5, '73512368', 'Luis', 'Paredes', 'Zapata', '911234569', '998877665', 'lparedes@example.com', 'Jr. Las Lomas 234', true, true),
-  (6, '84561234', 'Rosa', 'Chávez', 'Valverde', '945612378', NULL, 'rchavez@example.com', 'Calle Los Cedros 156', false,true),
-  (7, '78912345', 'Pedro', 'Cruz', 'Huaman', '987123654', '954321876', 'pcruz@example.com', 'Av. Perú 789', true,true),
-  (8, '62341234', 'Luisa', 'Ortiz', 'Pérez', '912345674', NULL, 'lortiz@example.com', 'Jr. San Juan 342', false, true),
-  (9, '98123456', 'Miguel', 'Alvarado', 'Reyes', '987412356', '943215678', 'malvarado@example.com', 'Av. Colonial 342', true,true),
-  (10, '81234567', 'Carmen', 'Salinas', 'Ríos', '965412378', '976543212', 'csalinas@example.com', 'Jr. Las Magnolias 765', false, true);
+   (1, '71234567', 'Carlos', 'García', 'Pérez', '987654321', '912345678', 'cgarcia@example.com', 'Av. Siempre Viva 123', true, true),
+   (2, '82765432', 'María', 'López', 'Sánchez', '976543210', NULL, 'mlopez@example.com', 'Jr. Los Pinos 456', false, true),
+   (3, '65432189', 'José', 'Martínez', 'Guzmán', '964321098', '941234567', NULL, 'Calle Las Rosas 789', true, true),
+   (4, '98651234', 'Ana', 'Rodríguez', 'Fernández', '932165478', NULL, 'arodriguez@example.com', 'Av. Las Palmeras 456', false, true),
+   (5, '73512368', 'Luis', 'Paredes', 'Zapata', '911234569', '998877665', 'lparedes@example.com', 'Jr. Las Lomas 234', true, true),
+   (6, '84561234', 'Rosa', 'Chávez', 'Valverde', '945612378', NULL, 'rchavez@example.com', 'Calle Los Cedros 156', false, true),
+   (7, '78912345', 'Pedro', 'Cruz', 'Huaman', '987123654', '954321876', 'pcruz@example.com', 'Av. Perú 789', true, true),
+   (8, '62341234', 'Luisa', 'Ortiz', 'Pérez', '912345674', NULL, 'lortiz@example.com', 'Jr. San Juan 342', false, true),
+   (9, '98123456', 'Miguel', 'Alvarado', 'Reyes', '987412356', '943215678', 'malvarado@example.com', 'Av. Colonial 342', true, true),
+   (10, '81234567', 'Carmen', 'Salinas', 'Ríos', '965412378', '976543212', 'csalinas@example.com', 'Jr. Las Magnolias 765', false, true);
+
 
 
 INSERT INTO MASCOTA (id, nombre, fecha_nacimiento, altura, peso, notaAdicional, sexo, esterilizado, desparasitado, estado_salud, raza_id, vigencia) VALUES
-  (1, 'Luna', '2020-05-15', 35.50, 12.30, 'Tiene mucha energía y es muy activa.',                            false, true, true, 'S', 1,   true),
-  (2, 'Max', '2018-11-22', 45.20, 18.75, 'Le encanta correr largas distancias y es muy fuerte.',             true, true, true, 'S', 2,    true),
-  (3, 'Bella', '2019-09-30', 38.10, 15.60, 'Padece artritis crónica, bajo tratamiento.',                     false, false, true, 'C', 3,  true),
-  (4, 'Simba', '2011-07-05', 50.00, 25.00, 'Un poco tímido al principio, pero muy juguetón.',                true, false, false, 'S', 1,  true),
-  (5, 'Rocky', '2017-03-01', 42.50, 20.40, 'Sufre de insuficiencia renal crónica, requiere dieta especial.', true, true, true, 'C', 2,    true),
-  (6, 'Coco', '2022-01-10', 30.80, 10.20, 'Muy cariñosa con los niños y social.',                            false, true, true, 'S', 8,   true),
-  (7, 'Nala', '2016-06-18', 37.00, 14.50, 'Cáncer avanzado, en tratamiento paliativo.',                      false, false, false, 'T',10, false),
-  (8, 'Charlie', '2020-12-09', 48.30, 22.10, 'Amigable con otras mascotas, le gusta nadar.',                 true, true, true, 'S', 2,    true),
-  (9, 'Milo', '2019-02-25', 39.20, 16.80, 'Alergia crónica a ciertos alimentos.',                            true, false, true, 'C', 1,   true),
-  (10, 'Chloe', '2015-10-28', 33.50, 11.90, 'Cáncer terminal, con pocos meses de vida.',                     false, true, true, 'T', 7,   true);
+   (1, 'Luna', '2020-05-15', 35.50, 12.30, 'Tiene mucha energía y es muy activa.', false, true, true, 'S', 1, true),
+   (2, 'Max', '2018-11-22', 45.20, 18.75, 'Le encanta correr largas distancias y es muy fuerte.', true, true, true, 'S', 2, true),
+   (3, 'Bella', '2019-09-30', 38.10, 15.60, 'Padece artritis crónica, bajo tratamiento.', false, false, true, 'C', 3, true),
+   (4, 'Simba', '2011-07-05', 50.00, 25.00, 'Un poco tímido al principio, pero muy juguetón.', true, false, false, 'S', 1, true),
+   (5, 'Rocky', '2017-03-01', 42.50, 20.40, 'Sufre de insuficiencia renal crónica, requiere dieta especial.', true, true, true, 'C', 2, true),
+   (6, 'Coco', '2022-01-10', 30.80, 10.20, 'Muy cariñosa con los niños y social.', false, true, true, 'S', 8,  true),
+   (7, 'Nala', '2016-06-18', 37.00, 14.50, 'Cáncer avanzado, en tratamiento paliativo.', false, false, false, 'T',10, true),
+   (8, 'Charlie', '2020-12-09', 48.30, 22.10, 'Amigable con otras mascotas, le gusta nadar.', true, true, true, 'S', 2, true),
+   (9, 'Milo', '2019-02-25', 39.20, 16.80, 'Alergia crónica a ciertos alimentos.', true, false, true, 'C', 1, true),
+   (10, 'Chloe', '2015-10-28', 33.50, 11.90, 'Cáncer terminal, con pocos meses de vida.', false, true, true, 'T', 7, true);
 
-
-INSERT INTO usuario (codUsuario, nomUsuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) VALUES
-(1, '123', TRUE, TRUE, '123', 'Francisco', 'Hernandez', 'Gomez','A'),
-(2, 'lrodriguez', TRUE, FALSE, 'clave_segura2', 'Laura', 'Rodriguez', 'Perez','A'),
-(3, 'jmendoza', FALSE, TRUE, 'clave_segura3', 'Javier', 'Mendoza', 'Ramirez','E'),
-(4, 'ccruz', TRUE, FALSE, 'clave_segura4', 'Claudia', 'Cruz', 'Lopez','E'),
-(5, 'rlopez', TRUE, TRUE, 'clave_segura5', 'Ricardo', 'Lopez', 'Diaz','V');
-
-
-
-
-
-
+INSERT INTO CUSTODIA (MASCOTAid, DUEniOid, fecha_adopción) VALUES
+   (1, 1, '2020-05-20'), -- Luna adoptada por Carlos
+   (2, 2, '2018-12-01'), -- Max adoptado por María
+   (3, 3, '2019-10-05'), -- Bella adoptada por José
+   (4, 4, '2011-08-01'), -- Simba adoptado por Ana
+   (5, 5, '2017-04-10'), -- Rocky adoptado por Luis
+   (6, 6, '2022-01-15'), -- Coco adoptada por Rosa
+   (7, 7, '2016-07-01'), -- Nala adoptada por Pedro
+   (8, 8, '2020-12-10'), -- Charlie adoptado por Luisa
+   (9, 9, '2019-03-01'), -- Milo adoptado por Miguel
+   (10, 10, '2015-11-01'), -- Chloe adoptada por Carmen
+   (10, 1, '2016-01-15'),  -- Chloe también adoptada por Carlos
+   (10, 2, '2017-05-20');  -- Chloe también adoptada por María
 
 
 
