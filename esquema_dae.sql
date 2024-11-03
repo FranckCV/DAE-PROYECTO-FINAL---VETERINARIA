@@ -54,7 +54,7 @@ create table SERVICIO (
   vigencia     bool not null, 
   costo        numeric(10, 2) not null, 
   primary key (id));
-create table DUEÑO (
+create table DUEniO (
   id            int4 not null, 
   nombres       varchar(150) not null, 
   apePaterno    varchar(200) not null, 
@@ -78,7 +78,7 @@ create table CITA (
   fecha_cita        date not null, 
   observacion       text, 
   CUSTODIAMASCOTAid int4 not null, 
-  CUSTODIADUEÑOid   int4, 
+  CUSTODIADUEniOid   int4, 
   primary key (id));
   
 create table TIPO_MEDICAMENTO (
@@ -122,10 +122,10 @@ create table DETALLES_VACUNACION (
   mascota_id));
 create table CUSTODIA (
   MASCOTAid      int4 not null, 
-  DUEÑOid        int4 not null, 
+  DUEniOid        int4 not null, 
   fecha_adopción int4, 
   primary key (MASCOTAid, 
-  DUEÑOid));
+  DUEniOid));
 create table DETALLE_SERVICIO (
   servicio_id int4 not null, 
   MEDICOid    int4 not null, 
@@ -164,9 +164,9 @@ alter table DETALLES_VACUNACION add constraint FKDETALLES_V104108 foreign key (v
 alter table DETALLES_VACUNACION add constraint FKDETALLES_V108578 foreign key (mascota_id) references MASCOTA (id);
 alter table DETALLE_CITA add constraint FKDETALLE_CI824652 foreign key (cita_id) references CITA (id);
 alter table COMPROBANTE add constraint FKCOMPROBANT250686 foreign key (CITAid) references CITA (id);
-alter table CUSTODIA add constraint FKCUSTODIA551514 foreign key (DUEÑOid) references DUEÑO (id);
+alter table CUSTODIA add constraint FKCUSTODIA551514 foreign key (DUEniOid) references DUEniO (id);
 alter table CUSTODIA add constraint FKCUSTODIA281978 foreign key (MASCOTAid) references MASCOTA (id);
-alter table CITA add constraint FKCITA813108 foreign key (CUSTODIAMASCOTAid, CUSTODIADUEÑOid) references CUSTODIA (MASCOTAid, DUEÑOid);
+alter table CITA add constraint FKCITA813108 foreign key (CUSTODIAMASCOTAid, CUSTODIADUEniOid) references CUSTODIA (MASCOTAid, DUEniOid);
 alter table DETALLE_SERVICIO add constraint FKDETALLE_SE753796 foreign key (MEDICOid) references MEDICO (id);
 alter table DETALLE_SERVICIO add constraint FKDETALLE_SE503336 foreign key (servicio_id) references SERVICIO (id);
 alter table DETALLE_MEDICAMENTO add constraint FKDETALLE_ME2678 foreign key (medicamento_id) references MEDICAMENTO (id);
@@ -300,3 +300,5 @@ INSERT INTO VACUNA (id, nombre, dosis_x_kgpeso, especie_id , disponibilidad) VAL
 -- (3, 'jmendoza', FALSE, TRUE, 'clave_segura3', 'Javier', 'Mendoza', 'Ramirez','E'),
 -- (4, 'ccruz', TRUE, FALSE, 'clave_segura4', 'Claudia', 'Cruz', 'Lopez','E'),
 -- (5, 'rlopez', TRUE, TRUE, 'clave_segura5', 'Ricardo', 'Lopez', 'Diaz','V');
+
+--select * from medicamento;
