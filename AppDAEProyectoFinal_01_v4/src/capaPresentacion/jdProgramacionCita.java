@@ -3,13 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package capaPresentacion;
+import capaNegocio.*;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
 
 /**
  *
  * @author Junior
  */
 public class jdProgramacionCita extends javax.swing.JDialog {
+    clsServicio objServicio = new clsServicio();
+    clsMascota objMascota = new clsMascota();
 
+    clsDuenio objDuenio = new clsDuenio();
+
+
+    
     /**
      * Creates new form jdProgramacionCita
      */
@@ -630,46 +640,46 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     }//GEN-LAST:event_cboServiciosActionPerformed
 
     private void txtDniRucKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniRucKeyPressed
-        if (evt.getKeyCode() == evt.VK_ENTER) {
-            if (txtDniRuc.getText().length() == 8 || txtDniRuc.getText().length() == 11) {
-                btnBuscarCita.requestFocus();
-                btnBuscarDuenioActionPerformed(null);
-
-            } else {
-            }
-            JOptionPane.showMessageDialog(this, "Ingresar DNI (8 dígitos) / RUC (11 dígitos)");
-        } else {
-        }
+//        if (evt.getKeyCode() == evt.VK_ENTER) {
+//            if (txtDniRuc.getText().length() == 8 || txtDniRuc.getText().length() == 11) {
+//                btnBuscarCita.requestFocus();
+//                btnBuscarDuenioActionPerformed(null);
+//
+//            } else {
+//            }
+//            JOptionPane.showMessageDialog(this, "Ingresar DNI (8 dígitos) / RUC (11 dígitos)");
+//        } else {
+//        }
     }//GEN-LAST:event_txtDniRucKeyPressed
 
     private void btnBuscarDuenioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarDuenioActionPerformed
-        ResultSet rsCliente = null;
-
-        try {
-
-            rsCliente = objDuenio.buscarDuenio(txtDniRuc.getText());
-
-            if (rsCliente.next()) {
-                txtCodDuenio.setText(String.valueOf(rsCliente.getString("id")));
-                txtNombreCliente.setText(String.valueOf(rsCliente.getString("nombres") + " " + rsCliente.getString("apepaterno")
-                    + " " + rsCliente.getString("apematerno")));
-            txtDireccion.setText(String.valueOf(rsCliente.getString("direccion")));
-
-            if (rsCliente.getString("doc_identidad").length() != 11) {
-                rdbBoleta.setSelected(true);
-            } else {
-                rdbFactura.setSelected(true);
-            }
-        } else {
-            if (JOptionPane.showConfirmDialog(this, "Dueño no existe ¿Desea registrarlo?", "Alerta!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                jdMantDuenio objMantDuenio = new jdMantDuenio(null, true);
-                objMantDuenio.setLocationRelativeTo(this);
-                objMantDuenio.setVisible(true);
-            }
-        }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
+//        ResultSet rsCliente = null;
+//
+//        try {
+//
+//            rsCliente = objDuenio.buscarDuenio(txtDniRuc.getText());
+//
+//            if (rsCliente.next()) {
+//                txtCodDuenio.setText(String.valueOf(rsCliente.getString("id")));
+//                txtNombreCliente.setText(String.valueOf(rsCliente.getString("nombres") + " " + rsCliente.getString("apepaterno")
+//                    + " " + rsCliente.getString("apematerno")));
+//            txtDireccion.setText(String.valueOf(rsCliente.getString("direccion")));
+//
+//            if (rsCliente.getString("doc_identidad").length() != 11) {
+//                rdbBoleta.setSelected(true);
+//            } else {
+//                rdbFactura.setSelected(true);
+//            }
+//        } else {
+//            if (JOptionPane.showConfirmDialog(this, "Dueño no existe ¿Desea registrarlo?", "Alerta!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+//                jdMantDuenio objMantDuenio = new jdMantDuenio(null, true);
+//                objMantDuenio.setLocationRelativeTo(this);
+//                objMantDuenio.setVisible(true);
+//            }
+//        }
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage());
+//        }
     }//GEN-LAST:event_btnBuscarDuenioActionPerformed
 
     private void txtNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroActionPerformed
@@ -681,41 +691,41 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNombreMascotaKeyPressed
 
     private void btnBuscarMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarMascotaActionPerformed
-        ResultSet rsMascota = null;
-
-        try {
-
-            if (txtCodDuenio.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un dueño para buscar mascotas");
-            } else if (txtNombreMascota.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar el nombre de la mascota");
-            } else {
-                rsMascota = objMascota.filtrarMascotaPorDuenioYNombre(Integer.valueOf(txtCodDuenio.getText()),
-                    txtNombreMascota.getText());
-
-                if (rsMascota.next()) {
-                    txtCodMascota.setText(String.valueOf(rsMascota.getString("id")));
-                    txtNotaMascota.setText(String.valueOf(rsMascota.getString("notaAdicional")));
-                    txtEdadMascota.setText(String.valueOf(objMascota.calcularEdadMascota(rsMascota.getInt("id"))));
-
-                    if (rsMascota.getBoolean("esterilizado")) {
-                        rdbCastrado.setSelected(true);
-                    } else {
-                        rdbNoCastrado.setSelected(true);
-                    }
-                } else {
-                    if (JOptionPane.showConfirmDialog(this, "Mascota no existe ¿Desea registrar?", "Alerta!",
-                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    jdMantMascota objMantMascota = new jdMantMascota(null, true);
-                    objMantMascota.setLocationRelativeTo(this);
-                    objMantMascota.setVisible(true);
-                }
-            }
-        }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
+//        ResultSet rsMascota = null;
+//
+//        try {
+//
+//            if (txtCodDuenio.getText().isEmpty()) {
+//                JOptionPane.showMessageDialog(this, "Debe ingresar un dueño para buscar mascotas");
+//            } else if (txtNombreMascota.getText().isEmpty()) {
+//                JOptionPane.showMessageDialog(this, "Debe ingresar el nombre de la mascota");
+//            } else {
+//                rsMascota = objMascota.filtrarMascotaPorDuenioYNombre(Integer.valueOf(txtCodDuenio.getText()),
+//                    txtNombreMascota.getText());
+//
+//                if (rsMascota.next()) {
+//                    txtCodMascota.setText(String.valueOf(rsMascota.getString("id")));
+//                    txtNotaMascota.setText(String.valueOf(rsMascota.getString("notaAdicional")));
+//                    txtEdadMascota.setText(String.valueOf(objMascota.calcularEdadMascota(rsMascota.getInt("id"))));
+//
+//                    if (rsMascota.getBoolean("esterilizado")) {
+//                        rdbCastrado.setSelected(true);
+//                    } else {
+//                        rdbNoCastrado.setSelected(true);
+//                    }
+//                } else {
+//                    if (JOptionPane.showConfirmDialog(this, "Mascota no existe ¿Desea registrar?", "Alerta!",
+//                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+//                    jdMantMascota objMantMascota = new jdMantMascota(null, true);
+//                    objMantMascota.setLocationRelativeTo(this);
+//                    objMantMascota.setVisible(true);
+//                }
+//            }
+//        }
+//
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage());
+//        }
     }//GEN-LAST:event_btnBuscarMascotaActionPerformed
 
     private void txtDescripcionServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionServicioActionPerformed

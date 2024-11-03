@@ -132,7 +132,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
 
         panel.setBackground(new java.awt.Color(255, 255, 255));
-        panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
