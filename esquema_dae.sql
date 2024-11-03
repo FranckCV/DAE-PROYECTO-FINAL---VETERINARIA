@@ -123,7 +123,7 @@ create table DETALLES_VACUNACION (
 create table CUSTODIA (
   MASCOTAid      int4 not null, 
   DUEniOid        int4 not null, 
-  fecha_adopción int4, 
+  fecha_adopción date, 
   primary key (MASCOTAid, 
   DUEniOid));
 create table DETALLE_SERVICIO (
