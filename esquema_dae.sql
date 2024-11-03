@@ -257,6 +257,7 @@ INSERT INTO VACUNA (id, nombre, dosis_x_kgpeso, especie_id , disponibilidad) VAL
 
 
 
+
 -- INSERT INTO DUEniO (numdoc, nombres, apePaterno, apeMaterno, telefono, telefonoAlt, correo, direccion, sexo, vigencia, codtipo) VALUES
 --   ('71234567', 'Carlos', 'García', 'Pérez', '987654321', '912345678', 'cgarcia@example.com', 'Av. Siempre Viva 123', true, true, 1),
 --   ('82765432', 'María', 'López', 'Sánchez', '976543210', NULL, 'mlopez@example.com', 'Jr. Los Pinos 456', false,true, 1),
