@@ -484,6 +484,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenu1.add(mnuCita);
 
         jMenuItem4.setText("Atención de Citas");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
 
         jMenuItem5.setText("Comprobantes de pago");
@@ -559,10 +564,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        jdInicioSesionVet objForm= new jdInicioSesionVet(this, true);
-        objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true);
-        txtUsuario.setText(objForm.nombreUsuario);
+//        jdInicioSesionVet objForm= new jdInicioSesionVet(this, true);
+//        objForm.setLocationRelativeTo(this);
+//        objForm.setVisible(true);
+//        txtUsuario.setText(objForm.nombreUsuario);
     }//GEN-LAST:event_formWindowOpened
 
     private void btnCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCitaActionPerformed
@@ -693,6 +698,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        jdCita objCita = new jdCita(this, true);
+        objCita.setLocationRelativeTo(this);
+        objCita.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
 
 
