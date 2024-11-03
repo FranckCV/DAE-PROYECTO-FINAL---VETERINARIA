@@ -72,4 +72,31 @@ public class clsMedicamento {
             throw new Exception("Error al modificar el medicamento --> " + e.getMessage());
         }
     }
+    
+    // PARA LA TRANSACCION
+     public ResultSet filtrar(String nom) throws Exception {
+        strSQL = "SELECT M.*, T.nomTipo FROM (SELECT * FROM medicamento "
+                + "WHERE UPPER(nombre) LIKE UPPER('%" + nom + "%') AND vigencia = true) M "
+                + "INNER JOIN tipo_medicamento T on M.tipo_medicamento_id = T.id";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al filtrar medicamentos --> " + e.getLocalizedMessage());
+        }
+    }
+     
+     public Integer getStock(int cod) throws Exception {
+        strSQL = "SELECT stock FROM medicamento WHERE id = " + cod + ";";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al obtener stock --> " + e.getMessage());
+        }
+        return 0;
+    }
+    
 }
