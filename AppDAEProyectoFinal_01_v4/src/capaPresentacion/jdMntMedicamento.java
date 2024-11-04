@@ -66,7 +66,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         try {
             rsTipoMed = objTipoMedicamento.listarTiposMedicamentos();
             while (rsTipoMed.next()) {
-                modeloTipoMed.addElement(rsTipoMed.getString("nombre"));
+                modeloTipoMed.addElement(rsTipoMed.getString("nomtipo"));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al listar tipos de medicamento: " + e.getMessage());

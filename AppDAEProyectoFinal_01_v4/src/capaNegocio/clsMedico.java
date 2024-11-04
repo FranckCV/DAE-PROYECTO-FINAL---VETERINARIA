@@ -70,17 +70,17 @@ public class clsMedico {
     }
         
     public ResultSet buscarMedico(int id) throws Exception {
-        strSQL = "select " +
-                "    med.*," +
-                "    esp.nom_especialidad, " +
-                "    count(det.servicio_id) as cant_servicios" +
-                " from medico med " +
-                " left join especialidad esp on esp.id = med.especialidad_id " +
-                " left join detalle_servicio det ON det.medico_id = med.id " +
-                " where med."+ID+" = " + id +
-                " group by med.id,nom_especialidad " +
-                " order by med.id "
-                + " ";
+        strSQL =   " select " +
+                    "     med.*," +
+                    "     esp.nom_especialidad, " +
+                    "     count(det.servicio_id) as CANT_SERVICIOS" +
+                    " from medico med " +
+                    " left join especialidad esp on esp.id = med.especialidad_id " +
+                    " left join detalle_servicio det ON det.medico_id = med.id " +
+                    " where med.id = "+id+
+                    " group by med.id, esp.nom_especialidad " +
+                    " order by med.id ;"
+                ;
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;

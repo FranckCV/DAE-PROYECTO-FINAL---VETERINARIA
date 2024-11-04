@@ -47,15 +47,15 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         txtNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
-        chkVigencia = new javax.swing.JCheckBox();
+        chkDisponibilidad = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         btnLimpiar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEspecialidad = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        btnDarbaja = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        btnDisponibilidad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -103,6 +103,11 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         jLabel1.setText("Codigo:");
 
         txtID.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIDKeyTyped(evt);
+            }
+        });
 
         txtNombre.setEditable(false);
         txtNombre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -111,7 +116,8 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         jLabel2.setText("Nombre:");
 
         btnBuscar.setBackground(new java.awt.Color(242, 242, 242));
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar.png"))); // NOI18N
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar-pequeño.png"))); // NOI18N
+        btnBuscar.setBorder(null);
         btnBuscar.setContentAreaFilled(false);
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,15 +125,16 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
             }
         });
 
-        chkVigencia.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        chkVigencia.setText("(Vigente)");
-        chkVigencia.setContentAreaFilled(false);
-        chkVigencia.setEnabled(false);
+        chkDisponibilidad.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        chkDisponibilidad.setText("(Disponibilidad)");
+        chkDisponibilidad.setContentAreaFilled(false);
+        chkDisponibilidad.setEnabled(false);
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel3.setText("Vigencia:");
+        jLabel3.setText("Disponibilidad:");
 
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/opacado.png"))); // NOI18N
+        btnLimpiar.setBorder(null);
         btnLimpiar.setContentAreaFilled(false);
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,7 +147,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)
@@ -148,28 +155,25 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(chkVigencia)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(chkDisponibilidad)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                         .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtNombre)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtID)
                         .addGap(18, 18, 18)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -178,7 +182,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(chkVigencia)
+                            .addComponent(chkDisponibilidad)
                             .addComponent(jLabel3))
                         .addGap(20, 20, 20))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -225,21 +229,21 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
             }
         });
 
-        btnDarbaja.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        btnDarbaja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/darBaja.png"))); // NOI18N
-        btnDarbaja.setText("Dar de Baja");
-        btnDarbaja.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDarbajaActionPerformed(evt);
-            }
-        });
-
         btnEliminar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/eliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnDisponibilidad.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        btnDisponibilidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/disponible.png"))); // NOI18N
+        btnDisponibilidad.setText("Disponible");
+        btnDisponibilidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDisponibilidadActionPerformed(evt);
             }
         });
 
@@ -254,8 +258,8 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDarbaja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDisponibilidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(21, 21, 21))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -272,15 +276,15 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDarbaja, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(0, 21, Short.MAX_VALUE))
@@ -353,17 +357,31 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         modificarEspecialidad();
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void btnDarbajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarbajaActionPerformed
+    private void btnDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisponibilidadActionPerformed
         // TODO add your handling code here:
-        darBaja();
-    }//GEN-LAST:event_btnDarbajaActionPerformed
+        String id = txtID.getText();
+        cambiarDisponibilidad();
+        txtID.setText(id);
+        btnBuscarActionPerformed(null);
+    }//GEN-LAST:event_btnDisponibilidadActionPerformed
+
+    private void txtIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+
+        boolean numeros = key >= 48 && key <= 57    ;
+
+        if (!(numeros)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtIDKeyTyped
     
     private void listarEspecialidades(){
         ResultSet rsDato = null;
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");
         modelo.addColumn("Nombre");
-        modelo.addColumn("Vigencia");
+        modelo.addColumn("Disponiblidad");
         tblEspecialidad.setModel(modelo);        
         try {
             rsDato = objTabla.listarEspecialidad();
@@ -371,7 +389,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 modelo.addRow(new Object[]{
                     rsDato.getInt(clsEspecialidad.ID),
                     rsDato.getString(clsEspecialidad.NOMBRE),
-                    textoBool(rsDato.getBoolean(clsEspecialidad.DISPONIBILIDAD), "Vigente", "No Vigente")
+                    textoBool(rsDato.getBoolean(clsEspecialidad.DISPONIBILIDAD), "Disponible", "No Disponible")
                 });
             }
             tblEspecialidad.setModel(modelo);
@@ -409,7 +427,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 rsEsp = objTabla.buscarEspecialidad(Integer.parseInt(txtID.getText()));
                 if (rsEsp.next()){
                     txtNombre.setText(rsEsp.getString(clsEspecialidad.NOMBRE));
-                    chkVigencia.setSelected(rsEsp.getBoolean(clsEspecialidad.DISPONIBILIDAD));
+                    chkDisponibilidad.setSelected(rsEsp.getBoolean(clsEspecialidad.DISPONIBILIDAD));
                     rsEsp.close();
                 } else {
                     JOptionPane.showMessageDialog(this, "Este codigo en "+clsEspecialidad.TABLA+" no existe");
@@ -432,14 +450,14 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         btnEliminar.setEnabled(eli);
         btnLimpiar.setEnabled(lim);
         btnModificar.setEnabled(mod);
-        btnDarbaja.setEnabled(baj);
+        btnDisponibilidad.setEnabled(baj);
         tblEspecialidad.setEnabled(bus);
     }
     
     private void limpiarControles() {
         txtID.setText("");
         txtNombre.setText("");
-        chkVigencia.setSelected(false);
+        chkDisponibilidad.setSelected(false);
         
         txtID.requestFocus();        
     }
@@ -516,6 +534,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 listarEspecialidades();
                 txtID.setText(objTabla.generarIDEspecialidad().toString());
                 txtNombre.requestFocus();
+                chkDisponibilidad.setSelected(true);
             }else{
                 if (txtNombre.getText().trim().isBlank() || txtID.getText().trim().isBlank()) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
@@ -538,31 +557,6 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         }
     }
     
-    private void darBaja() {
-        try {
-            ResultSet rsCateg = null;
-            if (txtID.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo");
-            } else {
-                int valor = JOptionPane.showConfirmDialog(null, "Esta acción no podrá deshacerse.\n ¿Deseas dar de baja este elemento?", "Confirmacion",JOptionPane.YES_NO_OPTION);
-                if (valor == JOptionPane.YES_OPTION) {
-                    rsCateg = objTabla.buscarEspecialidad(Integer.parseInt(txtID.getText()));
-                    if (rsCateg.next()) {
-                        if (rsCateg.getBoolean(clsEspecialidad.DISPONIBILIDAD)) {
-                            objTabla.darBaja(Integer.parseInt(txtID.getText()));
-                            limpiarControles();
-                            listarEspecialidades();
-                        } else {
-                            JOptionPane.showMessageDialog(this, "Este elemento ya fue dado de baja");
-                        }
-                    } 
-                }                               
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-        }
-    }
-    
     private String textoBool(boolean vig, String txtTrue, String txtFalse) {
         if (vig) {
             return txtTrue;
@@ -571,14 +565,35 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         }
     }
     
+    private void cambiarDisponibilidad() {
+        try {
+            if (txtID.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo");
+            } else {
+                int valor = JOptionPane.showConfirmDialog(null, "¿Deseas cambiar la Disponibilidad de la especialidad "+txtNombre.getText()+"?", "Confirmacion",JOptionPane.YES_NO_OPTION);
+                if (valor == JOptionPane.YES_OPTION) {
+                    objTabla.cambiarDisponibilidad(Integer.parseInt(txtID.getText()));
+                    limpiarControles();
+                    listarEspecialidades();
+                    JOptionPane.showMessageDialog(this, "Se modificó la Disponibilidad de esta Especialidad con exito");
+                }                
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }
+    
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnDarbaja;
+    private javax.swing.JButton btnDisponibilidad;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JCheckBox chkVigencia;
+    private javax.swing.JCheckBox chkDisponibilidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

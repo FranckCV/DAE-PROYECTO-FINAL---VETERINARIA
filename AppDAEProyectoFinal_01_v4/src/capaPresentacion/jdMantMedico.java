@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
  * @author franc
  */
 public class jdMantMedico extends javax.swing.JDialog {
+    clsDetalle_Servicio objDetalleServicio = new clsDetalle_Servicio();
     clsMedico objTabla = new clsMedico();    
     clsEspecialidad objEs = new clsEspecialidad();
     private static final String BTN_DISPONIBLE = "Cambiar Disponibilidad";    
@@ -81,6 +82,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblServiciosxMedico = new javax.swing.JTable();
+        jLabel12 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -99,6 +101,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel1.setText("Doc Identidad:");
 
+        txtDocIdentidad.setEditable(false);
         txtDocIdentidad.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtDocIdentidad.setBorder(null);
         txtDocIdentidad.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -392,6 +395,8 @@ public class jdMantMedico extends javax.swing.JDialog {
         ));
         jScrollPane2.setViewportView(tblServiciosxMedico);
 
+        jLabel12.setText("Lista de Servicios que realiza:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -420,7 +425,11 @@ public class jdMantMedico extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(24, 24, 24)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(48, 48, 48))))
                     .addComponent(jScrollPane1))
                 .addGap(9, 9, 9))
         );
@@ -436,7 +445,10 @@ public class jdMantMedico extends javax.swing.JDialog {
                         .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -544,9 +556,9 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void btnDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisponibilidadActionPerformed
         // TODO add your handling code here:
-        String dni = txtDocIdentidad.getText();
+        String id = txtID.getText();
         cambiarDisponibilidad();
-        txtDocIdentidad.setText(dni);
+        txtID.setText(id);
         btnBuscarActionPerformed(null);
     }//GEN-LAST:event_btnDisponibilidadActionPerformed
 
@@ -574,9 +586,6 @@ public class jdMantMedico extends javax.swing.JDialog {
             evt.consume();
         } 
         
-//        if (txtDNI.getText().trim().length() == 11) {
-//            evt.consume();
-//        }
     }//GEN-LAST:event_txtDocIdentidadKeyTyped
 
     private void chkDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkDisponibilidadActionPerformed
@@ -591,6 +600,13 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void txtIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyTyped
         // TODO add your handling code here:
+        int key = evt.getKeyChar();
+
+        boolean numeros = key >= 48 && key <= 57    ;
+
+        if (!(numeros)) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtIDKeyTyped
     
     private void listarMedicos(){
@@ -620,7 +636,7 @@ public class jdMantMedico extends javax.swing.JDialog {
                     textoBool(rsDato.getBoolean(clsMedico.DISPONIBILIDAD), "Disponible", "No Disponible"),
                     textoBool(rsDato.getBoolean(clsMedico.VIGENCIA), "Vigente", "No Vigente"),
                     rsDato.getString(clsEspecialidad.NOMBRE),
-                    rsDato.getInt("cant_servicios")
+                    rsDato.getInt(clsMedico.CANT_SERVICIOS)
                 });
             }
             tblMedico.setModel(modelo);
@@ -628,7 +644,7 @@ public class jdMantMedico extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error al listar tabla "+clsMedico.TABLA+": " + e.getMessage());
         }
     }
-    
+           
     private void buscarMedico() {
         ResultSet rsPro = null;
         try {
@@ -830,11 +846,15 @@ public class jdMantMedico extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un codigo");
             } else {
                 rsCateg = objTabla.buscarMedico(Integer.parseInt(txtID.getText()));
+                int valor = JOptionPane.showConfirmDialog(null, "¿Deseas cambiar la Disponibilidad del medico "+txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText()+"?", "Confirmacion",JOptionPane.YES_NO_OPTION);
                 if (rsCateg.next()) {
                     if (rsCateg.getBoolean(clsMedico.VIGENCIA)) {
-                        objTabla.cambiarDisponibilidad(Integer.parseInt(txtID.getText()));
-                        limpiarControles();
-                        listarMedicos();
+                        if (valor == JOptionPane.YES_OPTION) {
+                            objTabla.cambiarDisponibilidad(Integer.parseInt(txtID.getText()));
+                            limpiarControles();
+                            listarMedicos();
+                            JOptionPane.showMessageDialog(this, "Se modificó la Disponibilidad de este médico con exito");
+                        }
                     } else {
                         JOptionPane.showMessageDialog(this, "Este medico no se encuentra vigente");
                     }
@@ -880,6 +900,40 @@ public class jdMantMedico extends javax.swing.JDialog {
         }
     }
     
+    private void listarServiciosxMedico(){
+        ResultSet rsDato = null;
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Servicio Disponible");
+        modelo.addColumn("Costo");
+        tblMedico.setModel(modelo);        
+        try {
+            rsDato = objDetalleServicio.listarServiciosxMedico(Integer.parseInt(txtID.getText()));
+            while (rsDato.next()){
+                modelo.addRow(new Object[]{
+                    rsDato.getString("id"),
+                    rsDato.getString(clsMedico.NOMBRES),
+                    rsDato.getString(clsMedico.APE_PATERNO),
+                    rsDato.getString(clsMedico.APE_MATERNO),
+                    rsDato.getString(clsMedico.DOC_IDENTIDAD),
+                    textoBool(rsDato.getBoolean(clsMedico.SEXO), "Masculino", "Femenino"),
+                    textoBool(rsDato.getBoolean(clsMedico.DISPONIBILIDAD), "Disponible", "No Disponible"),
+                    textoBool(rsDato.getBoolean(clsMedico.VIGENCIA), "Vigente", "No Vigente"),
+                    rsDato.getString(clsEspecialidad.NOMBRE),
+                    rsDato.getInt(clsMedico.CANT_SERVICIOS)
+                });
+            }
+            tblMedico.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al listar tabla "+clsMedico.TABLA+": " + e.getMessage());
+        }
+    }
+    
+    
+    
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnDisponibilidad;
@@ -895,6 +949,7 @@ public class jdMantMedico extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -12,7 +12,6 @@ import java.sql.ResultSet;
  * @author franc
  */
 public class clsServicio {
-
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;
@@ -73,7 +72,7 @@ public class clsServicio {
     }
 
     public void registrarServicio(int id, String nom, String desc, double cost) throws Exception {
-        strSQL = "insert into " + TABLA + " values (" + id + ", '" + nom + "', '" + desc + "', " + cost + ")";
+        strSQL = "insert into " + TABLA + " values (" + id + ", '" + nom + "', '" + desc + "', true," + cost + ")";
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
@@ -128,26 +127,7 @@ public class clsServicio {
         }
     }
     
-    
-    public ResultSet listarServiciosxMedico(int med_id) throws Exception {
-        strSQL = " select  " +
-                "    ser.id , " +
-                "    ser.nom_servicio , " +
-                "    ser.descripcion , " +
-                "    ser.vigencia , " +
-                "    ser.costo " +
-                "from servicio ser " +
-                "left join detalle_servicio det ON det.servicio_id = ser.id " +
-                "where det.medicoid = " + med_id
-                + " ";
-        try {
-            rs = objConectar.consultarBD(strSQL);
-            return rs;
-        } catch (Exception e) {
-            throw new Exception("Error en listar la tabla " + TABLA + " / " + e.getMessage());
-        }
-    }
-    
+        
     
     public void cambiarDisponibilidad(Integer id) throws Exception {
         Boolean disp = null;
