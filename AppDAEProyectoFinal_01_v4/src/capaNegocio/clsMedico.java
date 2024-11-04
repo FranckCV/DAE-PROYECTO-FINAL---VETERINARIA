@@ -9,6 +9,7 @@ public class clsMedico {
     String strSQL;
     ResultSet rs = null;
     public static final String TABLA = "MEDICO";
+    public static final String DNI = "doc_identidad";
     public static final String ID = "id";
     public static final String DOC_IDENTIDAD = "doc_identidad";
     public static final String NOMBRES = "nombres";
@@ -70,17 +71,17 @@ public class clsMedico {
     }
         
     public ResultSet buscarMedico(int id) throws Exception {
-        strSQL = "select " +
-                "    med.*," +
-                "    esp.nom_especialidad, " +
-                "    count(det.servicio_id) as cant_servicios" +
-                " from medico med " +
-                " left join especialidad esp on esp.id = med.especialidad_id " +
-                " left join detalle_servicio det ON det.medico_id = med.id " +
-                " where med."+ID+" = " + id +
-                " group by med.id,nom_especialidad " +
-                " order by med.id "
-                + " ";
+        strSQL =   " select " +
+                    "     med.*," +
+                    "     esp.nom_especialidad, " +
+                    "     count(det.servicio_id) as CANT_SERVICIOS" +
+                    " from medico med " +
+                    " left join especialidad esp on esp.id = med.especialidad_id " +
+                    " left join detalle_servicio det ON det.medico_id = med.id " +
+                    " where med.id = "+id+
+                    " group by med.id, esp.nom_especialidad " +
+                    " order by med.id ;"
+                ;
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -196,6 +197,19 @@ public class clsMedico {
         } catch (Exception e) {
             throw new Exception("Error al modificar tabla "+TABLA+": " + e.getMessage());
         }        
+    }
+    
+     public Integer obtenerID(String nom) throws Exception {
+        strSQL = "Select id from " + TABLA + " where nombres = '" + nom + "' ";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al buscar codigo de " + TABLA + " con el nombre " + nom + " --> " + e.getMessage());
+        }
+        return 0;
     }
     
     

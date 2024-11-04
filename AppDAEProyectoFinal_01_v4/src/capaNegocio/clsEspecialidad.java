@@ -21,10 +21,7 @@ public class clsEspecialidad {
     public static final String DISPONIBILIDAD = "disponibilidad";
     
     public ResultSet listarEspecialidad() throws Exception{
-        strSQL = """ 
-                select 
-                    *
-                from """ +TABLA ;
+        strSQL = " select  * from " +TABLA+" order by id" ;
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -112,6 +109,24 @@ public class clsEspecialidad {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
             throw new Exception("Error al modificar tabla "+TABLA+": " + e.getMessage());
+        }        
+    }
+    
+    
+    public void cambiarDisponibilidad(Integer id) throws Exception {
+        Boolean disp = null;
+
+        rs = objConectar.consultarBD("select "+DISPONIBILIDAD+" from "+TABLA+" where "+ID+" = '"+id+"'");
+
+        while (rs.next()) {                
+            disp = rs.getBoolean(DISPONIBILIDAD);
+        }
+        
+        try {
+            strSQL = "update "+TABLA+" set "+DISPONIBILIDAD+" = "+!disp+" where "+ID+" = '"+id+"'";
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al cambiar disponibilidad en ID:"+id+" en tabla "+TABLA+": " + e.getMessage());
         }        
     }
     

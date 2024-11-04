@@ -37,11 +37,11 @@ public class clsTipoMedicamento {
     }
 
     public Integer obtenerCodigoTipoMedicamento(String nombre) throws Exception {
-        strSQL = "Select id from tipo_medicamento where nombre = '" + nombre + "'";
+        strSQL = "SELECT id AS codigo FROM tipo_medicamento WHERE nomTipo = '" + nombre + "';";
         try {
             rs = objConectar.consultarBD(strSQL);
             if (rs.next()) {
-                return rs.getInt("id");  // Retorna el ID del tipo de medicamento
+                return rs.getInt("codigo");  
             } else {
                 throw new Exception("No se encontró el tipo de medicamento con el nombre: " + nombre);
             }
@@ -50,7 +50,7 @@ public class clsTipoMedicamento {
         }
     }
 
-public void registrarTipoMedicamento(int id, String nombre) throws Exception {
+    public void registrarTipoMedicamento(int id, String nombre) throws Exception {
         strSQL = "Insert into tipo_medicamento Values(" + id + ",'" + nombre + "')";
         try {
             objConectar.ejecutarBD(strSQL);

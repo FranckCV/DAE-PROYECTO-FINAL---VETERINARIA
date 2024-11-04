@@ -480,6 +480,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenu1.setText("Citas");
 
         mnuCita.setText("Programación de Citas");
+        mnuCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCitaActionPerformed(evt);
+            }
+        });
         jMenu1.add(mnuCita);
 
         jMenuItem4.setText("Atención de Citas");
@@ -703,6 +708,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objCita.setLocationRelativeTo(this);
         objCita.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void mnuCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCitaActionPerformed
+        jdProgramacionCita objCita = new jdProgramacionCita(this, true);
+        objCita.setLocationRelativeTo(this);
+        objCita.setVisible(true);
+    }//GEN-LAST:event_mnuCitaActionPerformed
 
 
 
