@@ -25,11 +25,11 @@ public class clsDetalle_Servicio {
                 "    ser.id , " +
                 "    ser.nom_servicio , " +
                 "    ser.descripcion , " +
-                "    ser.vigencia , " +
+                "    ser.disponibilidad , " +
                 "    ser.costo " +
                 " from servicio ser " +
                 " left join detalle_servicio det ON det.servicio_id = ser.id " +
-                " where det.medicoid = " + med_id
+                " where det.medico_id = " + med_id + " and ser.disponibilidad = true "
                 + " ";
         try {
             rs = objConectar.consultarBD(strSQL);

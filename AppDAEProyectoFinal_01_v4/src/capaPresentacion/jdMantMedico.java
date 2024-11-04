@@ -515,6 +515,7 @@ public class jdMantMedico extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "No puede ejecutar esta accion");
         }
         listarMedicos();
+        tblServiciosxMedico.setModel(new DefaultTableModel());
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -670,6 +671,7 @@ public class jdMantMedico extends javax.swing.JDialog {
                     chkDisponibilidad.setSelected(rsPro.getBoolean(clsMedico.DISPONIBILIDAD));
                     chkVigencia.setSelected(rsPro.getBoolean(clsMedico.VIGENCIA));
                     cmbEspecialidad.setSelectedItem(rsPro.getString(clsEspecialidad.NOMBRE));
+                    listarServiciosxMedico();
                     rsPro.close();
                 } else {
                     JOptionPane.showMessageDialog(this, "Este codigo en "+clsMedico.TABLA+" no existe");
@@ -906,26 +908,19 @@ public class jdMantMedico extends javax.swing.JDialog {
         modelo.addColumn("ID");
         modelo.addColumn("Servicio Disponible");
         modelo.addColumn("Costo");
-        tblMedico.setModel(modelo);        
+        tblServiciosxMedico.setModel(modelo);        
         try {
             rsDato = objDetalleServicio.listarServiciosxMedico(Integer.parseInt(txtID.getText()));
             while (rsDato.next()){
                 modelo.addRow(new Object[]{
-                    rsDato.getString("id"),
-                    rsDato.getString(clsMedico.NOMBRES),
-                    rsDato.getString(clsMedico.APE_PATERNO),
-                    rsDato.getString(clsMedico.APE_MATERNO),
-                    rsDato.getString(clsMedico.DOC_IDENTIDAD),
-                    textoBool(rsDato.getBoolean(clsMedico.SEXO), "Masculino", "Femenino"),
-                    textoBool(rsDato.getBoolean(clsMedico.DISPONIBILIDAD), "Disponible", "No Disponible"),
-                    textoBool(rsDato.getBoolean(clsMedico.VIGENCIA), "Vigente", "No Vigente"),
-                    rsDato.getString(clsEspecialidad.NOMBRE),
-                    rsDato.getInt(clsMedico.CANT_SERVICIOS)
+                    rsDato.getString(clsServicio.ID),
+                    rsDato.getString(clsServicio.NOMBRE),
+                    rsDato.getString(clsServicio.COSTO)
                 });
             }
-            tblMedico.setModel(modelo);
+            tblServiciosxMedico.setModel(modelo);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al listar tabla "+clsMedico.TABLA+": " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al listar tabla "+clsServicio.TABLA+": " + e.getMessage());
         }
     }
     

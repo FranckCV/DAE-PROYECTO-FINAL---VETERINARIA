@@ -125,10 +125,6 @@ public class clsServicio {
             throw new Exception("Error al obtener datos de detalle del servicio --> " + e.getMessage());
         }
     }
-<<<<<<< HEAD
-    
-        
-=======
 
     public ResultSet obtenerDatosDetalleServicioPorCodServicio(int codigoServicio) throws Exception {
         // Construir la consulta SQL
@@ -240,8 +236,7 @@ public class clsServicio {
             throw new Exception("Error al obtener datos de detalle del servicio --> " + e.getMessage());
         }
     }
-    
->>>>>>> 067d2c7f639b8e61f469f2d1b2e3b8a18fa4629f
+
     
     public void cambiarDisponibilidad(Integer id) throws Exception {
         Boolean disp = null;
