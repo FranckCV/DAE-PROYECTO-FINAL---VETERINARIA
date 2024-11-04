@@ -104,10 +104,11 @@ public class clsServicio {
 
     public ResultSet obtenerDatosDetalleServicio(int codigoServicio, String documentoMedico) throws Exception {
         // Construir la consulta SQL
-        strSQL = "SELECT "
+        strSQL = "SELECT ds.*, "
                 + "s.id, "
                 + "s.nom_servicio,"
                 + "s.descripcion, "
+                + "s.costo, "
                 + "m.nombres, "
                 + "m.apePaterno, "
                 + "m.apeMaterno "
@@ -116,6 +117,98 @@ public class clsServicio {
                 + "INNER JOIN MEDICO m ON ds.MEDICOid = m.id "
                 + "WHERE s.id = " + codigoServicio + " "
                 + "AND m.doc_identidad = '" + documentoMedico + "'";
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al obtener datos de detalle del servicio --> " + e.getMessage());
+        }
+    }
+    
+    public ResultSet obtenerDatosDetalleServicioPorCodServicio(int codigoServicio) throws Exception {
+        // Construir la consulta SQL
+        strSQL = "SELECT ds.*, "
+                + "s.id, "
+                + "s.nom_servicio,"
+                + "s.descripcion, "
+                + "s.costo, "
+                + "m.nombres, "
+                + "m.apePaterno, "
+                + "m.apeMaterno "
+                + "FROM DETALLE_SERVICIO ds "
+                + "INNER JOIN SERVICIO s ON ds.servicio_id = s.id "
+                + "INNER JOIN MEDICO m ON ds.MEDICOid = m.id "
+                + "WHERE s.id = " + codigoServicio;
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al obtener datos de detalle del servicio --> " + e.getMessage());
+        }
+    }
+    
+    public ResultSet obtenerDatosDetalleServicioPorMedico(String documentoMedico) throws Exception {
+        // Construir la consulta SQL
+        strSQL = "SELECT ds.*, "
+                + "s.id, "
+                + "s.nom_servicio,"
+                + "s.descripcion, "
+                + "s.costo, "
+                + "m.nombres, "
+                + "m.apePaterno, "
+                + "m.apeMaterno "
+                + "FROM DETALLE_SERVICIO ds "
+                + "INNER JOIN SERVICIO s ON ds.servicio_id = s.id "
+                + "INNER JOIN MEDICO m ON ds.MEDICOid = m.id "
+                + "AND m.doc_identidad = '" + documentoMedico + "'";
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al obtener datos de detalle del servicio --> " + e.getMessage());
+        }
+    }
+    
+    public ResultSet obtenerDatosDetalleServicioTodos() throws Exception {
+        // Construir la consulta SQL
+        strSQL = "SELECT ds.*, "
+                + "s.id, "
+                + "s.nom_servicio,"
+                + "s.descripcion, "
+                + "s.costo, "
+                + "m.nombres, "
+                + "m.apePaterno, "
+                + "m.apeMaterno "
+                + "FROM DETALLE_SERVICIO ds "
+                + "INNER JOIN SERVICIO s ON ds.servicio_id = s.id "
+                + "INNER JOIN MEDICO m ON ds.MEDICOid = m.id ";
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al obtener todos datos de detalle del servicio --> " + e.getMessage());
+        }
+    }
+    
+    public ResultSet obtenerDatosDetalleServicio(int codigoServicio, int codMedico) throws Exception {
+        // Construir la consulta SQL
+        strSQL = "SELECT ds.*, "
+                + "s.id, "
+                + "s.nom_servicio,"
+                + "s.descripcion, "
+                + "s.costo, "
+                + "m.nombres, "
+                + "m.apePaterno, "
+                + "m.apeMaterno "
+                + "FROM DETALLE_SERVICIO ds "
+                + "INNER JOIN SERVICIO s ON ds.servicio_id = s.id "
+                + "INNER JOIN MEDICO m ON ds.MEDICOid = m.id "
+                + "WHERE s.id = " + codigoServicio + " "
+                + "AND m.id = " + codMedico;
 
         try {
             rs = objConectar.consultarBD(strSQL);
