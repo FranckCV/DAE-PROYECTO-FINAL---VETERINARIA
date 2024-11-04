@@ -300,3 +300,5 @@ INSERT INTO VACUNA (id, nombre, dosis_x_kgpeso, especie_id , disponibilidad) VAL
 -- (3, 'jmendoza', FALSE, TRUE, 'clave_segura3', 'Javier', 'Mendoza', 'Ramirez','E'),
 -- (4, 'ccruz', TRUE, FALSE, 'clave_segura4', 'Claudia', 'Cruz', 'Lopez','E'),
 -- (5, 'rlopez', TRUE, TRUE, 'clave_segura5', 'Ricardo', 'Lopez', 'Diaz','V');
+
+--Franco Tremendo chimbombo
