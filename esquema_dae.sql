@@ -1,3 +1,63 @@
+create table USUARIO (
+  codUsuario int4 not null, 
+  nomusuario varchar(30) not null, 
+  estado     bool not null, 
+  sexo       bool not null, 
+  clave      varchar(100) not null, 
+  nombres    varchar(50) not null, 
+  apPaterno  varchar(40) not null, 
+  apMaterno  varchar(40) not null, 
+  cargo      char(1) not null, 
+  primary key (codUsuario));
+
+
+-- MEDICOS Y SERVICIOS
+
+create table SERVICIO (
+  id           int4 not null, 
+  nom_servicio varchar(100) not null, 
+  descripcion  text not null, 
+  disponibilidad     bool not null, 
+  costo        numeric(10, 2) not null, 
+  primary key (id));
+create table ESPECIALIDAD (
+  id               int4 not null, 
+  nom_especialidad varchar(100) not null, 
+  disponibilidad   bool not null, 
+  primary key (id));
+create table MEDICO (
+  id              int4 not null, 
+  nombres         varchar(150) not null, 
+  apePaterno      varchar(200) not null, 
+  apeMaterno      varchar(200) not null, 
+  doc_identidad   varchar(20) not null, 
+  sexo            bool not null, 
+  disponibilidad  bool not null, 
+  vigencia        bool not null, 
+  especialidad_id int4 not null, 
+  primary key (id));
+create table DETALLE_SERVICIO (
+  servicio_id     int4 not null,
+  medico_id        int4 not null,
+  disponibilidad  bool not null,
+  primary key (servicio_id, 
+  medico_id));
+
+-- DUEÑOS Y MASCOTAS
+
+create table ESPECIE (
+  id             int4 not null, 
+  nombre         varchar(150) not null, 
+  disponibilidad bool not null, 
+  primary key (id));
+
+create table RAZA (
+  id             int4 not null, 
+  nombre         varchar(150) not null, 
+  especie_id     int4 not null, 
+  disponibilidad bool not null, 
+  primary key (id));
+
 create table MASCOTA (
   id               int4 not null, 
   nombre           varchar(150) not null, 
@@ -12,48 +72,7 @@ create table MASCOTA (
   vigencia         bool not null, 
   raza_id          int4 not null, 
   primary key (id));
-create table RAZA (
-  id             int4 not null, 
-  nombre         varchar(150) not null, 
-  especie_id     int4 not null, 
-  disponibilidad bool not null, 
-  primary key (id));
-create table ESPECIE (
-  id             int4 not null, 
-  nombre         varchar(150) not null, 
-  disponibilidad bool not null, 
-  primary key (id));
-create table MEDICO (
-  id              int4 not null, 
-  nombres         varchar(150) not null, 
-  apePaterno      varchar(200) not null, 
-  apeMaterno      varchar(200) not null, 
-  doc_identidad   varchar(20) not null, 
-  sexo            bool not null, 
-  disponibilidad  bool not null, 
-  vigencia        bool not null, 
-  especialidad_id int4 not null, 
-  primary key (id));
-create table ESTADO_CITA (
-  id            int4 not null, 
-  nombre_estado varchar(150) not null, 
-  primary key (id));
-create table MEDICAMENTO (
-  id                  int4 not null, 
-  nombre              varchar(255) not null, 
-  costo               numeric(9, 2) not null, 
-  stock               int4 not null, 
-  presentacion        varchar(15) not null, 
-  vigencia            bool not null, 
-  tipo_medicamento_id int4 not null, 
-  primary key (id));
-create table SERVICIO (
-  id           int4 not null, 
-  nom_servicio varchar(100) not null, 
-  descripcion  text not null, 
-  vigencia     bool not null, 
-  costo        numeric(10, 2) not null, 
-  primary key (id));
+
 create table DUEniO (
   id            int4 not null, 
   nombres       varchar(150) not null, 
@@ -67,45 +86,7 @@ create table DUEniO (
   sexo          bool not null, 
   vigencia      bool not null, 
   primary key (id));
-create table ESPECIALIDAD (
-  id               int4 not null, 
-  nom_especialidad varchar(100) not null, 
-  vigencia         bool not null, 
-  primary key (id));
-create table CITA (
-  id                int4 not null, 
-  estado_cita_id    int4 not null, 
-  fecha_cita        date not null, 
-  observacion       text, 
-  CUSTODIAMASCOTAid int4 not null, 
-  CUSTODIADUEniOid   int4, 
-  primary key (id));
-  
-create table TIPO_MEDICAMENTO (
-  id      int4 not null, 
-  nomtipo varchar(255) not null, 
-  primary key (id));
-  
-create table DETALLE_CITA (
-  cita_id                  int4 not null, 
-  detalle_servicio_serv_id int4 not null, 
-  detalle_servicio_med_id  int4 not null, 
-  horaEntrada              time not null, 
-  horaSalida               time not null, 
-  nota_adicional           text not null, 
-  primary key (cita_id, 
-  detalle_servicio_serv_id, 
-  detalle_servicio_med_id));
-create table COMPROBANTE (
-  Tipo         char(1) not null, 
-  serie_numero char(10) not null, 
-  monto_total  numeric(10, 2) not null, 
-  fecha        date not null, 
-  CITAid       int4 not null, 
-  primary key (Tipo, 
-  serie_numero));
-comment on column COMPROBANTE.Tipo is '"B" para boleta
-"F" para factura';
+
 create table VACUNA (
   id             int4 not null, 
   nombre         varchar(150) not null, 
@@ -126,12 +107,64 @@ create table CUSTODIA (
   fecha_adopción date, 
   primary key (MASCOTAid, 
   DUEniOid));
-create table DETALLE_SERVICIO (
-  servicio_id     int4 not null,
-  MEDICOid        int4 not null,
-  disponibilidad  bool not null,
-  primary key (servicio_id, 
-  MEDICOid));
+
+-- CITAS
+
+create table ESTADO_CITA (
+  id            int4 not null, 
+  nombre_estado varchar(150) not null, 
+  primary key (id));
+
+create table CITA (
+  id                int4 not null, 
+  estado_cita_id    int4 not null, 
+  fecha_cita        date not null, 
+  observacion       text, 
+  CUSTODIAMASCOTAid int4 not null, 
+  CUSTODIADUEniOid   int4, 
+  primary key (id));
+  
+create table COMPROBANTE (
+  Tipo         char(1) not null, 
+  serie_numero char(10) not null, 
+  monto_total  numeric(10, 2) not null, 
+  fecha        date not null, 
+  CITAid       int4 not null, 
+  primary key (Tipo, 
+  serie_numero));
+comment on column COMPROBANTE.Tipo is '"B" para boleta
+"F" para factura';
+
+create table DETALLE_CITA (
+  cita_id                  int4 not null, 
+  detalle_servicio_serv_id int4 not null, 
+  detalle_servicio_med_id  int4 not null, 
+  horaEntrada              time not null, 
+  horaSalida               time not null, 
+  nota_adicional           text not null, 
+  primary key (cita_id, 
+  detalle_servicio_serv_id, 
+  detalle_servicio_med_id));
+
+
+
+-- MEDICAMENTOS
+
+create table TIPO_MEDICAMENTO (
+  id      int4 not null, 
+  nomtipo varchar(255) not null, 
+  primary key (id));
+  
+create table MEDICAMENTO (
+  id                  int4 not null, 
+  nombre              varchar(255) not null, 
+  costo               numeric(9, 2) not null, 
+  stock               int4 not null, 
+  presentacion        varchar(15) not null, 
+  vigencia            bool not null, 
+  tipo_medicamento_id int4 not null, 
+  primary key (id));
+
 create table DETALLE_MEDICAMENTO (
   medicamento_id               int4 not null, 
   detalle_cita_id              int4 not null, 
@@ -144,17 +177,9 @@ create table DETALLE_MEDICAMENTO (
   detalle_cita_id, 
   detalle_servicio_servicio_id, 
   detalle_servicio_medico_id));
-create table USUARIO (
-  codUsuario int4 not null, 
-  nomusuario varchar(30) not null, 
-  estado     bool not null, 
-  sexo       bool not null, 
-  clave      varchar(100) not null, 
-  nombres    varchar(50) not null, 
-  apPaterno  varchar(40) not null, 
-  apMaterno  varchar(40) not null, 
-  cargo      char(1) not null, 
-  primary key (codUsuario));
+
+
+
 alter table RAZA add constraint FKRAZA702100 foreign key (especie_id) references ESPECIE (id);
 alter table MASCOTA add constraint FKMASCOTA643044 foreign key (raza_id) references RAZA (id);
 alter table MEDICO add constraint FKMEDICO608762 foreign key (especialidad_id) references ESPECIALIDAD (id);
@@ -168,33 +193,57 @@ alter table COMPROBANTE add constraint FKCOMPROBANT250686 foreign key (CITAid) r
 alter table CUSTODIA add constraint FKCUSTODIA551514 foreign key (DUEniOid) references DUEniO (id);
 alter table CUSTODIA add constraint FKCUSTODIA281978 foreign key (MASCOTAid) references MASCOTA (id);
 alter table CITA add constraint FKCITA813108 foreign key (CUSTODIAMASCOTAid, CUSTODIADUEniOid) references CUSTODIA (MASCOTAid, DUEniOid);
-alter table DETALLE_SERVICIO add constraint FKDETALLE_SE753796 foreign key (MEDICOid) references MEDICO (id);
+alter table DETALLE_SERVICIO add constraint FKDETALLE_SE753796 foreign key (medico_id) references MEDICO (id);
 alter table DETALLE_SERVICIO add constraint FKDETALLE_SE503336 foreign key (servicio_id) references SERVICIO (id);
 alter table DETALLE_MEDICAMENTO add constraint FKDETALLE_ME2678 foreign key (medicamento_id) references MEDICAMENTO (id);
 alter table DETALLE_MEDICAMENTO add constraint FKDETALLE_ME390069 foreign key (detalle_cita_id, detalle_servicio_servicio_id, detalle_servicio_medico_id) references DETALLE_CITA (cita_id, detalle_servicio_serv_id, detalle_servicio_med_id);
-alter table DETALLE_CITA add constraint FKDETALLE_CI377475 foreign key (detalle_servicio_serv_id, detalle_servicio_med_id) references DETALLE_SERVICIO (servicio_id, MEDICOid);
+alter table DETALLE_CITA add constraint FKDETALLE_CI377475 foreign key (detalle_servicio_serv_id, detalle_servicio_med_id) references DETALLE_SERVICIO (servicio_id, medico_id);
 
 
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 
+-- MEDICOS Y SERVICIOS
 
-
-INSERT INTO ESPECIALIDAD (id, nom_especialidad, vigencia) VALUES 
+INSERT INTO ESPECIALIDAD (id, nom_especialidad, disponibilidad) VALUES 
 (1, 'Medicina General', TRUE),
 (2, 'Cirugía Veterinaria', TRUE),
 (3, 'Dermatología', TRUE),
 (4, 'Cardiología Veterinaria', TRUE),
 (5, 'Odontología Veterinaria', FALSE);
 
-
-
-INSERT INTO SERVICIO (id, nom_servicio, descripcion, costo, vigencia) VALUES
+INSERT INTO SERVICIO (id, nom_servicio, descripcion, costo, disponibilidad) VALUES
 (1, 'Consulta General', 'Consulta médica general para revisión de la mascota', 50.00,true),
 (2, 'Vacunación', 'Aplicación de vacuna según el calendario de vacunación', 30.00,true),
 (3, 'Desparasitación', 'Tratamiento para eliminar parásitos internos y externos', 40.00,true),
 (4, 'Cirugía menor', 'Intervenciones quirúrgicas menores como esterilización', 200.00,true),
 (5, 'Emergencia', 'Atención de emergencias veterinarias las 24 horas', 150.00,true);
+
+
+INSERT INTO MEDICO (id, doc_identidad, nombres, apePaterno, apeMaterno, sexo, disponibilidad, vigencia, especialidad_id) 
+VALUES 
+    (1, '12345678', 'Juan', 'Pérez', 'García', TRUE, TRUE, TRUE, 1),
+    (2, '23456789', 'Carlos', 'Gómez', 'Sánchez', TRUE, FALSE, FALSE, 5),
+    (3, '34567890', 'Pedro', 'Hernández', 'Ramírez', TRUE, FALSE, TRUE, 5),
+    (4, '87654321', 'Ana', 'López', 'Martínez', FALSE, FALSE, TRUE, 2), 
+    (5, '98765432', 'Lucía', 'Rodríguez', 'Morales', FALSE, TRUE, TRUE, 4);
+
+
+INSERT INTO DETALLE_SERVICIO (servicio_id, medico_id, disponibilidad) VALUES
+   (1, 1,true), -- Consulta General realizada por el médico con ID 1
+   (2, 1,true), -- Vacunación realizada por el médico con ID 1
+   (3, 2,true), -- Desparasitación realizada por el médico con ID 2
+   (4, 3,true), -- Cirugía menor realizada por el médico con ID 3
+   (5, 4,true), -- Emergencia realizada por el médico con ID 4
+   (1, 2,true), -- Consulta General realizada también por el médico con ID 2
+   (2, 3,true), -- Vacunación realizada por el médico con ID 3
+   (3, 4,true), -- Desparasitación realizada por el médico con ID 4
+   (4, 5,true), -- Cirugía menor realizada por el médico con ID 5
+   (5, 5,true); -- Emergencia realizada también por el médico con ID 5
+
+
+
+-- MASCOTAS Y DUEÑOS
 
 
 INSERT INTO ESPECIE (id, nombre , disponibilidad) VALUES 
@@ -203,37 +252,6 @@ INSERT INTO ESPECIE (id, nombre , disponibilidad) VALUES
 (3, 'Caballo' , true),
 (4, 'Vaca' , true),
 (5, 'Oveja' , true);
-
-
-INSERT INTO ESTADO_CITA (id, nombre_estado) VALUES
-(1, 'Pendiente'),
-(2, 'Por confirmar'),
-(3, 'Cancelada'),
-(4, 'Reprogramada'),
-(6, 'Finalizada'),
-(7, 'No asistió');
-
-
-INSERT INTO TIPO_MEDICAMENTO (id, nomtipo) VALUES 
-(1, 'Antibiótico'),
-(2, 'Analgésico'),
-(3, 'Antiparasitario'),
-(4, 'Antiinflamatorio'),
-(5, 'Vacuna');
-
-
-INSERT INTO MEDICAMENTO (id, nombre, costo, stock, presentacion, vigencia, tipo_medicamento_id) VALUES 
-(1, 'Amoxicilina 250mg', 15.50, 50, 'Cápsula', true, 1),
-(2, 'Meloxicam 0.5mg', 25.00, 30, 'Comprimido', true, 2),
-(3, 'Drontal Plus 150mg', 40.00, 100, 'Tableta', true, 3),
-(4, 'Carprofeno 25mg', 35.00, 20, 'Comprimido', true, 4),
-(5, 'Vacuna Triple Felina', 55.00, 10, 'Inyección', true, 5),
-(6, 'Ivermectina 1%', 12.00, 80, 'Inyección', true, 3),
-(7, 'Ketoprofeno 10mg', 20.00, 60, 'Inyección', true, 4),
-(8, 'Vacuna Antirrábica', 60.00, 15, 'Inyección', true, 5),
-(9, 'Tramadol 50mg', 30.00, 40, 'Tableta', true, 2),
-(10, 'Doxiciclina 100mg', 22.00, 25, 'Cápsula', true, 1);
-
 
 
 INSERT INTO RAZA (id, nombre, especie_id , disponibilidad) VALUES 
@@ -258,18 +276,6 @@ INSERT INTO VACUNA (id, nombre, dosis_x_kgpeso, especie_id , disponibilidad) VAL
 
 
 
-<<<<<<< HEAD
-=======
-INSERT INTO MEDICO (id, doc_identidad, nombres, apePaterno, apeMaterno, sexo, disponibilidad, vigencia, especialidad_id) 
-VALUES 
-    (1, '12345678', 'Juan', 'Pérez', 'García',        TRUE, TRUE, TRUE, 1),
-    (2, '23456789', 'Carlos', 'Gómez', 'Sánchez',     TRUE, FALSE, FALSE, 5),
-    (3, '34567890', 'Pedro', 'Hernández', 'Ramírez',  TRUE, FALSE, TRUE, 5),
-    (4, '87654321', 'Ana', 'López', 'Martínez',       FALSE, FALSE, TRUE, 2), 
-    (5, '98765432', 'Lucía', 'Rodríguez', 'Morales',  FALSE, TRUE, TRUE, 4);
-
-
->>>>>>> d2a48d649f314e7ca670501bf9dd8496dfe0beb3
 INSERT INTO DUEniO (id, doc_identidad, nombres, apePaterno, apeMaterno, telefono, telefonoAlt, correo, direccion, sexo, vigencia) VALUES
    (1, '71234567', 'Carlos', 'García', 'Pérez', '987654321', '912345678', 'cgarcia@example.com', 'Av. Siempre Viva 123', true, true),
    (2, '82765432', 'María', 'López', 'Sánchez', '976543210', NULL, 'mlopez@example.com', 'Jr. Los Pinos 456', false, true),
@@ -311,29 +317,50 @@ INSERT INTO CUSTODIA (MASCOTAid, DUEniOid, fecha_adopción) VALUES
    (10, 2, '2017-05-20');  -- Chloe también adoptada por María
 
 
-INSERT INTO MEDICO (id, doc_identidad, nombres, apePaterno, apeMaterno, sexo, disponibilidad, vigencia, especialidad_id) 
-VALUES 
-    (1, '12345678', 'Juan', 'Pérez', 'García', TRUE, TRUE, TRUE, 1),
-    (2, '23456789', 'Carlos', 'Gómez', 'Sánchez', TRUE, FALSE, FALSE, 5),
-    (3, '34567890', 'Pedro', 'Hernández', 'Ramírez', TRUE, FALSE, TRUE, 5),
-    (4, '87654321', 'Ana', 'López', 'Martínez', FALSE, FALSE, TRUE, 2), 
-    (5, '98765432', 'Lucía', 'Rodríguez', 'Morales', FALSE, TRUE, TRUE, 4);
+-- CITAS
 
-INSERT INTO DETALLE_SERVICIO (servicio_id, MEDICOid) VALUES
-   (1, 1), -- Consulta General realizada por el médico con ID 1
-   (2, 1), -- Vacunación realizada por el médico con ID 1
-   (3, 2), -- Desparasitación realizada por el médico con ID 2
-   (4, 3), -- Cirugía menor realizada por el médico con ID 3
-   (5, 4), -- Emergencia realizada por el médico con ID 4
-   (1, 2), -- Consulta General realizada también por el médico con ID 2
-   (2, 3), -- Vacunación realizada por el médico con ID 3
-   (3, 4), -- Desparasitación realizada por el médico con ID 4
-   (4, 5), -- Cirugía menor realizada por el médico con ID 5
-   (5, 5); -- Emergencia realizada también por el médico con ID 5
+
+
+INSERT INTO ESTADO_CITA (id, nombre_estado) VALUES
+(1, 'Pendiente'),
+(2, 'Por confirmar'),
+(3, 'Cancelada'),
+(4, 'Reprogramada'),
+(6, 'Finalizada'),
+(7, 'No asistió');
+
+
+-- MEDICAMENTOS
+
+
+INSERT INTO TIPO_MEDICAMENTO (id, nomtipo) VALUES 
+(1, 'Antibiótico'),
+(2, 'Analgésico'),
+(3, 'Antiparasitario'),
+(4, 'Antiinflamatorio'),
+(5, 'Vacuna');
+
+
+INSERT INTO MEDICAMENTO (id, nombre, costo, stock, presentacion, vigencia, tipo_medicamento_id) VALUES 
+(1, 'Amoxicilina 250mg', 15.50, 50, 'Cápsula', true, 1),
+(2, 'Meloxicam 0.5mg', 25.00, 30, 'Comprimido', true, 2),
+(3, 'Drontal Plus 150mg', 40.00, 100, 'Tableta', true, 3),
+(4, 'Carprofeno 25mg', 35.00, 20, 'Comprimido', true, 4),
+(5, 'Vacuna Triple Felina', 55.00, 10, 'Inyección', true, 5),
+(6, 'Ivermectina 1%', 12.00, 80, 'Inyección', true, 3),
+(7, 'Ketoprofeno 10mg', 20.00, 60, 'Inyección', true, 4),
+(8, 'Vacuna Antirrábica', 60.00, 15, 'Inyección', true, 5),
+(9, 'Tramadol 50mg', 30.00, 40, 'Tableta', true, 2),
+(10, 'Doxiciclina 100mg', 22.00, 25, 'Cápsula', true, 1);
+
+
+
+
+
 
 --select * from medicamento;
 
 --select * from duenio;
 
-select * from servicio;
+-- select * from servicio;
 

@@ -532,6 +532,15 @@ public class jdMantServicio extends javax.swing.JDialog {
         }
     }
     
+
+    
+    private String textoBool(boolean vig, String txtTrue, String txtFalse) {
+        if (vig) {
+            return txtTrue;
+        } else {
+            return txtFalse;
+        }
+    }
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

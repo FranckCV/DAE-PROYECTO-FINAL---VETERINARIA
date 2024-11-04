@@ -51,7 +51,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtDNI = new javax.swing.JTextField();
+        txtDocIdentidad = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
@@ -69,6 +69,8 @@ public class jdMantMedico extends javax.swing.JDialog {
         chkVigencia = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
         btnLimpiar = new javax.swing.JButton();
+        txtID = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -77,6 +79,8 @@ public class jdMantMedico extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMedico = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblServiciosxMedico = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -93,13 +97,13 @@ public class jdMantMedico extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(138, 238, 238));
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel1.setText("DNI:");
+        jLabel1.setText("Doc Identidad:");
 
-        txtDNI.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtDNI.setBorder(null);
-        txtDNI.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtDocIdentidad.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtDocIdentidad.setBorder(null);
+        txtDocIdentidad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtDNIKeyTyped(evt);
+                txtDocIdentidadKeyTyped(evt);
             }
         });
 
@@ -149,6 +153,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         chkDisponibilidad.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         chkDisponibilidad.setText("(Disponible)");
         chkDisponibilidad.setContentAreaFilled(false);
+        chkDisponibilidad.setEnabled(false);
         chkDisponibilidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chkDisponibilidadActionPerformed(evt);
@@ -199,86 +204,107 @@ public class jdMantMedico extends javax.swing.JDialog {
             }
         });
 
+        txtID.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtID.setBorder(null);
+        txtID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIDKeyTyped(evt);
+            }
+        });
+
+        jLabel11.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jLabel11.setText("ID:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(338, 338, 338)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(159, 159, 159))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtApePat, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                            .addComponent(chkDisponibilidad)
-                            .addComponent(radMasculino)
-                            .addComponent(radFemenino))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 15, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtDocIdentidad, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                                        .addComponent(txtApePat, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(radMasculino)
+                                    .addComponent(radFemenino))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(chkVigencia)
-                                    .addComponent(txtApeMat, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(btnLimpiar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(cmbEspecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtNombre))
-                .addGap(22, 22, 22))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(chkDisponibilidad)
+                                        .addComponent(chkVigencia)
+                                        .addComponent(txtApeMat, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cmbEspecialidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtNombre)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)))
+                .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtApePat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtApeMat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(chkDisponibilidad)
-                    .addComponent(chkVigencia)
-                    .addComponent(jLabel8))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(cmbEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel11))
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(txtApePat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtApeMat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(cmbEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDocIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(radMasculino)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5)
+                            .addComponent(chkDisponibilidad))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(radFemenino))
-                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(radFemenino)
+                            .addComponent(chkVigencia)
+                            .addComponent(jLabel8))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnNuevo.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -353,6 +379,19 @@ public class jdMantMedico extends javax.swing.JDialog {
         jLabel10.setName(""); // NOI18N
         jLabel10.setPreferredSize(new java.awt.Dimension(250, 250));
 
+        tblServiciosxMedico.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(tblServiciosxMedico);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -360,45 +399,54 @@ public class jdMantMedico extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20)
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(15, 15, 15))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(24, 24, 24)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
+                .addGap(9, 9, 9))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(12, 12, 12))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(0, 0, 102));
@@ -412,10 +460,10 @@ public class jdMantMedico extends javax.swing.JDialog {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator2)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(418, 418, 418)
                 .addComponent(jLabel9)
-                .addGap(284, 284, 284))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -476,7 +524,7 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void tblMedicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMedicoMouseClicked
         // TODO add your handling code here:
-        txtDNI.setText(String.valueOf(tblMedico.getValueAt(tblMedico.getSelectedRow(), 0)));
+        txtID.setText(String.valueOf(tblMedico.getValueAt(tblMedico.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);        
     }//GEN-LAST:event_tblMedicoMouseClicked
 
@@ -496,9 +544,9 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void btnDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisponibilidadActionPerformed
         // TODO add your handling code here:
-        String dni = txtDNI.getText();
+        String dni = txtDocIdentidad.getText();
         cambiarDisponibilidad();
-        txtDNI.setText(dni);
+        txtDocIdentidad.setText(dni);
         btnBuscarActionPerformed(null);
     }//GEN-LAST:event_btnDisponibilidadActionPerformed
 
@@ -511,9 +559,9 @@ public class jdMantMedico extends javax.swing.JDialog {
         darBaja();
     }//GEN-LAST:event_btnVigenciaActionPerformed
 
-    private void txtDNIKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDNIKeyTyped
+    private void txtDocIdentidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocIdentidadKeyTyped
         // TODO add your handling code here:
-        if(txtDNI.getText().length() >= 8) {
+        if(txtDocIdentidad.getText().length() >= 8) {
             evt.consume();
         }
         
@@ -529,7 +577,7 @@ public class jdMantMedico extends javax.swing.JDialog {
 //        if (txtDNI.getText().trim().length() == 11) {
 //            evt.consume();
 //        }
-    }//GEN-LAST:event_txtDNIKeyTyped
+    }//GEN-LAST:event_txtDocIdentidadKeyTyped
 
     private void chkDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkDisponibilidadActionPerformed
         // TODO add your handling code here:
@@ -540,31 +588,39 @@ public class jdMantMedico extends javax.swing.JDialog {
     private void chkVigenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkVigenciaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_chkVigenciaActionPerformed
+
+    private void txtIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIDKeyTyped
     
     private void listarMedicos(){
         ResultSet rsDato = null;
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("DNI");
+        modelo.addColumn("ID");
         modelo.addColumn("Nombres");
         modelo.addColumn("A. Paterno");
         modelo.addColumn("A. Materno");
+        modelo.addColumn("DNI");
         modelo.addColumn("Sexo");
         modelo.addColumn("Disponibilidad");
         modelo.addColumn("Vigencia");
         modelo.addColumn("Especialidad");
+        modelo.addColumn("Cant. Servicios");
         tblMedico.setModel(modelo);        
         try {
-            rsDato = objTabla.listarMedicos();
+            rsDato = objTabla.listarMedicosconServicios();
             while (rsDato.next()){
                 modelo.addRow(new Object[]{
-                    rsDato.getString(clsMedico.DNI),
+                    rsDato.getString("id"),
                     rsDato.getString(clsMedico.NOMBRES),
                     rsDato.getString(clsMedico.APE_PATERNO),
                     rsDato.getString(clsMedico.APE_MATERNO),
+                    rsDato.getString(clsMedico.DOC_IDENTIDAD),
                     textoBool(rsDato.getBoolean(clsMedico.SEXO), "Masculino", "Femenino"),
                     textoBool(rsDato.getBoolean(clsMedico.DISPONIBILIDAD), "Disponible", "No Disponible"),
                     textoBool(rsDato.getBoolean(clsMedico.VIGENCIA), "Vigente", "No Vigente"),
-                    rsDato.getString(clsEspecialidad.NOMBRE)
+                    rsDato.getString(clsEspecialidad.NOMBRE),
+                    rsDato.getInt("cant_servicios")
                 });
             }
             tblMedico.setModel(modelo);
@@ -576,24 +632,25 @@ public class jdMantMedico extends javax.swing.JDialog {
     private void buscarMedico() {
         ResultSet rsPro = null;
         try {
-            if (txtDNI.getText().equals("")) {
+            if (txtID.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar una ID para buscar");
             } else {    
                 for (int i = 0; i < tblMedico.getRowCount(); i++) {
                     String valorCodigo = tblMedico.getValueAt(i, 0).toString();
-                    if (valorCodigo.equals(txtDNI.getText())) {
+                    if (valorCodigo.equals(txtID.getText())) {
                         tblMedico.setRowSelectionInterval(i, i);
                         tblMedico.scrollRectToVisible(tblMedico.getCellRect(i, 0, true));
                         break;
                     }
                 }      
-                rsPro = objTabla.buscarMedico(txtDNI.getText());
+                rsPro = objTabla.buscarMedico(Integer.parseInt(txtID.getText()));
                 if (rsPro.next()){
                     txtNombre.setText(rsPro.getString(clsMedico.NOMBRES));
                     txtApePat.setText(rsPro.getString(clsMedico.APE_PATERNO));
                     txtApeMat.setText(rsPro.getString(clsMedico.APE_MATERNO));
                     radMasculino.setSelected(rsPro.getBoolean(clsMedico.SEXO));
                     radFemenino.setSelected(!rsPro.getBoolean(clsMedico.SEXO));
+                    txtDocIdentidad.setText(rsPro.getString(clsMedico.DOC_IDENTIDAD));
                     chkDisponibilidad.setSelected(rsPro.getBoolean(clsMedico.DISPONIBILIDAD));
                     chkVigencia.setSelected(rsPro.getBoolean(clsMedico.VIGENCIA));
                     cmbEspecialidad.setSelectedItem(rsPro.getString(clsEspecialidad.NOMBRE));
@@ -636,7 +693,8 @@ public class jdMantMedico extends javax.swing.JDialog {
     }
     
     private void limpiarControles() {
-        txtDNI.setText("");
+        txtID.setText("");
+        txtDocIdentidad.setText("");
         txtNombre.setText("");
         txtApePat.setText("");
         txtApeMat.setText("");
@@ -646,11 +704,12 @@ public class jdMantMedico extends javax.swing.JDialog {
         chkVigencia.setSelected(false);
         cmbEspecialidad.setSelectedIndex(-1);
         
-        txtDNI.requestFocus();        
+        txtID.requestFocus();        
     }
    
-    private void editableControles(boolean cod, boolean nom, boolean apeP, boolean apeM, boolean sexo, boolean disp, boolean vig, boolean esp) {
-        txtDNI.setEditable(cod);
+    private void editableControles(boolean id , boolean dni, boolean nom, boolean apeP, boolean apeM, boolean sexo, boolean disp, boolean vig, boolean esp) {
+        txtID.setEditable(id);
+        txtDocIdentidad.setEditable(dni);
         txtNombre.setEditable(nom);
         txtApePat.setEditable(apeP);
         txtApeMat.setEditable(apeM);
@@ -663,12 +722,12 @@ public class jdMantMedico extends javax.swing.JDialog {
           
     private void eliminarMedico() {
         try {
-            if (txtDNI.getText().equals("")) {
+            if (txtID.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un codigo a eliminar!");
             } else {
                 int valor = JOptionPane.showConfirmDialog(null, "Deseas continuar?", "Confirmacion",JOptionPane.YES_NO_OPTION);
                 if (valor == JOptionPane.YES_OPTION) {
-                    objTabla.eliminarMedico(txtDNI.getText());
+                    objTabla.eliminarMedico(Integer.parseInt(txtID.getText()));
                     limpiarControles();
                     listarMedicos();
                 }
@@ -682,7 +741,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         btnNuevo.setText(frmMenuPrincipal.BTN_NUEVO);
         btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
         btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);        
-        editableControles(true, false, false, false,false, false, false, false);
+        editableControles(true, false ,false, false, false,false, false, false, false);
         usarBotones(true, true, true, true, true, true, true);
         limpiarControles();
         listarMedicos();
@@ -690,27 +749,28 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void modificarMedico() {
         try {
-            if (txtDNI.getText().isBlank()) {
+            if (txtID.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
             } else {
                 if (btnModificar.getText().equals(frmMenuPrincipal.BTN_MODIFICAR)) {
                     btnModificar.setText(frmMenuPrincipal.BTN_GUARDAR);
                     btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
-                    editableControles(false, true, true, true, true, true, true, true);
+                    editableControles(false, true,true, true, true, true, true, true, true);
                     usarBotones(false, false, true, true, false, false, false);
                 } else {
                     objTabla.modificarMedico(
-                        txtDNI.getText(),
+                        Integer.parseInt(txtID.getText()),
                         txtNombre.getText(),
                         txtApePat.getText(),
                         txtApeMat.getText(),
+                        txtDocIdentidad.getText(),
                         radMasculino.isSelected(),
 //                        cldNacimiento.getDateFormatString(),
                         objEs.obteneIdEspecialidad(cmbEspecialidad.getSelectedItem().toString())
                     );
                     btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
                     btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
-                    editableControles(true, false, false, false, false, false, false, false);
+                    editableControles(true, false,false, false, false, false, false, false, false);
                     usarBotones(true, true, true, true, true, true, true);
                     limpiarControles();
                     listarMedicos();
@@ -728,28 +788,30 @@ public class jdMantMedico extends javax.swing.JDialog {
                 btnNuevo.setText(frmMenuPrincipal.BTN_GUARDAR);
                 btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
                 limpiarControles();
-                editableControles(true, true, true, true, true, false, false, true);
+                editableControles(false,true, true, true, true, true, false, false, true);
+                txtID.setText(objTabla.generarIDMedico().toString());
                 chkDisponibilidad.setSelected(true);
                 chkVigencia.setSelected(true);
                 usarBotones(false, true, false, true, false, false, false);
                 txtNombre.requestFocus();
             } else {
-                if (txtNombre.getText().trim().isBlank() || txtDNI.getText().trim().isBlank()) {
+                if (txtNombre.getText().trim().isBlank() || txtDocIdentidad.getText().trim().isBlank()) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
-                } else if (txtDNI.getText().length()!=8) {
+                } else if (txtDocIdentidad.getText().length()!=8) {
                     JOptionPane.showMessageDialog(this, "DNI invalido");
                 } else {
                     btnNuevo.setText(frmMenuPrincipal.BTN_NUEVO);
                     btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
                     objTabla.registrarMedico(
-                        txtDNI.getText(),
+                        Integer.parseInt(txtID.getText()),
                         txtNombre.getText(),
                         txtApePat.getText(),
                         txtApeMat.getText(),
+                        txtDocIdentidad.getText(),
                         radMasculino.isSelected(),
                         objEs.obteneIdEspecialidad(cmbEspecialidad.getSelectedItem().toString())
                     );
-                    editableControles(true, false, false, false, false, false, false, false);
+                    editableControles(true, false ,false, false, false, false, false, false, false);
                     usarBotones(true, true, true, true, true, true, true);
                     limpiarControles();
                     listarMedicos();
@@ -764,13 +826,13 @@ public class jdMantMedico extends javax.swing.JDialog {
     private void cambiarDisponibilidad() {
         try {
             ResultSet rsCateg = null;
-            if (txtDNI.getText().equals("")) {
+            if (txtID.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un codigo");
             } else {
-                rsCateg = objTabla.buscarMedico(txtDNI.getText());
+                rsCateg = objTabla.buscarMedico(Integer.parseInt(txtID.getText()));
                 if (rsCateg.next()) {
                     if (rsCateg.getBoolean(clsMedico.VIGENCIA)) {
-                        objTabla.cambiarDisponibilidad(txtDNI.getText());
+                        objTabla.cambiarDisponibilidad(Integer.parseInt(txtID.getText()));
                         limpiarControles();
                         listarMedicos();
                     } else {
@@ -793,17 +855,18 @@ public class jdMantMedico extends javax.swing.JDialog {
     
     private void darBaja() {
         try {
-            String dni = txtDNI.getText();
-            ResultSet rsCateg = null;
-            if (dni.equals("")) {
+            ResultSet rsCateg = null;                
+            int id_med;           
+            if (txtID.getText().isBlank()) {
                 JOptionPane.showConfirmDialog(this, "Debe ingresar un codigo");
             } else {
+                id_med = Integer.parseInt(txtID.getText());
                 int valor = JOptionPane.showConfirmDialog(null, "Esta acción no podrá deshacerse.\n ¿Deseas dar de baja este elemento?", "Confirmacion",JOptionPane.YES_NO_OPTION);
                 if (valor == JOptionPane.YES_OPTION) {
-                    rsCateg = objTabla.buscarMedico(dni);
+                    rsCateg = objTabla.buscarMedico(Integer.parseInt(txtID.getText()));
                     if (rsCateg.next()) {
                         if (rsCateg.getBoolean(clsMedico.VIGENCIA)) {
-                            objTabla.darBaja(dni);
+                            objTabla.darBaja(id_med);
                             limpiarControles();
                             listarMedicos();
                         } else {
@@ -831,6 +894,7 @@ public class jdMantMedico extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cmbEspecialidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -843,13 +907,16 @@ public class jdMantMedico extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JRadioButton radFemenino;
     private javax.swing.JRadioButton radMasculino;
     private javax.swing.JTable tblMedico;
+    private javax.swing.JTable tblServiciosxMedico;
     private javax.swing.JTextField txtApeMat;
     private javax.swing.JTextField txtApePat;
-    private javax.swing.JTextField txtDNI;
+    private javax.swing.JTextField txtDocIdentidad;
+    private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 

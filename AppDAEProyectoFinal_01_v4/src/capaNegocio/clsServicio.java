@@ -20,6 +20,7 @@ public class clsServicio {
     public static final String ID = "id";
     public static final String NOMBRE = "nom_servicio";
     public static final String DESCRIPCION = "descripcion";
+    public static final String DISPONIBILIDAD = "disponibilidad"; //cambiar despues de nuevo script
     public static final String COSTO = "costo";
 
     public ResultSet listarServicios() throws Exception {
@@ -93,6 +94,7 @@ public class clsServicio {
         }
     }
 
+    
     public void eliminarServicio(Integer id) throws Exception {
         strSQL = "delete from " + TABLA + " where " + ID + " = " + id;
         try {
@@ -101,7 +103,8 @@ public class clsServicio {
             throw new Exception("Error al eliminar " + TABLA + ": " + e.getMessage());
         }
     }
-
+    
+    
     public ResultSet obtenerDatosDetalleServicio(int codigoServicio, String documentoMedico) throws Exception {
         // Construir la consulta SQL
         strSQL = "SELECT ds.*, "
@@ -126,6 +129,7 @@ public class clsServicio {
         }
     }
     
+<<<<<<< HEAD
     public ResultSet obtenerDatosDetalleServicioPorCodServicio(int codigoServicio) throws Exception {
         // Construir la consulta SQL
         strSQL = "SELECT ds.*, "
@@ -141,10 +145,25 @@ public class clsServicio {
                 + "INNER JOIN MEDICO m ON ds.MEDICOid = m.id "
                 + "WHERE s.id = " + codigoServicio;
 
+=======
+    
+    public ResultSet listarServiciosxMedico(int med_id) throws Exception {
+        strSQL = " select  " +
+                "    ser.id , " +
+                "    ser.nom_servicio , " +
+                "    ser.descripcion , " +
+                "    ser.vigencia , " +
+                "    ser.costo " +
+                "from servicio ser " +
+                "left join detalle_servicio det ON det.servicio_id = ser.id " +
+                "where det.medicoid = " + med_id
+                + " ";
+>>>>>>> 4e92a84c02e100b9a260d1b6b506706f9bf2559f
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
         } catch (Exception e) {
+<<<<<<< HEAD
             throw new Exception("Error al obtener datos de detalle del servicio --> " + e.getMessage());
         }
     }
@@ -217,5 +236,30 @@ public class clsServicio {
             throw new Exception("Error al obtener datos de detalle del servicio --> " + e.getMessage());
         }
     }
+=======
+            throw new Exception("Error en listar la tabla " + TABLA + " / " + e.getMessage());
+        }
+    }
+    
+    
+    public void cambiarDisponibilidad(Integer id) throws Exception {
+        Boolean disp = null;
+>>>>>>> 4e92a84c02e100b9a260d1b6b506706f9bf2559f
 
+        rs = objConectar.consultarBD("select "+DISPONIBILIDAD+" from "+TABLA+" where "+ID+" = '"+id+"'");
+
+        while (rs.next()) {                
+            disp = rs.getBoolean(DISPONIBILIDAD);
+        }
+        
+        try {
+            strSQL = "update "+TABLA+" set "+DISPONIBILIDAD+" = "+!disp+" where "+ID+" = '"+id+"'";
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al cambiar disponibilidad en ID:"+id+" en tabla "+TABLA+": " + e.getMessage());
+        }        
+    }
+    
+    
+    
 }
