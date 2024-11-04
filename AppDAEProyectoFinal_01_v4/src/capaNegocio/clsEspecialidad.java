@@ -21,7 +21,10 @@ public class clsEspecialidad {
     public static final String DISPONIBILIDAD = "vigencia";
     
     public ResultSet listarEspecialidad() throws Exception{
-        strSQL = "select * from "+TABLA ;
+        strSQL = """ 
+                select 
+                    *
+                from """ +TABLA ;
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;

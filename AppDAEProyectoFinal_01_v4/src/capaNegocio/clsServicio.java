@@ -20,7 +20,7 @@ public class clsServicio {
     public static final String ID = "id";
     public static final String NOMBRE = "nom_servicio";
     public static final String DESCRIPCION = "descripcion";
-    public static final String DISPONIBILIDAD = "vigencia"; //cambiar despues de nuevo script
+    public static final String DISPONIBILIDAD = "disponibilidad"; //cambiar despues de nuevo script
     public static final String COSTO = "costo";
 
     public ResultSet listarServicios() throws Exception {
@@ -94,6 +94,7 @@ public class clsServicio {
         }
     }
 
+    
     public void eliminarServicio(Integer id) throws Exception {
         strSQL = "delete from " + TABLA + " where " + ID + " = " + id;
         try {
@@ -102,6 +103,7 @@ public class clsServicio {
             throw new Exception("Error al eliminar " + TABLA + ": " + e.getMessage());
         }
     }
+    
     
     public ResultSet obtenerDatosDetalleServicio(int codigoServicio, String documentoMedico) throws Exception {
         // Construir la consulta SQL
@@ -125,6 +127,7 @@ public class clsServicio {
             throw new Exception("Error al obtener datos de detalle del servicio --> " + e.getMessage());
         }
     }
+    
     
     public ResultSet listarServiciosxMedico(int med_id) throws Exception {
         strSQL = " select  " +
