@@ -12,7 +12,6 @@ import java.sql.ResultSet;
  * @author franc
  */
 public class clsServicio {
-
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;
@@ -73,7 +72,7 @@ public class clsServicio {
     }
 
     public void registrarServicio(int id, String nom, String desc, double cost) throws Exception {
-        strSQL = "insert into " + TABLA + " values (" + id + ", '" + nom + "', '" + desc + "', " + cost + ")";
+        strSQL = "insert into " + TABLA + " values (" + id + ", '" + nom + "', '" + desc + "', true," + cost + ")";
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
@@ -237,7 +236,7 @@ public class clsServicio {
             throw new Exception("Error al obtener datos de detalle del servicio --> " + e.getMessage());
         }
     }
-    
+
     
     public void cambiarDisponibilidad(Integer id) throws Exception {
         Boolean disp = null;

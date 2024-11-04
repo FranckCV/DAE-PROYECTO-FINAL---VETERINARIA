@@ -24,7 +24,7 @@ public class clsTipoMedicamento {
     }
 
     public Integer generarCodigoTipoMedicamento() throws Exception {
-        strSQL = "Select COALESCE(Max(id), 0) + 1 as codigo from tipo_medicamento";
+        strSQL = "SELECT COALESCE(MAX(id), 0) + 1 AS codigo FROM tipo_medicamento";
         try {
             rs = objConectar.consultarBD(strSQL);
             if (rs.next()) {
@@ -37,11 +37,11 @@ public class clsTipoMedicamento {
     }
 
     public Integer obtenerCodigoTipoMedicamento(String nombre) throws Exception {
-        strSQL = "Select id from tipo_medicamento where nombre = '" + nombre + "'";
+        strSQL = "SELECT id AS codigo FROM tipo_medicamento WHERE nomTipo = '" + nombre + "';";
         try {
             rs = objConectar.consultarBD(strSQL);
             if (rs.next()) {
-                return rs.getInt("id");  // Retorna el ID del tipo de medicamento
+                return rs.getInt("codigo");
             } else {
                 throw new Exception("No se encontró el tipo de medicamento con el nombre: " + nombre);
             }
@@ -50,8 +50,8 @@ public class clsTipoMedicamento {
         }
     }
 
-public void registrarTipoMedicamento(int id, String nombre) throws Exception {
-        strSQL = "Insert into tipo_medicamento Values(" + id + ",'" + nombre + "')";
+    public void registrarTipoMedicamento(int id, String nomtipo) throws Exception {
+        strSQL = "Insert into tipo_medicamento Values(" + id + ",'" + nomtipo + "')";
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
@@ -79,11 +79,25 @@ public void registrarTipoMedicamento(int id, String nombre) throws Exception {
     }
 
     public void modificarTipoMedicamento(Integer id, String nombre) throws Exception {
-        strSQL = "Update tipo_medicamento set nombre='" + nombre + "' where id=" + id;
+        strSQL = "Update tipo_medicamento set nomtipo='" + nombre + "' where id=" + id;
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
             throw new Exception("Error al modificar el tipo de medicamento --> " + e.getMessage());
         }
     }
+
+    public boolean existeNombreTipoMedicamento(String nombre) throws Exception {
+        strSQL = "SELECT COUNT(*) AS cantidad FROM tipo_medicamento WHERE nomTipo = '" + nombre + "'";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return rs.getInt("cantidad") > 0;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al verificar el nombre del tipo de medicamento --> " + e.getMessage());
+        }
+        return false;
+    }
+
 }
