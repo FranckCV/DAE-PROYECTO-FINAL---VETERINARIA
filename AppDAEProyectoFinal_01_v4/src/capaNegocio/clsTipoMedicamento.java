@@ -50,8 +50,8 @@ public class clsTipoMedicamento {
         }
     }
 
-    public void registrarTipoMedicamento(int id, String nombre) throws Exception {
-        strSQL = "Insert into tipo_medicamento Values(" + id + ",'" + nombre + "')";
+    public void registrarTipoMedicamento(int id, String nomtipo) throws Exception {
+        strSQL = "Insert into tipo_medicamento Values(" + id + ",'" + nomtipo + "')";
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
@@ -79,7 +79,7 @@ public class clsTipoMedicamento {
     }
 
     public void modificarTipoMedicamento(Integer id, String nombre) throws Exception {
-        strSQL = "Update tipo_medicamento set nombre='" + nombre + "' where id=" + id;
+        strSQL = "Update tipo_medicamento set nomtipo='" + nombre + "' where id=" + id;
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {

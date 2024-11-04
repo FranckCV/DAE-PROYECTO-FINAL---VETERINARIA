@@ -410,7 +410,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
             } else {
                 rs = objTipoMedicamento.buscarTipoMedicamento(Integer.parseInt(txtId.getText()));
                 if (rs.next()) {
-                    txtNombre.setText(rs.getString("nombre"));
+                    txtNombre.setText(rs.getString("nomtipo"));
                     rs.close();
                 }
             }
