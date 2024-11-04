@@ -50,16 +50,17 @@ public class clsMedico {
     }
         
     public ResultSet listarMedicosconServicios() throws Exception{
-        strSQL = "select " +
-                "    med.*, " +
-                "    esp."+clsEspecialidad.NOMBRE+", " +
-                "    count(det.servicio_id) as cant_servicios " +
-                " from medico med " +
-                " left join especialidad esp on esp.id = med.especialidad_id " +
-                " left join detalle_servicio det ON det.medicoid = med.id " +
-                " group by med.id, nom_especialidad " +
-                " order by med.id "
-                + " ";
+        strSQL = """
+                select 
+                   med.*, 
+                   esp.nom_especialidad, 
+                   count(det.servicio_id) as cant_servicios
+                from medico med
+                left join especialidad esp on esp.id = med.especialidad_id
+                left join detalle_servicio det ON det.medicoid = med.id
+                group by med.id, nom_especialidad
+                order by med.id 
+                """;
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -102,8 +103,7 @@ public class clsMedico {
             throw new Exception("Error al buscar dni: '"+dni+"' en la tabla "+TABLA+": " + e.getMessage());
         }        
     }
-    
-    
+        
     
     public void registrarMedico (
             Integer id,
