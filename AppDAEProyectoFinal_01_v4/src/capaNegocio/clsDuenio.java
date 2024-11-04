@@ -5,7 +5,7 @@ import com.sun.jdi.connect.spi.Connection;
 import java.beans.Statement;
 import java.sql.ResultSet;
 
-public class clsDueño {
+public class clsDuenio {
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
@@ -14,7 +14,7 @@ public class clsDueño {
     Statement sent;
 
 //listarDueños
-    public ResultSet listarDueños() throws Exception {
+    public ResultSet listarDuenios() throws Exception {
         strSQL = "SELECT * FROM duenio d INNER JOIN tipo_cliente t ON d.codtipo = t.codtipo";
         try {
             rs = objConectar.consultarBD(strSQL);
@@ -48,7 +48,7 @@ public class clsDueño {
     }
     
 
-  public void registrarDueño(String numDoc, String nom, String app, String apm,
+  public void registrarDuenio(String numDoc, String nom, String app, String apm,
                            String tel, String telAlt, String correo, String direc, 
                            boolean sexo, boolean vig, Integer codTipo) throws Exception {
     // Construcción de la consulta de inserción
@@ -65,7 +65,7 @@ public class clsDueño {
 }
 
 
-public void modificarDueño(String numDoc, String nom, String app, String apm,
+public void modificarDuenio(String numDoc, String nom, String app, String apm,
                            String tel, String telAlt, String correo, String direc, 
                            boolean sexo, boolean vig, Integer codTipo) throws Exception {
     strSQL = "UPDATE duenio SET " +
@@ -90,8 +90,8 @@ public void modificarDueño(String numDoc, String nom, String app, String apm,
 
 //buscar
 
-    public ResultSet buscarDueño(String numDoc) throws Exception {
-        strSQL = "SELECT * FROM duenio d INNER JOIN tipo_cliente t ON d.codtipo = t.codtipo where numdoc='" + numDoc + "'";
+    public ResultSet buscarDuenio(String numDoc) throws Exception {
+        strSQL = "SELECT * FROM duenio where doc_identidad='" + numDoc + "'";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;

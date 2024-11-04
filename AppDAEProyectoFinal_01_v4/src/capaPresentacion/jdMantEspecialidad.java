@@ -371,7 +371,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 modelo.addRow(new Object[]{
                     rsDato.getInt(clsEspecialidad.ID),
                     rsDato.getString(clsEspecialidad.NOMBRE),
-                    textoBool(rsDato.getBoolean(clsEspecialidad.VIGENCIA), "Vigente", "No Vigente")
+                    textoBool(rsDato.getBoolean(clsEspecialidad.DISPONIBILIDAD), "Vigente", "No Vigente")
                 });
             }
             tblEspecialidad.setModel(modelo);
@@ -409,7 +409,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 rsEsp = objTabla.buscarEspecialidad(Integer.parseInt(txtID.getText()));
                 if (rsEsp.next()){
                     txtNombre.setText(rsEsp.getString(clsEspecialidad.NOMBRE));
-                    chkVigencia.setSelected(rsEsp.getBoolean(clsEspecialidad.VIGENCIA));
+                    chkVigencia.setSelected(rsEsp.getBoolean(clsEspecialidad.DISPONIBILIDAD));
                     rsEsp.close();
                 } else {
                     JOptionPane.showMessageDialog(this, "Este codigo en "+clsEspecialidad.TABLA+" no existe");
@@ -548,7 +548,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 if (valor == JOptionPane.YES_OPTION) {
                     rsCateg = objTabla.buscarEspecialidad(Integer.parseInt(txtID.getText()));
                     if (rsCateg.next()) {
-                        if (rsCateg.getBoolean(clsEspecialidad.VIGENCIA)) {
+                        if (rsCateg.getBoolean(clsEspecialidad.DISPONIBILIDAD)) {
                             objTabla.darBaja(Integer.parseInt(txtID.getText()));
                             limpiarControles();
                             listarEspecialidades();

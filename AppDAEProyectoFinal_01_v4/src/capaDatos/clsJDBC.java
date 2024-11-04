@@ -17,41 +17,42 @@ import java.sql.*;
  * @author franc
  */
 public class clsJDBC {
+
     private String driver, url, user, password;
     private Connection con;
     private Statement sent = null;
-    
-    public clsJDBC (){
+
+    public clsJDBC() {
         this.driver = "org.postgresql.Driver";
         this.url = "jdbc:postgresql://localhost:5432/bd_veterinaria"
                 + "";
         this.user = "postgres";
-        
+
 //        this.password = "tirsarios123";
         this.password = "1234567890";
+//        this.password = "USAT2023";
         
         
         this.con = null;
     }
-    
-    public void conectar() throws Exception{        
+
+    public void conectar() throws Exception {
         try {
             Class.forName(driver);
             con = DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException | SQLException ex) {
-            throw new Exception("Error al conectarse con la BD " +  ex.getMessage());
-        }        
+            throw new Exception("Error al conectarse con la BD " + ex.getMessage());
+        }
     }
-    
-    
-    public void desconectar() throws Exception{ 
+
+    public void desconectar() throws Exception {
         try {
             con.close();
         } catch (SQLException ex) {
             throw new Exception("Error al desconectar la BD!");
         }
     }
-    
+
     public ResultSet consultarBD(String strSQL) throws Exception {
         ResultSet rs = null;
         try {
@@ -62,12 +63,13 @@ public class clsJDBC {
         } catch (Exception e) {
             throw new Exception("Error en la consulta" + e.getMessage());
         } finally {
-            if (con != null)
+            if (con != null) {
                 desconectar();
+            }
         }
     }
-    
-    public void ejecutarBD (String strSQL) throws Exception {
+
+    public void ejecutarBD(String strSQL) throws Exception {
         try {
             conectar();
             sent = con.createStatement();
@@ -80,8 +82,7 @@ public class clsJDBC {
             }
         }
     }
-    
-    
+
     // Nuevo método para consultas con parámetros usando PreparedStatement
     public ResultSet consultarBDConParametros(String strSQL, Object[] parametros) throws Exception {
         ResultSet rs = null;
@@ -89,12 +90,12 @@ public class clsJDBC {
         try {
             conectar();
             ps = con.prepareStatement(strSQL);
-            
+
             // Asignar los parámetros al PreparedStatement
             for (int i = 0; i < parametros.length; i++) {
                 ps.setObject(i + 1, parametros[i]);
             }
-            
+
             rs = ps.executeQuery();
             return rs; // Dejar la conexión abierta para procesar el ResultSet
         } catch (Exception e) {
@@ -102,18 +103,18 @@ public class clsJDBC {
         }
     }
 
-     // Método para ejecutar una actualización (INSERT, UPDATE, DELETE) con PreparedStatement
+    // Método para ejecutar una actualización (INSERT, UPDATE, DELETE) con PreparedStatement
     public int ejecutarActualizacion(String strSQL, Object[] parametros) throws Exception {
         PreparedStatement ps = null;
         try {
             conectar();
             ps = con.prepareStatement(strSQL);
-            
+
             // Asignar los parámetros al PreparedStatement
             for (int i = 0; i < parametros.length; i++) {
                 ps.setObject(i + 1, parametros[i]);
             }
-            
+
             return ps.executeUpdate(); // Retorna la cantidad de filas afectadas
         } catch (Exception e) {
             throw new Exception("Error en la actualización: " + e.getMessage());
@@ -121,6 +122,7 @@ public class clsJDBC {
             desconectar();
         }
     }
+
     public String obtenerNombresColumnas(String tabla) throws Exception {
         ResultSet rs = null;
         try {
@@ -128,7 +130,7 @@ public class clsJDBC {
             sent = con.createStatement();
             // Consultar la tabla para obtener una fila de datos
             rs = sent.executeQuery("SELECT * FROM " + tabla + " LIMIT 1");
-            
+
             // Obtener los metadatos del ResultSet
             ResultSetMetaData rsmd = rs.getMetaData();
             int numeroColumnas = rsmd.getColumnCount();
@@ -140,13 +142,12 @@ public class clsJDBC {
         } catch (Exception e) {
             throw new Exception("Error al obtener los nombres de las columnas: " + e.getMessage());
         } finally {
-            if (rs != null) rs.close();
+            if (rs != null) {
+                rs.close();
+            }
             desconectar();
         }
         return "";
     }
-    
-    
-    
-    
+
 }

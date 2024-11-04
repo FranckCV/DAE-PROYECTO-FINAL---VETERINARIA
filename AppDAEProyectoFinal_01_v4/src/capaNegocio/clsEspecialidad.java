@@ -18,7 +18,7 @@ public class clsEspecialidad {
     public static final String TABLA = "ESPECIALIDAD";
     public static final String ID = "id";
     public static final String NOMBRE = "nom_especialidad";
-    public static final String VIGENCIA = "vigencia";
+    public static final String DISPONIBILIDAD = "vigencia";
     
     public ResultSet listarEspecialidad() throws Exception{
         strSQL = "select * from "+TABLA ;
@@ -31,7 +31,7 @@ public class clsEspecialidad {
     }
     
     public ResultSet listarEspecialidadesVigentes() throws Exception{
-        strSQL = "select * from "+TABLA+" where "+VIGENCIA+" = true";
+        strSQL = "select * from "+TABLA+" where "+DISPONIBILIDAD+" = true";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -104,7 +104,7 @@ public class clsEspecialidad {
     }
     
     public void darBaja(Integer id) throws Exception {
-        strSQL = "update "+TABLA+" set "+VIGENCIA+" = false where "+ID+" = "+id;
+        strSQL = "update "+TABLA+" set "+DISPONIBILIDAD+" = false where "+ID+" = "+id;
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {

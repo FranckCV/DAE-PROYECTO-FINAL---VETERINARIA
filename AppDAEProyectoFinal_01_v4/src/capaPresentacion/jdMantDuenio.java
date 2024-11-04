@@ -2,7 +2,7 @@ package capaPresentacion;
 
 import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
-import capaNegocio.clsDueño;
+import capaNegocio.clsDuenio;
 import capaNegocio.clsEspecialidad;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 public class jdMantDuenio extends javax.swing.JDialog {
 
-    clsDueño objDueño = new clsDueño();
+    clsDuenio objDuenio = new clsDuenio();
 
     public jdMantDuenio(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -55,7 +55,7 @@ public class jdMantDuenio extends javax.swing.JDialog {
         cmbTipoD = new javax.swing.JComboBox<>();
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblDueño = new javax.swing.JTable();
+        tblDuenio = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
@@ -281,7 +281,7 @@ public class jdMantDuenio extends javax.swing.JDialog {
             }
         });
 
-        tblDueño.setModel(new javax.swing.table.DefaultTableModel(
+        tblDuenio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -292,12 +292,12 @@ public class jdMantDuenio extends javax.swing.JDialog {
 
             }
         ));
-        tblDueño.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblDuenio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblDueñoMouseClicked(evt);
+                tblDuenioMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblDueño);
+        jScrollPane1.setViewportView(tblDuenio);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/perro.png"))); // NOI18N
 
@@ -465,29 +465,29 @@ public class jdMantDuenio extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        ResultSet rsDueño = null;
+        ResultSet rsDuenio = null;
 
         try {
             if (txtNumDoc.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un número de documento para buscar");
                 sinEditarP();
             } else {
-                rsDueño = objDueño.buscarDueño(txtNumDoc.getText());
+                rsDuenio = objDuenio.buscarDuenio(txtNumDoc.getText());
                 editar();
 
-                if (rsDueño.next()) {
-                    txtNombres.setText(rsDueño.getString("nombres"));
-                    txtPaterno.setText(rsDueño.getString("apePaterno"));
-                    txtMaterno.setText(rsDueño.getString("apeMaterno"));
-                    txtNumC.setText(rsDueño.getString("telefono"));
-                    txtNumCA.setText(rsDueño.getString("telefonoAlt"));
-                    txtCorreo.setText(rsDueño.getString("correo"));
-                    txtDireccion.setText(rsDueño.getString("direccion"));
-                    cmbSexo.setSelectedItem(getSexoString(rsDueño.getBoolean("sexo")));
-                    chkVigencia.setSelected(rsDueño.getBoolean("vigencia"));
-                    cmbTipoD.setSelectedItem(rsDueño.getString("nombre"));
+                if (rsDuenio.next()) {
+                    txtNombres.setText(rsDuenio.getString("nombres"));
+                    txtPaterno.setText(rsDuenio.getString("apePaterno"));
+                    txtMaterno.setText(rsDuenio.getString("apeMaterno"));
+                    txtNumC.setText(rsDuenio.getString("telefono"));
+                    txtNumCA.setText(rsDuenio.getString("telefonoAlt"));
+                    txtCorreo.setText(rsDuenio.getString("correo"));
+                    txtDireccion.setText(rsDuenio.getString("direccion"));
+                    cmbSexo.setSelectedItem(getSexoString(rsDuenio.getBoolean("sexo")));
+                    chkVigencia.setSelected(rsDuenio.getBoolean("vigencia"));
+                    cmbTipoD.setSelectedItem(rsDuenio.getString("nombre"));
                     sinEditarP();
-                    rsDueño.close();
+                    rsDuenio.close();
                 } else {
                     JOptionPane.showMessageDialog(this, "Número de documento del Dueño no existe");
                     limpiarControles();
@@ -503,7 +503,7 @@ public class jdMantDuenio extends javax.swing.JDialog {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
         limpiarControles();
-        listarDueños();
+        listarDuenios();
         listarTipoCliente();
         sinEditarP();
     }//GEN-LAST:event_btnLimpiarActionPerformed
@@ -525,7 +525,7 @@ public class jdMantDuenio extends javax.swing.JDialog {
                     btnRegistrar.setText("Agregar Dueño");
                     editar();
                     boolean sexo = cmbSexo.getSelectedItem().toString().equals("Masculino");
-                    objDueño.registrarDueño(
+                    objDuenio.registrarDuenio(
                             txtNumDoc.getText(),
                             txtNombres.getText(),
                             txtPaterno.getText(),
@@ -536,9 +536,9 @@ public class jdMantDuenio extends javax.swing.JDialog {
                             txtDireccion.getText(),
                             sexo,
                             chkVigencia.isSelected(),
-                            objDueño.obtenerCodigoTipoCliente(cmbTipoD.getSelectedItem().toString()));
+                            objDuenio.obtenerCodigoTipoCliente(cmbTipoD.getSelectedItem().toString()));
                     // Limpiar los controles una vez se guarda el dueño
-                    listarDueños();  // Actualiza la lista de dueños
+                    listarDuenios();  // Actualiza la lista de dueños
                     listarTipoCliente();
                     limpiarControles();
                     JOptionPane.showMessageDialog(null, "Dueño registrado con éxito!");
@@ -561,15 +561,15 @@ public class jdMantDuenio extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        listarDueños();
+        listarDuenios();
         listarTipoCliente();
     }//GEN-LAST:event_formWindowOpened
 
-    private void tblDueñoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDueñoMouseClicked
+    private void tblDuenioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDuenioMouseClicked
         // TODO add your handling code here:
-        txtNumDoc.setText(String.valueOf(tblDueño.getValueAt(tblDueño.getSelectedRow(), 0)));
+        txtNumDoc.setText(String.valueOf(tblDuenio.getValueAt(tblDuenio.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);
-    }//GEN-LAST:event_tblDueñoMouseClicked
+    }//GEN-LAST:event_tblDuenioMouseClicked
 
     private void btnAgregarMasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMasActionPerformed
         try {
@@ -602,7 +602,7 @@ dispose();
                         editar();
                     } else {
                         if (camposEstanLlenos()) {
-                            objDueño.modificarDueño(
+                            objDuenio.modificarDuenio(
                                     txtNumDoc.getText(), // numDoc debe ir primero
                                     txtNombres.getText(),
                                     txtPaterno.getText(),
@@ -613,9 +613,9 @@ dispose();
                                     txtDireccion.getText(),
                                     cmbSexo.getSelectedItem().toString().equals("Masculino"), // Booleano para el sexo
                                     chkVigencia.isSelected(),
-                                    objDueño.obtenerCodigoTipoCliente(cmbTipoD.getSelectedItem().toString()));
+                                    objDuenio.obtenerCodigoTipoCliente(cmbTipoD.getSelectedItem().toString()));
                             // Limpiar controles y actualizar la lista de dueños
-                            listarDueños();
+                            listarDuenios();
                             limpiarControles();
                             listarTipoCliente();
                             sinEditarP();
@@ -731,7 +731,7 @@ private void abrirOtroJDialog() throws SQLException {
         chkVigencia.setEnabled(true);
     }
 
-    private void listarDueños() {
+    private void listarDuenios() {
         ResultSet rsDue = null;
         String vigencia = "";
 
@@ -747,9 +747,9 @@ private void abrirOtroJDialog() throws SQLException {
         modeloD.addColumn("Sexo");
         modeloD.addColumn("Vigencia");
         modeloD.addColumn("Tipo Doc.");
-        tblDueño.setModel(modeloD);
+        tblDuenio.setModel(modeloD);
         try {
-            rsDue = objDueño.listarDueños();
+            rsDue = objDuenio.listarDuenios();
             while (rsDue.next()) {
                 String sexoTexto = rsDue.getBoolean("sexo") ? "Masculino" : "Femenino";
                 if (rsDue.getString("vigencia").equals("t")) {
@@ -781,7 +781,7 @@ private void abrirOtroJDialog() throws SQLException {
         DefaultComboBoxModel modeloTC = new DefaultComboBoxModel();
         cmbTipoD.setModel(modeloTC);
         try {
-            rsTipoC = objDueño.listarTipoClientes();
+            rsTipoC = objDuenio.listarTipoClientes();
             while (rsTipoC.next()) {
                 modeloTC.addElement(rsTipoC.getString("nombre"));
             }
@@ -838,7 +838,7 @@ private void abrirOtroJDialog() throws SQLException {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable tblDueño;
+    private javax.swing.JTable tblDuenio;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtMaterno;
