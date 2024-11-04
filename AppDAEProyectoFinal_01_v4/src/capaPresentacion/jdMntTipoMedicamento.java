@@ -12,18 +12,67 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Fabiana Lucía
+ * @author Leonardo Guzmán
  */
 public class jdMntTipoMedicamento extends javax.swing.JDialog {
-        
+
     clsTipoMedicamento objTipoMedicamento = new clsTipoMedicamento();
+
     /**
      * Creates new form jdMntTipoMedicamento
      */
     public jdMntTipoMedicamento(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        listar();
+        listarTiposMedicamento();
+        setInitialButtonState();
+    }
+
+    private void limpiarControles() {
+        txtId.setText("");
+        txtNombre.setText("");
+        setInitialButtonState();
+    }
+
+    private void setInitialButtonState() {
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnRegistrar.setEnabled(true);
+        txtId.setEditable(false);
+    }
+
+    private void usarBotonesTipoMedicamento(boolean buscar, boolean registrar, boolean modificar, boolean eliminar, boolean limpiar) {
+        btnBuscar.setEnabled(buscar);
+        btnRegistrar.setEnabled(registrar);
+        btnModificar.setEnabled(modificar);
+        btnEliminar.setEnabled(eliminar);
+        btnLimpiar.setEnabled(limpiar);
+    }
+
+    private void habilitarControles(boolean habilitar) {
+        txtNombre.setEnabled(habilitar);
+        btnRegistrar.setEnabled(habilitar);
+        btnModificar.setEnabled(habilitar);
+        btnEliminar.setEnabled(habilitar);
+    }
+
+    private void listarTiposMedicamento() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Código");
+        modelo.addColumn("Nombre");
+
+        try {
+            ResultSet rsTipoMedicamento = objTipoMedicamento.listarTiposMedicamentos();
+            while (rsTipoMedicamento.next()) {
+                Vector<String> registro = new Vector<>();
+                registro.add(rsTipoMedicamento.getString("id"));
+                registro.add(rsTipoMedicamento.getString("nomtipo"));
+                modelo.addRow(registro);
+            }
+            tblTipoMedicamento.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al listar tipos de medicamento: " + e.getMessage());
+        }
     }
 
     /**
@@ -290,22 +339,36 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
-         try {
-            if (btnRegistrar.getText().equals("Registar")) {
+        try {
+            if (btnRegistrar.getText().equals("Nuevo")) {
                 btnRegistrar.setText("Guardar");
+                btnEliminar.setText("Cancelar");
                 limpiarControles();
                 txtId.setText(objTipoMedicamento.generarCodigoTipoMedicamento().toString());
+                txtNombre.setEditable(true);
+                usarBotonesTipoMedicamento(false, true, false, true, false);
                 txtNombre.requestFocus();
             } else {
-                btnRegistrar.setText("Registar");
-                objTipoMedicamento.registrarTipoMedicamento(
-                        Integer.parseInt(txtId.getText()),
-                        txtNombre.getText());
-                JOptionPane.showMessageDialog(this, "Tipo de Medicamento registrado con éxito.");
-                listar();
-                limpiarControles();
-            }
+                btnRegistrar.setText("Nuevo");
+                btnEliminar.setText("Eliminar");
+                usarBotonesTipoMedicamento(true, true, true, true, true);
 
+            }
+            if (txtNombre.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
+                return;
+            }
+            if (objTipoMedicamento.existeNombreTipoMedicamento(txtNombre.getText())) {
+                JOptionPane.showMessageDialog(this, "El nombre del tipo de medicamento ya está registrado. Elija un nombre diferente.");
+                return;
+            }
+            objTipoMedicamento.registrarTipoMedicamento(
+                    Integer.parseInt(txtId.getText()),
+                    txtNombre.getText()
+            );
+            JOptionPane.showMessageDialog(this, "Tipo de Medicamento registrado con éxito");
+            listarTiposMedicamento();
+            limpiarControles();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al registrar el tipo de medicamento: " + e.getMessage());
         }
@@ -315,22 +378,13 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             if (txtId.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un ID para modificar.");
-            } else {
-                int result = JOptionPane.showConfirmDialog(this, "¿Dese modificar el tipo de medicamento?", "",
-                        JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) {
-                    objTipoMedicamento.modificarTipoMedicamento(
-                            Integer.parseInt(txtId.getText()),
-                            txtNombre.getText());
-                    JOptionPane.showMessageDialog(this, "Tipo de Medicamento modificado con éxito.");
-
-                } else if (result == JOptionPane.NO_OPTION) {
-                    JOptionPane.showMessageDialog(this, "No se modificaron los datos.");
-                }
-                listar();
-                limpiarControles();
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo de medicamento para modificar.");
+                return;
             }
+            objTipoMedicamento.modificarTipoMedicamento(Integer.parseInt(txtId.getText()), txtNombre.getText());
+            JOptionPane.showMessageDialog(this, "Tipo de Medicamento modificado con éxito.");
+            listarTiposMedicamento();
+            limpiarControles();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al modificar el tipo de medicamento: " + e.getMessage());
         }
@@ -339,20 +393,17 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         try {
-            if (txtId.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un ID a eliminar");
-            } else {
-                int result = JOptionPane.showConfirmDialog(this, "¿Dese eliminar el Medicamento?", "",
-                        JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) {
-                    objTipoMedicamento.eliminarTipoMedicamento(Integer.parseInt(txtId.getText()));
-
-                } else if (result == JOptionPane.NO_OPTION) {
-                }
-                limpiarControles();
-                listar();
+            if (txtId.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un código para eliminar.");
+                return;
             }
-
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Desea eliminar el tipo de medicamento?", "Confirmación", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                objTipoMedicamento.eliminarTipoMedicamento(Integer.parseInt(txtId.getText()));
+                JOptionPane.showMessageDialog(this, "Tipo de Medicamento eliminado con éxito.");
+                listarTiposMedicamento();
+                limpiarControles();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al eliminar el tipo de medicamento: " + e.getMessage());
         }
@@ -360,20 +411,17 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
 
     private void tblTipoMedicamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTipoMedicamentoMouseClicked
         // TODO add your handling code here:
-        txtId.setText(String.valueOf(tblTipoMedicamento.getValueAt(tblTipoMedicamento.getSelectedRow(), 0)));
-        //El cero de la derecha me dice en qué columna me estoy centrando.
+        int selectedRow = tblTipoMedicamento.getSelectedRow();
+        txtId.setText(tblTipoMedicamento.getValueAt(selectedRow, 0).toString());
+        txtNombre.setText(tblTipoMedicamento.getValueAt(selectedRow, 1).toString());
+        habilitarControles(true);
         btnBuscarActionPerformed(null);
     }//GEN-LAST:event_tblTipoMedicamentoMouseClicked
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-        int key = evt.getKeyChar();
-
-        boolean mayusculas = key >= 65 && key <= 90;
-        boolean minusculas = key >= 97 && key <= 122;
-        boolean espacio = key == 32;
-
-        if (!(minusculas || mayusculas || espacio)) {
+        char keyChar = evt.getKeyChar();
+        if (!Character.isLetter(keyChar) && !Character.isSpaceChar(keyChar)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreKeyTyped
@@ -384,38 +432,29 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
 
     private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
         // TODO add your handling code here:
-        if (txtId.getText().length() >= 10) {
-            evt.consume();
-        }
-
-        int key = evt.getKeyChar();
-
-        boolean numeros = key >= 48 && key <= 57;
-
-        if (!numeros) {
-            evt.consume();
-        }
-
-        if (txtId.getText().trim().length() == 10) {
+        char keyChar = evt.getKeyChar();
+        if (!Character.isDigit(keyChar) || txtId.getText().length() >= 10) {
             evt.consume();
         }
     }//GEN-LAST:event_txtIdKeyTyped
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        ResultSet rs = null;
         try {
-            if (txtId.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un código para buscar");
+            if (txtId.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un ID para buscar.");
+                return;
+            }
+            ResultSet rs = objTipoMedicamento.buscarTipoMedicamento(Integer.parseInt(txtId.getText()));
+            if (rs.next()) {
+                txtNombre.setText(rs.getString("nomtipo"));
+                habilitarControles(true);
             } else {
-                rs = objTipoMedicamento.buscarTipoMedicamento(Integer.parseInt(txtId.getText()));
-                if (rs.next()) {
-                    txtNombre.setText(rs.getString("nomtipo"));
-                    rs.close();
-                }
+                JOptionPane.showMessageDialog(this, "No se encontró el tipo de medicamento con el ID especificado.");
+                limpiarControles();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al buscar el tipo de medicamento: " + e.getMessage());
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -424,33 +463,6 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         limpiarControles();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    private void limpiarControles() {
-        txtId.setText("");
-        txtNombre.setText("");
-    }
-
-    private void listar() {
-        ResultSet rsTipoExamen = null;
-        Vector registro;
-        String vigencia = "";
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Código");
-        modelo.addColumn("Nombre");
-
-        try {
-            rsTipoExamen =objTipoMedicamento.listarTiposMedicamentos();
-            while (rsTipoExamen.next()) {
-                registro = new Vector();
-                registro.add(0, rsTipoExamen.getInt("id"));
-                registro.add(1, rsTipoExamen.getString("nomtipo"));
-                modelo.addRow(registro);
-            }
-            tblTipoMedicamento.setModel(modelo);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-
-    }
     /**
      * @param args the command line arguments
      */

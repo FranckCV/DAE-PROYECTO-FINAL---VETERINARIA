@@ -16,7 +16,7 @@ public class clsMedicamento {
     public ResultSet listarMedicamentos() throws Exception {
         String strSQL = "SELECT m.id, m.nombre, m.costo, m.stock, m.presentacion, m.vigencia, t.nomtipo AS tipo_medicamento "
                 + "FROM medicamento m "
-                + "JOIN tipo_medicamento t ON m.tipo_medicamento_id = t.id";
+                + "JOIN tipo_medicamento t ON m.tipo_medicamento_id = t.id order by id";
         try {
             return objConectar.consultarBD(strSQL);
         } catch (Exception e) {
@@ -65,12 +65,21 @@ public class clsMedicamento {
         }
     }
 
-    public void modificarMedicamento(Integer id, String nombre, double costo, int stock, String presentacion, boolean vigencia , int tipoMedicamentoId) throws Exception {
+    public void modificarMedicamento(Integer id, String nombre, double costo, int stock, String presentacion, boolean vigencia, int tipoMedicamentoId) throws Exception {
         strSQL = "Update medicamento set nombre='" + nombre + "', costo=" + costo + ", stock=" + stock + ", presentacion='" + presentacion + "', vigencia= '" + vigencia + "', tipo_medicamento_id=" + tipoMedicamentoId + " where id=" + id;
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
             throw new Exception("Error al modificar el medicamento --> " + e.getMessage());
+        }
+    }
+
+    public void actualizarDisponibilidad(int id, boolean vigencia) throws Exception {
+        strSQL = "UPDATE medicamento SET vigencia = '" + vigencia + "' WHERE id = " + id;
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al actualizar disponibilidad del medicamento --> " + e.getMessage());
         }
     }
 
@@ -98,6 +107,19 @@ public class clsMedicamento {
             throw new Exception("Error al obtener stock --> " + e.getMessage());
         }
         return 0;
+    }
+
+    public boolean existeNombreMedicamento(String nombre) throws Exception {
+        strSQL = "SELECT COUNT(*) AS cantidad FROM medicamento WHERE nombre = '" + nombre + "'";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return rs.getInt("cantidad") > 0;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al verificar el nombre del medicamento --> " + e.getMessage());
+        }
+        return false;
     }
 
 }

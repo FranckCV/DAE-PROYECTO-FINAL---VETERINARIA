@@ -24,7 +24,7 @@ public class clsTipoMedicamento {
     }
 
     public Integer generarCodigoTipoMedicamento() throws Exception {
-        strSQL = "Select COALESCE(Max(id), 0) + 1 as codigo from tipo_medicamento";
+        strSQL = "SELECT COALESCE(MAX(id), 0) + 1 AS codigo FROM tipo_medicamento";
         try {
             rs = objConectar.consultarBD(strSQL);
             if (rs.next()) {
@@ -41,7 +41,7 @@ public class clsTipoMedicamento {
         try {
             rs = objConectar.consultarBD(strSQL);
             if (rs.next()) {
-                return rs.getInt("codigo");  
+                return rs.getInt("codigo");
             } else {
                 throw new Exception("No se encontró el tipo de medicamento con el nombre: " + nombre);
             }
@@ -86,4 +86,18 @@ public class clsTipoMedicamento {
             throw new Exception("Error al modificar el tipo de medicamento --> " + e.getMessage());
         }
     }
+
+    public boolean existeNombreTipoMedicamento(String nombre) throws Exception {
+        strSQL = "SELECT COUNT(*) AS cantidad FROM tipo_medicamento WHERE nomTipo = '" + nombre + "'";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return rs.getInt("cantidad") > 0;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al verificar el nombre del tipo de medicamento --> " + e.getMessage());
+        }
+        return false;
+    }
+
 }
