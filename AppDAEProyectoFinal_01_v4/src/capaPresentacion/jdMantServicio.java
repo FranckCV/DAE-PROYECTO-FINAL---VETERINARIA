@@ -532,7 +532,25 @@ public class jdMantServicio extends javax.swing.JDialog {
         }
     }
     
-
+    private void cambiarDisponibilidad() {
+        try {
+            if (txtID.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo");
+            } else {
+                int valor = JOptionPane.showConfirmDialog(null, "¿Deseas cambiar la Disponibilidad de el servicio "+txtNombre.getText()+"?", "Confirmacion",JOptionPane.YES_NO_OPTION);
+                if (valor == JOptionPane.YES_OPTION) {
+                    objTabla.cambiarDisponibilidad(Integer.parseInt(txtID.getText()));
+                    limpiarControles();
+                    listarServicio();
+                    JOptionPane.showMessageDialog(this, "Se modificó la Disponibilidad de esta Especialidad con exito");
+                }                
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }
+    
+    
     
     private String textoBool(boolean vig, String txtTrue, String txtFalse) {
         if (vig) {
