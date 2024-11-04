@@ -13,15 +13,17 @@ public class clsMedicamento {
     String strSQL;
     ResultSet rs = null;
 
-    public ResultSet listarMedicamentos() throws Exception {
-        strSQL = "select * from medicamento";
-        try {
-            rs = objConectar.consultarBD(strSQL);
-            return rs;
-        } catch (Exception e) {
-            throw new Exception("Error al listar los medicamentos --> " + e.getMessage());
-        }
+public ResultSet listarMedicamentos() throws Exception {
+    String strSQL = "SELECT m.id, m.nombre, m.costo, m.stock, m.presentacion, t.nomtipo AS tipo_medicamento "
+                  + "FROM medicamento m "
+                  + "JOIN tipo_medicamento t ON m.tipo_medicamento_id = t.id";
+    try {
+        return objConectar.consultarBD(strSQL);
+    } catch (Exception e) {
+        throw new Exception("Error al listar los medicamentos --> " + e.getMessage());
     }
+}
+
 
     public Integer generarCodigoMedicamento() throws Exception {
         strSQL = "Select COALESCE(Max(id), 0)+1 as codigo from medicamento";

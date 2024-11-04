@@ -9,24 +9,29 @@ import capaNegocio.clsTipoMedicamento;
 import java.sql.ResultSet;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
  * @author Fabiana Lucía
  */
 public class jdMntMedicamento extends javax.swing.JDialog {
+
     clsMedicamento objMedicamento = new clsMedicamento();
     clsTipoMedicamento objTipoMedicamento = new clsTipoMedicamento();
-    
+
     private void formatoSpinner() {
         SpinnerNumberModel model = new SpinnerNumberModel(00, 00, null, 1);
-
         spnStock.setModel(model);
+        JFormattedTextField txt = ((JSpinner.NumberEditor) spnStock.getEditor()).getTextField();
+        ((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
     }
-    
+
     /**
      * Creates new form jdMntMedicamento
      */
@@ -52,7 +57,14 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         try {
             rsMed = objMedicamento.listarMedicamentos();
             while (rsMed.next()) {
-                modelo.addRow(new Object[]{rsMed.getInt("id"), rsMed.getString("nombre"), rsMed.getDouble("costo"), rsMed.getInt("stock"), rsMed.getString("presentacion"), rsMed.getString("tipo_medicamento_id")});
+                modelo.addRow(new Object[]{
+                    rsMed.getInt("id"),
+                    rsMed.getString("nombre"),
+                    rsMed.getDouble("costo"),
+                    rsMed.getInt("stock"),
+                    rsMed.getString("presentacion"),
+                    rsMed.getString("tipo_medicamento") // Usa el alias correcto
+                });
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al listar medicamentos: " + e.getMessage());
@@ -66,13 +78,39 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         try {
             rsTipoMed = objTipoMedicamento.listarTiposMedicamentos();
             while (rsTipoMed.next()) {
-                modeloTipoMed.addElement(rsTipoMed.getString("nombre"));
+                modeloTipoMed.addElement(rsTipoMed.getString("nomTipo"));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al listar tipos de medicamento: " + e.getMessage());
         }
     }
-    
+
+    private void usarBotonesMedicamento(boolean buscar, boolean registrar, boolean modificar, boolean eliminar, boolean limpiar) {
+        btnBuscar.setEnabled(buscar);
+        btnRegistrar.setEnabled(registrar);
+        btnModificar.setEnabled(modificar);
+        btnEliminar.setEnabled(eliminar);
+    }
+
+    private void editableControlesMedicamento(boolean id, boolean nombre, boolean costo, boolean tipo, boolean stock, boolean presentacion) {
+        txtId.setEditable(id);
+        txtNombre.setEditable(nombre);
+        txtCosto.setEditable(costo);
+        cbxTipoMedicamento.setEnabled(tipo);
+        spnStock.setEnabled(stock);
+        txtPresentacion.setEditable(presentacion);
+    }
+
+    private void cancelarAccionMedicamento() {
+        btnRegistrar.setText("Registrar");
+        btnModificar.setText("Modificar");
+        btnEliminar.setText("Eliminar");
+        editableControlesMedicamento(false, false, false, false, false, false);
+        usarBotonesMedicamento(true, true, false, false, true);
+        limpiarControles();
+        listarMedicamentos();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -449,7 +487,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         if (!(minusculas || mayusculas || espacio)) {
             evt.consume();
         }
-        
+
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -458,9 +496,12 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             if (btnRegistrar.getText().equals("Registrar")) {
                 btnRegistrar.setText("Guardar");
                 limpiarControles();
+                editableControlesMedicamento(false, true, true, true, true, true);
+                usarBotonesMedicamento(false, true, false, true, true);
                 txtId.setText(objMedicamento.generarCodigoMedicamento().toString());
                 txtNombre.requestFocus();
             } else {
+                // Registrar el medicamento
                 objMedicamento.registrarMedicamento(
                         Integer.parseInt(txtId.getText()),
                         txtNombre.getText(),
@@ -471,10 +512,8 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                 );
                 btnRegistrar.setText("Registrar");
                 JOptionPane.showMessageDialog(this, "Medicamento registrado con éxito");
-                limpiarControles();
-                listarMedicamentos();
+                cancelarAccionMedicamento();
             }
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al registrar medicamento: " + e.getMessage());
         }
@@ -483,25 +522,40 @@ public class jdMntMedicamento extends javax.swing.JDialog {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         try {
-            if (txtId.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un ID a modificar");
-            } else {
-                int result = JOptionPane.showConfirmDialog(this, "¿Dese modificar el medicamento?", "",
-                        JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) {
-                    objMedicamento.modificarMedicamento(
-                            Integer.parseInt(txtId.getText()),
-                            txtNombre.getText(),
-                            Double.parseDouble(txtCosto.getText()),
-                            (int) spnStock.getValue(),
-                            txtPresentacion.getText(),
-                            objTipoMedicamento.obtenerCodigoTipoMedicamento(cbxTipoMedicamento.getSelectedItem().toString()));
-                } else if (result == JOptionPane.NO_OPTION) {
-                }
+            
+//            if (txtNombre.getText().trim().isEmpty() || txtCosto.getText().trim().isEmpty() || txtPresentacion.getText().trim().isEmpty()) {
+//                JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos requeridos.");
+//                return;
+//            }
+            
+            if (txtId.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un medicamento para modificar");
+                return;
             }
-            JOptionPane.showMessageDialog(this, "Medicamento modificado con éxito.");
-            limpiarControles();
-            listarMedicamentos();
+
+            if (btnModificar.getText().equals("Modificar")) {
+                btnModificar.setText("Guardar Cambios");
+                btnEliminar.setText("Cancelar");
+                editableControlesMedicamento(false, true, true, true, true, true);
+                usarBotonesMedicamento(false, false, true, true, true);
+            } else {
+                if (txtNombre.getText().trim().isEmpty() || txtCosto.getText().trim().isEmpty() || txtPresentacion.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos requeridos.");
+                    return;
+                }
+
+                int tipoMedicamentoId = objTipoMedicamento.obtenerCodigoTipoMedicamento(cbxTipoMedicamento.getSelectedItem().toString());
+                objMedicamento.modificarMedicamento(
+                        Integer.parseInt(txtId.getText()),
+                        txtNombre.getText(),
+                        Double.parseDouble(txtCosto.getText()),
+                        (int) spnStock.getValue(),
+                        txtPresentacion.getText(),
+                        tipoMedicamentoId
+                );
+                JOptionPane.showMessageDialog(this, "Medicamento modificado con éxito");
+                cancelarAccionMedicamento();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al modificar medicamento: " + e.getMessage());
         }
@@ -510,22 +564,32 @@ public class jdMntMedicamento extends javax.swing.JDialog {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         try {
-            if (txtId.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un ID a eliminar");
+            if (txtId.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un medicamento para modificar");
             } else {
-                int result = JOptionPane.showConfirmDialog(this, "¿Dese eliminar el Medicamento?", "",
-                        JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) {
-                    objMedicamento.eliminarMedicamento(Integer.parseInt(txtId.getText()));
-
-                } else if (result == JOptionPane.NO_OPTION) {
+                if (btnModificar.getText().equals("Modificar")) {
+                    btnModificar.setText("Guardar Cambios");
+                    btnEliminar.setText("Cancelar");
+                    editableControlesMedicamento(false, true, true, true, true, true);
+                    usarBotonesMedicamento(false, false, true, true, true);
+                } else {
+                    // Modificar el medicamento
+                    objMedicamento.modificarMedicamento(
+                            Integer.parseInt(txtId.getText()),
+                            txtNombre.getText(),
+                            Double.parseDouble(txtCosto.getText()),
+                            (int) spnStock.getValue(),
+                            txtPresentacion.getText(),
+                            objTipoMedicamento.obtenerCodigoTipoMedicamento(cbxTipoMedicamento.getSelectedItem().toString())
+                    );
+                    btnModificar.setText("Modificar");
+                    btnEliminar.setText("Eliminar");
+                    JOptionPane.showMessageDialog(this, "Medicamento modificado con éxito");
+                    cancelarAccionMedicamento();
                 }
-                limpiarControles();
-                listarMedicamentos();
             }
-
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al eliminar medicamento: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al modificar medicamento: " + e.getMessage());
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -583,7 +647,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
     private void tblMedicamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMedicamentoMouseClicked
         // TODO add your handling code here:
         txtId.setText(String.valueOf(tblMedicamento.getValueAt(tblMedicamento.getSelectedRow(), 0)));
-        btnBuscarActionPerformed(null);   
+        btnBuscarActionPerformed(null);
     }//GEN-LAST:event_tblMedicamentoMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -599,13 +663,12 @@ public class jdMntMedicamento extends javax.swing.JDialog {
     private void spnStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spnStockKeyTyped
         // TODO add your handling code here:
         int key = evt.getKeyChar();
-        boolean numeros = key >= 48 && key <= 57    ;
+        boolean numeros = key >= 48 && key <= 57;
         if (!(numeros)) {
             evt.consume();
         }
     }//GEN-LAST:event_spnStockKeyTyped
 
-    
     public void limpiarControles() {
         txtId.setText("");
         txtNombre.setText("");
@@ -617,13 +680,13 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         txtId.requestFocus();
     }
 
-        private void buscarMedicamento() {
+    private void buscarMedicamento() {
         ResultSet rsEsp = null;
         try {
             if (txtId.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar una ID para buscar");
             } else {
-                
+
                 for (int i = 0; i < tblMedicamento.getRowCount(); i++) {
                     String valorCodigo = tblMedicamento.getValueAt(i, 0).toString();
                     if (valorCodigo.equals(txtId.getText())) {
@@ -632,9 +695,9 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                         break;
                     }
                 }
-                
+
                 rsEsp = objMedicamento.buscarMedicamento(Integer.parseInt(txtId.getText()));
-                if (rsEsp.next()){
+                if (rsEsp.next()) {
                     txtNombre.setText(rsEsp.getString("nombre"));
                     txtCosto.setText(rsEsp.getString("costo"));
                     spnStock.setValue(rsEsp.getInt("stock"));
@@ -652,11 +715,10 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             limpiarControles();
         }
     }
-   
+
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
