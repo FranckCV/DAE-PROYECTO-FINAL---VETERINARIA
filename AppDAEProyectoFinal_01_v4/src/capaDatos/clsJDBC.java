@@ -29,8 +29,8 @@ public class clsJDBC {
         this.user = "postgres";
 
 //        this.password = "tirsarios123";
-        this.password = "1234567890";
-//        this.password = "USAT2023";
+//        this.password = "1234567890";
+        this.password = "USAT2023";
         
         
         this.con = null;

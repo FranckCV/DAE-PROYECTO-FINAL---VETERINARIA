@@ -9,12 +9,9 @@ public class clsMedico {
     String strSQL;
     ResultSet rs = null;
     public static final String TABLA = "MEDICO";
-<<<<<<< HEAD
     public static final String DNI = "doc_identidad";
-=======
     public static final String ID = "id";
     public static final String DOC_IDENTIDAD = "doc_identidad";
->>>>>>> 4e92a84c02e100b9a260d1b6b506706f9bf2559f
     public static final String NOMBRES = "nombres";
     public static final String APE_PATERNO = "apePaterno";
     public static final String APE_MATERNO = "apeMaterno";

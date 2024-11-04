@@ -3,10 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package capaPresentacion;
-import capaNegocio.*;
-import java.sql.ResultSet;
-import javax.swing.JOptionPane;
-
 
 import capaNegocio.clsCita;
 import capaNegocio.clsDuenio;
@@ -25,10 +21,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Junior
  */
 public class jdProgramacionCita extends javax.swing.JDialog {
-    clsServicio objServicio = new clsServicio();
-    clsMascota objMascota = new clsMascota();
 
-<<<<<<< HEAD
     clsMedicamento objMedicamento = new clsMedicamento();
     clsCita objCita = new clsCita();
     clsDuenio objDuenio = new clsDuenio();
@@ -36,15 +29,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     clsServicio objServicio = new clsServicio();
     clsMascota objMascota = new clsMascota();
 
-=======
-    clsDuenio objDuenio = new clsDuenio();
-
-
-    
-    /**
-     * Creates new form jdProgramacionCita
-     */
->>>>>>> 4e92a84c02e100b9a260d1b6b506706f9bf2559f
     public jdProgramacionCita(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -807,7 +791,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_cboServiciosActionPerformed
 
-<<<<<<< HEAD
     private void txtDocDuenioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocDuenioKeyPressed
         if (evt.getKeyCode() == evt.VK_ENTER) {
             if (txtDocDuenio.getText().length() == 8 || txtDocDuenio.getText().length() == 11) {
@@ -848,49 +831,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-=======
-    private void txtDniRucKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniRucKeyPressed
-//        if (evt.getKeyCode() == evt.VK_ENTER) {
-//            if (txtDniRuc.getText().length() == 8 || txtDniRuc.getText().length() == 11) {
-//                btnBuscarCita.requestFocus();
-//                btnBuscarDuenioActionPerformed(null);
-//
-//            } else {
-//            }
-//            JOptionPane.showMessageDialog(this, "Ingresar DNI (8 dígitos) / RUC (11 dígitos)");
-//        } else {
-//        }
-    }//GEN-LAST:event_txtDniRucKeyPressed
-
-    private void btnBuscarDuenioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarDuenioActionPerformed
-//        ResultSet rsCliente = null;
-//
-//        try {
-//
-//            rsCliente = objDuenio.buscarDuenio(txtDniRuc.getText());
-//
-//            if (rsCliente.next()) {
-//                txtCodDuenio.setText(String.valueOf(rsCliente.getString("id")));
-//                txtNombreCliente.setText(String.valueOf(rsCliente.getString("nombres") + " " + rsCliente.getString("apepaterno")
-//                    + " " + rsCliente.getString("apematerno")));
-//            txtDireccion.setText(String.valueOf(rsCliente.getString("direccion")));
-//
-//            if (rsCliente.getString("doc_identidad").length() != 11) {
-//                rdbBoleta.setSelected(true);
-//            } else {
-//                rdbFactura.setSelected(true);
-//            }
-//        } else {
-//            if (JOptionPane.showConfirmDialog(this, "Dueño no existe ¿Desea registrarlo?", "Alerta!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-//                jdMantDuenio objMantDuenio = new jdMantDuenio(null, true);
-//                objMantDuenio.setLocationRelativeTo(this);
-//                objMantDuenio.setVisible(true);
-//            }
-//        }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage());
-//        }
->>>>>>> 4e92a84c02e100b9a260d1b6b506706f9bf2559f
     }//GEN-LAST:event_btnBuscarDuenioActionPerformed
 
     private void txtNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroActionPerformed
@@ -902,7 +842,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNombreMascotaKeyPressed
 
     private void btnBuscarMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarMascotaActionPerformed
-<<<<<<< HEAD
         ResultSet rsMascota = null;
 
         try {
@@ -920,31 +859,11 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                     txtNotaMascota.setText(String.valueOf(rsMascota.getString("notaAdicional")));
                     txtEdadMascota.setText(String.valueOf(objMascota.calcularEdadMascota(rsMascota.getInt("id"))));
 
-=======
-//        ResultSet rsMascota = null;
-//
-//        try {
-//
-//            if (txtCodDuenio.getText().isEmpty()) {
-//                JOptionPane.showMessageDialog(this, "Debe ingresar un dueño para buscar mascotas");
-//            } else if (txtNombreMascota.getText().isEmpty()) {
-//                JOptionPane.showMessageDialog(this, "Debe ingresar el nombre de la mascota");
-//            } else {
-//                rsMascota = objMascota.filtrarMascotaPorDuenioYNombre(Integer.valueOf(txtCodDuenio.getText()),
-//                    txtNombreMascota.getText());
-//
-//                if (rsMascota.next()) {
-//                    txtCodMascota.setText(String.valueOf(rsMascota.getString("id")));
-//                    txtNotaMascota.setText(String.valueOf(rsMascota.getString("notaAdicional")));
-//                    txtEdadMascota.setText(String.valueOf(objMascota.calcularEdadMascota(rsMascota.getInt("id"))));
-//
->>>>>>> 4e92a84c02e100b9a260d1b6b506706f9bf2559f
 //                    if (rsMascota.getBoolean("esterilizado")) {
 //                        rdbCastrado.setSelected(true);
 //                    } else {
 //                        rdbNoCastrado.setSelected(true);
 //                    }
-<<<<<<< HEAD
                 } else {
                     if (JOptionPane.showConfirmDialog(this, "Mascota no existe ¿Desea registrar?", "Alerta!",
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -958,21 +877,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-=======
-//                } else {
-//                    if (JOptionPane.showConfirmDialog(this, "Mascota no existe ¿Desea registrar?", "Alerta!",
-//                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-//                    jdMantMascota objMantMascota = new jdMantMascota(null, true);
-//                    objMantMascota.setLocationRelativeTo(this);
-//                    objMantMascota.setVisible(true);
-//                }
-//            }
-//        }
-//
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage());
-//        }
->>>>>>> 4e92a84c02e100b9a260d1b6b506706f9bf2559f
     }//GEN-LAST:event_btnBuscarMascotaActionPerformed
 
     private void txtDescripcionServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionServicioActionPerformed
