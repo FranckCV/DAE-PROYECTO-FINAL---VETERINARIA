@@ -14,10 +14,11 @@ public class clsMedicamento {
     ResultSet rs = null;
 
     public ResultSet listarMedicamentos() throws Exception {
-        strSQL = "select * from medicamento";
+        String strSQL = "SELECT m.id, m.nombre, m.costo, m.stock, m.presentacion, m.vigencia, t.nomtipo AS tipo_medicamento "
+                + "FROM medicamento m "
+                + "JOIN tipo_medicamento t ON m.tipo_medicamento_id = t.id";
         try {
-            rs = objConectar.consultarBD(strSQL);
-            return rs;
+            return objConectar.consultarBD(strSQL);
         } catch (Exception e) {
             throw new Exception("Error al listar los medicamentos --> " + e.getMessage());
         }
@@ -36,8 +37,8 @@ public class clsMedicamento {
         return 0;
     }
 
-    public void registrarMedicamento(int id, String nombre, double costo, int stock, String presentacion, int tipoMedicamentoId) throws Exception {
-        strSQL = "Insert into medicamento Values(" + id + ",'" + nombre + "'," + costo + "," + stock + ",'" + presentacion + "'," + tipoMedicamentoId + ")";
+    public void registrarMedicamento(int id, String nombre, double costo, int stock, String presentacion, boolean vigencia, int tipoMedicamentoId) throws Exception {
+        strSQL = "Insert into medicamento Values(" + id + ",'" + nombre + "'," + costo + "," + stock + ",'" + presentacion + "','" + vigencia + "'," + tipoMedicamentoId + ")";
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
@@ -64,17 +65,17 @@ public class clsMedicamento {
         }
     }
 
-    public void modificarMedicamento(Integer id, String nombre, double costo, int stock, String presentacion, int tipoMedicamentoId) throws Exception {
-        strSQL = "Update medicamento set nombre='" + nombre + "', costo=" + costo + ", stock=" + stock + ", presentacion='" + presentacion + "', tipo_medicamento_id=" + tipoMedicamentoId + " where id=" + id;
+    public void modificarMedicamento(Integer id, String nombre, double costo, int stock, String presentacion, boolean vigencia , int tipoMedicamentoId) throws Exception {
+        strSQL = "Update medicamento set nombre='" + nombre + "', costo=" + costo + ", stock=" + stock + ", presentacion='" + presentacion + "', vigencia= '" + vigencia + "', tipo_medicamento_id=" + tipoMedicamentoId + " where id=" + id;
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
             throw new Exception("Error al modificar el medicamento --> " + e.getMessage());
         }
     }
-    
+
     // PARA LA TRANSACCION
-     public ResultSet filtrar(String nom) throws Exception {
+    public ResultSet filtrar(String nom) throws Exception {
         strSQL = "SELECT M.*, T.nomTipo FROM (SELECT * FROM medicamento "
                 + "WHERE UPPER(nombre) LIKE UPPER('%" + nom + "%') AND vigencia = true) M "
                 + "INNER JOIN tipo_medicamento T on M.tipo_medicamento_id = T.id";
@@ -85,8 +86,8 @@ public class clsMedicamento {
             throw new Exception("Error al filtrar medicamentos --> " + e.getLocalizedMessage());
         }
     }
-     
-     public Integer getStock(int cod) throws Exception {
+
+    public Integer getStock(int cod) throws Exception {
         strSQL = "SELECT stock FROM medicamento WHERE id = " + cod + ";";
         try {
             rs = objConectar.consultarBD(strSQL);
@@ -98,5 +99,5 @@ public class clsMedicamento {
         }
         return 0;
     }
-    
+
 }

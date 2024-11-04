@@ -9,24 +9,29 @@ import capaNegocio.clsTipoMedicamento;
 import java.sql.ResultSet;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
  * @author Fabiana Lucía
  */
 public class jdMntMedicamento extends javax.swing.JDialog {
+
     clsMedicamento objMedicamento = new clsMedicamento();
     clsTipoMedicamento objTipoMedicamento = new clsTipoMedicamento();
-    
+
     private void formatoSpinner() {
         SpinnerNumberModel model = new SpinnerNumberModel(00, 00, null, 1);
-
         spnStock.setModel(model);
+        JFormattedTextField txt = ((JSpinner.NumberEditor) spnStock.getEditor()).getTextField();
+        ((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
     }
-    
+
     /**
      * Creates new form jdMntMedicamento
      */
@@ -36,6 +41,13 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         formatoSpinner();
         listarMedicamentos();
         listarTipoMedicamento();
+        btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
+        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
+        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+        cbxTipoMedicamento.setEnabled(false);
+        spnStock.setEnabled(false);
+        chkVigencia.setEnabled(false);
+
     }
 
     public void listarMedicamentos() {
@@ -46,13 +58,22 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         modelo.addColumn("Costo");
         modelo.addColumn("Stock");
         modelo.addColumn("Presentación");
+        modelo.addColumn("Disponible");
         modelo.addColumn("Tipo Medicamento");
         tblMedicamento.setModel(modelo);
 
         try {
             rsMed = objMedicamento.listarMedicamentos();
             while (rsMed.next()) {
-                modelo.addRow(new Object[]{rsMed.getInt("id"), rsMed.getString("nombre"), rsMed.getDouble("costo"), rsMed.getInt("stock"), rsMed.getString("presentacion"), rsMed.getString("tipo_medicamento_id")});
+                modelo.addRow(new Object[]{
+                    rsMed.getInt("id"),
+                    rsMed.getString("nombre"),
+                    rsMed.getDouble("costo"),
+                    rsMed.getInt("stock"),
+                    rsMed.getString("presentacion"),
+                    rsMed.getString("vigencia"),
+                    rsMed.getString("tipo_medicamento")
+                });
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al listar medicamentos: " + e.getMessage());
@@ -66,13 +87,41 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         try {
             rsTipoMed = objTipoMedicamento.listarTiposMedicamentos();
             while (rsTipoMed.next()) {
+
                 modeloTipoMed.addElement(rsTipoMed.getString("nomtipo"));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al listar tipos de medicamento: " + e.getMessage());
         }
     }
-    
+
+    private void usarBotonesMedicamento(boolean buscar, boolean registrar, boolean modificar, boolean eliminar, boolean limpiar) {
+        btnBuscar.setEnabled(buscar);
+        btnRegistrar.setEnabled(registrar);
+        btnModificar.setEnabled(modificar);
+        btnEliminar.setEnabled(eliminar);
+        btnLimpiar.setEnabled(limpiar);
+    }
+
+    private void editableControlesMedicamento(boolean id, boolean nombre, boolean costo, boolean tipo, boolean stock, boolean presentacion) {
+        txtId.setEditable(id);
+        txtNombre.setEditable(nombre);
+        txtCosto.setEditable(costo);
+        cbxTipoMedicamento.setEnabled(tipo);
+        spnStock.setEnabled(stock);
+        txtPresentacion.setEditable(presentacion);
+    }
+
+    private void cancelarAccionMedicamento() {
+        btnRegistrar.setText("Registrar");
+        btnModificar.setText("Modificar");
+        btnEliminar.setText("Eliminar");
+        editableControlesMedicamento(false, false, false, false, false, false);
+        usarBotonesMedicamento(true, true, false, false, true); // Estado inicial
+        limpiarControles();
+        listarMedicamentos();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,7 +141,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -101,6 +150,8 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         spnStock = new javax.swing.JSpinner();
         txtCosto = new javax.swing.JTextField();
         txtPresentacion = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        chkVigencia = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -111,6 +162,11 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -162,15 +218,15 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             }
         });
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/opacado.png"))); // NOI18N
-        jButton5.setBorder(null);
-        jButton5.setContentAreaFilled(false);
-        jButton5.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/opacado.png"))); // NOI18N
-        jButton5.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/escoba-mascota.png"))); // NOI18N
-        jButton5.setVerifyInputWhenFocusTarget(false);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/opacado.png"))); // NOI18N
+        btnLimpiar.setBorder(null);
+        btnLimpiar.setContentAreaFilled(false);
+        btnLimpiar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/opacado.png"))); // NOI18N
+        btnLimpiar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/escoba-mascota.png"))); // NOI18N
+        btnLimpiar.setVerifyInputWhenFocusTarget(false);
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnLimpiarActionPerformed(evt);
             }
         });
 
@@ -209,12 +265,16 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setText("Disponibilidad:");
+
+        chkVigencia.setText("(Disponible)");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(37, 37, 37)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,17 +291,23 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                         .addGap(130, 130, 130)
                         .addComponent(spnStock))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel3))
                         .addGap(77, 77, 77)
-                        .addComponent(txtPresentacion)))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(chkVigencia)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtPresentacion))))
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
-                .addGap(30, 30, 30))
+                .addComponent(btnLimpiar)
+                .addGap(29, 29, 29))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -261,11 +327,15 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                     .addComponent(spnStock, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton5)
+                    .addComponent(btnLimpiar)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel13)
                         .addComponent(txtPresentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(45, 45, 45))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(chkVigencia))
+                .addGap(22, 22, 22))
         );
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/medicamento.png"))); // NOI18N
@@ -351,10 +421,12 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -364,8 +436,8 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -382,7 +454,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 102));
@@ -428,7 +500,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -449,83 +521,91 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         if (!(minusculas || mayusculas || espacio)) {
             evt.consume();
         }
-        
+
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
         try {
-            if (btnRegistrar.getText().equals("Registrar")) {
-                btnRegistrar.setText("Guardar");
+            if (btnRegistrar.getText().equals(frmMenuPrincipal.BTN_NUEVO)) {
+                btnRegistrar.setText(frmMenuPrincipal.BTN_GUARDAR);
+                btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+                editableControlesMedicamento(false, true, true, true, true, true);
+                chkVigencia.setEnabled(true);
                 limpiarControles();
+                editableControlesMedicamento(false, true, true, true, true, true);
                 txtId.setText(objMedicamento.generarCodigoMedicamento().toString());
+                chkVigencia.setSelected(true);
+                usarBotonesMedicamento(false, true, false, true, false); // Habilitar/deshabilitar botones
                 txtNombre.requestFocus();
             } else {
-                objMedicamento.registrarMedicamento(
-                        Integer.parseInt(txtId.getText()),
-                        txtNombre.getText(),
-                        Double.parseDouble(txtCosto.getText()),
-                        (int) spnStock.getValue(),
-                        txtPresentacion.getText(),
-                        objTipoMedicamento.obtenerCodigoTipoMedicamento(cbxTipoMedicamento.getSelectedItem().toString())
-                );
-                btnRegistrar.setText("Registrar");
-                JOptionPane.showMessageDialog(this, "Medicamento registrado con éxito");
-                limpiarControles();
-                listarMedicamentos();
+                if (txtNombre.getText().trim().isEmpty() || txtCosto.getText().trim().isEmpty() || txtPresentacion.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
+                } else {
+                    btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
+                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    objMedicamento.registrarMedicamento(
+                            Integer.parseInt(txtId.getText()),
+                            txtNombre.getText(),
+                            Double.parseDouble(txtCosto.getText()),
+                            (int) spnStock.getValue(),
+                            txtPresentacion.getText(),
+                            chkVigencia.isSelected(),
+                            objTipoMedicamento.obtenerCodigoTipoMedicamento(cbxTipoMedicamento.getSelectedItem().toString())
+                    );
+                    editableControlesMedicamento(true, false, false, false, false, false);
+                    usarBotonesMedicamento(true, true, true, true, true); // Restablecer botones
+                    limpiarControles();
+                    listarMedicamentos();
+                    JOptionPane.showMessageDialog(this, "Medicamento registrado con éxito");
+                }
             }
-
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al registrar medicamento: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         try {
-            if (txtId.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un ID a modificar");
+            if (txtId.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un medicamento para modificar");
             } else {
-                int result = JOptionPane.showConfirmDialog(this, "¿Dese modificar el medicamento?", "",
-                        JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) {
+                if (btnModificar.getText().equals(frmMenuPrincipal.BTN_MODIFICAR)) {
+                    btnModificar.setText(frmMenuPrincipal.BTN_GUARDAR);
+                    btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+                    editableControlesMedicamento(false, true, true, true, true, true);
+                    chkVigencia.setEnabled(true); 
+                } else {
                     objMedicamento.modificarMedicamento(
                             Integer.parseInt(txtId.getText()),
                             txtNombre.getText(),
                             Double.parseDouble(txtCosto.getText()),
                             (int) spnStock.getValue(),
                             txtPresentacion.getText(),
-                            objTipoMedicamento.obtenerCodigoTipoMedicamento(cbxTipoMedicamento.getSelectedItem().toString()));
-                } else if (result == JOptionPane.NO_OPTION) {
+                            chkVigencia.isSelected(),
+                            objTipoMedicamento.obtenerCodigoTipoMedicamento(cbxTipoMedicamento.getSelectedItem().toString())
+                    );
+                    btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
+                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    editableControlesMedicamento(true, false, false, false, false, false);
+                    usarBotonesMedicamento(true, true, true, true, true);
+                    limpiarControles();
+                    listarMedicamentos();
+                    JOptionPane.showMessageDialog(this, "Medicamento modificado con éxito");
                 }
             }
-            JOptionPane.showMessageDialog(this, "Medicamento modificado con éxito.");
-            limpiarControles();
-            listarMedicamentos();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al modificar medicamento: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        try {
-            if (txtId.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un ID a eliminar");
-            } else {
-                int result = JOptionPane.showConfirmDialog(this, "¿Dese eliminar el Medicamento?", "",
-                        JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) {
-                    objMedicamento.eliminarMedicamento(Integer.parseInt(txtId.getText()));
-
-                } else if (result == JOptionPane.NO_OPTION) {
-                }
-                limpiarControles();
-                listarMedicamentos();
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al eliminar medicamento: " + e.getMessage());
+        if (btnRegistrar.getText().equals(frmMenuPrincipal.BTN_GUARDAR) || btnModificar.getText().equals(frmMenuPrincipal.BTN_GUARDAR)) {
+            cancelarAccionMedicamento();
+        } else {
+            eliminarMedicamento();
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -583,7 +663,8 @@ public class jdMntMedicamento extends javax.swing.JDialog {
     private void tblMedicamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMedicamentoMouseClicked
         // TODO add your handling code here:
         txtId.setText(String.valueOf(tblMedicamento.getValueAt(tblMedicamento.getSelectedRow(), 0)));
-        btnBuscarActionPerformed(null);   
+        btnBuscarActionPerformed(null);
+        usarBotonesMedicamento(true, true, true, true, true); // Habilita todos los botones
     }//GEN-LAST:event_tblMedicamentoMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -591,21 +672,28 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         buscarMedicamento();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
         limpiarControles();
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void spnStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spnStockKeyTyped
         // TODO add your handling code here:
         int key = evt.getKeyChar();
-        boolean numeros = key >= 48 && key <= 57    ;
+        boolean numeros = key >= 48 && key <= 57;
         if (!(numeros)) {
             evt.consume();
         }
     }//GEN-LAST:event_spnStockKeyTyped
 
-    
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        listarMedicamentos();
+        listarTipoMedicamento();
+        limpiarControles();
+        usarBotonesMedicamento(true, true, false, false, true); // Habilita "Buscar" y "Registrar"
+    }//GEN-LAST:event_formWindowOpened
+
     public void limpiarControles() {
         txtId.setText("");
         txtNombre.setText("");
@@ -617,13 +705,13 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         txtId.requestFocus();
     }
 
-        private void buscarMedicamento() {
+    private void buscarMedicamento() {
         ResultSet rsEsp = null;
         try {
             if (txtId.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar una ID para buscar");
             } else {
-                
+
                 for (int i = 0; i < tblMedicamento.getRowCount(); i++) {
                     String valorCodigo = tblMedicamento.getValueAt(i, 0).toString();
                     if (valorCodigo.equals(txtId.getText())) {
@@ -632,9 +720,9 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                         break;
                     }
                 }
-                
+
                 rsEsp = objMedicamento.buscarMedicamento(Integer.parseInt(txtId.getText()));
-                if (rsEsp.next()){
+                if (rsEsp.next()) {
                     txtNombre.setText(rsEsp.getString("nombre"));
                     txtCosto.setText(rsEsp.getString("costo"));
                     spnStock.setValue(rsEsp.getInt("stock"));
@@ -652,24 +740,43 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             limpiarControles();
         }
     }
-   
+
+    private void eliminarMedicamento() {
+        try {
+            if (txtId.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un código para eliminar!");
+            } else {
+                int valor = JOptionPane.showConfirmDialog(null, "¿Deseas continuar?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                if (valor == JOptionPane.YES_OPTION) {
+                    objMedicamento.eliminarMedicamento(Integer.parseInt(txtId.getText()));
+                    limpiarControles();
+                    listarMedicamentos();
+                    JOptionPane.showMessageDialog(this, "Medicamento eliminado con éxito");
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<String> cbxTipoMedicamento;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JCheckBox chkVigencia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

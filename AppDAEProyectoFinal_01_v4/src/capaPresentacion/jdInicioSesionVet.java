@@ -28,6 +28,24 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtClave.requestFocus();
+            }
+        });
+
+        txtClave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRespuesta.requestFocus(); // Mueve el foco al campo de respuesta del captcha
+            }
+        });
+
+        txtRespuesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+        
         this.setTitle("Inicio de sesión");
         txtCaptchaEnunciado.setEnabled(false);
         txtCaptchaEnunciado.setBackground(Color.black);
@@ -276,7 +294,7 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             if (objCaptcha.validarCaptcha(txtCaptchaEnunciado.getText(), txtRespuesta.getText())
-                && !objUsuario.login(txtUsuario.getText(), txtClave.getText()).isEmpty()) {
+                    && !objUsuario.login(txtUsuario.getText(), txtClave.getText()).isEmpty()) {
                 nombreUsuario = objUsuario.obtenerUsuario(txtUsuario.getText());
                 JOptionPane.showMessageDialog(this, "Bienvenido al sistema " + nombreUsuario);
                 this.dispose();
