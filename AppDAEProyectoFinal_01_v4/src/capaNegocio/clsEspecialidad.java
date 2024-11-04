@@ -18,7 +18,7 @@ public class clsEspecialidad {
     public static final String TABLA = "ESPECIALIDAD";
     public static final String ID = "id";
     public static final String NOMBRE = "nom_especialidad";
-    public static final String DISPONIBILIDAD = "vigencia";
+    public static final String DISPONIBILIDAD = "disponibilidad";
     
     public ResultSet listarEspecialidad() throws Exception{
         strSQL = """ 

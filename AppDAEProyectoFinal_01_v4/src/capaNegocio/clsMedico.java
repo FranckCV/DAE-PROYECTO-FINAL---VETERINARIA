@@ -57,7 +57,7 @@ public class clsMedico {
                    count(det.servicio_id) as cant_servicios
                 from medico med
                 left join especialidad esp on esp.id = med.especialidad_id
-                left join detalle_servicio det ON det.medicoid = med.id
+                left join detalle_servicio det ON det.medico_id = med.id
                 group by med.id, nom_especialidad
                 order by med.id 
                 """;
