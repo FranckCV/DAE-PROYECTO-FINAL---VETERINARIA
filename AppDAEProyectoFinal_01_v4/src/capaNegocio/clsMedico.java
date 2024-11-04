@@ -9,6 +9,7 @@ public class clsMedico {
     String strSQL;
     ResultSet rs = null;
     public static final String TABLA = "MEDICO";
+    public static final String DNI = "doc_identidad";
     public static final String ID = "id";
     public static final String DOC_IDENTIDAD = "doc_identidad";
     public static final String NOMBRES = "nombres";
@@ -196,6 +197,19 @@ public class clsMedico {
         } catch (Exception e) {
             throw new Exception("Error al modificar tabla "+TABLA+": " + e.getMessage());
         }        
+    }
+    
+     public Integer obtenerID(String nom) throws Exception {
+        strSQL = "Select id from " + TABLA + " where nombres = '" + nom + "' ";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al buscar codigo de " + TABLA + " con el nombre " + nom + " --> " + e.getMessage());
+        }
+        return 0;
     }
     
     
