@@ -353,6 +353,14 @@ INSERT INTO MEDICAMENTO (id, nombre, costo, stock, presentacion, vigencia, tipo_
 (9, 'Tramadol 50mg', 30.00, 40, 'Tableta', true, 2),
 (10, 'Doxiciclina 100mg', 22.00, 25, 'Cápsula', true, 1);
 
+INSERT INTO CITA (id, estado_cita_id, fecha_cita, observacion, CUSTODIAMASCOTAid, CUSTODIADUEniOid) 
+VALUES 
+    (1, 1, '2024-11-05', 'Primera revisión general', 1, 1),
+    (2, 2, '2024-11-10', 'Vacunación inicial', 2, 2),
+    (3, 4, '2024-11-15', 'Control de seguimiento', 3, 3),
+    (4, 7, '2024-11-20', 'Consulta cancelada por inasistencia', 4, 4),
+    (5, 6, '2024-11-25', 'Finalización de tratamiento', 5, 5);
+
 
 
 
