@@ -389,7 +389,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 modelo.addRow(new Object[]{
                     rsDato.getInt(clsEspecialidad.ID),
                     rsDato.getString(clsEspecialidad.NOMBRE),
-                    textoBool(rsDato.getBoolean(clsEspecialidad.DISPONIBILIDAD), "Disponible", "No Disponible")
+                    frmMenuPrincipal.textoBool(rsDato.getBoolean(clsEspecialidad.DISPONIBILIDAD), frmMenuPrincipal.DISPONIBILIDAD_SI, frmMenuPrincipal.DISPONIBILIDAD_NO)
                 });
             }
             tblEspecialidad.setModel(modelo);
@@ -568,14 +568,6 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error:" + e.getMessage());
-        }
-    }
-    
-    private String textoBool(boolean vig, String txtTrue, String txtFalse) {
-        if (vig) {
-            return txtTrue;
-        } else {
-            return txtFalse;
         }
     }
     

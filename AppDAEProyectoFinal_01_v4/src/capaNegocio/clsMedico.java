@@ -52,18 +52,17 @@ import java.sql.ResultSet;
         
     public ResultSet listarMedicosconServicios() throws Exception{
         strSQL = """
-                select 
-                   med.*, 
-                   esp.nom_especialidad,
-                   esp.disponibilidad as disp_esp,
-                   count(det.servicio_id) as cant_servicios
-                from medico med
-                left join especialidad esp on esp.id = med.especialidad_id
-                left join detalle_servicio det ON det.medico_id = med.id
-                left join servicio ser on ser.id = det.servicio_id
-                where ser.disponibilidad = true and det.disponibilidad = true
-                group by med.id, esp.id
-                order by med.vigencia desc, med.id 
+                SELECT 
+                    med.*, 
+                    esp.nom_especialidad,
+                    esp.disponibilidad AS disp_esp,
+                    COALESCE(COUNT(det.servicio_id), 0) AS cant_servicios
+                FROM medico med
+                LEFT JOIN especialidad esp ON esp.id = med.especialidad_id
+                LEFT JOIN  detalle_servicio det ON det.medico_id = med.id AND det.disponibilidad = true
+                LEFT JOIN servicio ser ON ser.id = det.servicio_id AND ser.disponibilidad = true
+                GROUP BY   med.id, esp.id
+                ORDER BY  med.vigencia DESC, med.id;
                 """;
         try {
             rs = objConectar.consultarBD(strSQL);
@@ -80,10 +79,10 @@ import java.sql.ResultSet;
                     "     esp.disponibilidad as disp_esp, " +
                     "     count(det.servicio_id) as CANT_SERVICIOS" +
                     " from medico med " +
-                    " left join especialidad esp on esp.id = med.especialidad_id " +
-                    " left join detalle_servicio det ON det.medico_id = med.id " +
-                    " left join servicio ser on ser.id = det.servicio_id " +
-                    " where med.id = "+id+" and ser.disponibilidad = true and det.disponibilidad = true"+
+                    " LEFT JOIN especialidad esp ON esp.id = med.especialidad_id " +
+                    " LEFT JOIN  detalle_servicio det ON det.medico_id = med.id AND det.disponibilidad = true " +
+                    " LEFT JOIN servicio ser ON ser.id = det.servicio_id AND ser.disponibilidad = true " +
+                    " where med.id = "+id+" "+
                     " group by med.id, esp.id " +
                     " order by med.vigencia desc, med.id ;"
                 ;
