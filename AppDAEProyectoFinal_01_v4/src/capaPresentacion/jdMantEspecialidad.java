@@ -480,7 +480,21 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            String foranea[] = {"referida", "llave foránea", "referida a la tabla"};
+            boolean contieneErrorForaneo = false;
+
+            for (String palabra : foranea) {
+                if (e.getMessage().contains(palabra)) {
+                    contieneErrorForaneo = true;
+                    break;
+                }
+            }
+
+            if (contieneErrorForaneo) {
+                JOptionPane.showMessageDialog(this, "Error: Hay datos externos asociados a \"" + txtNombre.getText() + "\". \nConsidere cambiar su disponibilidad para que ya no pueda ser usado");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            }
         }
     }
       
