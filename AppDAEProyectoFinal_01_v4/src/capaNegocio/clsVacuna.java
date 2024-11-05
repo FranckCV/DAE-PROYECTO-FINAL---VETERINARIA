@@ -21,7 +21,7 @@ public class clsVacuna {
     public static final String DISPONIBILIDAD = "disponibilidad";
 
     public ResultSet listarVacunas() throws Exception {
-        strSQL = "select * from " + TABLA;
+        strSQL = "select * from " + TABLA + " order by id";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -81,7 +81,7 @@ public class clsVacuna {
 
     public void registrarVacuna(int id, String nom, Double dosis_x_kgpeso, int especie_id, boolean disponibilidad) throws Exception {
         strSQL = "insert into " + TABLA + " values (" + id + ", '" + nom + "', " + dosis_x_kgpeso + ", "
-                + especie_id + ", " + (disponibilidad ? "1" : "0") + ")";
+                + especie_id + ", " + disponibilidad + ")";
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
@@ -91,7 +91,7 @@ public class clsVacuna {
 
     public void modificarVacuna(int id, String nom, double dosis_x_kgpeso, Integer especie_id, boolean disponibilidad) throws Exception {
         strSQL = "update " + TABLA + " set " + NOMBRE + " = '" + nom + "', " + DOSIS_X_KGPESO + " = " + dosis_x_kgpeso
-                + ", " + ESPECIE_ID + " = " + especie_id + ", " + DISPONIBILIDAD + " = " + (disponibilidad ? "1" : "0")
+                + ", " + ESPECIE_ID + " = " + especie_id + ", " + DISPONIBILIDAD + " = " + disponibilidad
                 + " where " + ID + " = " + id;
         try {
             objConectar.ejecutarBD(strSQL);
@@ -125,12 +125,25 @@ public class clsVacuna {
     }
 
     public void actualizarDisponibilidad(int id, boolean disponibilidad) throws Exception {
-        strSQL = "UPDATE " + TABLA + " SET " + DISPONIBILIDAD + " = " + (disponibilidad ? 1 : 0) + " WHERE " + ID + " = " + id;
+        strSQL = "UPDATE " + TABLA + " SET " + DISPONIBILIDAD + " = " + disponibilidad + " WHERE " + ID + " = " + id;
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
             throw new Exception("Error al actualizar disponibilidad de la vacuna --> " + e.getMessage());
         }
+    }
+
+    public boolean existeNombreVacuna(String nombre) throws Exception {
+        strSQL = "SELECT COUNT(*) AS cantidad FROM " + TABLA + " WHERE " + NOMBRE + " = '" + nombre + "'";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return rs.getInt("cantidad") > 0;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al verificar el nombre de la vacuna --> " + e.getMessage());
+        }
+        return false;
     }
 
 }
