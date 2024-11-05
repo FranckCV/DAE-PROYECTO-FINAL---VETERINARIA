@@ -47,6 +47,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         cbxTipoMedicamento.setEnabled(false);
         spnStock.setEnabled(false);
         chkVigencia.setEnabled(false);
+        chkVigencia.setSelected(true);
 
     }
 
@@ -554,15 +555,11 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             if (btnRegistrar.getText().equals(frmMenuPrincipal.BTN_NUEVO)) {
                 btnRegistrar.setText(frmMenuPrincipal.BTN_GUARDAR);
                 btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
-                chkVigencia.setEnabled(true);
                 limpiarControles();
-                editableControlesMedicamento(false, true, true, true, true, false, true);
+                editableControlesMedicamento(true, true, true, true, true, false, true);
                 txtId.setText(objMedicamento.generarCodigoMedicamento().toString());
-                chkVigencia.setSelected(true);
-                usarBotonesMedicamento(true, true, false, true, false, false);
+                usarBotonesMedicamento(false, true, false, true, false, false);
                 txtNombre.requestFocus();
-            } else if (btnEliminar.getText().equals(frmMenuPrincipal.BTN_CANCELAR)) {
-                cancelarAccionMedicamento();
             } else {
                 // Validación de campos
                 if (txtNombre.getText().trim().isEmpty() || txtCosto.getText().trim().isEmpty() || txtPresentacion.getText().trim().isEmpty()) {
@@ -574,19 +571,10 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "El nombre del medicamento ya está registrado. Elija un nombre diferente.");
                     return;
                 } else {
-                    // Imprimir todos los valores que se van a pasar al método
-                    System.out.println("Intentando registrar medicamento con los siguientes datos:");
-                    System.out.println("ID: " + txtId.getText());
-                    System.out.println("Nombre: " + txtNombre.getText());
-                    System.out.println("Costo: " + txtCosto.getText());
-                    System.out.println("Stock: " + spnStock.getValue());
-                    System.out.println("Presentación: " + txtPresentacion.getText());
-                    System.out.println("Vigencia: " + chkVigencia.isSelected());
-                    System.out.println("Tipo de Medicamento ID: " + cbxTipoMedicamento.getSelectedItem().toString());
-
-                    // Registrar el medicamento
                     btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
                     btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+
+                    // Registro del medicamento
                     objMedicamento.registrarMedicamento(
                             Integer.parseInt(txtId.getText()),
                             txtNombre.getText(),
@@ -596,19 +584,18 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                             chkVigencia.isSelected(),
                             objTipoMedicamento.obtenerCodigoTipoMedicamento(cbxTipoMedicamento.getSelectedItem().toString())
                     );
-                    editableControlesMedicamento(true, false, false, false, false, false, false);
-                    usarBotonesMedicamento(true, true, true, true, true, true);
+
+                    editableControlesMedicamento(false, false, false, false, false, false, false);
+                    usarBotonesMedicamento(true, true, false, false, true, false);
+                    limpiarControles();
+                    listarMedicamentos();
                     JOptionPane.showMessageDialog(this, "Medicamento registrado con éxito");
                 }
-                limpiarControles();
-                listarMedicamentos();
-
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
             e.printStackTrace();
         }
-
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
 

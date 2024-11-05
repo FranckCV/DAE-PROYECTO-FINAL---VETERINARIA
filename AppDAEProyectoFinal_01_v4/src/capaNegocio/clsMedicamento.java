@@ -38,17 +38,17 @@ public class clsMedicamento {
     }
 
     public void registrarMedicamento(int id, String nombre, double costo, int stock, String presentacion, boolean vigencia, int tipoMedicamentoId) throws Exception {
-        String strVigencia = vigencia ? "TRUE" : "FALSE"; // Cambiar si la base de datos usa 1/0
-        strSQL = "INSERT INTO medicamento (id, nombre, costo, stock, presentacion, vigencia, tipo_medicamento_id) "
-                + "VALUES (" + id + ", '" + nombre + "', " + costo + ", " + stock + ", '" + presentacion + "', " + strVigencia + ", " + tipoMedicamentoId + ")";
-
-        System.out.println("Consulta SQL generada: " + strSQL); // Depuración para verificar la consulta
-
+        String strSQL = "INSERT INTO medicamento VALUES("
+                + id + ", '"
+                + nombre + "', "
+                + costo + ", "
+                + stock + ", '"
+                + presentacion + "', "
+                + (vigencia ? "true" : "false") + ", "
+                + tipoMedicamentoId + ")";
         try {
             objConectar.ejecutarBD(strSQL);
-            System.out.println("Medicamento registrado exitosamente."); // Confirmación de registro exitoso
         } catch (Exception e) {
-            e.printStackTrace();
             throw new Exception("Error al registrar el medicamento --> " + e.getMessage());
         }
     }
