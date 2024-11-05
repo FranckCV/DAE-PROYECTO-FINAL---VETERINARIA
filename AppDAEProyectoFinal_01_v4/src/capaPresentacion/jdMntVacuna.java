@@ -9,10 +9,12 @@ import capaNegocio.clsEspecie;
 import java.sql.ResultSet;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -34,11 +36,14 @@ public class jdMntVacuna extends javax.swing.JDialog {
         btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
         spnDosis.setEnabled(false);
         chkDisponibilidad.setEnabled(false);
+        chkDisponibilidad.setSelected(true);
     }
 
-    private void formatoSpinner() {
-        SpinnerNumberModel model = new SpinnerNumberModel(0.00, 0.00, null, 0.01);
+       private void formatoSpinner() {
+        SpinnerNumberModel model = new SpinnerNumberModel(00, 00, null, 1);
         spnDosis.setModel(model);
+        JFormattedTextField txt = ((JSpinner.NumberEditor) spnDosis.getEditor()).getTextField();
+        ((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
     }
 
     private void listarEspecies() {
@@ -219,6 +224,11 @@ public class jdMntVacuna extends javax.swing.JDialog {
         cmbEspecie.setBorder(null);
 
         spnDosis.setEnabled(false);
+        spnDosis.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                spnDosisKeyTyped(evt);
+            }
+        });
 
         txtId.setBorder(null);
         txtId.addActionListener(new java.awt.event.ActionListener() {
@@ -557,7 +567,7 @@ public class jdMntVacuna extends javax.swing.JDialog {
                 editableControlesVacuna(false, true, true, true, false); // Habilita los campos para ingresar datos
                 txtId.setText(objVacuna.generarIDVacuna().toString()); // Genera un nuevo ID
                 chkDisponibilidad.setSelected(true); // Disponibilidad predeterminada
-                usarBotonesVacuna(true, true, false, true, false, true);
+                usarBotonesVacuna(true, true, false, true, false, false);
                 txtNombre.requestFocus(); // Foco en el nombre
             } else {
                 // Guardar los datos
@@ -582,7 +592,7 @@ public class jdMntVacuna extends javax.swing.JDialog {
                 btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
                 btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
                 editableControlesVacuna(true, false, false, false, false);
-                usarBotonesVacuna(true, true, true, true, true, true);
+                usarBotonesVacuna(true, true, false, true, true, false);
                 limpiarControles();
                 listarVacunas();
                 JOptionPane.showMessageDialog(this, "Vacuna registrada con éxito");
@@ -667,6 +677,15 @@ public class jdMntVacuna extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void spnDosisKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spnDosisKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        boolean numeros = key >= 48 && key <= 57;
+        if (!(numeros)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_spnDosisKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

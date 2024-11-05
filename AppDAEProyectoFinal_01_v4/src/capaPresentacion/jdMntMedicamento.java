@@ -47,6 +47,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         cbxTipoMedicamento.setEnabled(false);
         spnStock.setEnabled(false);
         chkVigencia.setEnabled(false);
+        chkVigencia.setSelected(true);
 
     }
 
@@ -119,7 +120,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
     private void cancelarAccionMedicamento() {
         btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
         btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
-        usarBotonesMedicamento(true, true, false, false, true, false); 
+        usarBotonesMedicamento(true, true, false, false, true, false);
         limpiarControles();
         editableControlesMedicamento(false, false, false, false, false, false, false);
         listarMedicamentos();
@@ -554,26 +555,26 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             if (btnRegistrar.getText().equals(frmMenuPrincipal.BTN_NUEVO)) {
                 btnRegistrar.setText(frmMenuPrincipal.BTN_GUARDAR);
                 btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
-                chkVigencia.setEnabled(true);
                 limpiarControles();
-                editableControlesMedicamento(false, true, true, true, true, false, true);
+                editableControlesMedicamento(true, true, true, true, true, false, true);
                 txtId.setText(objMedicamento.generarCodigoMedicamento().toString());
-                chkVigencia.setSelected(true);
-                usarBotonesMedicamento(true, true, false, true, false, false); // Solo "Registrar" y "Cancelar" están activos
+                usarBotonesMedicamento(false, true, false, true, false, false);
                 txtNombre.requestFocus();
-            } else if (btnEliminar.getText().equals(frmMenuPrincipal.BTN_CANCELAR)) {
-                cancelarAccionMedicamento();
             } else {
+                // Validación de campos
                 if (txtNombre.getText().trim().isEmpty() || txtCosto.getText().trim().isEmpty() || txtPresentacion.getText().trim().isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
                     return;
                 }
+
                 if (objMedicamento.existeNombreMedicamento(txtNombre.getText())) {
                     JOptionPane.showMessageDialog(this, "El nombre del medicamento ya está registrado. Elija un nombre diferente.");
                     return;
                 } else {
                     btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
                     btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+
+                    // Registro del medicamento
                     objMedicamento.registrarMedicamento(
                             Integer.parseInt(txtId.getText()),
                             txtNombre.getText(),
@@ -583,8 +584,9 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                             chkVigencia.isSelected(),
                             objTipoMedicamento.obtenerCodigoTipoMedicamento(cbxTipoMedicamento.getSelectedItem().toString())
                     );
-                    editableControlesMedicamento(true, false, false, false, false, false, false);
-                    usarBotonesMedicamento(true, true, true, true, true, true); // Restablecer botones
+
+                    editableControlesMedicamento(false, false, false, false, false, false, false);
+                    usarBotonesMedicamento(true, true, false, false, true, false);
                     limpiarControles();
                     listarMedicamentos();
                     JOptionPane.showMessageDialog(this, "Medicamento registrado con éxito");
@@ -592,6 +594,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            e.printStackTrace();
         }
 
     }//GEN-LAST:event_btnRegistrarActionPerformed

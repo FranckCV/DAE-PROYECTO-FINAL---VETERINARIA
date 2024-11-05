@@ -38,7 +38,14 @@ public class clsMedicamento {
     }
 
     public void registrarMedicamento(int id, String nombre, double costo, int stock, String presentacion, boolean vigencia, int tipoMedicamentoId) throws Exception {
-        strSQL = "Insert into medicamento Values(" + id + ",'" + nombre + "'," + costo + "," + stock + ",'" + presentacion + "','" + vigencia + "'," + tipoMedicamentoId + ")";
+        String strSQL = "INSERT INTO medicamento VALUES("
+                + id + ", '"
+                + nombre + "', "
+                + costo + ", "
+                + stock + ", '"
+                + presentacion + "', "
+                + (vigencia ? "true" : "false") + ", "
+                + tipoMedicamentoId + ")";
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
