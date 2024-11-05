@@ -372,7 +372,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
                 btnRegistrar.setText(frmMenuPrincipal.BTN_GUARDAR);
                 btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
                 limpiarControles();
-                editableControlesTipoMedicamento(false, false); 
+                editableControlesTipoMedicamento(true, true); 
                 txtId.setText(objTipoMedicamento.generarCodigoTipoMedicamento().toString());
                 usarBotonesTipoMedicamento(false, true, false, true, false); 
                 txtNombre.requestFocus();
