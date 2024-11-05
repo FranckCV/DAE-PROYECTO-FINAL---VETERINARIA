@@ -1,11 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package capaNegocio;
 
 import capaDatos.clsJDBC;
-
 import java.sql.ResultSet;
 
 /**
@@ -13,6 +8,7 @@ import java.sql.ResultSet;
  * @author Junior
  */
 public class clsVacuna {
+
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;
@@ -22,9 +18,10 @@ public class clsVacuna {
     public static final String NOMBRE = "nombre";
     public static final String DOSIS_X_KGPESO = "dosis_x_kgpeso";
     public static final String ESPECIE_ID = "especie_id";
-    
+    public static final String DISPONIBILIDAD = "disponibilidad";
+
     public ResultSet listarVacunas() throws Exception {
-        strSQL = "select * from " + TABLA;
+        strSQL = "select * from " + TABLA + " order by id";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -63,7 +60,7 @@ public class clsVacuna {
         strSQL = "Select COALESCE(MAX(" + ID + "),0)+1 as valor from " + TABLA;
         try {
             rs = objConectar.consultarBD(strSQL);
-            while (rs.next()) {
+            if (rs.next()) {
                 return rs.getInt("valor");
             }
         } catch (Exception e) {
@@ -82,8 +79,9 @@ public class clsVacuna {
         }
     }
 
-    public void registrarVacuna(int id, String nom, Double dosis_x_kgpeso ,int especie_id) throws Exception {
-        strSQL = "insert into " + TABLA + " values (" + id + ", '" + nom + "', " + dosis_x_kgpeso + ", " + especie_id + ")";
+    public void registrarVacuna(int id, String nom, Double dosis_x_kgpeso, int especie_id, boolean disponibilidad) throws Exception {
+        strSQL = "insert into " + TABLA + " values (" + id + ", '" + nom + "', " + dosis_x_kgpeso + ", "
+                + especie_id + ", " + disponibilidad + ")";
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
@@ -91,10 +89,10 @@ public class clsVacuna {
         }
     }
 
-    public void modificarVacuna(int id, String nom, double dosis_x_kgpeso, Integer especie_id) throws Exception {
+    public void modificarVacuna(int id, String nom, double dosis_x_kgpeso, Integer especie_id, boolean disponibilidad) throws Exception {
         strSQL = "update " + TABLA + " set " + NOMBRE + " = '" + nom + "', " + DOSIS_X_KGPESO + " = " + dosis_x_kgpeso
-                + ", " + ESPECIE_ID + " = " + especie_id + " "
-                + "where " + ID + " = " + id + "";
+                + ", " + ESPECIE_ID + " = " + especie_id + ", " + DISPONIBILIDAD + " = " + disponibilidad
+                + " where " + ID + " = " + id;
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
@@ -125,5 +123,27 @@ public class clsVacuna {
         }
         return "";
     }
-    
+
+    public void actualizarDisponibilidad(int id, boolean disponibilidad) throws Exception {
+        strSQL = "UPDATE " + TABLA + " SET " + DISPONIBILIDAD + " = " + disponibilidad + " WHERE " + ID + " = " + id;
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al actualizar disponibilidad de la vacuna --> " + e.getMessage());
+        }
+    }
+
+    public boolean existeNombreVacuna(String nombre) throws Exception {
+        strSQL = "SELECT COUNT(*) AS cantidad FROM " + TABLA + " WHERE " + NOMBRE + " = '" + nombre + "'";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return rs.getInt("cantidad") > 0;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al verificar el nombre de la vacuna --> " + e.getMessage());
+        }
+        return false;
+    }
+
 }
