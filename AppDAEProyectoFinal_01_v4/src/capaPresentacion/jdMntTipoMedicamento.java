@@ -25,9 +25,10 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         listarTiposMedicamento();
-        btnRegistrar.setText("Registrar");
-        btnModificar.setText("Modificar");
-        btnEliminar.setText("Eliminar");
+        btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
+        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
+        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+        
     }
 
     public void listarTiposMedicamento() {
@@ -66,15 +67,16 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
     private void cancelarAccionTipoMedicamento() {
         btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
         btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
-        usarBotonesTipoMedicamento(true, true, false, false, false); 
+        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
+        usarBotonesTipoMedicamento(true, true, false, false, true); 
         limpiarControles();
-        editableControlesTipoMedicamento(false, false);
+        editableControlesTipoMedicamento(true, false);
         listarTiposMedicamento();
     }
 
     private void limpiarControles() {
         txtId.setText("");
-        txtId.setEditable(false);
+        txtId.setEditable(true);
         txtNombre.setText("");
         txtNombre.requestFocus();
     }
@@ -374,7 +376,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
                 limpiarControles();
                 editableControlesTipoMedicamento(true, true); 
                 txtId.setText(objTipoMedicamento.generarCodigoTipoMedicamento().toString());
-                usarBotonesTipoMedicamento(false, true, false, true, false); 
+                usarBotonesTipoMedicamento(false, true, false, true, true); 
                 txtNombre.requestFocus();
             } else {
 
@@ -519,6 +521,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         // TODO add your handling code here:
         listarTiposMedicamento();
         limpiarControles();
+        editableControlesTipoMedicamento(true, false);
         usarBotonesTipoMedicamento(true, true, false, false, false);
     }//GEN-LAST:event_formWindowOpened
 

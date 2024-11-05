@@ -119,10 +119,11 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
     private void cancelarAccionMedicamento() {
         btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
+        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
         btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
         usarBotonesMedicamento(true, true, false, false, true, false);
         limpiarControles();
-        editableControlesMedicamento(false, false, false, false, false, false, false);
+        editableControlesMedicamento(true, false, false, false, false, false, false);
         listarMedicamentos();
     }
 
@@ -585,7 +586,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                             objTipoMedicamento.obtenerCodigoTipoMedicamento(cbxTipoMedicamento.getSelectedItem().toString())
                     );
 
-                    editableControlesMedicamento(false, false, false, false, false, false, false);
+                    editableControlesMedicamento(true, true, false, false, false, false, false);
                     usarBotonesMedicamento(true, true, false, false, true, false);
                     limpiarControles();
                     listarMedicamentos();
@@ -624,7 +625,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                     btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
                     btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
                     editableControlesMedicamento(true, false, false, false, false, false, false);
-                    usarBotonesMedicamento(true, true, true, true, true, false);
+                    usarBotonesMedicamento(true, true, false, true, true, true);
                     limpiarControles();
                     listarMedicamentos();
                     JOptionPane.showMessageDialog(this, "Medicamento modificado con éxito");
