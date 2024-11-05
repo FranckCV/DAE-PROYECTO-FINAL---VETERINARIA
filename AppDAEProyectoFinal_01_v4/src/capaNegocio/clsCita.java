@@ -5,7 +5,7 @@
 package capaNegocio;
 
 import capaDatos.clsJDBC;
-import java.util.Date;
+import java.sql.Date;
 import java.sql.*;
 
 /**
@@ -44,9 +44,9 @@ public class clsCita {
     }
 
     // Método para insertar una nueva cita
-    public void insertarCita(Integer id, Integer estadoCitaId, Date fechaCita, String observacion, Integer custodiaMascotaId, Integer custodiaDueñoId) throws Exception {
-        strSQL = "INSERT INTO CITA (id, estado_cita_id, fecha_cita, observacion, CUSTODIAMASCOTAid, CUSTODIADUEÑOid) "
-                + "VALUES (" + id + ", " + estadoCitaId + ", '" + fechaCita + "', '" + observacion + "', " + custodiaMascotaId + ", " + custodiaDueñoId + ")";
+    public void insertarCita(Integer id, Integer estadoCitaId, Date fechaCita, String observacion, Integer custodiaMascotaId, Integer custodiaDuenioId) throws Exception {
+        strSQL = "INSERT INTO CITA (id, estado_cita_id, fecha_cita, observacion, CUSTODIAMASCOTAid, CUSTODIADUENIOid) "
+                + "VALUES (" + id + ", " + estadoCitaId + ", '" + fechaCita + "', '" + observacion + "', " + custodiaMascotaId + ", " + custodiaDuenioId + ")";
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
