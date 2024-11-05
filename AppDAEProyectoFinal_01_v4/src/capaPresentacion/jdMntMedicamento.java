@@ -557,10 +557,10 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                 btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
                 chkVigencia.setEnabled(true);
                 limpiarControles();
-                editableControlesMedicamento(false, true, true, true, true, true, true);
+                editableControlesMedicamento(false, true, true, true, true, false, true);
                 txtId.setText(objMedicamento.generarCodigoMedicamento().toString());
                 chkVigencia.setSelected(true);
-                usarBotonesMedicamento(false, true, false, true, false, false); // Habilitar/deshabilitar botones
+                usarBotonesMedicamento(false, true, false, true, false, true); // Habilitar/deshabilitar botones
                 txtNombre.requestFocus();
             } else {
 
@@ -603,10 +603,10 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                 if (btnModificar.getText().equals(frmMenuPrincipal.BTN_MODIFICAR)) {
                     btnModificar.setText(frmMenuPrincipal.BTN_GUARDAR);
                     btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
-                    editableControlesMedicamento(false, true, true, true, true, true, true);
+                    editableControlesMedicamento(false, true, true, true, true, false, true);
                     usarBotonesMedicamento(false, false, true, true, true, false);
 
-                    chkVigencia.setEnabled(true);
+                    chkVigencia.setEnabled(false);
                 } else {
                     objMedicamento.modificarMedicamento(
                             Integer.parseInt(txtId.getText()),
@@ -614,13 +614,12 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                             Double.parseDouble(txtCosto.getText()),
                             (int) spnStock.getValue(),
                             txtPresentacion.getText(),
-                            chkVigencia.isSelected(),
                             objTipoMedicamento.obtenerCodigoTipoMedicamento(cbxTipoMedicamento.getSelectedItem().toString())
                     );
                     btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
                     btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
-                    editableControlesMedicamento(true, false, false, false, false, true, false);
-                    usarBotonesMedicamento(true, true, true, true, true, true);
+                    editableControlesMedicamento(true, false, false, false, false, false, false);
+                    usarBotonesMedicamento(true, true, true, true, true, false);
                     limpiarControles();
                     listarMedicamentos();
                     JOptionPane.showMessageDialog(this, "Medicamento modificado con éxito");
@@ -706,6 +705,8 @@ public class jdMntMedicamento extends javax.swing.JDialog {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
         limpiarControles();
+        usarBotonesMedicamento(true, true, false, false, false, false); // Habilita todos los botones
+
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void spnStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spnStockKeyTyped
