@@ -566,11 +566,11 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
                 if (txtNombre.getText().trim().isEmpty() || txtCosto.getText().trim().isEmpty() || txtPresentacion.getText().trim().isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
-                } 
+                }
                 if (objMedicamento.existeNombreMedicamento(txtNombre.getText())) {
                     JOptionPane.showMessageDialog(this, "El nombre del medicamento ya está registrado. Elija un nombre diferente.");
                     return;
-                }else {
+                } else {
                     btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
                     btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
                     objMedicamento.registrarMedicamento(
