@@ -41,7 +41,7 @@ public class jdMantMedico extends javax.swing.JDialog {
     private final String columnName_IDServicio = "ID Servicio";
     private final String columnName_NombreServicio = "Servicio Disponible";
     private final String columnName_CostoServicio = "Costo";
-    private final String columnName_DisponibilidadDetServicio = "Disponibilidad";
+    private final String columnName_DisponibilidadDetServicio = "Disp. Asignacion";
     
     public static String id_medico_asignacion = "";
     
@@ -456,13 +456,15 @@ public class jdMantMedico extends javax.swing.JDialog {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(24, 24, 24)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                    .addComponent(btnAbrirGestionServicios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(btnAbrirGestionServicios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel12)
-                                .addGap(51, 51, 51)))))
-                .addGap(18, 18, 18))
+                                .addGap(102, 102, 102)))))
+                .addGap(29, 29, 29))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -475,12 +477,11 @@ public class jdMantMedico extends javax.swing.JDialog {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAbrirGestionServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(27, 27, 27)
-                            .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -646,7 +647,6 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void btnAbrirGestionServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirGestionServiciosActionPerformed
         // TODO add your handling code here:
-        
         if (txtID.getText().isBlank()) {
             JOptionPane.showMessageDialog(this, "Debe ingresar un codigo para asignar servicios");
         } else {
@@ -764,7 +764,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         }
     }
     
-    private void usarBotones(boolean bus, boolean nue, boolean mod, boolean eli, boolean vig, boolean disp, boolean lim) {
+    private void usarBotones(boolean bus, boolean nue, boolean mod, boolean eli, boolean vig, boolean disp, boolean lim , boolean asig) {
         btnBuscar.setEnabled(bus);
         btnNuevo.setEnabled(nue);
         btnEliminar.setEnabled(eli);
@@ -772,6 +772,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         btnDisponibilidad.setEnabled(disp);
         btnVigencia.setEnabled(vig);
         btnModificar.setEnabled(mod);
+        btnAbrirGestionServicios.setEnabled(asig);
     }
     
     private void limpiarControles() {
@@ -815,7 +816,12 @@ public class jdMantMedico extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            if (e.getMessage().contains("referida desde la tabla")) {
+                JOptionPane.showMessageDialog(this, "Error: Hay datos externos asociados al medico \"" + txtNombre.getText() +" "+ txtApePat.getText() +" "+ txtApeMat.getText() + "\". \n"
+                        + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            }
         }
     }
     
@@ -824,7 +830,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
         btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);        
         editableControles(true, false ,false, false, false,false, false, false, false);
-        usarBotones(true, true, true, true, true, true, true);
+        usarBotones(true, true, true, true, true, true, true,true);
         limpiarControles();
         listarMedicos();
     }
@@ -838,7 +844,7 @@ public class jdMantMedico extends javax.swing.JDialog {
                     btnModificar.setText(frmMenuPrincipal.BTN_GUARDAR);
                     btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
                     editableControles(false, true,true, true, true, true, true, true, true);
-                    usarBotones(false, false, true, true, false, false, false);
+                    usarBotones(false, false, true, true, false, false, false,false);
                 } else {
                     objTabla.modificarMedico(
                         Integer.parseInt(txtID.getText()),
@@ -853,7 +859,7 @@ public class jdMantMedico extends javax.swing.JDialog {
                     btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
                     btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
                     editableControles(true, false,false, false, false, false, false, false, false);
-                    usarBotones(true, true, true, true, true, true, true);
+                    usarBotones(true, true, true, true, true, true, true,true);
                     limpiarControles();
                     listarMedicos();
                     JOptionPane.showMessageDialog(this, "Se modificó con exito");
@@ -874,7 +880,7 @@ public class jdMantMedico extends javax.swing.JDialog {
                 txtID.setText(objTabla.generarIDMedico().toString());
                 chkDisponibilidad.setSelected(true);
                 chkVigencia.setSelected(true);
-                usarBotones(false, true, false, true, false, false, false);
+                usarBotones(false, true, false, true, false, false, false,false);
                 txtNombre.requestFocus();
             } else {
                 if (txtNombre.getText().trim().isBlank() || txtDocIdentidad.getText().trim().isBlank()) {
@@ -894,7 +900,7 @@ public class jdMantMedico extends javax.swing.JDialog {
                         objEs.obteneIdEspecialidad(cmbEspecialidad.getSelectedItem().toString())
                     );
                     editableControles(true, false ,false, false, false, false, false, false, false);
-                    usarBotones(true, true, true, true, true, true, true);
+                    usarBotones(true, true, true, true, true, true, true,true);
                     limpiarControles();
                     listarMedicos();
                     JOptionPane.showMessageDialog(this, "Se registró con exito");
