@@ -106,7 +106,7 @@ public class clsServicio {
     public void cambiarDisponibilidad(Integer id) throws Exception {
         Boolean disp = null;
 
-        rs = objConectar.consultarBD("select "+DISPONIBILIDAD+" from "+TABLA+" where "+ID+" = '"+id+"'");
+        rs = objConectar.consultarBD("select "+DISPONIBILIDAD+" from "+TABLA+" where "+ID+" = "+id+" ");
 
         while (rs.next()) {                
             disp = rs.getBoolean(DISPONIBILIDAD);
