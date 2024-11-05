@@ -14,7 +14,7 @@ import java.sql.*;
 
 /**
  *
- * @author franc
+ * @author Grupo_Veterinaria
  */
 public class clsJDBC {
 

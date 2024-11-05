@@ -4,7 +4,7 @@ package capaNegocio;
 import capaDatos.clsJDBC;
 import java.sql.ResultSet;
 
-public class clsMedico {
+    public class clsMedico {
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;
