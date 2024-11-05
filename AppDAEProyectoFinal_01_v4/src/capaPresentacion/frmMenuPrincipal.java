@@ -16,13 +16,30 @@ import javax.swing.JOptionPane;
  * @author franc
  */
 public class frmMenuPrincipal extends javax.swing.JFrame {
-         
+
+    
+//    Texto en Botones
     public static final String BTN_NUEVO = "Registrar";
     public static final String BTN_GUARDAR = "Guardar";
     public static final String BTN_MODIFICAR = "Modificar";
     public static final String BTN_ELIMINAR = "Eliminar";
     public static final String BTN_LIMPIAR = "Vaciar campos";
-    public static final String BTN_CANCELAR = "Cancelar"; 
+    public static final String BTN_CANCELAR = "Cancelar";
+    public static final String BTN_DISPONIBILIDAD = "Cambiar Disponibilidad";    
+    public static final String BTN_VIGENCIA = "Dar de Baja";  
+    
+//    Texto en Listados
+    public static final String SEXO_MAS = "Masculino";
+    public static final String SEXO_FEM = "Femenino";
+    public static final String VIGENCIA_SI = "Vigente";
+    public static final String VIGENCIA_NO = "No Vigente";
+    public static final String DISPONIBILIDAD_SI = "Disponible";
+    public static final String DISPONIBILIDAD_NO = "No Disponible";
+    public static final String DISPONIBLE_NO_EXT = "(No Disp)";
+
+    
+    
+    
     clsUsuario objUsuario= new clsUsuario();
     /**
      * Creates new form frmMenuPrincipal
@@ -566,6 +583,21 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    public static String textoBool(boolean vig, String txtTrue, String txtFalse) {
+        if (vig) {
+            return txtTrue;
+        } else {
+            return txtFalse;
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
 //        jdInicioSesionVet objForm= new jdInicioSesionVet(this, true);
@@ -715,7 +747,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objCita.setVisible(true);
     }//GEN-LAST:event_mnuCitaActionPerformed
 
-
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCita;

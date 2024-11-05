@@ -431,7 +431,7 @@ public class jdMantServicio extends javax.swing.JDialog {
                     rsPro.getString(clsServicio.NOMBRE),
                     rsPro.getString(clsServicio.DESCRIPCION),
                     rsPro.getString(clsServicio.COSTO),
-                    textoBool(rsPro.getBoolean(clsServicio.DISPONIBILIDAD), "Disponible", "No Disponible")
+                    frmMenuPrincipal.textoBool(rsPro.getBoolean(clsServicio.DISPONIBILIDAD), frmMenuPrincipal.DISPONIBILIDAD_SI, frmMenuPrincipal.DISPONIBILIDAD_NO)
                 });
             }
             tblServicio.setModel(modelo);
