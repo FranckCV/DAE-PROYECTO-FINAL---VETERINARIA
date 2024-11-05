@@ -76,7 +76,9 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
 
     private void limpiarControles() {
         txtId.setText("");
+        txtId.setEditable(false);
         txtNombre.setText("");
+        txtNombre.requestFocus();
     }
 
     private void eliminarTipoMedicamento() {
@@ -368,38 +370,48 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
         try {
-            if (btnRegistrar.getText().equals("Registrar")) {
+            if (btnRegistrar.getText().equals("Nuevo")) {
                 btnRegistrar.setText("Guardar");
                 btnEliminar.setText("Cancelar");
                 limpiarControles();
-                txtId.setText(objTipoMedicamento.generarCodigoTipoMedicamento().toString()); // Generar el ID automáticamente
-                editableControlesTipoMedicamento(false, true); // Habilitar el campo de nombre
-                usarBotonesTipoMedicamento(false, true, false, true, false); // Configurar los botones
+
+                // Genera el ID automáticamente y deshabilita el campo para edición
+                txtId.setText(objTipoMedicamento.generarCodigoTipoMedicamento().toString());
+                txtId.setEditable(false);
+
+                editableControlesTipoMedicamento(false, true); // Habilitar solo el campo de nombre
+                usarBotonesTipoMedicamento(false, true, false, true, false); // Configurar botones
                 txtNombre.requestFocus();
             } else {
-                // Validar que el campo nombre no esté vacío
                 if (txtNombre.getText().trim().isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
                     return;
                 }
 
-                // Validar que el nombre del tipo de medicamento no esté duplicado
                 if (objTipoMedicamento.existeNombreTipoMedicamento(txtNombre.getText())) {
                     JOptionPane.showMessageDialog(this, "El nombre del tipo de medicamento ya está registrado. Elija un nombre diferente.");
                     return;
                 } else {
-                    // Guardar el nuevo tipo de medicamento
-                    btnRegistrar.setText("Nuevo");
-                    btnEliminar.setText("Eliminar");
+                    // Registrar el tipo de medicamento
                     objTipoMedicamento.registrarTipoMedicamento(
                             Integer.parseInt(txtId.getText()),
                             txtNombre.getText()
                     );
-                    editableControlesTipoMedicamento(false, false); // Deshabilitar el campo de nombre
-                    usarBotonesTipoMedicamento(true, true, true, true, true); // Restablecer botones
+
+                    btnRegistrar.setText("Nuevo");
+                    btnEliminar.setText("Eliminar");
+                    editableControlesTipoMedicamento(false, false);
+                    usarBotonesTipoMedicamento(true, true, true, true, true);
                     limpiarControles();
-                    listarTiposMedicamento(); // Actualizar la lista de tipos de medicamento
+                    listarTiposMedicamento();
                     JOptionPane.showMessageDialog(this, "Tipo de Medicamento registrado con éxito");
+
+                    try {
+                        txtId.setText(objTipoMedicamento.generarCodigoTipoMedicamento().toString());
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, "Error al generar el código de tipo de medicamento: " + e.getMessage());
+                    }
+                    txtId.setEditable(false);
                 }
             }
         } catch (Exception e) {
@@ -418,7 +430,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
                     btnModificar.setText(frmMenuPrincipal.BTN_GUARDAR);
                     btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
                     txtNombre.setEditable(true); // Habilitar el campo de nombre para edición
-                    usarBotonesTipoMedicamento(false, false, true, true, false); // Configurar botones
+                    usarBotonesTipoMedicamento(true, false, true, true, false); // Configurar botones
 
                     txtNombre.requestFocus(); // Enfocar en el campo de nombre
                 } else {
@@ -469,6 +481,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
 
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
@@ -515,6 +528,8 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
         limpiarControles();
+        usarBotonesTipoMedicamento(true, true, false, false, false);
+
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -522,6 +537,8 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         listarTiposMedicamento();
         limpiarControles();
         usarBotonesTipoMedicamento(true, true, false, false, false);
+        txtId.setText(objTipoMedicamento.generarCodigoTipoMedicamento().toString());
+        txtId.setEditable(false);
     }//GEN-LAST:event_formWindowOpened
 
     /**
