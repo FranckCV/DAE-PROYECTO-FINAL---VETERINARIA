@@ -54,13 +54,16 @@ public class clsMedico {
         strSQL = """
                 select 
                    med.*, 
-                   esp.nom_especialidad, 
+                   esp.nom_especialidad,
+                   esp.disponibilidad as disp_esp,
                    count(det.servicio_id) as cant_servicios
                 from medico med
                 left join especialidad esp on esp.id = med.especialidad_id
                 left join detalle_servicio det ON det.medico_id = med.id
-                group by med.id, nom_especialidad
-                order by med.id 
+                left join servicio ser on ser.id = det.servicio_id
+                where ser.disponibilidad = true and det.disponibilidad = true
+                group by med.id, esp.id
+                order by med.vigencia desc, med.id 
                 """;
         try {
             rs = objConectar.consultarBD(strSQL);
@@ -74,13 +77,15 @@ public class clsMedico {
         strSQL =   " select " +
                     "     med.*," +
                     "     esp.nom_especialidad, " +
+                    "     esp.disponibilidad as disp_esp, " +
                     "     count(det.servicio_id) as CANT_SERVICIOS" +
                     " from medico med " +
                     " left join especialidad esp on esp.id = med.especialidad_id " +
                     " left join detalle_servicio det ON det.medico_id = med.id " +
-                    " where med.id = "+id+
-                    " group by med.id, esp.nom_especialidad " +
-                    " order by med.id ;"
+                    " left join servicio ser on ser.id = det.servicio_id " +
+                    " where med.id = "+id+" and ser.disponibilidad = true and det.disponibilidad = true"+
+                    " group by med.id, esp.id " +
+                    " order by med.vigencia desc, med.id ;"
                 ;
         try {
             rs = objConectar.consultarBD(strSQL);

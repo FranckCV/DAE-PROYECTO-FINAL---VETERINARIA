@@ -5,6 +5,8 @@
 package capaPresentacion;
 
 import capaNegocio.*;
+import java.awt.Color;
+import java.awt.Component;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,7 +15,10 @@ import java.util.Vector;
 import javax.swing.ButtonModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import soporte.CustomTableCellRenderer;
 
 /**
  *
@@ -25,6 +30,7 @@ public class jdMantMedico extends javax.swing.JDialog {
     clsEspecialidad objEs = new clsEspecialidad();
     private static final String BTN_DISPONIBLE = "Cambiar Disponibilidad";    
     private static final String BTN_VIGENCIA = "Dar de Baja";
+    private static final String NO_DISPONIBLE = "(No Disp)";
     
     /**
      * Creates new form jdMantMarca
@@ -610,6 +616,28 @@ public class jdMantMedico extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtIDKeyTyped
     
+//    class CustomTableCellRenderer extends DefaultTableCellRenderer {
+//        @Override
+//        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+//            Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+//
+//            // Verifica si la columna "Especialidad" en la fila contiene "(No Disp)"
+//            String especialidadValue = table.getValueAt(row, 8).toString(); // Aquí 8 es el índice de la columna "Especialidad"
+//
+//            // Define un color personalizado con código hexadecimal
+//            Color customRed = Color.decode("#FF6347"); // Ejemplo: Tomate rojo
+//            Color defaultBackground = Color.WHITE;
+//
+//            if (especialidadValue.contains("(No Disp)")) {
+//                cell.setBackground(customRed); // Establece el fondo personalizado en rojo
+//            } else {
+//                cell.setBackground(isSelected ? table.getSelectionBackground() : defaultBackground); // Fondo blanco si no está seleccionada
+//            }
+//
+//            return cell;
+//        }
+//    }
+    
     private void listarMedicos(){
         ResultSet rsDato = null;
         DefaultTableModel modelo = new DefaultTableModel();
@@ -636,11 +664,20 @@ public class jdMantMedico extends javax.swing.JDialog {
                     textoBool(rsDato.getBoolean(clsMedico.SEXO), "Masculino", "Femenino"),
                     textoBool(rsDato.getBoolean(clsMedico.DISPONIBILIDAD), "Disponible", "No Disponible"),
                     textoBool(rsDato.getBoolean(clsMedico.VIGENCIA), "Vigente", "No Vigente"),
-                    rsDato.getString(clsEspecialidad.NOMBRE),
+                    textoBool(rsDato.getBoolean("disp_esp"), rsDato.getString(clsEspecialidad.NOMBRE), NO_DISPONIBLE+" "+rsDato.getString(clsEspecialidad.NOMBRE)),
                     rsDato.getInt(clsMedico.CANT_SERVICIOS)
                 });
             }
             tblMedico.setModel(modelo);
+            
+//            Object[][] conditions = {
+//                {6, "No Disponible", "#FFD1C9"},
+//                {7, "No Vigente", "#FFD1C9"},
+//                {8, "(No Disp)", "#FFD1C9"}
+//            };
+//
+//            CustomTableCellRenderer.setCustomRenderer(tblMedico, conditions);
+        
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al listar tabla "+clsMedico.TABLA+": " + e.getMessage());
         }

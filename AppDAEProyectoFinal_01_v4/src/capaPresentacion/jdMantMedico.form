@@ -63,22 +63,13 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="btnVigencia" min="-2" pref="158" max="-2" attributes="0"/>
-                                      <Component id="btnDisponibilidad" min="-2" pref="158" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="btnModificar" min="-2" pref="158" max="-2" attributes="0"/>
-                                      <Component id="btnEliminar" min="-2" pref="158" max="-2" attributes="0"/>
-                                      <Component id="btnNuevo" alignment="1" min="-2" pref="158" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="btnVigencia" alignment="1" min="-2" pref="158" max="-2" attributes="0"/>
+                              <Component id="btnDisponibilidad" alignment="1" min="-2" pref="158" max="-2" attributes="0"/>
+                              <Component id="btnModificar" alignment="1" min="-2" pref="158" max="-2" attributes="0"/>
+                              <Component id="btnEliminar" alignment="1" min="-2" pref="158" max="-2" attributes="0"/>
+                              <Component id="btnNuevo" alignment="1" min="-2" pref="158" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
@@ -171,10 +162,8 @@
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="txtDocIdentidad" pref="160" max="32767" attributes="0"/>
-                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="txtID" pref="160" max="32767" attributes="0"/>
-                                              <Component id="txtApePat" alignment="0" max="32767" attributes="0"/>
-                                          </Group>
+                                          <Component id="txtID" alignment="1" pref="160" max="32767" attributes="0"/>
+                                          <Component id="txtApePat" alignment="0" max="32767" attributes="0"/>
                                           <Component id="radMasculino" min="-2" max="-2" attributes="0"/>
                                           <Component id="radFemenino" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
