@@ -25,20 +25,30 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         listarTiposMedicamento();
-        setInitialButtonState();
+        btnRegistrar.setText("Registrar");
+        btnModificar.setText("Modificar");
+        btnEliminar.setText("Eliminar");
+        txtId.setEditable(false); // El ID se genera automáticamente
     }
 
-    private void limpiarControles() {
-        txtId.setText("");
-        txtNombre.setText("");
-        setInitialButtonState();
-    }
+    public void listarTiposMedicamento() {
+        ResultSet rsTipoMed = null;
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Nombre");
+        tblTipoMedicamento.setModel(modelo);
 
-    private void setInitialButtonState() {
-        btnModificar.setEnabled(false);
-        btnEliminar.setEnabled(false);
-        btnRegistrar.setEnabled(true);
-        txtId.setEditable(false);
+        try {
+            rsTipoMed = objTipoMedicamento.listarTiposMedicamentos();
+            while (rsTipoMed.next()) {
+                modelo.addRow(new Object[]{
+                    rsTipoMed.getInt("id"),
+                    rsTipoMed.getString("nomtipo")
+                });
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al listar tipos de medicamento: " + e.getMessage());
+        }
     }
 
     private void usarBotonesTipoMedicamento(boolean buscar, boolean registrar, boolean modificar, boolean eliminar, boolean limpiar) {
@@ -49,29 +59,41 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         btnLimpiar.setEnabled(limpiar);
     }
 
-    private void habilitarControles(boolean habilitar) {
-        txtNombre.setEnabled(habilitar);
-        btnRegistrar.setEnabled(habilitar);
-        btnModificar.setEnabled(habilitar);
-        btnEliminar.setEnabled(habilitar);
+    private void editableControlesTipoMedicamento(boolean id, boolean nombre) {
+        txtId.setEditable(id);
+        txtNombre.setEditable(nombre);
     }
 
-    private void listarTiposMedicamento() {
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Código");
-        modelo.addColumn("Nombre");
+    private void cancelarAccionTipoMedicamento() {
+        btnRegistrar.setText("Registrar");
+        btnModificar.setText("Modificar");
+        btnEliminar.setText("Eliminar");
+        editableControlesTipoMedicamento(false, false);
+        usarBotonesTipoMedicamento(true, true, true, true, true);
+        limpiarControles();
+        listarTiposMedicamento();
+    }
 
+    private void limpiarControles() {
+        txtId.setText("");
+        txtNombre.setText("");
+    }
+
+    private void eliminarTipoMedicamento() {
         try {
-            ResultSet rsTipoMedicamento = objTipoMedicamento.listarTiposMedicamentos();
-            while (rsTipoMedicamento.next()) {
-                Vector<String> registro = new Vector<>();
-                registro.add(rsTipoMedicamento.getString("id"));
-                registro.add(rsTipoMedicamento.getString("nomtipo"));
-                modelo.addRow(registro);
+            if (txtId.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un código para eliminar.");
+            } else {
+                int valor = JOptionPane.showConfirmDialog(null, "¿Deseas eliminar el tipo de medicamento?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                if (valor == JOptionPane.YES_OPTION) {
+                    objTipoMedicamento.eliminarTipoMedicamento(Integer.parseInt(txtId.getText()));
+                    limpiarControles();
+                    listarTiposMedicamento(); // Actualizar la lista de tipos de medicamentos
+                    JOptionPane.showMessageDialog(this, "Tipo de Medicamento eliminado con éxito");
+                }
             }
-            tblTipoMedicamento.setModel(modelo);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al listar tipos de medicamento: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }
 
@@ -104,6 +126,11 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         btnLimpiar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 102));
 
@@ -115,11 +142,11 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(55, 55, 55))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,33 +290,34 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(36, 36, 36)
-                        .addComponent(btnLimpiar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(btnRegistrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                        .addComponent(btnModificar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEliminar)
-                        .addGap(16, 16, 16)))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(95, 95, 95)
+                                .addComponent(btnLimpiar))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(btnLimpiar)
-                        .addGap(1, 1, 1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(18, 18, 18)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnLimpiar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -340,82 +368,95 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
         try {
-            if (btnRegistrar.getText().equals("Nuevo")) {
+            if (btnRegistrar.getText().equals("Registrar")) {
                 btnRegistrar.setText("Guardar");
                 btnEliminar.setText("Cancelar");
                 limpiarControles();
-                txtId.setText(objTipoMedicamento.generarCodigoTipoMedicamento().toString());
-                txtNombre.setEditable(true);
-                usarBotonesTipoMedicamento(false, true, false, true, false);
+                txtId.setText(objTipoMedicamento.generarCodigoTipoMedicamento().toString()); // Generar el ID automáticamente
+                editableControlesTipoMedicamento(false, true); // Habilitar el campo de nombre
+                usarBotonesTipoMedicamento(false, true, false, true, false); // Configurar los botones
                 txtNombre.requestFocus();
             } else {
-                btnRegistrar.setText("Nuevo");
-                btnEliminar.setText("Eliminar");
-                usarBotonesTipoMedicamento(true, true, true, true, true);
+                // Validar que el campo nombre no esté vacío
+                if (txtNombre.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
+                    return;
+                }
 
+                // Validar que el nombre del tipo de medicamento no esté duplicado
+                if (objTipoMedicamento.existeNombreTipoMedicamento(txtNombre.getText())) {
+                    JOptionPane.showMessageDialog(this, "El nombre del tipo de medicamento ya está registrado. Elija un nombre diferente.");
+                    return;
+                } else {
+                    // Guardar el nuevo tipo de medicamento
+                    btnRegistrar.setText("Nuevo");
+                    btnEliminar.setText("Eliminar");
+                    objTipoMedicamento.registrarTipoMedicamento(
+                            Integer.parseInt(txtId.getText()),
+                            txtNombre.getText()
+                    );
+                    editableControlesTipoMedicamento(false, false); // Deshabilitar el campo de nombre
+                    usarBotonesTipoMedicamento(true, true, true, true, true); // Restablecer botones
+                    limpiarControles();
+                    listarTiposMedicamento(); // Actualizar la lista de tipos de medicamento
+                    JOptionPane.showMessageDialog(this, "Tipo de Medicamento registrado con éxito");
+                }
             }
-            if (txtNombre.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
-                return;
-            }
-            if (objTipoMedicamento.existeNombreTipoMedicamento(txtNombre.getText())) {
-                JOptionPane.showMessageDialog(this, "El nombre del tipo de medicamento ya está registrado. Elija un nombre diferente.");
-                return;
-            }
-            objTipoMedicamento.registrarTipoMedicamento(
-                    Integer.parseInt(txtId.getText()),
-                    txtNombre.getText()
-            );
-            JOptionPane.showMessageDialog(this, "Tipo de Medicamento registrado con éxito");
-            listarTiposMedicamento();
-            limpiarControles();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al registrar el tipo de medicamento: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
+
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         try {
-            if (txtId.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo de medicamento para modificar.");
-                return;
+            if (txtId.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo de medicamento para modificar");
+            } else {
+                if (btnModificar.getText().equals(frmMenuPrincipal.BTN_MODIFICAR)) {
+                    btnModificar.setText(frmMenuPrincipal.BTN_GUARDAR);
+                    btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+                    txtNombre.setEditable(true); // Habilitar el campo de nombre para edición
+                    usarBotonesTipoMedicamento(false, false, true, true, false); // Configurar botones
+
+                    txtNombre.requestFocus(); // Enfocar en el campo de nombre
+                } else {
+                    // Realiza la modificación
+                    objTipoMedicamento.modificarTipoMedicamento(
+                            Integer.parseInt(txtId.getText()),
+                            txtNombre.getText()
+                    );
+
+                    btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
+                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    txtNombre.setEditable(false); // Bloquear edición después de guardar
+                    usarBotonesTipoMedicamento(true, true, true, true, true); // Restablecer los botones
+                    limpiarControles();
+                    listarTiposMedicamento(); // Actualizar la tabla de tipos de medicamentos
+                    JOptionPane.showMessageDialog(this, "Tipo de Medicamento modificado con éxito");
+                }
             }
-            objTipoMedicamento.modificarTipoMedicamento(Integer.parseInt(txtId.getText()), txtNombre.getText());
-            JOptionPane.showMessageDialog(this, "Tipo de Medicamento modificado con éxito.");
-            listarTiposMedicamento();
-            limpiarControles();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al modificar el tipo de medicamento: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        try {
-            if (txtId.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un código para eliminar.");
-                return;
-            }
-            int confirm = JOptionPane.showConfirmDialog(this, "¿Desea eliminar el tipo de medicamento?", "Confirmación", JOptionPane.YES_NO_OPTION);
-            if (confirm == JOptionPane.YES_OPTION) {
-                objTipoMedicamento.eliminarTipoMedicamento(Integer.parseInt(txtId.getText()));
-                JOptionPane.showMessageDialog(this, "Tipo de Medicamento eliminado con éxito.");
-                listarTiposMedicamento();
-                limpiarControles();
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al eliminar el tipo de medicamento: " + e.getMessage());
+        if (btnRegistrar.getText().equals("Guardar") || btnModificar.getText().equals("Guardar")) {
+            cancelarAccionTipoMedicamento();
+        } else {
+            eliminarTipoMedicamento();
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void tblTipoMedicamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTipoMedicamentoMouseClicked
         // TODO add your handling code here:
-        int selectedRow = tblTipoMedicamento.getSelectedRow();
-        txtId.setText(tblTipoMedicamento.getValueAt(selectedRow, 0).toString());
-        txtNombre.setText(tblTipoMedicamento.getValueAt(selectedRow, 1).toString());
-        habilitarControles(true);
+        txtId.setText(String.valueOf(tblTipoMedicamento.getValueAt(tblTipoMedicamento.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);
+        usarBotonesTipoMedicamento(true, true, true, true, true);
+
     }//GEN-LAST:event_tblTipoMedicamentoMouseClicked
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
@@ -440,21 +481,34 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
+        ResultSet rsTipo = null;
         try {
-            if (txtId.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un ID para buscar.");
-                return;
-            }
-            ResultSet rs = objTipoMedicamento.buscarTipoMedicamento(Integer.parseInt(txtId.getText()));
-            if (rs.next()) {
-                txtNombre.setText(rs.getString("nomtipo"));
-                habilitarControles(true);
+            if (txtId.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar una ID para buscar");
             } else {
-                JOptionPane.showMessageDialog(this, "No se encontró el tipo de medicamento con el ID especificado.");
-                limpiarControles();
+                for (int i = 0; i < tblTipoMedicamento.getRowCount(); i++) {
+                    String valorCodigo = tblTipoMedicamento.getValueAt(i, 0).toString();
+                    if (valorCodigo.equals(txtId.getText())) {
+                        tblTipoMedicamento.setRowSelectionInterval(i, i);
+                        tblTipoMedicamento.scrollRectToVisible(tblTipoMedicamento.getCellRect(i, 0, true));
+                        break;
+                    }
+                }
+
+                rsTipo = objTipoMedicamento.buscarTipoMedicamento(Integer.parseInt(txtId.getText()));
+                if (rsTipo.next()) {
+                    txtNombre.setText(rsTipo.getString("nomtipo"));
+                    rsTipo.close();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Este código en tipo de medicamento no existe");
+                    limpiarControles();
+                    listarTiposMedicamento();
+                }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al buscar el tipo de medicamento: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            listarTiposMedicamento();
+            limpiarControles();
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -462,6 +516,13 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         // TODO add your handling code here:
         limpiarControles();
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        listarTiposMedicamento();
+        limpiarControles();
+        usarBotonesTipoMedicamento(true, true, false, false, false);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
