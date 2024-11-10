@@ -25,6 +25,7 @@ public class clsJDBC {
         this.password = "1234567890";
 //       this.password = "Leocix06015";
 //        this.password = "USAT2023";
+//        this.password= "1234";
         this.con = null;
     }
 
