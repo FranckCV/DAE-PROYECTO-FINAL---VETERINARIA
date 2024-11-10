@@ -30,8 +30,8 @@ public class clsJDBC {
 
 //        this.password = "tirsarios123";
        // this.password = "1234567890";
-       this.password = "Leocix06015";
-//        this.password = "USAT2023";
+//       this.password = "Leocix06015";
+        this.password = "USAT2023";
         
         
         this.con = null;
