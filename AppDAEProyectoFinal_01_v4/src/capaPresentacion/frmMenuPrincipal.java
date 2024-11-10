@@ -38,8 +38,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     public static final String DISPONIBLE_NO_EXT = "(No Disp)";
 
     
-    
-    
     clsUsuario objUsuario= new clsUsuario();
     /**
      * Creates new form frmMenuPrincipal
@@ -592,7 +590,15 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         }
     }
     
-    
+    public static void validarTextoSoloNumero(java.awt.event.KeyEvent evt){
+        int key = evt.getKeyChar();
+
+        boolean numeros = key >= 48 && key <= 57    ;
+
+        if (!(numeros)) {
+            evt.consume();
+        }
+    }
     
     
     

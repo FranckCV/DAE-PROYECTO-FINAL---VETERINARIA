@@ -405,13 +405,7 @@ public class jdMantServicio extends javax.swing.JDialog {
 
     private void txtIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyTyped
         // TODO add your handling code here:
-        int key = evt.getKeyChar();
-
-        boolean numeros = key >= 48 && key <= 57    ;
-
-        if (!(numeros)) {
-            evt.consume();
-        }
+        frmMenuPrincipal.validarTextoSoloNumero(evt);
     }//GEN-LAST:event_txtIDKeyTyped
     
     private void listarServicio(){
