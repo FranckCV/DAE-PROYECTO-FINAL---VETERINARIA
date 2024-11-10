@@ -18,15 +18,13 @@ public class clsJDBC {
 
     public clsJDBC() {
         this.driver = "org.postgresql.Driver";
-        this.url = "jdbc:postgresql://localhost:5432/bd_veterinaria"
-                + "";
+        this.url = "jdbc:postgresql://localhost:5432/bd_veterinaria";
         this.user = "postgres";
 
 //        this.password = "tirsarios123";
         this.password = "1234567890";
 //       this.password = "Leocix06015";
 //        this.password = "USAT2023";
-
         this.con = null;
     }
 
@@ -142,6 +140,10 @@ public class clsJDBC {
             desconectar();
         }
         return "";
+    }
+    
+    public Connection getCon() {
+        return this.con;
     }
 
 }

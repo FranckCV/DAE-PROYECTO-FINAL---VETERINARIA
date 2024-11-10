@@ -613,7 +613,9 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCitaActionPerformed
-        // TODO add your handling code here:
+        jdProgramacionCita objProgramacionCita = new jdProgramacionCita(this, true);
+        objProgramacionCita.setLocationRelativeTo(this);
+        objProgramacionCita.setVisible(true);
     }//GEN-LAST:event_btnCitaActionPerformed
 
     private void mnuMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMascotaActionPerformed

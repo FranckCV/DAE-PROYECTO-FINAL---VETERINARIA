@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author Junior
+ * @author Grupo_Veterinaria
  */
 public class clsVacuna {
 

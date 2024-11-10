@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author Junior Perez
+ * @author Grupo_Veterinaria
  */
 public class clsUsuario {
 

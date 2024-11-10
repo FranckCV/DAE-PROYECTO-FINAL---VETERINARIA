@@ -6,6 +6,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.sql.PreparedStatement;
 
+/**
+ *
+ * @author Grupo_Veterinaria
+ */
+
 public class clsMascota {
 
     clsJDBC objConectar = new clsJDBC();
