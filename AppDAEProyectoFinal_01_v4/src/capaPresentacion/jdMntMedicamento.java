@@ -711,7 +711,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
         limpiarControles();
-        usarBotonesMedicamento(true, true, false, false, false, false); // Habilita todos los botones
+        usarBotonesMedicamento(true, true, false, false, true, false); // Habilita todos los botones
 
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
