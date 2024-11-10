@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaNegocio/clsTipoMedicamento.java</file>
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMntVacuna.java</file>
@@ -16,6 +14,6 @@
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaDatos/clsJDBC.java</file>
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaNegocio/clsVacuna.java</file>
         </group>
->>>>>>> b1e1fdd3baab908e138b258a1b8701f3f495f736
     </open-files>
+
 </project-private>
