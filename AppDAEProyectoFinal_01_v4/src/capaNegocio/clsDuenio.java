@@ -5,6 +5,11 @@ import com.sun.jdi.connect.spi.Connection;
 import java.beans.Statement;
 import java.sql.ResultSet;
 
+/**
+ *
+ * @author Grupo_Veterinaria
+ */
+
 public class clsDuenio {
 
     clsJDBC objConectar = new clsJDBC();

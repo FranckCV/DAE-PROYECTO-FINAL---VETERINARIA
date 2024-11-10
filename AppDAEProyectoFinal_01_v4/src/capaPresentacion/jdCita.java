@@ -6,6 +6,7 @@ package capaPresentacion;
 
 import capaNegocio.clsCita;
 import capaNegocio.clsDuenio;
+import capaNegocio.clsEstadoCita;
 import capaNegocio.clsMascota;
 import capaNegocio.clsMedicamento;
 import capaNegocio.clsMedico;
@@ -29,14 +30,32 @@ public class jdCita extends javax.swing.JDialog {
     clsMedico objMedico = new clsMedico();
     clsServicio objServicio = new clsServicio();
     clsMascota objMascota = new clsMascota();
+    clsEstadoCita objEstadoCita = new clsEstadoCita();
 
     public jdCita(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
         llenarCboServicios();
+        llenarCboEstadoCita();
         this.setTitle("Gestión de Cita");
 
+    }
+    
+    private void llenarCboEstadoCita() {
+        ResultSet rsEstadoCita = null;
+        DefaultComboBoxModel modeloSer = new DefaultComboBoxModel();
+        cboEstadoCita.setModel(modeloSer);
+
+        try {
+            rsEstadoCita = objEstadoCita.listarEstadoCita();
+
+            while (rsEstadoCita.next()) {
+                modeloSer.addElement(rsEstadoCita.getString("nombre_estado"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Error al listar en interfaz los estados");
+        }
     }
 
     private void llenarCboServicios() {
@@ -152,7 +171,7 @@ public class jdCita extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         txtDniRuc = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtNombreCliente = new javax.swing.JTextField();
+        txtNombreDuenio = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -160,12 +179,12 @@ public class jdCita extends javax.swing.JDialog {
         txtCodDuenio = new javax.swing.JTextField();
         rdbBoleta = new javax.swing.JRadioButton();
         rdbFactura = new javax.swing.JRadioButton();
-        txtTipo = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         txtNombreMascota = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        txtEdadMascota = new javax.swing.JTextField();
+        txtEstadoSaludMascota = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         txtNotaMascota = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
@@ -174,6 +193,8 @@ public class jdCita extends javax.swing.JDialog {
         rdbCastrado = new javax.swing.JRadioButton();
         rdbNoCastrado = new javax.swing.JRadioButton();
         txtTipo2 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        spnEdad = new javax.swing.JSpinner();
         jPanel10 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
@@ -571,7 +592,7 @@ public class jdCita extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtCodDuenio, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombreCliente)))
+                                .addComponent(txtNombreDuenio)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(rdbBoleta)
@@ -579,7 +600,7 @@ public class jdCita extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rdbFactura)
-                            .addComponent(txtTipo)))
+                            .addComponent(txtTelefono)))
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -596,13 +617,13 @@ public class jdCita extends javax.swing.JDialog {
                                 .addComponent(jLabel1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombreDuenio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addComponent(txtCodDuenio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel8)
-                            .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(rdbBoleta)
@@ -651,6 +672,8 @@ public class jdCita extends javax.swing.JDialog {
             }
         });
 
+        jLabel4.setText("Edad:");
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -664,7 +687,7 @@ public class jdCita extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addComponent(txtNombreMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -672,7 +695,7 @@ public class jdCita extends javax.swing.JDialog {
                             .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addComponent(txtCodMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtEdadMascota)))
+                                .addComponent(txtEstadoSaludMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel9Layout.createSequentialGroup()
@@ -682,9 +705,13 @@ public class jdCita extends javax.swing.JDialog {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
                                 .addComponent(jLabel20)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtTipo2)))
-                        .addGap(12, 12, 12))
-                    .addComponent(txtNotaMascota))
+                                .addComponent(txtTipo2))))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(txtNotaMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(spnEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
@@ -700,7 +727,7 @@ public class jdCita extends javax.swing.JDialog {
                                 .addComponent(jLabel7)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtEdadMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEstadoSaludMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12)
                             .addComponent(txtCodMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel9Layout.createSequentialGroup()
@@ -714,7 +741,9 @@ public class jdCita extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
-                    .addComponent(txtNotaMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNotaMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(spnEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -933,28 +962,63 @@ public class jdCita extends javax.swing.JDialog {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBuscarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCitaActionPerformed
-//        ResultSet rsVenta = null;
-//        ResultSet rsDetalle = null;
-//
-//        try {
-//            if (rsVenta.next()) {
-//                llenarTablaInicial();
-//                DefaultTableModel modelo = (DefaultTableModel) tblDetalleMedicamento.getModel();
-//                txtDniRuc.setText(rsVenta.getString("dni"));
-//                btnBuscarClienteActionPerformed(evt);
-//                jDateChooser1.setDate(rsVenta.getDate("fecha"));
-//                rsDetalle = objVenta.listarDetalleVenta(Integer.parseInt(txtNumero.getText()));
-//
-//                while(rsDetalle.next()){
-//                    modelo.addRow(new Object[]{rsDetalle.getString("codProducto"),
-//                        rsDetalle.getString("nomProducto"), rsDetalle.getString("preciVenta"),
-//                        rsDetalle.getString("cantidad"), rsDetalle.getString("descuento") + "%",
-//                        rsDetalle.getString("precioVenta"), rsDetalle.getFloat("subtotal")});
-//            }
-//        }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, e.getMessage());
-//        }
+        ResultSet rsCitaEncontrada = null;
+        ResultSet rsDetalleCitaEncontrado = null;
+
+        try {
+            rsCitaEncontrada = objCita.buscarCita(Integer.parseInt(txtNumero.getText()));
+
+            if (rsCitaEncontrada.next()) {
+                int codDuenio = rsCitaEncontrada.getInt("custodiaduenioid");
+                int codMascota = rsCitaEncontrada.getInt("custodiamascotaid");
+
+                // del dueño
+                String docDuenio = rsCitaEncontrada.getString("duenio_doc");
+                String nombreDuenio = rsCitaEncontrada.getString("duenio_nombres") + " "
+                        + rsCitaEncontrada.getString("duenio_apPaterno") + " "
+                        + rsCitaEncontrada.getString("duenio_apMaterno");
+                String direccion = rsCitaEncontrada.getString("direccion");
+                String telefono_duenio = rsCitaEncontrada.getString("telefono_duenio");
+
+                // Datos de la mascota
+                String nombreMascota = rsCitaEncontrada.getString("nombre_mascota");
+                int edad = rsCitaEncontrada.getInt("edad");
+//                Date fechaNacimientoMascota = rsCitaEncontrada.getDate("mascota_fecha_nacimiento");
+//                double alturaMascota = rsCitaEncontrada.getDouble("mascota_altura");
+//                double pesoMascota = rsCitaEncontrada.getDouble("mascota_peso");
+//                boolean sexoMascota = rsCitaEncontrada.getBoolean("mascota_sexo");
+                boolean esterilizadoMascota = rsCitaEncontrada.getBoolean("castrado");
+//                boolean desparasitadoMascota = rsCitaEncontrada.getBoolean("mascota_desparasitado");
+                String nota = rsCitaEncontrada.getString("nota");
+                int raza_id = rsCitaEncontrada.getInt("raza_id");
+
+                // cita
+                int idCita = rsCitaEncontrada.getInt("id");
+                int estadoCitaId = rsCitaEncontrada.getInt("estado_cita_id");
+                Date fechaCita = rsCitaEncontrada.getDate("fecha_cita");
+                String observacionCita = rsCitaEncontrada.getString("observacion");
+                
+                txtCodDuenio.setText(String.valueOf(codDuenio));
+                txtDniRuc.setText(docDuenio);
+                txtNombreDuenio.setText(nombreDuenio);
+                txtDireccion.setText(direccion);
+                txtTelefono.setText(telefono_duenio);
+                
+                txtCodMascota.setText(String.valueOf(codMascota));
+                txtNombreMascota.setText(nombreMascota);
+                spnEdad.setValue(edad);
+//                txtEstadoSaludMascota.setText(direccion);
+                if (esterilizadoMascota) {
+                    rdbCastrado.setSelected(true);
+                } else {
+                    rdbNoCastrado.setSelected(true);
+                }
+                
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
 
     }//GEN-LAST:event_btnBuscarCitaActionPerformed
 
@@ -1024,7 +1088,7 @@ public class jdCita extends javax.swing.JDialog {
 
             if (rsCliente.next()) {
                 txtCodDuenio.setText(String.valueOf(rsCliente.getString("id")));
-                txtNombreCliente.setText(String.valueOf(rsCliente.getString("nombres") + " " + rsCliente.getString("apepaterno")
+                txtNombreDuenio.setText(String.valueOf(rsCliente.getString("nombres") + " " + rsCliente.getString("apepaterno")
                         + " " + rsCliente.getString("apematerno")));
                 txtDireccion.setText(String.valueOf(rsCliente.getString("direccion")));
 
@@ -1074,7 +1138,7 @@ public class jdCita extends javax.swing.JDialog {
                 if (rsMascota.next()) {
                     txtCodMascota.setText(String.valueOf(rsMascota.getString("id")));
                     txtNotaMascota.setText(String.valueOf(rsMascota.getString("notaAdicional")));
-                    txtEdadMascota.setText(String.valueOf(objMascota.calcularEdadMascota(rsMascota.getInt("id"))));
+                    txtEstadoSaludMascota.setText(String.valueOf(objMascota.calcularEdadMascota(rsMascota.getInt("id"))));
 
                     if (rsMascota.getBoolean("esterilizado")) {
                         rdbCastrado.setSelected(true);
@@ -1210,6 +1274,7 @@ public class jdCita extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
@@ -1229,6 +1294,7 @@ public class jdCita extends javax.swing.JDialog {
     private javax.swing.JRadioButton rdbCastrado;
     private javax.swing.JRadioButton rdbFactura;
     private javax.swing.JRadioButton rdbNoCastrado;
+    private javax.swing.JSpinner spnEdad;
     private javax.swing.JTable tblDetalleMedicamento;
     private javax.swing.JTable tblDetalleServicio;
     private javax.swing.JTextArea txtANotaAdicional;
@@ -1241,17 +1307,17 @@ public class jdCita extends javax.swing.JDialog {
     private javax.swing.JTextField txtDniRuc;
     private javax.swing.JTextField txtDocMedico;
     private javax.swing.JTextField txtDosis;
-    private javax.swing.JTextField txtEdadMascota;
+    private javax.swing.JTextField txtEstadoSaludMascota;
     private javax.swing.JTextField txtIgv;
     private javax.swing.JTextField txtIndicacion;
-    private javax.swing.JTextField txtNombreCliente;
+    private javax.swing.JTextField txtNombreDuenio;
     private javax.swing.JTextField txtNombreMascota;
     private javax.swing.JTextField txtNombreMedico;
     private javax.swing.JTextField txtNombreProducto;
     private javax.swing.JTextField txtNotaMascota;
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtSubtotal;
-    private javax.swing.JTextField txtTipo;
+    private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtTipo2;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables

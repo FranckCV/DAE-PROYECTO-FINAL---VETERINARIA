@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author franc
+ * @author Grupo_Veterinaria
  */
 public class clsDetalle_Servicio {
     clsJDBC objConectar = new clsJDBC();

@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author franc
+ * @author Grupo_Veterinaria
  */
 public class clsEspecialidad {
     clsJDBC objConectar = new clsJDBC();

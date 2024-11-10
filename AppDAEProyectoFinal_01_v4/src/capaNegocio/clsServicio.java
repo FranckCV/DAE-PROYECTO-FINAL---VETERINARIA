@@ -9,9 +9,10 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author franc
+ * @author Grupo_Veterinaria
  */
 public class clsServicio {
+
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;
@@ -101,42 +102,30 @@ public class clsServicio {
             throw new Exception("Error al eliminar " + TABLA + ": " + e.getMessage());
         }
     }
-    
 
     public void cambiarDisponibilidad(Integer id) throws Exception {
         Boolean disp = null;
 
-        rs = objConectar.consultarBD("select "+DISPONIBILIDAD+" from "+TABLA+" where "+ID+" = "+id+" ");
+        rs = objConectar.consultarBD("select " + DISPONIBILIDAD + " from " + TABLA + " where " + ID + " = " + id + " ");
 
-        while (rs.next()) {                
+        while (rs.next()) {
             disp = rs.getBoolean(DISPONIBILIDAD);
         }
-        
+
         try {
-            strSQL = "update "+TABLA+" set "+DISPONIBILIDAD+" = "+!disp+" where "+ID+" = '"+id+"'";
+            strSQL = "update " + TABLA + " set " + DISPONIBILIDAD + " = " + !disp + " where " + ID + " = '" + id + "'";
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
-            throw new Exception("Error al cambiar disponibilidad en ID:"+id+" en tabla "+TABLA+": " + e.getMessage());
-        }        
+            throw new Exception("Error al cambiar disponibilidad en ID:" + id + " en tabla " + TABLA + ": " + e.getMessage());
+        }
     }
-    
-    
-    
-    
-    
+
     public ResultSet obtenerDatosDetalleServicio(int codigoServicio, String documentoMedico) throws Exception {
-        // Construir la consulta SQL
-        strSQL = "SELECT ds.*, "
-                + "s.id, "
-                + "s.nom_servicio,"
-                + "s.descripcion, "
-                + "s.costo, "
-                + "m.nombres, "
-                + "m.apePaterno, "
-                + "m.apeMaterno "
+        strSQL = "SELECT ds.*, s.id, s.nom_servicio, s.descripcion, s.costo, "
+                + "m.nombres, m.apePaterno, m.apeMaterno "
                 + "FROM DETALLE_SERVICIO ds "
                 + "INNER JOIN SERVICIO s ON ds.servicio_id = s.id "
-                + "INNER JOIN MEDICO m ON ds.MEDICOid = m.id "
+                + "INNER JOIN MEDICO m ON ds.medico_id = m.id "
                 + "WHERE s.id = " + codigoServicio + " "
                 + "AND m.doc_identidad = '" + documentoMedico + "'";
 
@@ -149,42 +138,28 @@ public class clsServicio {
     }
 
     public ResultSet obtenerDatosDetalleServicioPorCodServicio(int codigoServicio) throws Exception {
-        // Construir la consulta SQL
-        strSQL = "SELECT ds.*, "
-                + "s.id, "
-                + "s.nom_servicio,"
-                + "s.descripcion, "
-                + "s.costo, "
-                + "m.nombres, "
-                + "m.apePaterno, "
-                + "m.apeMaterno "
+        strSQL = "SELECT ds.*, s.id, s.nom_servicio, s.descripcion, s.costo, "
+                + "m.nombres, m.apePaterno, m.apeMaterno "
                 + "FROM DETALLE_SERVICIO ds "
                 + "INNER JOIN SERVICIO s ON ds.servicio_id = s.id "
-                + "INNER JOIN MEDICO m ON ds.MEDICOid = m.id "
+                + "INNER JOIN MEDICO m ON ds.medico_id = m.id "
                 + "WHERE s.id = " + codigoServicio;
+
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
         } catch (Exception e) {
             throw new Exception("Error al obtener datos de detalle del servicio --> " + e.getMessage());
         }
-
     }
 
     public ResultSet obtenerDatosDetalleServicioPorMedico(String documentoMedico) throws Exception {
-        // Construir la consulta SQL
-        strSQL = "SELECT ds.*, "
-                + "s.id, "
-                + "s.nom_servicio,"
-                + "s.descripcion, "
-                + "s.costo, "
-                + "m.nombres, "
-                + "m.apePaterno, "
-                + "m.apeMaterno "
+        strSQL = "SELECT ds.*, s.id, s.nom_servicio, s.descripcion, s.costo, "
+                + "m.nombres, m.apePaterno, m.apeMaterno "
                 + "FROM DETALLE_SERVICIO ds "
                 + "INNER JOIN SERVICIO s ON ds.servicio_id = s.id "
-                + "INNER JOIN MEDICO m ON ds.MEDICOid = m.id "
-                + "AND m.doc_identidad = '" + documentoMedico + "'";
+                + "INNER JOIN MEDICO m ON ds.medico_id = m.id "
+                + "WHERE m.doc_identidad = '" + documentoMedico + "'";
 
         try {
             rs = objConectar.consultarBD(strSQL);
@@ -195,40 +170,26 @@ public class clsServicio {
     }
 
     public ResultSet obtenerDatosDetalleServicioTodos() throws Exception {
-        // Construir la consulta SQL
-        strSQL = "SELECT ds.*, "
-                + "s.id, "
-                + "s.nom_servicio,"
-                + "s.descripcion, "
-                + "s.costo, "
-                + "m.nombres, "
-                + "m.apePaterno, "
-                + "m.apeMaterno "
+        strSQL = "SELECT ds.*, s.id, s.nom_servicio, s.descripcion, s.costo, "
+                + "m.nombres, m.apePaterno, m.apeMaterno "
                 + "FROM DETALLE_SERVICIO ds "
                 + "INNER JOIN SERVICIO s ON ds.servicio_id = s.id "
-                + "INNER JOIN MEDICO m ON ds.MEDICOid = m.id ";
+                + "INNER JOIN MEDICO m ON ds.medico_id = m.id";
 
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
         } catch (Exception e) {
-            throw new Exception("Error al obtener todos datos de detalle del servicio --> " + e.getMessage());
+            throw new Exception("Error al obtener todos los datos de detalle del servicio --> " + e.getMessage());
         }
     }
 
     public ResultSet obtenerDatosDetalleServicio(int codigoServicio, int codMedico) throws Exception {
-        // Construir la consulta SQL
-        strSQL = "SELECT ds.*, "
-                + "s.id, "
-                + "s.nom_servicio,"
-                + "s.descripcion, "
-                + "s.costo, "
-                + "m.nombres, "
-                + "m.apePaterno, "
-                + "m.apeMaterno "
+        strSQL = "SELECT ds.*, s.id, s.nom_servicio, s.descripcion, s.costo, "
+                + "m.nombres, m.apePaterno, m.apeMaterno "
                 + "FROM DETALLE_SERVICIO ds "
                 + "INNER JOIN SERVICIO s ON ds.servicio_id = s.id "
-                + "INNER JOIN MEDICO m ON ds.MEDICOid = m.id "
+                + "INNER JOIN MEDICO m ON ds.medico_id = m.id "
                 + "WHERE s.id = " + codigoServicio + " "
                 + "AND m.id = " + codMedico;
 
@@ -239,6 +200,5 @@ public class clsServicio {
             throw new Exception("Error al obtener datos de detalle del servicio --> " + e.getMessage());
         }
     }
-    
-    
+
 }

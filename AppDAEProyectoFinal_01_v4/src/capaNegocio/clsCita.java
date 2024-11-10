@@ -5,8 +5,8 @@
 package capaNegocio;
 
 import capaDatos.clsJDBC;
-import java.sql.Date;
 import java.sql.*;
+import javax.swing.JTable;
 
 /**
  *
@@ -33,24 +33,77 @@ public class clsCita {
         return 0;
     }
 
-    public ResultSet buscarCita(Integer idCita) throws Exception {
-        strSQL = "SELECT * FROM CITA WHERE id = " + idCita;
+    public ResultSet buscarCita(Integer numCita) throws Exception {
+        strSQL = "SELECT CITA.*, "
+                + "DUEniO.doc_identidad AS duenio_doc, DUEniO.nombres AS duenio_nombres, DUEniO.apePaterno AS duenio_apPaterno, "
+                + "DUEniO.apeMaterno AS duenio_apMaterno, DUEniO.direccion, DUEniO.telefono AS telefono_duenio, "
+                + "MASCOTA.id AS codigo_mascota, MASCOTA.nombre AS nombre_mascota, MASCOTA.raza_id, MASCOTA.notaAdicional AS nota, "
+                + "MASCOTA.esterilizado AS castrado, "
+                + "EXTRACT(YEAR FROM AGE(CURRENT_DATE, MASCOTA.fecha_nacimiento)) AS edad "
+                + "FROM CITA "
+                + "INNER JOIN CUSTODIA ON CITA.CUSTODIAMASCOTAid = CUSTODIA.MASCOTAid AND CITA.CUSTODIADUEniOid = CUSTODIA.DUEniOid "
+                + "INNER JOIN DUEniO ON CUSTODIA.DUEniOid = DUEniO.id "
+                + "INNER JOIN MASCOTA ON CUSTODIA.MASCOTAid = MASCOTA.id "
+                + "WHERE CITA.id = " + numCita;
+
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
         } catch (Exception e) {
-            throw new Exception("Error al buscar cita --> " + e.getLocalizedMessage());
+            throw new Exception("Error al buscar cita " + e.getMessage());
         }
     }
 
     // Método para insertar una nueva cita
-    public void insertarCita(Integer id, Integer estadoCitaId, Date fechaCita, String observacion, Integer custodiaMascotaId, Integer custodiaDuenioId) throws Exception {
-        strSQL = "INSERT INTO CITA (id, estado_cita_id, fecha_cita, observacion, CUSTODIAMASCOTAid, CUSTODIADUENIOid) "
-                + "VALUES (" + id + ", " + estadoCitaId + ", '" + fechaCita + "', '" + observacion + "', " + custodiaMascotaId + ", " + custodiaDuenioId + ")";
+//    public void insertarCita(Integer id, Integer estadoCitaId, Date fechaCita, String observacion, Integer custodiaMascotaId, Integer custodiaDuenioId) throws Exception {
+//        strSQL = "INSERT INTO CITA (id, estado_cita_id, fecha_cita, observacion, CUSTODIAMASCOTAid, CUSTODIADUENIOid) "
+//                + "VALUES (" + id + ", " + estadoCitaId + ", '" + fechaCita + "', '" + observacion + "', " + custodiaMascotaId + ", " + custodiaDuenioId + ")";
+//        try {
+//            objConectar.ejecutarBD(strSQL);
+//        } catch (Exception e) {
+//            throw new Exception("Error al insertar cita --> " + e.getLocalizedMessage());
+//        }
+//    }
+    public void registrarCita(int estadoCitaId, int custodiamascotaId, int custodiaDuenioId, JTable tblServicios) throws Exception {
         try {
-            objConectar.ejecutarBD(strSQL);
+            objConectar.conectar();
+            con = objConectar.getCon();
+            con.setAutoCommit(false);
+            sent = con.createStatement();
+
+            // Genera un nuevo ID para la cita
+            int idCita = generarCodigoCita();
+            String strSQL = "INSERT INTO CITA (id, estado_cita_id, fecha_cita, observacion, CUSTODIAMASCOTAid, CUSTODIADUEniOid) "
+                    + "VALUES (" + idCita + ", " + estadoCitaId + ", CURRENT_DATE, '', " + custodiamascotaId + ", " + custodiaDuenioId + ")";
+            sent.executeUpdate(strSQL);
+
+            int rowCount = tblServicios.getRowCount();
+            for (int i = 0; i < rowCount; i++) {
+                String cadena = String.valueOf(tblServicios.getValueAt(i, 0));
+                String[] codigos = cadena.split(" - ");
+                int codSer = Integer.parseInt(codigos[0].trim());
+                int codMed = Integer.parseInt(codigos[1].trim());
+                String horaEntrada = tblServicios.getValueAt(i, 3).toString();
+                String horaSalida = tblServicios.getValueAt(i, 4).toString();
+                String notaAdicional = tblServicios.getValueAt(i, 5).toString();
+
+                strSQL = "INSERT INTO DETALLE_CITA (cita_id, detalle_servicio_serv_id, detalle_servicio_med_id, horaEntrada, "
+                        + "horaSalida, nota_adicional) "
+                        + "VALUES (" + idCita + ", " + codSer + ", "
+                        + codMed + ", '" + horaEntrada + "', '" + horaSalida + "', '" + notaAdicional + "')";
+                sent.executeUpdate(strSQL);
+
+                // Actualiza disponibilidad en DETALLE_SERVICIO
+                strSQL = "UPDATE DETALLE_SERVICIO SET disponibilidad = false WHERE servicio_id = " + codSer + " AND medico_id = " + codMed;
+                sent.executeUpdate(strSQL);
+            }
+
+            con.commit();
         } catch (Exception e) {
-            throw new Exception("Error al insertar cita --> " + e.getLocalizedMessage());
+            con.rollback();
+            throw new Exception("Error al registrar cita --> " + e.getLocalizedMessage());
+        } finally {
+            objConectar.desconectar();
         }
     }
 

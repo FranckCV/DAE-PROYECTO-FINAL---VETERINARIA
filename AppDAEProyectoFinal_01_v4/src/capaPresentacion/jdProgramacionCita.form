@@ -470,7 +470,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="txtTipo" min="-2" pref="181" max="-2" attributes="0"/>
+                          <Component id="txtTelefono" min="-2" pref="181" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -507,7 +507,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="jLabel8" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtTipo" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtTelefono" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -556,7 +556,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtCodDuenio">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtTipo">
+        <Component class="javax.swing.JTextField" name="txtTelefono">
         </Component>
         <Component class="javax.swing.JRadioButton" name="rdbBoleta">
           <Properties>

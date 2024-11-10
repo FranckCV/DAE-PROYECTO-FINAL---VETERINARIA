@@ -144,5 +144,9 @@ public class clsJDBC {
         }
         return "";
     }
+    
+    public Connection getCon() {
+        return this.con;
+    }
 
 }

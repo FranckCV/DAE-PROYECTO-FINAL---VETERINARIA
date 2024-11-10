@@ -10,7 +10,7 @@ import java.util.Random;
 
 /**
  *
- * @author Junior Perez
+ * @author Grupo_Veterinaria
  */
 public class clsCaptcha {
 
