@@ -251,6 +251,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Modificar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModificarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnDarBaja">
           <Properties>
@@ -459,8 +462,8 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtCodProducto" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jSpinner1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtCodMedicamento" alignment="0" max="32767" attributes="0"/>
+                              <Component id="spnCantidad" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
@@ -471,16 +474,21 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtNombreProducto" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Component id="txtNombreMedicamento" min="-2" pref="160" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                       <Component id="txtIndicacion" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                  <Component id="btnEliminarMedicamento" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnAgregarMedicamento" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="btnEliminarMedicamento" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnAgregarMedicamento" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="btnBuscarMedicamento" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -490,18 +498,21 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="btnAgregarMedicamento" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnEliminarMedicamento" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="btnBuscarMedicamento" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btnEliminarMedicamento" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtNombreProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtNombreMedicamento" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtCodProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtCodMedicamento" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jSpinner1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="spnCantidad" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtDosis" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -511,6 +522,7 @@
                               <Component id="txtIndicacion" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <Component id="btnAgregarMedicamento" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -523,9 +535,9 @@
             <Property name="text" type="java.lang.String" value="Medicamento:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtNombreProducto">
+        <Component class="javax.swing.JTextField" name="txtNombreMedicamento">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreProductoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreMedicamentoActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel14">
@@ -538,7 +550,7 @@
             <Property name="text" type="java.lang.String" value="Dosis:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtCodProducto">
+        <Component class="javax.swing.JTextField" name="txtCodMedicamento">
           <Properties>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[61, 22]"/>
@@ -548,10 +560,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCodProductoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCodMedicamentoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JSpinner" name="jSpinner1">
+        <Component class="javax.swing.JSpinner" name="spnCantidad">
         </Component>
         <Component class="javax.swing.JButton" name="btnAgregarMedicamento">
           <Properties>
@@ -594,6 +606,16 @@
         <Component class="javax.swing.JTextField" name="txtIndicacion">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIndicacionActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnBuscarMedicamento">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/conector/Recursos/buscar-peque&#xf1;o.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarMedicamentoActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -793,7 +815,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="txtTipo2" max="32767" attributes="0"/>
+                                  <Component id="txtRaza" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -831,7 +853,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtTipo2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtRaza" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -911,7 +933,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdbNoCastradoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtTipo2">
+        <Component class="javax.swing.JTextField" name="txtRaza">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -1155,6 +1177,9 @@
                   </Table>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblDetalleServicioMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

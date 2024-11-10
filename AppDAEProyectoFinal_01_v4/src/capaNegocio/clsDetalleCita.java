@@ -31,5 +31,22 @@ public class clsDetalleCita {
 //            throw new Exception("Error al insertar detalle de cita --> " + e.getLocalizedMessage());
 //        }
 //    }
+    public ResultSet buscarDetalleCita(Integer numCita) throws Exception {
+        strSQL = "SELECT DETALLE_CITA.*, "
+                + "SERVICIO.nom_servicio AS servicio_nombre, SERVICIO.descripcion AS servicio_descripcion, SERVICIO.costo AS costo,"
+                + "MEDICO.nombres AS medico_nombres, MEDICO.apePaterno AS medico_apPaterno, MEDICO.apeMaterno AS medico_apMaterno, "
+                + "MEDICO.doc_identidad AS medico_doc "
+                + "FROM DETALLE_CITA "
+                + "INNER JOIN SERVICIO ON DETALLE_CITA.detalle_servicio_serv_id = SERVICIO.id "
+                + "INNER JOIN MEDICO ON DETALLE_CITA.detalle_servicio_med_id = MEDICO.id "
+                + "WHERE DETALLE_CITA.cita_id = " + numCita;
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar detalle de cita --> " + e.getMessage());
+        }
+    }
 
 }

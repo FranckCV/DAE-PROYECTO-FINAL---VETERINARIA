@@ -5,14 +5,17 @@
 package capaPresentacion;
 
 import capaNegocio.clsCita;
+import capaNegocio.clsDetalleCita;
 import capaNegocio.clsDuenio;
 import capaNegocio.clsEstadoCita;
 import capaNegocio.clsMascota;
 import capaNegocio.clsMedicamento;
 import capaNegocio.clsMedico;
+import capaNegocio.clsRaza;
 import capaNegocio.clsServicio;
 import java.awt.Frame;
 import java.sql.*;
+import java.util.function.ObjDoubleConsumer;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -31,6 +34,8 @@ public class jdCita extends javax.swing.JDialog {
     clsServicio objServicio = new clsServicio();
     clsMascota objMascota = new clsMascota();
     clsEstadoCita objEstadoCita = new clsEstadoCita();
+    clsDetalleCita objDetalleCita = new clsDetalleCita();
+    clsRaza objRaza = new clsRaza();
 
     public jdCita(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -40,8 +45,38 @@ public class jdCita extends javax.swing.JDialog {
         llenarCboEstadoCita();
         this.setTitle("Gestión de Cita");
 
+        llenarTablaInicialServicio();
+        llenarTablaInicialMedicamento();
+
     }
-    
+
+    private void llenarTablaInicialServicio() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID SERV_MED");
+        modelo.addColumn("SERVICIO");
+        modelo.addColumn("MEDICO");
+        modelo.addColumn("HORA ENTRADA");
+        modelo.addColumn("HORA SALIDA");
+        modelo.addColumn("COSTO");
+
+        tblDetalleServicio.setModel(modelo);
+        tblDetalleServicio.getTableHeader().setReorderingAllowed(false); //no mover los headers
+    }
+
+    private void llenarTablaInicialMedicamento() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID MEDICAMENTO");
+        modelo.addColumn("ID SERVICIO");
+        modelo.addColumn("ID MEDICO");
+        modelo.addColumn("DOSIS");
+        modelo.addColumn("INDICACIÓN");
+        modelo.addColumn("CANTIDAD");
+        modelo.addColumn("COSTO");
+
+        tblDetalleMedicamento.setModel(modelo);
+        tblDetalleMedicamento.getTableHeader().setReorderingAllowed(false); //no mover los headers
+    }
+
     private void llenarCboEstadoCita() {
         ResultSet rsEstadoCita = null;
         DefaultComboBoxModel modeloSer = new DefaultComboBoxModel();
@@ -74,56 +109,79 @@ public class jdCita extends javax.swing.JDialog {
         }
     }
 
+    private void llenarServicioMedico() {
+        ResultSet rsSer;
+        ResultSet rsMed;
+        String cadena = String.valueOf(tblDetalleServicio.getValueAt(tblDetalleServicio.getSelectedRow(), 0));
+        String[] codigos = cadena.split(" - ");
+        int codigoTablaSer = Integer.parseInt(codigos[0].trim());
+        int codTablaMed = Integer.parseInt(codigos[1].trim());
+
+        try {
+            rsSer = objServicio.buscarServicio(codigoTablaSer);
+            rsMed = objMedico.buscarMedico(codTablaMed);
+
+            if (rsSer.next()) {
+                cboServicios.setSelectedItem(rsSer.getString("nom_servicio"));
+                txtDescripcionServicio.setText(rsSer.getString("descripcion"));
+            }
+
+            if (rsMed.next()) {
+                txtDocMedico.setText(rsMed.getString("doc_identidad"));
+                txtNombreMedico.setText(rsMed.getString("nombres") + " " + rsMed.getString("apepaterno") + " " + rsMed.getString("apematerno"));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Error al llenar campos SER-MED " + e.getMessage());
+        }
+
+    }
+
     //para agregar medicamentos debe estar llena la parte de servicio en el formulario u.u
-//    private void agregarMedicamento(int medicamento, int cantidad, float dosis, String indicacion) {
-//        if (medicamento != 0 && cantidad != 0) {
-//            ResultSet rs = null;
-//
-//            try {
-//                DefaultTableModel modelo = (DefaultTableModel) tblDetalleMedicamento.getModel();
-//                boolean repetido = false;
-//                int fila = -1;
-//
-//                for (int i = 0; i < tblDetalleMedicamento.getRowCount(); i++) {
-//                    if (Integer.parseInt(String.valueOf(tblDetalleMedicamento.getValueAt(i, 0))) == medicamento) {
-//                        repetido = true;
-//                        fila = i;
-//                    }
-//
-//                    if (repetido) {
-//                        int aux = Integer.parseInt(String.valueOf(tblDetalleMedicamento.getValueAt(i, 3)));
-//
-//                        cantidad += aux;
-//                        modelo.removeRow(fila);
-//                    }
-//
-//                }
-//
-//                int stock = objMedicamento.getStock(medicamento);
-//
-//                if (cantidad > stock) {
-//                    cantidad = stock;
-//                    JOptionPane.showMessageDialog(rootPane, "Stock Insuficiente");
-//                } else {
-//                    rs = objProducto.buscarProducto(producto);
-//
-//                    while (rs.next()) {
-//                        modelo.addRow(new Object[]{rs.getString("codproducto"), rs.getString("nomproducto"),
-//                            rs.getString("precio"), cantidad, descuento + "%",
-//                            rs.getFloat("precio") - descuento * rs.getFloat("precio") / 100,
-//                            (cantidad * (rs.getFloat("precio") - descuento * rs.getFloat("precio") / 100))});
-//                    }
-//
-//                }
-//
-//                tblDetalleMedicamento.setModel(modelo);
-//
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(this, "Error al calcular el total" + e.getMessage());
-//            }
-//        }
-//        calcularTotal();
-//    }
+    private void agregarMedicamento(int medicamento, int cantidad, float dosis, String indicacion) {
+        ResultSet rs = null;
+        try {
+            if (medicamento != 0 && cantidad != 0 && dosis != 0) {
+                
+                    if (JOptionPane.showConfirmDialog(this, "Confirmar", "¿Los datos son correctos?",
+                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+
+                        DefaultTableModel modelito = (DefaultTableModel) tblDetalleMedicamento.getModel();
+
+                        int idMed = -1;
+
+                        idMed = objMedico.obtenerIDconDoc(txtDocMedico.getText());
+
+                        for (int i = modelito.getRowCount() - 1; i >= 0; i--) {
+                            int medicamento_id = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 0).toString());
+                            int servicio_id = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 1).toString());
+                            int medico_id = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 2).toString());
+
+                            if (medicamento_id == Integer.parseInt(txtCodMedicamento.getText())
+                                    && servicio_id == Integer.parseInt(txtCodServicio.getText())
+                                    && medico_id == idMed) {
+                                modelito.removeRow(i);
+                                break;
+                            }
+                        }
+
+                        rs = objMedicamento.buscarMedicamento(medicamento);
+                        if (rs.next()) {
+                            modelito.addRow(new Object[]{medicamento, txtCodServicio.getText(), idMed, dosis,
+                                indicacion, cantidad, rs.getFloat("costo")});
+                        } 
+                        
+                        tblDetalleMedicamento.setModel(modelito);
+
+                    }
+                } 
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage() + " agregar medicamento");
+        }
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -157,16 +215,17 @@ public class jdCita extends javax.swing.JDialog {
         btnEliminarProducto2 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        txtNombreProducto = new javax.swing.JTextField();
+        txtNombreMedicamento = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        txtCodProducto = new javax.swing.JTextField();
-        jSpinner1 = new javax.swing.JSpinner();
+        txtCodMedicamento = new javax.swing.JTextField();
+        spnCantidad = new javax.swing.JSpinner();
         btnAgregarMedicamento = new javax.swing.JButton();
         btnEliminarMedicamento = new javax.swing.JButton();
         txtDosis = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         txtIndicacion = new javax.swing.JTextField();
+        btnBuscarMedicamento = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtDniRuc = new javax.swing.JTextField();
@@ -192,7 +251,7 @@ public class jdCita extends javax.swing.JDialog {
         txtCodMascota = new javax.swing.JTextField();
         rdbCastrado = new javax.swing.JRadioButton();
         rdbNoCastrado = new javax.swing.JRadioButton();
-        txtTipo2 = new javax.swing.JTextField();
+        txtRaza = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         spnEdad = new javax.swing.JSpinner();
         jPanel10 = new javax.swing.JPanel();
@@ -286,6 +345,11 @@ public class jdCita extends javax.swing.JDialog {
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/editar.png"))); // NOI18N
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnDarBaja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/darBaja.png"))); // NOI18N
         btnDarBaja.setText("Dar baja");
@@ -429,9 +493,9 @@ public class jdCita extends javax.swing.JDialog {
 
         jLabel13.setText("Medicamento:");
 
-        txtNombreProducto.addActionListener(new java.awt.event.ActionListener() {
+        txtNombreMedicamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreProductoActionPerformed(evt);
+                txtNombreMedicamentoActionPerformed(evt);
             }
         });
 
@@ -439,11 +503,11 @@ public class jdCita extends javax.swing.JDialog {
 
         jLabel15.setText("Dosis:");
 
-        txtCodProducto.setMinimumSize(new java.awt.Dimension(61, 22));
-        txtCodProducto.setPreferredSize(new java.awt.Dimension(61, 22));
-        txtCodProducto.addActionListener(new java.awt.event.ActionListener() {
+        txtCodMedicamento.setMinimumSize(new java.awt.Dimension(61, 22));
+        txtCodMedicamento.setPreferredSize(new java.awt.Dimension(61, 22));
+        txtCodMedicamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCodProductoActionPerformed(evt);
+                txtCodMedicamentoActionPerformed(evt);
             }
         });
 
@@ -477,6 +541,13 @@ public class jdCita extends javax.swing.JDialog {
             }
         });
 
+        btnBuscarMedicamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar-pequeño.png"))); // NOI18N
+        btnBuscarMedicamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarMedicamentoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -491,8 +562,8 @@ public class jdCita extends javax.swing.JDialog {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtCodProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSpinner1))
+                            .addComponent(txtCodMedicamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(spnCantidad))
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGap(35, 35, 35)
@@ -501,12 +572,15 @@ public class jdCita extends javax.swing.JDialog {
                                 .addComponent(txtDosis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtNombreMedicamento, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(txtIndicacion))
-                .addGap(26, 26, 26)
-                .addComponent(btnEliminarMedicamento)
                 .addGap(18, 18, 18)
-                .addComponent(btnAgregarMedicamento)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(btnEliminarMedicamento)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAgregarMedicamento))
+                    .addComponent(btnBuscarMedicamento))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -514,23 +588,26 @@ public class jdCita extends javax.swing.JDialog {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAgregarMedicamento)
-                    .addComponent(btnEliminarMedicamento)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(btnBuscarMedicamento)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEliminarMedicamento))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombreMedicamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13)
-                            .addComponent(txtCodProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCodMedicamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14)
-                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel15)
                             .addComponent(txtDosis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel23)
-                            .addComponent(txtIndicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtIndicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnAgregarMedicamento))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -705,7 +782,7 @@ public class jdCita extends javax.swing.JDialog {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
                                 .addComponent(jLabel20)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtTipo2))))
+                                .addComponent(txtRaza))))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(txtNotaMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -732,7 +809,7 @@ public class jdCita extends javax.swing.JDialog {
                             .addComponent(txtCodMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTipo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtRaza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel20))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -884,6 +961,11 @@ public class jdCita extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblDetalleServicio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDetalleServicioMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblDetalleServicio);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -969,28 +1051,34 @@ public class jdCita extends javax.swing.JDialog {
             rsCitaEncontrada = objCita.buscarCita(Integer.parseInt(txtNumero.getText()));
 
             if (rsCitaEncontrada.next()) {
-                int codDuenio = rsCitaEncontrada.getInt("custodiaduenioid");
-                int codMascota = rsCitaEncontrada.getInt("custodiamascotaid");
+//                int codDuenio = rsCitaEncontrada.getInt("custodiaduenioid");
+//                int codMascota = rsCitaEncontrada.getInt("custodiamascotaid");
 
                 // del dueño
                 String docDuenio = rsCitaEncontrada.getString("duenio_doc");
-                String nombreDuenio = rsCitaEncontrada.getString("duenio_nombres") + " "
-                        + rsCitaEncontrada.getString("duenio_apPaterno") + " "
-                        + rsCitaEncontrada.getString("duenio_apMaterno");
-                String direccion = rsCitaEncontrada.getString("direccion");
+//                String nombreDuenio = rsCitaEncontrada.getString("duenio_nombres") + " "
+//                        + rsCitaEncontrada.getString("duenio_apPaterno") + " "
+//                        + rsCitaEncontrada.getString("duenio_apMaterno");
+//                String direccion = rsCitaEncontrada.getString("direccion");
                 String telefono_duenio = rsCitaEncontrada.getString("telefono_duenio");
 
                 // Datos de la mascota
                 String nombreMascota = rsCitaEncontrada.getString("nombre_mascota");
-                int edad = rsCitaEncontrada.getInt("edad");
+//                int edad = rsCitaEncontrada.getInt("edad");
 //                Date fechaNacimientoMascota = rsCitaEncontrada.getDate("mascota_fecha_nacimiento");
 //                double alturaMascota = rsCitaEncontrada.getDouble("mascota_altura");
 //                double pesoMascota = rsCitaEncontrada.getDouble("mascota_peso");
 //                boolean sexoMascota = rsCitaEncontrada.getBoolean("mascota_sexo");
                 boolean esterilizadoMascota = rsCitaEncontrada.getBoolean("castrado");
 //                boolean desparasitadoMascota = rsCitaEncontrada.getBoolean("mascota_desparasitado");
-                String nota = rsCitaEncontrada.getString("nota");
+//                String nota = rsCitaEncontrada.getString("nota");
                 int raza_id = rsCitaEncontrada.getInt("raza_id");
+                
+                ResultSet rsRaza = objRaza.buscarRaza(raza_id);
+                
+                if (rsRaza.next()) {
+                    txtRaza.setText(rsRaza.getString("nombre"));
+                }
 
                 // cita
                 int idCita = rsCitaEncontrada.getInt("id");
@@ -998,15 +1086,24 @@ public class jdCita extends javax.swing.JDialog {
                 Date fechaCita = rsCitaEncontrada.getDate("fecha_cita");
                 String observacionCita = rsCitaEncontrada.getString("observacion");
                 
-                txtCodDuenio.setText(String.valueOf(codDuenio));
-                txtDniRuc.setText(docDuenio);
-                txtNombreDuenio.setText(nombreDuenio);
-                txtDireccion.setText(direccion);
-                txtTelefono.setText(telefono_duenio);
+                ResultSet rsEstadoCita = objEstadoCita.buscar(estadoCitaId);
                 
-                txtCodMascota.setText(String.valueOf(codMascota));
+                if (rsEstadoCita.next()) {
+                    cboEstadoCita.setSelectedItem(rsEstadoCita.getString("nombre_estado"));
+                }
+                
+                jDateChooser1.setDate(fechaCita);
+                txtANotaAdicional.setText(observacionCita);
+
+//                txtCodDuenio.setText(String.valueOf(codDuenio));
+                txtDniRuc.setText(docDuenio);
+//                txtNombreDuenio.setText(nombreDuenio);
+//                txtDireccion.setText(direccion);
+                txtTelefono.setText(telefono_duenio);
+
+//                txtCodMascota.setText(String.valueOf(codMascota));
                 txtNombreMascota.setText(nombreMascota);
-                spnEdad.setValue(edad);
+//                spnEdad.setValue(edad);
 //                txtEstadoSaludMascota.setText(direccion);
                 if (esterilizadoMascota) {
                     rdbCastrado.setSelected(true);
@@ -1014,7 +1111,31 @@ public class jdCita extends javax.swing.JDialog {
                     rdbNoCastrado.setSelected(true);
                 }
                 
+                
+                btnBuscarDuenioActionPerformed(null);
+                btnBuscarMascotaActionPerformed(null);
+                
             }
+
+            DefaultTableModel modelo = (DefaultTableModel) tblDetalleServicio.getModel();
+            modelo.setRowCount(0);
+
+            rsDetalleCitaEncontrado = objDetalleCita.buscarDetalleCita(Integer.parseInt(txtNumero.getText()));
+
+            while (rsDetalleCitaEncontrado.next()) {
+                String idServMed = rsDetalleCitaEncontrado.getInt("detalle_servicio_serv_id") + " - " + rsDetalleCitaEncontrado.getInt("detalle_servicio_med_id");
+                String servicio = rsDetalleCitaEncontrado.getString("servicio_nombre");
+                String medico = rsDetalleCitaEncontrado.getString("medico_nombres") + " "
+                        + rsDetalleCitaEncontrado.getString("medico_apPaterno") + " "
+                        + rsDetalleCitaEncontrado.getString("medico_apMaterno");
+                String horaEntrada = rsDetalleCitaEncontrado.getString("horaEntrada");
+                String horaSalida = rsDetalleCitaEncontrado.getString("horaSalida");
+                double costo = rsDetalleCitaEncontrado.getDouble("costo");
+
+                modelo.addRow(new Object[]{idServMed, servicio, medico, horaEntrada, horaSalida, costo});
+            }
+
+            tblDetalleServicio.setModel(modelo);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -1026,31 +1147,43 @@ public class jdCita extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumeroActionPerformed
 
-    private void txtNombreProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreProductoActionPerformed
+    private void txtNombreMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreMedicamentoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreProductoActionPerformed
+    }//GEN-LAST:event_txtNombreMedicamentoActionPerformed
 
-    private void txtCodProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodProductoActionPerformed
+    private void txtCodMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodMedicamentoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodProductoActionPerformed
+    }//GEN-LAST:event_txtCodMedicamentoActionPerformed
 
     private void btnAgregarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMedicamentoActionPerformed
         if (txtCodServicio.getText().isEmpty() || txtDocMedico.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Indicar el servicio y el médico por favor");
         } else {
-            jdAniadirMedicamento objAniadirMedicamento
-                    = new jdAniadirMedicamento((Frame) SwingUtilities.getWindowAncestor(this), true);
-            objAniadirMedicamento.setLocationRelativeTo(this);
-            objAniadirMedicamento.setVisible(true);
+            if (!txtCodMedicamento.getText().isEmpty()
+                    && !txtNombreMedicamento.getText().isEmpty()
+                    && !txtDosis.getText().isEmpty()
+                    && ((Integer) spnCantidad.getValue() != 0)) {
 
-            int producto = objAniadirMedicamento.getCod();
-            int cantidad = objAniadirMedicamento.getCant();
-            float dosis = objAniadirMedicamento.getDosis();
+                agregarMedicamento(Integer.parseInt(txtCodMedicamento.getText()), (Integer) spnCantidad.getValue(),
+                        Float.parseFloat(txtDosis.getText()), txtIndicacion.getText());
+            } else {
+                jdAniadirMedicamento objAniadirMedicamento
+                        = new jdAniadirMedicamento((Frame) SwingUtilities.getWindowAncestor(this), true);
+                objAniadirMedicamento.setLocationRelativeTo(this);
+                objAniadirMedicamento.setVisible(true);
 
-            try {
-//            agregarProducto(producto, cantidad, descuento);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getMessage());
+                int codMedicamento = objAniadirMedicamento.getCodMed();
+                int cantidad = objAniadirMedicamento.getCant();
+                float dosis = objAniadirMedicamento.getDosis();
+                String indicacion = objAniadirMedicamento.getIndic();
+
+                try {
+//                    JOptionPane.showMessageDialog(this, "si llego");
+                    agregarMedicamento(codMedicamento, cantidad, dosis, indicacion);
+//                    JOptionPane.showMessageDialog(this, "pa aca tmb");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage());
+                }
             }
         }
     }//GEN-LAST:event_btnAgregarMedicamentoActionPerformed
@@ -1236,6 +1369,18 @@ public class jdCita extends javax.swing.JDialog {
 
     }//GEN-LAST:event_cboServiciosActionPerformed
 
+    private void tblDetalleServicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetalleServicioMouseClicked
+        llenarServicioMedico();
+    }//GEN-LAST:event_tblDetalleServicioMouseClicked
+
+    private void btnBuscarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarMedicamentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarMedicamentoActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarMedicamento;
@@ -1244,6 +1389,7 @@ public class jdCita extends javax.swing.JDialog {
     private javax.swing.JButton btnBuscarDetalleServicio;
     private javax.swing.JButton btnBuscarDuenio;
     private javax.swing.JButton btnBuscarMascota;
+    private javax.swing.JButton btnBuscarMedicamento;
     private javax.swing.JButton btnDarBaja;
     private javax.swing.JButton btnEliminarMedicamento;
     private javax.swing.JButton btnEliminarProducto2;
@@ -1289,18 +1435,18 @@ public class jdCita extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JRadioButton rdbBoleta;
     private javax.swing.JRadioButton rdbCastrado;
     private javax.swing.JRadioButton rdbFactura;
     private javax.swing.JRadioButton rdbNoCastrado;
+    private javax.swing.JSpinner spnCantidad;
     private javax.swing.JSpinner spnEdad;
     private javax.swing.JTable tblDetalleMedicamento;
     private javax.swing.JTable tblDetalleServicio;
     private javax.swing.JTextArea txtANotaAdicional;
     private javax.swing.JTextField txtCodDuenio;
     private javax.swing.JTextField txtCodMascota;
-    private javax.swing.JTextField txtCodProducto;
+    private javax.swing.JTextField txtCodMedicamento;
     private javax.swing.JTextField txtCodServicio;
     private javax.swing.JTextField txtDescripcionServicio;
     private javax.swing.JTextField txtDireccion;
@@ -1312,13 +1458,13 @@ public class jdCita extends javax.swing.JDialog {
     private javax.swing.JTextField txtIndicacion;
     private javax.swing.JTextField txtNombreDuenio;
     private javax.swing.JTextField txtNombreMascota;
+    private javax.swing.JTextField txtNombreMedicamento;
     private javax.swing.JTextField txtNombreMedico;
-    private javax.swing.JTextField txtNombreProducto;
     private javax.swing.JTextField txtNotaMascota;
     private javax.swing.JTextField txtNumero;
+    private javax.swing.JTextField txtRaza;
     private javax.swing.JTextField txtSubtotal;
     private javax.swing.JTextField txtTelefono;
-    private javax.swing.JTextField txtTipo2;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }
