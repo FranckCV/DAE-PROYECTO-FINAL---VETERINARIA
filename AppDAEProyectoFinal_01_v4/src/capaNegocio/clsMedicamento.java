@@ -38,7 +38,14 @@ public class clsMedicamento {
     }
 
     public void registrarMedicamento(int id, String nombre, double costo, int stock, String presentacion, boolean vigencia, int tipoMedicamentoId) throws Exception {
-        strSQL = "Insert into medicamento Values(" + id + ",'" + nombre + "'," + costo + "," + stock + ",'" + presentacion + "','" + vigencia + "'," + tipoMedicamentoId + ")";
+        String strSQL = "INSERT INTO medicamento VALUES("
+                + id + ", '"
+                + nombre + "', "
+                + costo + ", "
+                + stock + ", '"
+                + presentacion + "', "
+                + (vigencia ? "true" : "false") + ", "
+                + tipoMedicamentoId + ")";
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
@@ -65,8 +72,8 @@ public class clsMedicamento {
         }
     }
 
-    public void modificarMedicamento(Integer id, String nombre, double costo, int stock, String presentacion, boolean vigencia, int tipoMedicamentoId) throws Exception {
-        strSQL = "Update medicamento set nombre='" + nombre + "', costo=" + costo + ", stock=" + stock + ", presentacion='" + presentacion + "', vigencia= '" + vigencia + "', tipo_medicamento_id=" + tipoMedicamentoId + " where id=" + id;
+    public void modificarMedicamento(Integer id, String nombre, double costo, int stock, String presentacion, int tipoMedicamentoId) throws Exception {
+        strSQL = "Update medicamento set nombre='" + nombre + "', costo=" + costo + ", stock=" + stock + ", presentacion='" + presentacion + "', tipo_medicamento_id=" + tipoMedicamentoId + " where id=" + id;
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {

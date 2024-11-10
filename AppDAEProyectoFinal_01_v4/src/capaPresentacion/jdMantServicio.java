@@ -431,7 +431,7 @@ public class jdMantServicio extends javax.swing.JDialog {
                     rsPro.getString(clsServicio.NOMBRE),
                     rsPro.getString(clsServicio.DESCRIPCION),
                     rsPro.getString(clsServicio.COSTO),
-                    textoBool(rsPro.getBoolean(clsServicio.DISPONIBILIDAD), "Disponible", "No Disponible")
+                    frmMenuPrincipal.textoBool(rsPro.getBoolean(clsServicio.DISPONIBILIDAD), frmMenuPrincipal.DISPONIBILIDAD_SI, frmMenuPrincipal.DISPONIBILIDAD_NO)
                 });
             }
             tblServicio.setModel(modelo);
@@ -513,7 +513,12 @@ public class jdMantServicio extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            if (e.getMessage().contains("referida desde la tabla")) {
+                JOptionPane.showMessageDialog(this, "Error: Hay datos externos asociados al servicio \"" + txtNombre.getText() + "\". \n"
+                        + "Considere cambiar su disponibilidad para que ya no pueda ser usado");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            }
         }
     }
     
