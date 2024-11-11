@@ -5,9 +5,9 @@
 package capaNegocio;
 
 import capaDatos.clsJDBC;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.swing.JTable;
 
 /**
@@ -50,46 +50,67 @@ public class clsDetalleCita {
         }
     }
 
-    public void insertarDetalleServicioNoRepetido(int idCita, JTable tblServicios) throws Exception {
+    public void insertarDetalleServicioSiNoExiste(int idCita, JTable tblServicios, int codSer, int codMed, String hora_ini, String hora_fin, String nota) throws Exception {
         try {
             objConectar.conectar();
             con = objConectar.getCon();
             con.setAutoCommit(false);
-            sent = con.createStatement();
 
+            // Convertir las horas de String a Time
+            SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+            Time horaEntrada = new Time(format.parse(hora_ini).getTime());
+            Time horaSalida = new Time(format.parse(hora_fin).getTime());
+
+            // Verifica si el detalle ya existe en la base de datos
+            String checkSQL = "SELECT COUNT(*) FROM DETALLE_CITA WHERE cita_id = ? AND detalle_servicio_serv_id = ? AND detalle_servicio_med_id = ?";
+            PreparedStatement checkStmt = con.prepareStatement(checkSQL);
+            checkStmt.setInt(1, idCita);
+            checkStmt.setInt(2, codSer);
+            checkStmt.setInt(3, codMed);
+
+            ResultSet rs = checkStmt.executeQuery();
+            rs.next();
+            int countInDB = rs.getInt(1);
+
+            boolean existsInTable = false;
             int rowCount = tblServicios.getRowCount();
+
+            // Verificar si el detalle ya existe en tblServicios
             for (int i = 0; i < rowCount; i++) {
-                // Extrae datos de cada fila
                 String cadena = String.valueOf(tblServicios.getValueAt(i, 0));
                 String[] codigos = cadena.split(" - ");
-                int codSer = Integer.parseInt(codigos[0].trim());
-                int codMed = Integer.parseInt(codigos[1].trim());
-                String horaEntrada = tblServicios.getValueAt(i, 3).toString();
-                String horaSalida = tblServicios.getValueAt(i, 4).toString();
-                String notaAdicional = tblServicios.getValueAt(i, 5).toString();
+                int codSerInTable = Integer.parseInt(codigos[0].trim());
+                int codMedInTable = Integer.parseInt(codigos[1].trim());
 
-                // Verifica si el detalle ya existe en la base de datos
-                String checkSQL = "SELECT COUNT(*) FROM DETALLE_CITA WHERE cita_id = " + idCita
-                        + " AND detalle_servicio_serv_id = " + codSer
-                        + " AND detalle_servicio_med_id = " + codMed;
-                ResultSet rs = sent.executeQuery(checkSQL);
-
-                rs.next();
-                int count = rs.getInt(1);
-                if (count == 0) {
-                    // Si no existe, realiza el INSERT
-                    String insertSQL = "INSERT INTO DETALLE_CITA (cita_id, detalle_servicio_serv_id, detalle_servicio_med_id, horaEntrada, "
-                            + "horaSalida, nota_adicional) "
-                            + "VALUES (" + idCita + ", " + codSer + ", " + codMed + ", '" + horaEntrada + "', '" + horaSalida + "', '" + notaAdicional + "')";
-                    sent.executeUpdate(insertSQL);
-
-                    // Actualiza disponibilidad en DETALLE_SERVICIO
-                    String updateSQL = "UPDATE DETALLE_SERVICIO SET disponibilidad = false WHERE servicio_id = " + codSer + " AND medico_id = " + codMed;
-                    sent.executeUpdate(updateSQL);
+                if (codSer == codSerInTable && codMed == codMedInTable) {
+                    existsInTable = true;
+                    break;
                 }
             }
 
+            // Solo inserta si no existe en la tabla y tampoco en la base de datos
+            if (countInDB == 0 && !existsInTable) {
+                String insertSQL = "INSERT INTO DETALLE_CITA (cita_id, detalle_servicio_serv_id, detalle_servicio_med_id, horaEntrada, horaSalida, nota_adicional) "
+                        + "VALUES (?, ?, ?, ?, ?, ?)";
+                PreparedStatement insertStmt = con.prepareStatement(insertSQL);
+                insertStmt.setInt(1, idCita);
+                insertStmt.setInt(2, codSer);
+                insertStmt.setInt(3, codMed);
+                insertStmt.setTime(4, horaEntrada);
+                insertStmt.setTime(5, horaSalida);
+                insertStmt.setString(6, nota);
+                insertStmt.executeUpdate();
+
+                System.out.println("Detalle de servicio insertado correctamente.");
+            } else if (existsInTable) {
+                System.out.println("El detalle de servicio ya existe en la tabla y no se ha insertado.");
+            } else {
+                System.out.println("El detalle de servicio ya existe en la base de datos y no se ha insertado.");
+            }
+
             con.commit();
+        } catch (ParseException e) {
+            throw new Exception("Formato de hora incorrecto. Utilice el formato HH:mm.");
         } catch (Exception e) {
             con.rollback();
             throw new Exception("Error al insertar detalle de servicio no repetido --> " + e.getLocalizedMessage());
@@ -98,4 +119,9 @@ public class clsDetalleCita {
         }
     }
 
+//    public void insertarDetalleCita(int idCita, int idServicio, int idMedico, String horaInicio, String horaFin, String notaAdicional) throws Exception {
+//        strSQL = "INSERT INTO DETALLE_CITA (cita_id, detalle_servicio_serv_id, detalle_servicio_med_id, horaEntrada, horaSalida, nota_adicional) "
+//                + "VALUES (" + idCita + ", " + idServicio + ", " + idMedico + ", '" + horaInicio + "', '" + horaFin + "', '" + (notaAdicional != null ? notaAdicional : "") + "')";
+//        objConectar.ejecutarBD(strSQL);
+//    }
 }
