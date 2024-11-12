@@ -46,13 +46,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     clsUsuario objUsuario = new clsUsuario();
 
-=======
     private String IMG_ICON = "logo_marmota.png";
     
     
     clsUsuario objUsuario= new clsUsuario();
->>>>>>> 1d7c7fc6b03060d12cf4679ff8b5d6ceafab7f5b
->>>>>>> a0c37b5adb26c64b1097cfe1bd22c178024795cd
     /**
      * Creates new form frmMenuPrincipal
      */
@@ -573,7 +570,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-<<<<<<< HEAD
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -595,7 +591,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         }
     }
 
-=======
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -616,15 +611,9 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-<<<<<<< HEAD
 
-=======
-          
->>>>>>> 1d7c7fc6b03060d12cf4679ff8b5d6ceafab7f5b
->>>>>>> a0c37b5adb26c64b1097cfe1bd22c178024795cd
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 //         TODO add your handling code here:
-<<<<<<< HEAD
         jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
@@ -647,13 +636,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Error al obtener puesto");
                         break;
                 }
-=======
+
 //        jdInicioSesionVet objForm= new jdInicioSesionVet(this, true);
 //        objForm.setLocationRelativeTo(this);
 //        objForm.setVisible(true);
 //        txtUsuario.setText(objForm.nombreUsuario);
 //        txtCargo.setText(objForm.cargo);
->>>>>>> 020f5cca62cf28e3164f9bc16f1bae07e9260a36
     }//GEN-LAST:event_formWindowOpened
 
     private void btnCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCitaActionPerformed
@@ -663,7 +651,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCitaActionPerformed
 
     private void mnuMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMascotaActionPerformed
-<<<<<<< HEAD
         // TODO add your handling code here:
 
         try {
@@ -676,7 +663,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al abrir el formulario de mascota: " + e.getMessage());
             e.printStackTrace();
         }
-=======
         try {
             // TODO add your handling code here:
 
@@ -688,7 +674,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
             Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
 
->>>>>>> a0c37b5adb26c64b1097cfe1bd22c178024795cd
     }//GEN-LAST:event_mnuMascotaActionPerformed
 
     private void mnuEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEspecieActionPerformed
@@ -754,8 +739,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void mnuEstadoCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEstadoCitaActionPerformed
         // TODO add your handling code here:
         jdMntEstadoCita objForm = new jdMntEstadoCita(this, true);
-<<<<<<< HEAD
-=======
+
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
     }//GEN-LAST:event_mnuEstadoCitaActionPerformed
@@ -763,7 +747,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
         jdMntVacuna objForm = new jdMntVacuna(this, true);
->>>>>>> a0c37b5adb26c64b1097cfe1bd22c178024795cd
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
     }//GEN-LAST:event_mnuEstadoCitaActionPerformed
@@ -798,21 +781,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void mnuCambiarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCambiarUsuarioActionPerformed
         // TODO add your handling code here:
-<<<<<<< HEAD
-        txtUsuario.setText("");
-        jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
-=======
+
         txtCargo.setText("");
-<<<<<<< HEAD
         txtUsuario.setText("");
         formWindowOpened(null);
-=======
-        jdInicioSesionVet objForm  = new jdInicioSesionVet(this, true);
->>>>>>> 1d7c7fc6b03060d12cf4679ff8b5d6ceafab7f5b
-        objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true);
+
     }//GEN-LAST:event_mnuUsuarioActionPerformed
->>>>>>> a0c37b5adb26c64b1097cfe1bd22c178024795cd
 
     }//GEN-LAST:event_mnuCambiarUsuarioActionPerformed
 
@@ -835,8 +809,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objCita.setVisible(true);
     }//GEN-LAST:event_mnuCitaActionPerformed
 
-<<<<<<< HEAD
-=======
+
     private void mnuCustodiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCustodiaActionPerformed
         // TODO add your handling code here:
         jdCustodia objCus = null;
@@ -862,7 +835,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
->>>>>>> a0c37b5adb26c64b1097cfe1bd22c178024795cd
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCita;
