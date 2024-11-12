@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
  *
  * @author Grupo_Veterinaria
  */
-
 public class clsMascota {
 
     clsJDBC objConectar = new clsJDBC();
@@ -19,7 +18,7 @@ public class clsMascota {
 
     // Método para listar todas las mascotas
     public ResultSet listarMascotas() throws Exception {
-        strSQL = "SELECT ma.*, ra.nombre AS raza_nombre, es.nombre AS especie_nombre FROM MASCOTA ma INNER JOIN raza ra ON ra.id = ma.raza_id INNER JOIN especie es ON es.id = ra.especie_id";
+        strSQL = "SELECT ma.*, ra.nombre AS raza_nombre, es.nombre AS especie_nombre FROM MASCOTA ma INNER JOIN raza ra ON ra.id = ma.raza_id INNER JOIN especie es ON es.id = ra.especie_id order by 1";
         try {
             return objConectar.consultarBD(strSQL);
 
@@ -31,17 +30,16 @@ public class clsMascota {
     // Método para registrar una mascota
     public void registrarMascota(int id, String nombre, Date fechaN, double altura, double peso,
             String notaAdicional, boolean sexo, boolean esterilizado,
-            boolean desparasitado, String condicion, int razaId, boolean estado,
-            Date fechaR, int especieId) throws Exception {
+            boolean desparasitado, String condicion, boolean estado, int razaId
+    ) throws Exception {
 
-        String strSQL = "INSERT INTO MASCOTA (id, nombre, fecha_nacimiento, altura, peso, notaAdicional, sexo, esterilizado, desparasitado, condicion, raza_id, estado, fecha_registro, especie_id) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String strSQL = "INSERT INTO MASCOTA (id, nombre, fecha_nacimiento, altura, peso, notaAdicional, sexo, esterilizado, desparasitado, estado_salud,vigencia,raza_id) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         // Parámetros para el PreparedStatement
         Object[] parametros = {
             id, nombre, new java.sql.Date(fechaN.getTime()), altura, peso, notaAdicional,
-            sexo, esterilizado, desparasitado, condicion, razaId, estado,
-            new java.sql.Date(fechaR.getTime()), especieId
+            sexo, esterilizado, desparasitado, condicion, estado, razaId
         };
 
         objConectar.ejecutarActualizacion(strSQL, parametros);
@@ -49,21 +47,23 @@ public class clsMascota {
 
     public void modificarMascota(int id, String nombre, Date fechaN, double altura, double peso,
             String notaAdicional, boolean sexo, boolean castrado,
-            boolean desparasitado, String condicion, int razaId, boolean estado,
-            Date fechaR, int especieId) throws Exception {
+            boolean desparasitado, String condicion, int razaId, boolean estado
+    ) throws Exception {
 
-        strSQL = "UPDATE MASCOTA SET nombre = ?, fecha_nacimiento = ?, altura = ?, peso = ?, notaAdicional = ?, "
-                + "sexo = ?, esterilizado = ?, desparasitado = ?, condicion = ?, raza_id = ?, estado = ?, "
-                + "fecha_registro = ?, especie_id = ? WHERE id = ?";
-
-        // Parámetros para el PreparedStatement
-        Object[] parametros = {
-            nombre, new java.sql.Date(fechaN.getTime()), altura, peso, notaAdicional,
-            sexo, castrado, desparasitado, condicion, razaId, estado,
-            new java.sql.Date(fechaR.getTime()), especieId, id
-        };
-
-        objConectar.ejecutarActualizacion(strSQL, parametros);
+        // Consulta SQL con concatenación directa
+        strSQL = "UPDATE MASCOTA SET nombre = '" + nombre + "', "
+                + "fecha_nacimiento = '" + new java.sql.Date(fechaN.getTime()) + "', "
+                + "altura = " + altura + ", "
+                + "peso = " + peso + ", "
+                + "notaAdicional = '" + notaAdicional + "', "
+                + "sexo = " + sexo + ", "
+                + "esterilizado = " + castrado + ", "
+                + "desparasitado = " + desparasitado + ", "
+                + "estado_salud = '" + condicion + "', "
+                + "raza_id = " + razaId + ", "
+                + "vigencia = " + estado + " "
+                + "WHERE id = " + id;
+        objConectar.ejecutarBD(strSQL);
     }
 
     // Método para generar un nuevo código de mascota
@@ -91,9 +91,24 @@ public class clsMascota {
         return objConectar.consultarBDConParametros(strSQL, new Object[]{id});
     }
 
+    public ResultSet buscarMascota(String nom) throws Exception {
+        strSQL = "SELECT ma.*, ra.nombre AS raza_nombre, es.nombre AS especie_nombre "
+                + "FROM MASCOTA ma "
+                + "INNER JOIN raza ra ON ra.id = ma.raza_id "
+                + "INNER JOIN especie es ON es.id = ra.especie_id "
+                + "WHERE ma.nombre = '" + nom + "';";
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar mascota" + e.getMessage());
+        }
+    }
+
     // Método para listar todas las razas
-    public ResultSet listarRaza(Integer cod) throws Exception {
-        strSQL = "SELECT * FROM raza WHERE especie_id = " + cod;
+    public ResultSet listarRaza() throws Exception {
+        strSQL = "SELECT * FROM raza ";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -102,14 +117,17 @@ public class clsMascota {
         }
     }
 
-    public ResultSet listarEspecie() throws Exception {
-        strSQL = "SELECT especie.id, especie.nombre AS nombre_especie "
-                + "FROM especie";  // Solo necesitas seleccionar de la tabla especie para listar las especies
+    public ResultSet filtrar(String nom) throws Exception {
+        strSQL = "SELECT ma.*, ra.nombre AS raza_nombre, es.nombre AS especie_nombre "
+                + "FROM MASCOTA ma "
+                + "INNER JOIN raza ra ON ra.id = ma.raza_id "
+                + "INNER JOIN especie es ON es.id = ra.especie_id "
+                + "WHERE UPPER(ma.nombre) LIKE UPPER ('%" + nom + "%') ";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
         } catch (Exception e) {
-            throw new Exception("Error al listar las especies: " + e.getMessage());
+            throw new Exception("Error al filtrar mascotas por nombre" + e.getMessage());
         }
     }
 
@@ -123,19 +141,6 @@ public class clsMascota {
             }
         } catch (Exception e) {
             throw new Exception("Error al obtener el código de la raza: " + e.getMessage());
-        }
-        return 0;
-    }
-
-    public Integer obtenerCodigoEspecie(String nombreEsp) throws Exception {
-        String strSQL = "SELECT id FROM especie WHERE nombre = ?";
-        try {
-            ResultSet rs = objConectar.consultarBDConParametros(strSQL, new Object[]{nombreEsp});
-            if (rs.next()) {
-                return rs.getInt("id");
-            }
-        } catch (Exception e) {
-            throw new Exception("Error al obtener el código de la especie: " + e.getMessage());
         }
         return 0;
     }
@@ -174,6 +179,32 @@ public class clsMascota {
         } catch (Exception e) {
             throw new Exception("Error al filtrar mascotas por dueño y nombre --> " + e.getLocalizedMessage());
         }
+    }
+
+    public String calcularEdadMascota(int idMascota) throws Exception {
+        String strSQL = "SELECT EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_nacimiento)) AS años, "
+                + "EXTRACT(MONTH FROM AGE(CURRENT_DATE, fecha_nacimiento)) AS meses, "
+                + "EXTRACT(DAY FROM AGE(CURRENT_DATE, fecha_nacimiento)) AS días "
+                + "FROM mascota WHERE id = " + idMascota;
+        ResultSet rs = null;
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                int años = rs.getInt("años");
+                int meses = rs.getInt("meses");
+                int días = rs.getInt("días");
+                return String.format("%d años, %d meses, %d días", años, meses, días);
+            } else {
+                throw new Exception("No se encontró la mascota con el ID proporcionado.");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al calcular la edad de la mascota --> " + e.getMessage());
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+        }
+
     }
 
 }

@@ -21,7 +21,11 @@ public class clsJDBC {
         this.url = "jdbc:postgresql://localhost:5432/bd_veterinaria";
         this.user = "postgres";
 
+<<<<<<< HEAD
+        this.password = "tirsarios123";
+=======
 //        this.password = "tirsarios123";
+>>>>>>> 1d7c7fc6b03060d12cf4679ff8b5d6ceafab7f5b
 //        this.password = "1234567890";
 //       this.password = "Leocix06015";
 //        this.password = "USAT2023";

@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Descargas/veterinaria_dae/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaDatos/clsJDBC.java</file>
+            <file>file:/D:/DAE/TRABAJO%20FINAL/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaNegocio/clsDetalleVacunacion.java</file>
+            <file>file:/D:/DAE/TRABAJO%20FINAL/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdCustodia.java</file>
+            <file>file:/D:/DAE/TRABAJO%20FINAL/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMantDuenio.java</file>
+            <file>file:/D:/DAE/TRABAJO%20FINAL/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/frmMenuPrincipal.java</file>
+            <file>file:/D:/DAE/TRABAJO%20FINAL/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaNegocio/clsCustodia.java</file>
+            <file>file:/D:/DAE/TRABAJO%20FINAL/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jsDetalleVacunacion.java</file>
         </group>
     </open-files>
 </project-private>
