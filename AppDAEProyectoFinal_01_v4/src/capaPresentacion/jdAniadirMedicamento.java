@@ -83,7 +83,7 @@ public class jdAniadirMedicamento extends javax.swing.JDialog {
         }
     }
 
-    public int getCod() {
+    public int getCodMed() {
         return med;
     }
 

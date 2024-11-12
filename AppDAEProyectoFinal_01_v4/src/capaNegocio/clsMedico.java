@@ -214,4 +214,17 @@ public class clsMedico {
         return 0;
     }
 
+    public Integer obtenerIDconDoc(String docIdentidad) throws Exception {
+        strSQL = "SELECT id FROM " + TABLA + " WHERE doc_identidad = '" + docIdentidad + "' ";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al buscar código de " + TABLA + " con el documento de identidad " + docIdentidad + " --> " + e.getMessage());
+        }
+        return 0;
+    }
+
 }
