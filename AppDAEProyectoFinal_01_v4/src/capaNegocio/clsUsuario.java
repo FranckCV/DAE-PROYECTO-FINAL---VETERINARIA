@@ -9,10 +9,10 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author Grupo_Veterinaria
+ * @author franc
  */
 public class clsUsuario {
-
+    
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;
@@ -152,5 +152,4 @@ public class clsUsuario {
         return 0;
     }
 
-    
 }

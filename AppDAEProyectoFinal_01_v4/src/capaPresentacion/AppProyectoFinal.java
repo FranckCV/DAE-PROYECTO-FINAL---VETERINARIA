@@ -9,7 +9,7 @@ package capaPresentacion;
  * @author franc
  */
 public class AppProyectoFinal {
-    /**v
+    /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
