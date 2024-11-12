@@ -21,7 +21,6 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
     public String cargo = "";
     public String usuario = "";
     public String usuario_id = "";
-    private String puesto = "";
 
     int count = 0;
 
@@ -297,22 +296,7 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
             if (objCaptcha.validarCaptcha(txtCaptchaEnunciado.getText(), txtRespuesta.getText())
                     && !objUsuario.login(txtUsuario.getText(), txtClave.getText()).isEmpty()) {
                 nombreUsuario = objUsuario.obtenerUsuario(txtUsuario.getText());
-                puesto = objUsuario.obtenerCargo(txtUsuario.getText());
-                switch (puesto) {
-                    case "V":
-                        cargo = "Veterinario";
-                        break;
-                    case "E":
-                        cargo = "Empleado";
-                        break;
-                    case "A":
-                        cargo = "Administrador";
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(null, "Error al obtener puesto");
-                        break;
-                }
-
+                cargo = objUsuario.obtenerCargo(txtUsuario.getText());
                 JOptionPane.showMessageDialog(this, "Bienvenido al sistema " + nombreUsuario);
                 this.dispose();
             } else {
