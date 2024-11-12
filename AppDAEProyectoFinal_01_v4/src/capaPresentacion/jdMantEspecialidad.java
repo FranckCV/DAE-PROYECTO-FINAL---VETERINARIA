@@ -4,6 +4,7 @@
  */
 package capaPresentacion;
 
+import soporte.*;
 import capaNegocio.*;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -22,9 +23,9 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
     public jdMantEspecialidad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        btnNuevo.setText(frmMenuPrincipal.BTN_NUEVO);
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+        btnNuevo.setText(Utilidad.BTN_NUEVO);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
     }
 
     /**
@@ -314,7 +315,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
-        if (btnNuevo.getText().equals(frmMenuPrincipal.BTN_NUEVO)) {
+        if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
             limpiarControles();
         } else {
             JOptionPane.showMessageDialog(this, "No puede ejecutar esta accion");
@@ -345,7 +346,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        if (btnNuevo.getText().equals(frmMenuPrincipal.BTN_GUARDAR) || btnModificar.getText().equals(frmMenuPrincipal.BTN_GUARDAR)) {
+        if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
             cancelarOperacion();
         } else {
             eliminarEspecialidad();
@@ -389,7 +390,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 modelo.addRow(new Object[]{
                     rsDato.getInt(clsEspecialidad.ID),
                     rsDato.getString(clsEspecialidad.NOMBRE),
-                    frmMenuPrincipal.textoBool(rsDato.getBoolean(clsEspecialidad.DISPONIBILIDAD), frmMenuPrincipal.DISPONIBILIDAD_SI, frmMenuPrincipal.DISPONIBILIDAD_NO)
+                    Utilidad.textoBool(rsDato.getBoolean(clsEspecialidad.DISPONIBILIDAD), Utilidad.DISPONIBILIDAD_SI, Utilidad.DISPONIBILIDAD_NO)
                 });
             }
             tblEspecialidad.setModel(modelo);
@@ -499,9 +500,9 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
     }
       
     private void cancelarOperacion() {
-        btnNuevo.setText(frmMenuPrincipal.BTN_NUEVO);
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);        
+        btnNuevo.setText(Utilidad.BTN_NUEVO);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);        
         limpiarControles();
         listarEspecialidades();
         editableControles(true, false);
@@ -513,9 +514,9 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
             if (txtID.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
             } else {
-                if (btnModificar.getText().equals(frmMenuPrincipal.BTN_MODIFICAR)) {
-                    btnModificar.setText(frmMenuPrincipal.BTN_GUARDAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+                if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                    btnModificar.setText(Utilidad.BTN_GUARDAR);
+                    btnEliminar.setText(Utilidad.BTN_CANCELAR);
                     editableControles(false, true);
                     usarBotones(false, false, true, true, false, false);
                 } else {
@@ -523,8 +524,8 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                         Integer.parseInt(txtID.getText()),
                         txtNombre.getText()
                     );
-                    btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    btnModificar.setText(Utilidad.BTN_MODIFICAR);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                     editableControles(true, false);
                     usarBotones(true, true, true, true, true, true);
                     limpiarControles();
@@ -539,9 +540,9 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 
     private void nuevaEspecialidad() {
         try {
-            if (btnNuevo.getText().equals(frmMenuPrincipal.BTN_NUEVO)) {
-                btnNuevo.setText(frmMenuPrincipal.BTN_GUARDAR);
-                btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+            if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
+                btnNuevo.setText(Utilidad.BTN_GUARDAR);
+                btnEliminar.setText(Utilidad.BTN_CANCELAR);
                 editableControles(false, true);
                 usarBotones(false, true, false, true, false, false);
                 limpiarControles();
@@ -553,8 +554,8 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 if (txtNombre.getText().trim().isBlank() || txtID.getText().trim().isBlank()) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
                 } else {
-                    btnNuevo.setText(frmMenuPrincipal.BTN_NUEVO);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    btnNuevo.setText(Utilidad.BTN_NUEVO);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                     objTabla.registrarEspecialidad(
                             Integer.parseInt(txtID.getText()),
                             txtNombre.getText()

@@ -4,6 +4,7 @@
  */
 package capaPresentacion;
 
+import soporte.*;
 import capaNegocio.*;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
@@ -33,8 +34,8 @@ public class jdMantUsuario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         btnNuevo.setText("Nuevo");
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         btnVigencia.setText(BTN_VIGENCIA);
 
         listarCargos();
@@ -496,7 +497,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        if (btnNuevo.getText().equals(frmMenuPrincipal.BTN_GUARDAR) || btnModificar.getText().equals(frmMenuPrincipal.BTN_GUARDAR)) {
+        if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
             cancelarAccion();
         } else {
             eliminarUsuario();
@@ -686,9 +687,9 @@ public class jdMantUsuario extends javax.swing.JDialog {
     }
 
     private void cancelarAccion() {
-        btnNuevo.setText(frmMenuPrincipal.BTN_NUEVO);
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+        btnNuevo.setText(Utilidad.BTN_NUEVO);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         limpiarControles();
         listarUsuarios();
     }
@@ -698,9 +699,9 @@ public class jdMantUsuario extends javax.swing.JDialog {
             if (txtId.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
             } else {
-                if (btnModificar.getText().equals(frmMenuPrincipal.BTN_MODIFICAR)) {
-                    btnModificar.setText(frmMenuPrincipal.BTN_GUARDAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+                if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                    btnModificar.setText(Utilidad.BTN_GUARDAR);
+                    btnEliminar.setText(Utilidad.BTN_CANCELAR);
                 } else {
 
                     boolean sexo;
@@ -726,8 +727,8 @@ public class jdMantUsuario extends javax.swing.JDialog {
                     objUsuario.modificarUsuario(Integer.parseInt(txtId.getText()), txtUsuario.getText(), chkVigencia.isSelected(), sexo,
                             txtClave.getText(), txtNombre.getText(), txtApePat.getText(),
                             txtApeMat.getText(), cargo);
-                    btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    btnModificar.setText(Utilidad.BTN_MODIFICAR);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
 
                     limpiarControles();
                     listarUsuarios();
@@ -742,8 +743,8 @@ public class jdMantUsuario extends javax.swing.JDialog {
     private void nuevoUsuario() {
         try {
             if (btnNuevo.getText().equals("Nuevo")) {
-                btnNuevo.setText(frmMenuPrincipal.BTN_GUARDAR);
-                btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+                btnNuevo.setText(Utilidad.BTN_GUARDAR);
+                btnEliminar.setText(Utilidad.BTN_CANCELAR);
                 limpiarControles();
                 chkVigencia.setSelected(true);
                 txtNombre.requestFocus();
@@ -754,7 +755,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
                 } else {
                     btnNuevo.setText("Nuevo");
-                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                     
                     boolean sexo;
 

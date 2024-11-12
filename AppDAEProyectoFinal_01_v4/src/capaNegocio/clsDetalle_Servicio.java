@@ -18,8 +18,7 @@ public class clsDetalle_Servicio {
     public static final String MEDICO_ID = "medico_id";
     public static final String SERVICIO_ID = "servicio_id";
     public static final String DISPONIBILIDAD = "disponibilidad";
-    
-    
+        
     public ResultSet listarServiciosxMedico(int med_id) throws Exception {
         strSQL= " select  " +
                 "    ser.id , " +
@@ -132,6 +131,42 @@ public class clsDetalle_Servicio {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
             throw new Exception("Error al cambiar disponibilidad en relacion entre medico ID:"+med_id+" y servicio ID "+ser_id+" en tabla "+TABLA+": " + e.getMessage());
+        }
+    }
+    
+    public Integer mostrarCantServiciosDisponiblesXMedico(int med_id) throws Exception{
+        strSQL = " select "
+                + "     count(det.servicio_id) as "+clsMedico.CANT_SERVICIOS
+                + " from medico med "
+                + " LEFT JOIN especialidad esp ON esp.id = med.especialidad_id "
+                + " LEFT JOIN detalle_servicio det ON det.medico_id = med.id AND det.disponibilidad = true "
+                + " LEFT JOIN servicio ser ON ser.id = det.servicio_id AND ser.disponibilidad = true "
+                + " where med.id = " + med_id + " "
+                + " group by med.id, esp.id ;";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            int valor = rs.getInt(clsMedico.CANT_SERVICIOS);
+            return valor;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar id: '" + med_id + "' en la tabla " + TABLA + ": " + e.getMessage());
+        }
+    }
+    
+    public Integer mostrarCantServiciosTotalXMedico(int med_id) throws Exception{
+        strSQL = " select "
+                + "     count(det.servicio_id) as "+clsMedico.CANT_SERVICIOS
+                + " from medico med "
+                + " LEFT JOIN especialidad esp ON esp.id = med.especialidad_id "
+                + " LEFT JOIN detalle_servicio det ON det.medico_id = med.id "
+                + " LEFT JOIN servicio ser ON ser.id = det.servicio_id AND ser.disponibilidad = true "
+                + " where med.id = " + med_id + " "
+                + " group by med.id, esp.id ;";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            int valor = rs.getInt(clsMedico.CANT_SERVICIOS);
+            return valor;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar id: '" + med_id + "' en la tabla " + TABLA + ": " + e.getMessage());
         }
     }
     
