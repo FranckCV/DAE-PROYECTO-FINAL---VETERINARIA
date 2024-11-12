@@ -4,6 +4,7 @@
  */
 package capaPresentacion;
 
+import soporte.*;
 import capaNegocio.*;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -23,9 +24,9 @@ public class jdMantServicio extends javax.swing.JDialog {
     public jdMantServicio(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        btnNuevo.setText(frmMenuPrincipal.BTN_NUEVO);
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+        btnNuevo.setText(Utilidad.BTN_NUEVO);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
     }
 
     /**
@@ -351,7 +352,7 @@ public class jdMantServicio extends javax.swing.JDialog {
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
-        if (btnNuevo.getText().equals(frmMenuPrincipal.BTN_NUEVO)) {
+        if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
             limpiarControles();
         } else {
             JOptionPane.showMessageDialog(this, "No puede ejecutar esta accion");
@@ -383,7 +384,7 @@ public class jdMantServicio extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        if (btnNuevo.getText().equals(frmMenuPrincipal.BTN_GUARDAR) || btnModificar.getText().equals(frmMenuPrincipal.BTN_GUARDAR)) {
+        if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
             cancelarAccion();
         } else {
             eliminarEspacioMedico();
@@ -405,7 +406,7 @@ public class jdMantServicio extends javax.swing.JDialog {
 
     private void txtIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyTyped
         // TODO add your handling code here:
-        frmMenuPrincipal.validarTextoSoloNumero(evt);
+        Utilidad.validarCampoTextoSoloNumero(evt);
     }//GEN-LAST:event_txtIDKeyTyped
     
     private void listarServicio(){
@@ -425,7 +426,7 @@ public class jdMantServicio extends javax.swing.JDialog {
                     rsPro.getString(clsServicio.NOMBRE),
                     rsPro.getString(clsServicio.DESCRIPCION),
                     rsPro.getString(clsServicio.COSTO),
-                    frmMenuPrincipal.textoBool(rsPro.getBoolean(clsServicio.DISPONIBILIDAD), frmMenuPrincipal.DISPONIBILIDAD_SI, frmMenuPrincipal.DISPONIBILIDAD_NO)
+                    Utilidad.textoBool(rsPro.getBoolean(clsServicio.DISPONIBILIDAD), Utilidad.DISPONIBILIDAD_SI, Utilidad.DISPONIBILIDAD_NO)
                 });
             }
             tblServicio.setModel(modelo);
@@ -517,9 +518,9 @@ public class jdMantServicio extends javax.swing.JDialog {
     }
     
     private void cancelarAccion() {
-        btnNuevo.setText(frmMenuPrincipal.BTN_NUEVO);
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);        
+        btnNuevo.setText(Utilidad.BTN_NUEVO);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);        
         limpiarControles();
         listarServicio();
         editableControles(true, false, false, false);
@@ -531,9 +532,9 @@ public class jdMantServicio extends javax.swing.JDialog {
             if (txtID.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
             } else {
-                if (btnModificar.getText().equals(frmMenuPrincipal.BTN_MODIFICAR)) {
-                    btnModificar.setText(frmMenuPrincipal.BTN_GUARDAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+                if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                    btnModificar.setText(Utilidad.BTN_GUARDAR);
+                    btnEliminar.setText(Utilidad.BTN_CANCELAR);
                     editableControles(false, true, true, true);
                     usarBotones(false, false, true, true, false, false);
                 } else {
@@ -543,8 +544,8 @@ public class jdMantServicio extends javax.swing.JDialog {
                         txtDescripcion.getText(),
                         Double.parseDouble(txtCosto.getText())
                     );
-                    btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    btnModificar.setText(Utilidad.BTN_MODIFICAR);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                     editableControles(true, false, false, false);
                     usarBotones(true, true, true, true, true, true);
                     limpiarControles();
@@ -559,9 +560,9 @@ public class jdMantServicio extends javax.swing.JDialog {
 
     private void nuevoEspacioMedico() {
         try {
-            if (btnNuevo.getText().equals(frmMenuPrincipal.BTN_NUEVO)) {
-                btnNuevo.setText(frmMenuPrincipal.BTN_GUARDAR);
-                btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+            if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
+                btnNuevo.setText(Utilidad.BTN_GUARDAR);
+                btnEliminar.setText(Utilidad.BTN_CANCELAR);
                 limpiarControles();
                 editableControles(false, true, true, true);
                 usarBotones(false, true, false, true, false, false);
@@ -571,8 +572,8 @@ public class jdMantServicio extends javax.swing.JDialog {
                 if (txtNombre.getText().trim().isBlank() || txtID.getText().trim().isBlank()) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
                 } else {
-                    btnNuevo.setText(frmMenuPrincipal.BTN_NUEVO);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    btnNuevo.setText(Utilidad.BTN_NUEVO);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                     objTabla.registrarServicio(
                             Integer.parseInt(txtID.getText()),
                             txtNombre.getText(),

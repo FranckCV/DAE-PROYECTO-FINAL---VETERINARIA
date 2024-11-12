@@ -81,7 +81,7 @@ public class clsMedico {
                 + "     med.*,"
                 + "     esp.nom_especialidad, "
                 + "     esp.disponibilidad as disp_esp, "
-                + "     count(det.servicio_id) as CANT_SERVICIOS"
+                + "     count(det.servicio_id) as "+CANT_SERVICIOS
                 + " from medico med "
                 + " LEFT JOIN especialidad esp ON esp.id = med.especialidad_id "
                 + " LEFT JOIN  detalle_servicio det ON det.medico_id = med.id AND det.disponibilidad = true "
