@@ -18,9 +18,10 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
     clsUsuario objUsuario = new clsUsuario();
     clsCaptcha objCaptcha = new clsCaptcha();
     public String nombreUsuario = "";
-    public String tipoUsuario = "";
+    public String cargo = "";
     public String usuario = "";
     public String usuario_id = "";
+    private String puesto = "";
 
     int count = 0;
 
@@ -45,7 +46,7 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
                 btnLoginActionPerformed(evt);
             }
         });
-        
+
         this.setTitle("Inicio de sesión");
         txtCaptchaEnunciado.setEnabled(false);
         txtCaptchaEnunciado.setBackground(Color.black);
@@ -296,6 +297,22 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
             if (objCaptcha.validarCaptcha(txtCaptchaEnunciado.getText(), txtRespuesta.getText())
                     && !objUsuario.login(txtUsuario.getText(), txtClave.getText()).isEmpty()) {
                 nombreUsuario = objUsuario.obtenerUsuario(txtUsuario.getText());
+                puesto = objUsuario.obtenerCargo(txtUsuario.getText());
+                switch (puesto) {
+                    case "V":
+                        cargo = "Veterinario";
+                        break;
+                    case "E":
+                        cargo = "Empleado";
+                        break;
+                    case "A":
+                        cargo = "Administrador";
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "Error al obtener puesto");
+                        break;
+                }
+
                 JOptionPane.showMessageDialog(this, "Bienvenido al sistema " + nombreUsuario);
                 this.dispose();
             } else {

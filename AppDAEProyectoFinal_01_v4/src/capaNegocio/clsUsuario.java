@@ -42,6 +42,20 @@ public class clsUsuario {
         }
         return "";
     }
+    
+    public String obtenerCargo(String usu) throws Exception{
+        strSQL="select cargo from usuario where nombreusuario='"+usu+"'";
+        try{
+            rs=objConectar.consultarBD(strSQL);
+            if(rs.next()){
+             return rs.getString("cargo");   
+            }
+        }
+        catch(Exception e){
+            throw new Exception("Error al obtener cargo de usuario");
+        }
+        return "";
+    }
 
     public ResultSet listarUsuarios() throws Exception {
         strSQL = "select * from usuario";
