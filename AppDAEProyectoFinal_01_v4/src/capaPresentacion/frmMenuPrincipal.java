@@ -70,18 +70,18 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
-        mnuUsuario = new javax.swing.JMenuItem();
-        jMenu8 = new javax.swing.JMenu();
+        mnuCambiarUsuario = new javax.swing.JMenuItem();
+        mnuMantenimiento = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         mnuMascota = new javax.swing.JMenuItem();
         mnuDueño = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         mnuMedico = new javax.swing.JMenuItem();
         mnuMedicamento = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        mnuExamenes = new javax.swing.JMenuItem();
         mnuServicio = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
+        mnuVacuna = new javax.swing.JMenuItem();
+        mnuUsuarios = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
         mnuEstadoCita = new javax.swing.JMenuItem();
         mnuTipoExamen = new javax.swing.JMenuItem();
@@ -314,17 +314,17 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         jMenu4.setText("Login");
 
-        mnuUsuario.setText("Cambiar usuario");
-        mnuUsuario.addActionListener(new java.awt.event.ActionListener() {
+        mnuCambiarUsuario.setText("Cambiar usuario");
+        mnuCambiarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuUsuarioActionPerformed(evt);
+                mnuCambiarUsuarioActionPerformed(evt);
             }
         });
-        jMenu4.add(mnuUsuario);
+        jMenu4.add(mnuCambiarUsuario);
 
         jMenuBar1.add(jMenu4);
 
-        jMenu8.setText("Mantenimiento");
+        mnuMantenimiento.setText("Mantenimiento");
 
         jMenu6.setText("Mascotas Pacientes");
 
@@ -344,7 +344,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu6.add(mnuDueño);
 
-        jMenu8.add(jMenu6);
+        mnuMantenimiento.add(jMenu6);
 
         jMenu5.setText("Informacion de la Clinica");
 
@@ -364,8 +364,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu5.add(mnuMedicamento);
 
-        jMenuItem8.setText("Examenes");
-        jMenu5.add(jMenuItem8);
+        mnuExamenes.setText("Examenes");
+        jMenu5.add(mnuExamenes);
 
         mnuServicio.setText("Servicios");
         mnuServicio.addActionListener(new java.awt.event.ActionListener() {
@@ -375,23 +375,23 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu5.add(mnuServicio);
 
-        jMenuItem6.setText("Vacunas");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        mnuVacuna.setText("Vacunas");
+        mnuVacuna.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                mnuVacunaActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem6);
+        jMenu5.add(mnuVacuna);
 
-        jMenuItem9.setText("Usuarios");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        mnuUsuarios.setText("Usuarios");
+        mnuUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                mnuUsuariosActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem9);
+        jMenu5.add(mnuUsuarios);
 
-        jMenu8.add(jMenu5);
+        mnuMantenimiento.add(jMenu5);
 
         jMenu10.setText("Información Adicional");
 
@@ -443,9 +443,9 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu10.add(mnuRazas);
 
-        jMenu8.add(jMenu10);
+        mnuMantenimiento.add(jMenu10);
 
-        jMenuBar1.add(jMenu8);
+        jMenuBar1.add(mnuMantenimiento);
 
         jMenu1.setText("Citas");
 
@@ -526,6 +526,27 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    public static String textoBool(boolean vig, String txtTrue, String txtFalse) {
+        if (vig) {
+            return txtTrue;
+        } else {
+            return txtFalse;
+        }
+    }
+
+    public static void validarTextoSoloNumero(java.awt.event.KeyEvent evt) {
+        int key = evt.getKeyChar();
+
+        boolean numeros = key >= 48 && key <= 57;
+
+        if (!(numeros)) {
+            evt.consume();
+        }
+    }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -546,9 +567,31 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-          
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 //         TODO add your handling code here:
+        jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
+        objForm.setLocationRelativeTo(this);
+        objForm.setVisible(true);
+        txtUsuario.setText(objForm.nombreUsuario);
+        switch (objForm.cargo) {
+                    case "V":
+                        txtCargo.setText("Veterinario");
+                        mnuMantenimiento.setEnabled(false);
+                        break;
+                    case "E":
+                        txtCargo.setText("Empleado");
+                        mnuUsuarios.setEnabled(false);
+                        break;
+                    case "A":
+                        txtCargo.setText("Administrador");
+                        mnuMantenimiento.setEnabled(true);
+                        mnuUsuarios.setEnabled(true);
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "Error al obtener puesto");
+                        break;
+                }
+
 //        jdInicioSesionVet objForm= new jdInicioSesionVet(this, true);
 //        objForm.setLocationRelativeTo(this);
 //        objForm.setVisible(true);
@@ -563,6 +606,18 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCitaActionPerformed
 
     private void mnuMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMascotaActionPerformed
+        // TODO add your handling code here:
+
+        try {
+            // Llamada al constructor que puede lanzar una excepción
+            jdMantMascota objForm = new jdMantMascota(null, true);
+            objForm.setLocationRelativeTo(this);
+            objForm.setVisible(true);
+        } catch (Exception e) {
+            // Manejo de la excepción
+            JOptionPane.showMessageDialog(this, "Error al abrir el formulario de mascota: " + e.getMessage());
+            e.printStackTrace();
+        }
         try {
             // TODO add your handling code here:
 
@@ -639,6 +694,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void mnuEstadoCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEstadoCitaActionPerformed
         // TODO add your handling code here:
         jdMntEstadoCita objForm = new jdMntEstadoCita(this, true);
+
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
     }//GEN-LAST:event_mnuEstadoCitaActionPerformed
@@ -648,7 +704,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jdMntVacuna objForm = new jdMntVacuna(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_mnuEstadoCitaActionPerformed
+
+    private void mnuVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuVacunaActionPerformed
+        // TODO add your handling code here:
+        jdMntVacuna objForm = new jdMntVacuna(this, true);
+        objForm.setLocationRelativeTo(this);
+        objForm.setVisible(true);
+    }//GEN-LAST:event_mnuVacunaActionPerformed
 
     private void btnMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMascotaActionPerformed
         // TODO add your handling code here:
@@ -671,7 +734,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objForm.setVisible(true);
     }//GEN-LAST:event_btnDueñoActionPerformed
 
-    private void mnuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuUsuarioActionPerformed
+    private void mnuCambiarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCambiarUsuarioActionPerformed
         // TODO add your handling code here:
         txtUsuario.setText("");
         txtCargo.setText("");
@@ -680,12 +743,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objForm.setVisible(true);
     }//GEN-LAST:event_mnuUsuarioActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+    private void mnuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuUsuariosActionPerformed
         // TODO add your handling code here:
         jdMantUsuario objForm = new jdMantUsuario(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    }//GEN-LAST:event_mnuUsuariosActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         jdCita objCita = new jdCita(this, true);
@@ -698,6 +761,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objCita.setLocationRelativeTo(this);
         objCita.setVisible(true);
     }//GEN-LAST:event_mnuCitaActionPerformed
+
 
     private void mnuCustodiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCustodiaActionPerformed
         // TODO add your handling code here:
@@ -741,7 +805,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
@@ -759,10 +822,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem35;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -770,12 +830,15 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JMenuItem mnuCambiarUsuario;
     private javax.swing.JMenuItem mnuCita;
     private javax.swing.JMenuItem mnuCustodia;
     private javax.swing.JMenuItem mnuDueño;
     private javax.swing.JMenuItem mnuEspecialidad;
     private javax.swing.JMenuItem mnuEspecie;
     private javax.swing.JMenuItem mnuEstadoCita;
+    private javax.swing.JMenuItem mnuExamenes;
+    private javax.swing.JMenu mnuMantenimiento;
     private javax.swing.JMenuItem mnuMascota;
     private javax.swing.JMenuItem mnuMedicamento;
     private javax.swing.JMenuItem mnuMedico;
@@ -783,7 +846,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuServicio;
     private javax.swing.JMenuItem mnuTipoExamen;
     private javax.swing.JMenuItem mnuTipoMedicamento;
-    private javax.swing.JMenuItem mnuUsuario;
+    private javax.swing.JMenuItem mnuUsuarios;
+    private javax.swing.JMenuItem mnuVacuna;
     private javax.swing.JPanel panel;
     private javax.swing.JTextField txtCargo;
     private javax.swing.JTextField txtUsuario;

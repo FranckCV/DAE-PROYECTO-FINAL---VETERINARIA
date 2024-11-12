@@ -368,24 +368,25 @@ VALUES
 
 --USUARIOS
 INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (1, 'jdoe', TRUE, TRUE, 'clave123', 'John', 'Doe', 'Smith', 'V');
+VALUES (1, 'jdoe', TRUE, TRUE, md5('1234' || 'jdoe' || 'CODE146'), 'John', 'Doe', 'Smith', 'V');
 
 INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (2, 'mgarcia', TRUE, FALSE, 'clave456', 'Maria', 'Garcia', 'Lopez', 'E');
+VALUES (2, 'mgarcia', TRUE, FALSE, md5('4567' || 'mgarcia' || 'CODE146'), 'Maria', 'Garcia', 'Lopez', 'E');
 
 INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (3, 'arivera', TRUE, TRUE, 'clave789', 'Alex', 'Rivera', 'Martinez', 'A');
+VALUES (3, 'arivera', TRUE, TRUE, md5('7890' || 'arivera' || 'CODE146'), 'Alex', 'Rivera', 'Martinez', 'A');
 
 INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (4, 'lfernandez', FALSE, FALSE, 'clave101', 'Laura', 'Fernandez', 'Soto', 'V');
+VALUES (4, 'lfernandez', FALSE, FALSE, md5('1011' || 'lfernandez' || 'CODE146'), 'Laura', 'Fernandez', 'Soto', 'V');
 
 INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (5, 'cperez', TRUE, TRUE, 'clave102', 'Carlos', 'Perez', 'Gutierrez', 'E');
+VALUES (5, 'cperez', TRUE, TRUE, md5('1021' || 'cperez' || 'CODE146'), 'Carlos', 'Perez', 'Gutierrez', 'E');
 
 INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (6, 'asanchez', FALSE, TRUE, 'clave103', 'Andres', 'Sanchez', 'Lopez', 'V');
+VALUES (6, 'asanchez', FALSE, TRUE, md5('1031' || 'asanchez' || 'CODE146'), 'Andres', 'Sanchez', 'Lopez', 'V');
 
-
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
+VALUES (7, 'fabi', FALSE, TRUE, md5('123' || 'fabi' || 'CODE146'), 'Fabiana', 'Paucar', 'Mejia', 'V');
 
 
 --select * from medicamento;

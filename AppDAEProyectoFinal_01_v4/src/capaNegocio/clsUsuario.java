@@ -5,7 +5,7 @@
 package capaNegocio;
 
 import capaDatos.clsJDBC;
-import java.sql.ResultSet;
+import java.sql.*;
 
 /**
  *
@@ -18,9 +18,17 @@ public class clsUsuario {
     ResultSet rs = null;
 
     public String login(String usu, String cont) throws Exception {
-        strSQL = "select * from usuario where nomusuario = '" + usu + "' and clave = '" + cont + "'";
+        strSQL = "select * from usuario where nomusuario = ? "
+                + "and clave = md5(? || ? || 'CODE146')";
         try {
-            rs = objConectar.consultarBD(strSQL);
+            Connection micon = null;
+            objConectar.conectar();
+            micon = objConectar.getCon();
+            PreparedStatement sp = micon.prepareStatement(strSQL);
+            sp.setString(1, usu);  
+            sp.setString(2, cont); 
+            sp.setString(3, usu);  
+            rs = sp.executeQuery();
             while (rs.next()) {
                 return rs.getString("nombres");
             }
@@ -42,16 +50,15 @@ public class clsUsuario {
         }
         return "";
     }
-    
-    public String obtenerCargo(String usu) throws Exception{
-        strSQL="select cargo from usuario where nombreusuario='"+usu+"'";
-        try{
-            rs=objConectar.consultarBD(strSQL);
-            if(rs.next()){
-             return rs.getString("cargo");   
+
+    public String obtenerCargo(String usu) throws Exception {
+        strSQL = "select cargo from usuario where nomusuario='" + usu + "'";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return rs.getString("cargo");
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             throw new Exception("Error al obtener cargo de usuario");
         }
         return "";
@@ -80,7 +87,6 @@ public class clsUsuario {
 //        }
 //        return 0;
 //    }
-
     // Método para registrar un nuevo usuario
     public void registrarUsuario(int codUsuario, String nomUsuario, boolean estado, boolean sexo, String clave,
             String nombres, String apPaterno, String apMaterno, String cargo) throws Exception {
@@ -138,7 +144,6 @@ public class clsUsuario {
         }
     }
 
-    
     public Integer generarCodigoUsuario() throws Exception {
         strSQL = "Select COALESCE(Max(codUsuario), 0) + 1 as codigo from usuario";
         try {
