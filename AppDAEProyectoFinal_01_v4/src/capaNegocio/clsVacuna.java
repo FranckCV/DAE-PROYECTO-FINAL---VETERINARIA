@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author Junior
+ * @author Grupo_Veterinaria
  */
 public class clsVacuna {
 
@@ -43,18 +43,18 @@ public class clsVacuna {
         return 0;
     }
 
-    public Integer obtenerIdEspecie(String nom) throws Exception {
-        strSQL = "Select " + ID + " from especie where " + NOMBRE + " = '" + nom + "' ";
-        try {
-            rs = objConectar.consultarBD(strSQL);
-            if (rs.next()) {
-                return rs.getInt(ID);
+        public Integer obtenerIdEspecie(String nom) throws Exception {
+            strSQL = "Select " + ID + " from especie where " + NOMBRE + " = '" + nom + "' ";
+            try {
+                rs = objConectar.consultarBD(strSQL);
+                if (rs.next()) {
+                    return rs.getInt(ID);
+                }
+            } catch (Exception e) {
+                throw new Exception("Error al buscar ID de " + TABLA + " con el nombre " + nom + " --> " + e.getMessage());
             }
-        } catch (Exception e) {
-            throw new Exception("Error al buscar ID de " + TABLA + " con el nombre " + nom + " --> " + e.getMessage());
+            return 0;
         }
-        return 0;
-    }
 
     public Integer generarIDVacuna() throws Exception {
         strSQL = "Select COALESCE(MAX(" + ID + "),0)+1 as valor from " + TABLA;

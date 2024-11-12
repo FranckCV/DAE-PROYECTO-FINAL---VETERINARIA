@@ -7,7 +7,7 @@ import capaDatos.clsJDBC;
 import java.sql.ResultSet;
 /**
  *
- * @author Fabiana Lucía
+ * @author Grupo_Veterinaria
  */
 public class clsEstadoCita {
     //Empezamos creando una variable para mascota

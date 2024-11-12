@@ -4,6 +4,7 @@
  */
 package capaPresentacion;
 
+import soporte.*;
 import capaNegocio.clsMedicamento;
 import capaNegocio.clsTipoMedicamento;
 import java.sql.ResultSet;
@@ -25,25 +26,18 @@ public class jdMntMedicamento extends javax.swing.JDialog {
     clsMedicamento objMedicamento = new clsMedicamento();
     clsTipoMedicamento objTipoMedicamento = new clsTipoMedicamento();
 
-    private void formatoSpinner() {
-        SpinnerNumberModel model = new SpinnerNumberModel(00, 00, null, 1);
-        spnStock.setModel(model);
-        JFormattedTextField txt = ((JSpinner.NumberEditor) spnStock.getEditor()).getTextField();
-        ((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
-    }
-
     /**
      * Creates new form jdMntMedicamento
      */
     public jdMntMedicamento(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        formatoSpinner();
+        Utilidad.validarSpinnerNumerosPositivos(spnStock);
         listarMedicamentos();
         listarTipoMedicamento();
-        btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+        btnRegistrar.setText(Utilidad.BTN_NUEVO);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         cbxTipoMedicamento.setEnabled(false);
         spnStock.setEnabled(false);
         chkVigencia.setEnabled(false);
@@ -118,9 +112,9 @@ public class jdMntMedicamento extends javax.swing.JDialog {
     }
 
     private void cancelarAccionMedicamento() {
-        btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+        btnRegistrar.setText(Utilidad.BTN_NUEVO);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         usarBotonesMedicamento(true, true, false, false, true, false);
         limpiarControles();
         editableControlesMedicamento(true, false, false, false, false, false, false);
@@ -538,24 +532,15 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-        int key = evt.getKeyChar();
-
-        boolean mayusculas = key >= 65 && key <= 90;
-        boolean minusculas = key >= 97 && key <= 122;
-        boolean espacio = key == 32;
-
-        if (!(minusculas || mayusculas || espacio)) {
-            evt.consume();
-        }
-
+        Utilidad.validarCampoTextoSoloLetras(evt);
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
         try {
-            if (btnRegistrar.getText().equals(frmMenuPrincipal.BTN_NUEVO)) {
-                btnRegistrar.setText(frmMenuPrincipal.BTN_GUARDAR);
-                btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+            if (btnRegistrar.getText().equals(Utilidad.BTN_NUEVO)) {
+                btnRegistrar.setText(Utilidad.BTN_GUARDAR);
+                btnEliminar.setText(Utilidad.BTN_CANCELAR);
                 limpiarControles();
                 editableControlesMedicamento(true, true, true, true, true, false, true);
                 txtId.setText(objMedicamento.generarCodigoMedicamento().toString());
@@ -572,8 +557,8 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "El nombre del medicamento ya está registrado. Elija un nombre diferente.");
                     return;
                 } else {
-                    btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    btnRegistrar.setText(Utilidad.BTN_NUEVO);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
 
                     // Registro del medicamento
                     objMedicamento.registrarMedicamento(
@@ -606,9 +591,9 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             if (txtId.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un medicamento para modificar");
             } else {
-                if (btnModificar.getText().equals(frmMenuPrincipal.BTN_MODIFICAR)) {
-                    btnModificar.setText(frmMenuPrincipal.BTN_GUARDAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+                if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                    btnModificar.setText(Utilidad.BTN_GUARDAR);
+                    btnEliminar.setText(Utilidad.BTN_CANCELAR);
                     editableControlesMedicamento(false, true, true, true, true, false, true);
                     usarBotonesMedicamento(false, false, true, true, true, false);
 
@@ -622,8 +607,8 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                             txtPresentacion.getText(),
                             objTipoMedicamento.obtenerCodigoTipoMedicamento(cbxTipoMedicamento.getSelectedItem().toString())
                     );
-                    btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    btnModificar.setText(Utilidad.BTN_MODIFICAR);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                     editableControlesMedicamento(true, false, false, false, false, false, false);
                     usarBotonesMedicamento(true, true, false, true, true, true);
                     limpiarControles();
@@ -638,7 +623,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        if (btnRegistrar.getText().equals(frmMenuPrincipal.BTN_GUARDAR) || btnModificar.getText().equals(frmMenuPrincipal.BTN_GUARDAR)) {
+        if (btnRegistrar.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
             cancelarAccionMedicamento();
         } else {
             eliminarMedicamento();
@@ -717,11 +702,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
     private void spnStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spnStockKeyTyped
         // TODO add your handling code here:
-        int key = evt.getKeyChar();
-        boolean numeros = key >= 48 && key <= 57;
-        if (!(numeros)) {
-            evt.consume();
-        }
+        Utilidad.validarCampoTextoSoloNumero(evt);
     }//GEN-LAST:event_spnStockKeyTyped
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

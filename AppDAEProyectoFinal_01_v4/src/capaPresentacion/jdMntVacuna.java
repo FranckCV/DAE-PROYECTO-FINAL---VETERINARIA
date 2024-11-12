@@ -4,10 +4,9 @@
  */
 package capaPresentacion;
 
-import capaNegocio.clsVacuna;
 import capaNegocio.clsEspecie;
+import capaNegocio.clsVacuna;
 import java.sql.ResultSet;
-import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
@@ -15,6 +14,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
+import soporte.*;
 
 /**
  *
@@ -31,9 +31,9 @@ public class jdMntVacuna extends javax.swing.JDialog {
         formatoSpinner();
         listarVacunas();
         listarEspecies();
-        btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+        btnRegistrar.setText(Utilidad.BTN_NUEVO);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         spnDosis.setEnabled(false);
         chkDisponibilidad.setEnabled(false);
         chkDisponibilidad.setSelected(true);
@@ -107,9 +107,9 @@ public class jdMntVacuna extends javax.swing.JDialog {
     }
 
     private void cancelarAccionVacuna() {
-        btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
+        btnRegistrar.setText(Utilidad.BTN_NUEVO);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
         usarBotonesVacuna(true, true, false, false, true, false);
         limpiarControles();
         editableControlesVacuna(true, false, false, false, false);
@@ -261,7 +261,7 @@ public class jdMntVacuna extends javax.swing.JDialog {
         });
 
         btnDisponibilidad.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        btnDisponibilidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/editar.png"))); // NOI18N
+        btnDisponibilidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/disponible.png"))); // NOI18N
         btnDisponibilidad.setText("Disponibilidad");
         btnDisponibilidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -331,8 +331,9 @@ public class jdMntVacuna extends javax.swing.JDialog {
                     .addComponent(btnDisponibilidad, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(24, 24, 24))
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDisponibilidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, Short.MAX_VALUE))
+                .addGap(27, 27, 27))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -415,7 +416,7 @@ public class jdMntVacuna extends javax.swing.JDialog {
                     .addComponent(btnLimpiar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(13, Short.MAX_VALUE))
         );
@@ -528,9 +529,9 @@ public class jdMntVacuna extends javax.swing.JDialog {
             if (txtId.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar una vacuna para modificar.");
             } else {
-                if (btnModificar.getText().equals(frmMenuPrincipal.BTN_MODIFICAR)) {
-                    btnModificar.setText(frmMenuPrincipal.BTN_GUARDAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+                if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                    btnModificar.setText(Utilidad.BTN_GUARDAR);
+                    btnEliminar.setText(Utilidad.BTN_CANCELAR);
                     editableControlesVacuna(false, true, true, true, false);
                     usarBotonesVacuna(false, false, true, true, true, false);
                     chkDisponibilidad.setEnabled(false);
@@ -543,8 +544,8 @@ public class jdMntVacuna extends javax.swing.JDialog {
                             chkDisponibilidad.isSelected()
                     );
 
-                    btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    btnModificar.setText(Utilidad.BTN_MODIFICAR);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                     editableControlesVacuna(true, false, false, false, false);
                     usarBotonesVacuna(true, true, true, true, true, true);
                     limpiarControles();
@@ -560,10 +561,10 @@ public class jdMntVacuna extends javax.swing.JDialog {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try {
-            if (btnRegistrar.getText().equals(frmMenuPrincipal.BTN_NUEVO)) {
+            if (btnRegistrar.getText().equals(Utilidad.BTN_NUEVO)) {
                 // Cambia a modo guardar
-                btnRegistrar.setText(frmMenuPrincipal.BTN_GUARDAR);
-                btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+                btnRegistrar.setText(Utilidad.BTN_GUARDAR);
+                btnEliminar.setText(Utilidad.BTN_CANCELAR);
                 chkDisponibilidad.setEnabled(true);
                 limpiarControles(); // Limpia los campos
                 editableControlesVacuna(false, true, true, true, false); // Habilita los campos para ingresar datos
@@ -584,15 +585,15 @@ public class jdMntVacuna extends javax.swing.JDialog {
 
                 objVacuna.registrarVacuna(
                         Integer.parseInt(txtId.getText()),
-                        txtNombre.getText(),
+                        txtNombre.getText(), 
                         (Double) spnDosis.getValue(),
                         objEspecie.obtenerIdEspecie(cmbEspecie.getSelectedItem().toString()),
                         chkDisponibilidad.isSelected()
                 );
 
                 // Restablece la interfaz
-                btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
-                btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                btnRegistrar.setText(Utilidad.BTN_NUEVO);
+                btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                 editableControlesVacuna(true, false, false, false, false);
                 usarBotonesVacuna(true, true, false, true, true, false);
                 limpiarControles();
@@ -606,7 +607,7 @@ public class jdMntVacuna extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
-            if (btnRegistrar.getText().equals(frmMenuPrincipal.BTN_GUARDAR) || btnModificar.getText().equals(frmMenuPrincipal.BTN_GUARDAR)) {
+            if (btnRegistrar.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
                 cancelarAccionVacuna();
             } else {
                 if (txtId.getText().isEmpty()) {

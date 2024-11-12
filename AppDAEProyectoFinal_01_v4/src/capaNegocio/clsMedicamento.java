@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author Leonardo
+ * @author Grupo_Veterinaria
  */
 public class clsMedicamento {
 

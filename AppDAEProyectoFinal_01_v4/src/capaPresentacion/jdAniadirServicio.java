@@ -94,7 +94,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
             }
 
             while (rsServicios.next()) {
-                modelo.addRow(new Object[]{rsServicios.getInt("ID") + " - " + rsServicios.getInt("medicoid"),
+                modelo.addRow(new Object[]{rsServicios.getInt("ID") + " - " + rsServicios.getInt("medico_id"),
                     rsServicios.getString("nom_servicio"),
                     rsServicios.getString("nombres") + " " + rsServicios.getString("apepaterno"),
                     rsServicios.getString("costo")

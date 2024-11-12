@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author Junior Perez
+ * @author Grupo_Veterinaria
  */
 public class clsUsuario {
 
@@ -39,6 +39,20 @@ public class clsUsuario {
             }
         } catch (Exception e) {
             throw new Exception("Error al obtener user");
+        }
+        return "";
+    }
+    
+    public String obtenerCargo(String usu) throws Exception{
+        strSQL="select cargo from usuario where nombreusuario='"+usu+"'";
+        try{
+            rs=objConectar.consultarBD(strSQL);
+            if(rs.next()){
+             return rs.getString("cargo");   
+            }
+        }
+        catch(Exception e){
+            throw new Exception("Error al obtener cargo de usuario");
         }
         return "";
     }
