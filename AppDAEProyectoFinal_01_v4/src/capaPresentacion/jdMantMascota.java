@@ -15,21 +15,14 @@ import javax.swing.table.DefaultTableModel;
 public class jdMantMascota extends javax.swing.JDialog {
 
     clsMascota objMasco = new clsMascota();
+    clsRaza objRaza = new clsRaza();
 
     public jdMantMascota(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
         sinEditarP();
         txtId.requestFocus();
-
         listarMascotas();
-        listarNombreEspecies();
-
-        cmbEspecie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbEspecieActionPerformed(evt);
-            }
-        });
     }
 
     @SuppressWarnings("unchecked")
@@ -49,7 +42,6 @@ public class jdMantMascota extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -70,13 +62,10 @@ public class jdMantMascota extends javax.swing.JDialog {
         jLabel19 = new javax.swing.JLabel();
         txtPeso = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        dtcFechaRegistro = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
         chkEstado = new javax.swing.JCheckBox();
-        jLabel5 = new javax.swing.JLabel();
-        cmbEspecie = new javax.swing.JComboBox<>();
-        btnNwEspecie = new javax.swing.JButton();
         btnRaza = new javax.swing.JButton();
+        btnBuscar1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         txtId = new javax.swing.JTextField();
@@ -143,9 +132,6 @@ public class jdMantMascota extends javax.swing.JDialog {
         jButton5.setContentAreaFilled(false);
         jButton5.setVerifyInputWhenFocusTarget(false);
 
-        jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel7.setText("Fecha Registro:");
-
         jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel9.setText("Altura:");
 
@@ -176,11 +162,21 @@ public class jdMantMascota extends javax.swing.JDialog {
         cbxSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Macho", "Hembra" }));
 
         txtNombre.setBorder(null);
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
         jLabel16.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel16.setText("cm");
 
         txtAltura.setBorder(null);
+        txtAltura.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAlturaKeyTyped(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel17.setText("kg");
@@ -212,13 +208,14 @@ public class jdMantMascota extends javax.swing.JDialog {
         jLabel19.setText("Raza:");
 
         txtPeso.setBorder(null);
+        txtPeso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPesoKeyTyped(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel8.setText("Fecha Nacimiento:");
-
-        dtcFechaRegistro.setDateFormatString("yyyy-MM-dd");
-        dtcFechaRegistro.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        dtcFechaRegistro.setOpaque(false);
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel3.setText("Estado:");
@@ -226,31 +223,23 @@ public class jdMantMascota extends javax.swing.JDialog {
         chkEstado.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         chkEstado.setText("Vivo");
 
-        jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel5.setText("Especie:");
-
-        cmbEspecie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbEspecieActionPerformed(evt);
-            }
-        });
-
-        btnNwEspecie.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/patas.png"))); // NOI18N
-        btnNwEspecie.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnNwEspecie.setBorderPainted(false);
-        btnNwEspecie.setOpaque(false);
-        btnNwEspecie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNwEspecieActionPerformed(evt);
-            }
-        });
-
         btnRaza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/patas.png"))); // NOI18N
         btnRaza.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnRaza.setBorderPainted(false);
         btnRaza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRazaActionPerformed(evt);
+            }
+        });
+
+        btnBuscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar.png"))); // NOI18N
+        btnBuscar1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnBuscar1.setBorderPainted(false);
+        btnBuscar1.setContentAreaFilled(false);
+        btnBuscar1.setName(""); // NOI18N
+        btnBuscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscar1ActionPerformed(evt);
             }
         });
 
@@ -265,69 +254,63 @@ public class jdMantMascota extends javax.swing.JDialog {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(71, 71, 71)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
-                                        .addGap(10, 10, 10))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addGap(116, 116, 116)
-                                        .addComponent(jLabel17))
-                                    .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(86, 86, 86)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                                .addComponent(jLabel11)
+                                                .addGap(10, 10, 10))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                                .addGap(116, 116, 116)
+                                                .addComponent(jLabel17))
+                                            .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(jLabel15)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(chkEstado))
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addGap(20, 20, 20)
                                         .addComponent(jLabel9)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txtAltura, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(8, 8, 8)
-                                        .addComponent(jLabel16)))))
-                        .addGap(0, 0, 0)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel16))))
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(60, 60, 60)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(80, 80, 80)
+                                .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(dtcFechaRegistro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(cmbEstadoSalud, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .addGap(134, 134, 134)
+                                .addComponent(chkEstado)))
+                        .addGap(48, 48, 48)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbxRaza, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel19)
-                                    .addComponent(jLabel5))
+                                    .addComponent(jLabel15)
+                                    .addComponent(jLabel8))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cmbEspecie, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbxRaza, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(cbxSexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbEstadoSalud, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
+                        .addComponent(chkCastrado)
+                        .addGap(35, 35, 35)
+                        .addComponent(chkDesparasitado))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .addComponent(chkCastrado)
-                                .addGap(35, 35, 35)
-                                .addComponent(chkDesparasitado))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -335,71 +318,58 @@ public class jdMantMascota extends javax.swing.JDialog {
                         .addGap(16, 16, 16))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRaza)
-                            .addComponent(btnNwEspecie))
+                        .addComponent(btnRaza)
                         .addContainerGap(27, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(17, 17, 17)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel11)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel6)
+                                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel8))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(3, 3, 3)))
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel17))))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel16)
+                            .addComponent(txtAltura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)
-                            .addComponent(txtAltura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel16)
+                            .addComponent(cmbEstadoSalud, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(8, 8, 8)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton5)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnNwEspecie))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jButton5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(dtcFechaRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel8)
-                                            .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(10, 10, 10)
-                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel18)
-                                            .addComponent(cmbEstadoSalud, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(cmbEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cbxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel15))))
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel19)
-                                    .addComponent(cbxRaza, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(chkEstado)
-                                    .addComponent(jLabel3))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addComponent(btnRaza)))))
-                .addGap(18, 18, 18)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel19)
+                        .addComponent(cbxRaza, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(chkEstado)
+                        .addComponent(jLabel3))
+                    .addComponent(btnRaza))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -407,7 +377,7 @@ public class jdMantMascota extends javax.swing.JDialog {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chkDesparasitado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chkCastrado))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/refugio-de-animales.png"))); // NOI18N
@@ -418,6 +388,11 @@ public class jdMantMascota extends javax.swing.JDialog {
         txtId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIdActionPerformed(evt);
+            }
+        });
+        txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdKeyTyped(evt);
             }
         });
 
@@ -531,33 +506,38 @@ public class jdMantMascota extends javax.swing.JDialog {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                .addContainerGap()
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
+                        .addGap(24, 24, 24)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1231, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 325, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -583,7 +563,7 @@ public class jdMantMascota extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(8, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -602,9 +582,16 @@ public class jdMantMascota extends javax.swing.JDialog {
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        listarNombreEspecies();  // Volver a listar las especies
-        listarNombreRaza();  // Volver a listar las razas
-
+        // Volver a listar las especies
+        listarNombreRaza();
+        try {
+            // Volver a listar las razas
+            listarMascotas();
+            listarNombreRaza();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formWindowOpened
 
 
@@ -621,14 +608,15 @@ public class jdMantMascota extends javax.swing.JDialog {
                 btnModificar.setEnabled(false);
                 btnLimpiar.setEnabled(false);
                 btnAgregarD.setEnabled(false);
-                btnNwEspecie.setEnabled(false);
                 btnRaza.setEnabled(false);
+                txtId.setEditable(false);
+
                 Editar();
 
             } else {
                 if (camposEstanLlenos()) {  // Verificar si todos los campos están llenos
                     btnRegistrar.setText("Registrar Mascota");
-                    Editar(); 
+                    Editar();
                     txtId.setEditable(false);// Puede que esto deba ser ajustado dependiendo de su propósito
 
                     // Registrar la mascota usando los valores de los campos del formulario
@@ -643,25 +631,22 @@ public class jdMantMascota extends javax.swing.JDialog {
                             chkCastrado.isSelected(),
                             chkDesparasitado.isSelected(),
                             extraerEstado(cmbEstadoSalud.getSelectedItem().toString()),
-                            objMasco.obtenerCodigoRaza(cbxRaza.getSelectedItem().toString()),
                             chkEstado.isSelected(),
-                            dtcFechaRegistro.getDate(),
-                            objMasco.obtenerCodigoEspecie(cmbEspecie.getSelectedItem().toString()));
-                    listarNombreEspecies();  // Volver a listar las especies
+                            objRaza.obtenerIdRaza(cbxRaza.getSelectedItem().toString())
+                    );
+                    // Volver a listar las especies
                     listarNombreRaza();  // Volver a listar las razas
                     listarMascotas();  // Actualizar la lista de mascotas
-  limpiarCampos();
+                    limpiarCampos();
                     JOptionPane.showMessageDialog(this, "Mascota registrada con éxito");
                 }
                 btnBuscar.setEnabled(true);
                 btnModificar.setEnabled(true);
                 btnLimpiar.setEnabled(true);
                 btnAgregarD.setEnabled(true);
-                btnNwEspecie.setEnabled(true);
                 btnRaza.setEnabled(true);
                 txtId.setEditable(true);// Puede que esto deba ser ajustado dependiendo de su propósito
 
-              
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Solo se aceptan números en altura y peso");
@@ -677,6 +662,9 @@ public class jdMantMascota extends javax.swing.JDialog {
         txtId.setText(String.valueOf(tblMascota.getValueAt(tblMascota.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);
     }//GEN-LAST:event_tblMascotaMouseClicked
+ private String getSexoString(boolean sexo) {
+        return sexo ? "Macho" : "Hembra";
+    }
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
@@ -687,8 +675,8 @@ public class jdMantMascota extends javax.swing.JDialog {
             } else {
 
                 try {
-                    ResultSet rsBus = null;
-                    rsBus = objMasco.buscarMascota(Integer.parseInt(txtId.getText()));
+                    
+                    ResultSet rsBus = objMasco.buscarMascota(Integer.parseInt(txtId.getText()));
                     if (rsBus.next()) {
                         // Asignamos los valores obtenidos desde la base de datos a los campos del formulario
                         txtNombre.setText(rsBus.getString("nombre"));
@@ -696,22 +684,19 @@ public class jdMantMascota extends javax.swing.JDialog {
                         cbxSexo.setSelectedItem(getSexoString(rsBus.getBoolean("sexo")));
                         txtAltura.setText(String.valueOf(rsBus.getDouble("altura")));
                         txtPeso.setText(String.valueOf(rsBus.getDouble("peso")));
-                        cmbEstadoSalud.setSelectedItem(rsBus.getString("condicion"));
                         cbxRaza.setSelectedItem(rsBus.getString("raza_nombre"));
-                        cmbEspecie.setSelectedItem(rsBus.getString("especie_nombre"));
                         txtNotaAdicional.setText(rsBus.getString("notaAdicional"));
                         chkCastrado.setSelected(rsBus.getBoolean("esterilizado"));
                         chkDesparasitado.setSelected(rsBus.getBoolean("desparasitado"));
-                        cmbEstadoSalud.setSelectedItem(mostrarEstado(rsBus.getString("condicion")));
-                        chkEstado.setSelected(rsBus.getBoolean("estado"));
-                        dtcFechaRegistro.setDate(rsBus.getDate("fecha_registro"));
+                        cmbEstadoSalud.setSelectedItem(mostrarEstado(rsBus.getString("estado_salud")));
+                        chkEstado.setSelected(rsBus.getBoolean("vigencia"));
                         dtcFechaNacimiento.setDate(rsBus.getDate("fecha_nacimiento"));
                         sinEditarP();
-                        rsBus.close();// Método que gestiona el estado del formulario
                     } else {
                         JOptionPane.showMessageDialog(this, "Mascota no encontrada");
                         limpiarCampos();  // Método para limpiar el formulario
                         sinEditarP();
+                        listarMascotas();
                     }
 
                 } catch (NumberFormatException ex) {
@@ -742,43 +727,41 @@ public class jdMantMascota extends javax.swing.JDialog {
                     if (btnModificar.getText().equals("Modificar")) {
                         btnModificar.setText("Guardar Datos");
                         btnBuscar.setEnabled(false);
-                                            txtId.setEditable(false);// Puede que esto deba ser ajustado dependiendo de su propósito
-
+                        txtId.setEditable(false);// Puede que esto deba ser ajustado dependiendo de su propósito
                         Editar();
                     } else {
                         if (camposEstanLlenos()) {
+                            btnModificar.setText("Modificar");
                             int idMascota = Integer.parseInt(txtId.getText().trim());
                             double altura = Double.parseDouble(txtAltura.getText().trim());
                             double peso = Double.parseDouble(txtPeso.getText().trim());
-                                    objMasco.modificarMascota(
+                            objMasco.modificarMascota(
                                     idMascota,
                                     txtNombre.getText(),
                                     dtcFechaNacimiento.getDate(),
                                     altura,
                                     peso,
                                     txtNotaAdicional.getText(),
-                                    cbxSexo.getSelectedItem().toString().equals("Macho"), 
+                                    cbxSexo.getSelectedItem().toString().equals("Macho"),
                                     chkCastrado.isSelected(),
                                     chkDesparasitado.isSelected(),
-                                    extraerEstado(cmbEstadoSalud.getSelectedItem().toString()), 
-                                    objMasco.obtenerCodigoRaza(cbxRaza.getSelectedItem().toString()), 
-                                    chkEstado.isSelected(),
-                                    dtcFechaRegistro.getDate(),
-                                    objMasco.obtenerCodigoEspecie(cmbEspecie.getSelectedItem().toString()));
-                        JOptionPane.showMessageDialog(this, "Información de mascota modificada exitosamente.");
-                limpiarCampos();  // Limpiar los campos del formulario
-                listarMascotas();  // Actualizar la lista de mascotas
-                listarNombreRaza();
-                listarNombreEspecies();
-                sinEditarP();
-                btnModificar.setText("Modificar");
-                    btnBuscar.setEnabled(true);
-                                        txtId.setEditable(true);// Puede que esto deba ser ajustado dependiendo de su propósito
+                                    extraerEstado(cmbEstadoSalud.getSelectedItem().toString()),
+                                    objRaza.obtenerIdRaza(cbxRaza.getSelectedItem().toString()),
+                                    chkEstado.isSelected());
+                            JOptionPane.showMessageDialog(this, "Información de mascota modificada exitosamente.");
+                            limpiarCampos();  // Limpiar los campos del formulario
+                            listarMascotas();  // Actualizar la lista de mascotas
+                            listarNombreRaza();
+
+                            sinEditarP();
+                            btnModificar.setText("Modificar");
+                            btnBuscar.setEnabled(true);
+                            txtId.setEditable(true);// Puede que esto deba ser ajustado dependiendo de su propósito
 
                         }
                     }
                 }
-                
+
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Error: Los campos de ID, altura o peso deben ser números válidos.");
             } catch (NullPointerException ex) {
@@ -796,20 +779,13 @@ public class jdMantMascota extends javax.swing.JDialog {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         try {
             limpiarCampos();
-            listarMascotas();  
-                listarNombreRaza();
-                listarNombreEspecies();
+            listarMascotas();
+            listarNombreRaza();
+
         } catch (Exception ex) {
         }
-      
+
     }//GEN-LAST:event_btnLimpiarActionPerformed
-
-    private void btnNwEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNwEspecieActionPerformed
-        // TODO add your handling code here:
-        jdMntEspecie segundoDialogo = new jdMntEspecie(null, true); // 'this' indica el diálogo padre, y 'true' indica que es modal
-        segundoDialogo.setVisible(true);
-
-    }//GEN-LAST:event_btnNwEspecieActionPerformed
 
     private void btnRazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRazaActionPerformed
         // TODO add your handling code here:
@@ -825,9 +801,60 @@ public class jdMantMascota extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnAgregarDActionPerformed
 
-    private void cmbEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEspecieActionPerformed
-        listarNombreRaza();
-    }//GEN-LAST:event_cmbEspecieActionPerformed
+    private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
+        try {
+            // TODO add your handling code here:
+            listarMascotasNombre();
+        } catch (SQLException ex) {
+            Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnBuscar1ActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        // Verifica si el carácter no es una letra y tampoco un espacio
+        if (!Character.isLetter(c) && c != ' ') {
+            evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        // Verifica si el carácter no es un dígito
+        if (!Character.isDigit(c)) {
+            evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
+        }
+    }//GEN-LAST:event_txtIdKeyTyped
+
+    private void txtPesoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        String text = ((javax.swing.JTextField) evt.getSource()).getText();
+
+// Permite solo dígitos y un solo punto o coma
+        if (!Character.isDigit(c) && c != '.' && c != ',') {
+            evt.consume();
+        } else if ((c == '.' || c == ',') && (text.contains(".") || text.contains(","))) {
+            evt.consume(); // Evita múltiples puntos o comas
+        }
+
+    }//GEN-LAST:event_txtPesoKeyTyped
+
+    private void txtAlturaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAlturaKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        String text = ((javax.swing.JTextField) evt.getSource()).getText();
+
+// Permite solo dígitos y un solo punto o coma
+        if (!Character.isDigit(c) && c != '.' && c != ',') {
+            evt.consume();
+        } else if ((c == '.' || c == ',') && (text.contains(".") || text.contains(","))) {
+            evt.consume(); // Evita múltiples puntos o comas
+        }
+
+    }//GEN-LAST:event_txtAlturaKeyTyped
     private void listarMascotas() throws SQLException {
         ResultSet rsMas = null;
         DefaultTableModel modeloM = new DefaultTableModel();
@@ -839,15 +866,12 @@ public class jdMantMascota extends javax.swing.JDialog {
         modeloM.addColumn("Altura");
         modeloM.addColumn("Peso");
         modeloM.addColumn("Sexo");
-        modeloM.addColumn("Nota");
+        modeloM.addColumn("Nota Adicional");
         modeloM.addColumn("Esterilizado");
         modeloM.addColumn("Desparasitado");
         modeloM.addColumn("Condición");
         modeloM.addColumn("Estado");
         modeloM.addColumn("Raza");
-        modeloM.addColumn("Especie");
-        modeloM.addColumn("Fecha Registro");
-
         tblMascota.setModel(modeloM);
 
         try {
@@ -856,13 +880,11 @@ public class jdMantMascota extends javax.swing.JDialog {
                 String sexoTexto = rsMas.getBoolean("sexo") ? "Macho" : "Hembra";
                 String despaTexto = rsMas.getBoolean("desparasitado") ? "SI" : "NO";
                 String castTexto = rsMas.getBoolean("esterilizado") ? "SI" : "NO";
-                String estado = rsMas.getBoolean("estado") ? "VIVO" : "MUERTO";
+                String estado = rsMas.getBoolean("vigencia") ? "VIVO" : "MUERTO";
 
                 // Convertir las fechas de Date a String en formato adecuado
                 String fechaNacimiento = rsMas.getDate("fecha_nacimiento") != null
                         ? rsMas.getDate("fecha_nacimiento").toString() : "Sin fecha";
-                String fechaRegistro = rsMas.getDate("fecha_registro") != null
-                        ? rsMas.getDate("fecha_registro").toString() : "Sin fecha";
 
                 modeloM.addRow(new Object[]{
                     rsMas.getInt("id"),
@@ -874,12 +896,9 @@ public class jdMantMascota extends javax.swing.JDialog {
                     rsMas.getString("notaAdicional"),
                     castTexto,
                     despaTexto,
-                    mostrarEstado(rsMas.getString("condicion")), // Asegurarse de que mostrarEstado maneje valores nulos
+                    mostrarEstado(rsMas.getString("estado_salud")), // Asegurarse de que mostrarEstado maneje valores nulos
                     estado,
-                    rsMas.getString("raza_nombre"),
-                    rsMas.getString("especie_nombre"),
-                    fechaRegistro
-                });
+                    rsMas.getString("raza_nombre"),});
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al listar Mascotas: " + e.getMessage());
@@ -890,66 +909,37 @@ public class jdMantMascota extends javax.swing.JDialog {
         }
     }
 
-    private String getSexoString(boolean sexo) {
-        return sexo ? "Macho" : "Hembra";
-    }
+  
 
     private void listarNombreRaza() {
         ResultSet rss = null;
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         cbxRaza.setModel(modelo);
         try {
-            String especie = cmbEspecie.getSelectedItem().toString();
 
-            rss = objMasco.listarRaza(objMasco.obtenerCodigoEspecie(especie));
-            if (!rss.isBeforeFirst()) {
-                JOptionPane.showMessageDialog(this, "No se encontraron razas para la especie seleccionada.");
-            } else {
-                while (rss.next()) {
-                    modelo.addElement(rss.getString("nombre"));
-                }
+            rss = objRaza.listarRazas();
+            while (rss.next()) {
+                modelo.addElement(rss.getString("nombre"));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al listar Modelos--->" + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al listar las Razas--->" + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    private void listarNombreEspecies() {
-        ResultSet rsTipoC = null;
-        DefaultComboBoxModel modeloTC = new DefaultComboBoxModel();
-        cmbEspecie.setModel(modeloTC);
-        try {
-            rsTipoC = objMasco.listarEspecie();
-            while (rsTipoC.next()) {
-                modeloTC.addElement(rsTipoC.getString("nombre_especie"));
-            }
-        } catch (Exception e) {
-
-        }
-    }
-
     private boolean camposEstanLlenos() {
-       
 
         if (txtId.getText().isEmpty() || txtNombre.getText().isEmpty() || txtPeso.getText().isEmpty() || txtAltura.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Todos los campos deben estar completos.");
             return false;
         }
-        if (dtcFechaNacimiento.getDate() == null || dtcFechaRegistro.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar las fechas de nacimiento y registro.");
+        if (dtcFechaNacimiento.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar las fechas de nacimiento");
             return false;
         }
-       
-          Date fechaNacimiento = dtcFechaNacimiento.getDate();
-    Date fechaRegistro = dtcFechaRegistro.getDate();
-    // Comparar las fechas: la fecha de registro debe ser igual o posterior a la fecha de nacimiento
-    if (fechaRegistro.before(fechaNacimiento)) {
-        JOptionPane.showMessageDialog(null, "La fecha de registro no puede ser anterior a la fecha de nacimiento.");
-        return false;
-    }
-     return true;
-        
+
+        return true;
+
     }
 
     private String extraerEstado(String est) {
@@ -983,30 +973,79 @@ public class jdMantMascota extends javax.swing.JDialog {
         txtPeso.setText("");
         txtNotaAdicional.setText("");
         dtcFechaNacimiento.setDate(null);
-        dtcFechaRegistro.setDate(null);
-        cbxSexo.setSelectedIndex(0);  // Volver a la primera opción (0)
-        cbxSexo.setEnabled(true);     // Habilitar el ComboBox de sexo para futura edición
-        cbxRaza.setSelectedIndex(0);  // Volver a la primera opción de la raza
-        cbxRaza.setEnabled(true);     // Habilitar el ComboBox de raza para futura edición
-        cmbEspecie.setSelectedIndex(0);  // Restablecer el ComboBox de especies
-        cmbEspecie.setEnabled(true);     // Habilitar el ComboBox de especie para futura edición
-        cmbEstadoSalud.setSelectedIndex(0);  // Restablecer el ComboBox de estado de salud
-        cmbEstadoSalud.setEnabled(true);  // Habilitar el ComboBox de estado de salud para futura edición
-        chkCastrado.setSelected(false);
-        chkCastrado.setEnabled(true);  // Habilitar el CheckBox
+        //cbxSexo.setSelectedIndex(0);  // Volver a la primera opción (0)
+        cbxSexo.setEditable(false);     // Habilitar el ComboBox de sexo para futura edición
+        //cbxRaza.setSelectedIndex(0);  // Volver a la primera opción de la raza
+        cbxRaza.setEditable(false);     // Habilitar el ComboBox de raza para futura edición        cmbEstadoSalud.setSelectedIndex(-1);  // Restablecer el ComboBox de estado de salud
+        cmbEstadoSalud.setEditable(false);
+        chkCastrado.setEnabled(false);
         chkEstado.setSelected(false);
         chkDesparasitado.setSelected(false);
-        chkDesparasitado.setEnabled(true);  // Habilitar el CheckBox
-        listarNombreRaza();    // Refrescar las opciones de razas
+        chkCastrado.setSelected(false);
+        chkDesparasitado.setEnabled(false);
+        listarNombreRaza();
         listarMascotas();      // Refrescar la lista de mascotas
-        listarNombreEspecies();  // Refrescar las especies en el ComboBox
+        // Refrescar las especies en el ComboBox
+    }
+
+    private void listarMascotasNombre() throws SQLException {
+        ResultSet rsMas = null;
+        DefaultTableModel modeloM = new DefaultTableModel();
+
+        // Definir las columnas de la tabla
+        modeloM.addColumn("Id");
+        modeloM.addColumn("Nombre");
+        modeloM.addColumn("Fecha Nacimiento");
+        modeloM.addColumn("Altura");
+        modeloM.addColumn("Peso");
+        modeloM.addColumn("Sexo");
+        modeloM.addColumn("Nota Adicional");
+        modeloM.addColumn("Esterilizado");
+        modeloM.addColumn("Desparasitado");
+        modeloM.addColumn("Condición");
+        modeloM.addColumn("Estado");
+        modeloM.addColumn("Raza");
+        tblMascota.setModel(modeloM);
+
+        try {
+            rsMas = objMasco.filtrar(txtNombre.getText());  // Obtener el ResultSet de mascotas
+            while (rsMas.next()) {
+                String sexoTexto = rsMas.getBoolean("sexo") ? "Macho" : "Hembra";
+                String despaTexto = rsMas.getBoolean("desparasitado") ? "SI" : "NO";
+                String castTexto = rsMas.getBoolean("esterilizado") ? "SI" : "NO";
+                String estado = rsMas.getBoolean("vigencia") ? "VIVO" : "MUERTO";
+
+                // Convertir las fechas de Date a String en formato adecuado
+                String fechaNacimiento = rsMas.getDate("fecha_nacimiento") != null
+                        ? rsMas.getDate("fecha_nacimiento").toString() : "Sin fecha";
+
+                modeloM.addRow(new Object[]{
+                    rsMas.getInt("id"),
+                    rsMas.getString("nombre"),
+                    fechaNacimiento,
+                    rsMas.getString("altura"),
+                    rsMas.getString("peso"),
+                    sexoTexto,
+                    rsMas.getString("notaAdicional"),
+                    castTexto,
+                    despaTexto,
+                    mostrarEstado(rsMas.getString("estado_salud")), // Asegurarse de que mostrarEstado maneje valores nulos
+                    estado,
+                    rsMas.getString("raza_nombre"),});
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al listar Mascotas: " + e.getMessage());
+        } finally {
+            if (rsMas != null) {
+                rsMas.close();
+            }
+        }
     }
 
     private void sinEditar() {
         txtId.setText("");
         txtNombre.setEditable(false);
         dtcFechaNacimiento.setEnabled(false);
-        dtcFechaRegistro.setEnabled(false);
         txtAltura.setEditable(false);
         txtPeso.setEditable(false);
         txtNotaAdicional.setEditable(false);
@@ -1015,7 +1054,6 @@ public class jdMantMascota extends javax.swing.JDialog {
         // cbxRaza.setSelectedIndex(-1);
         cbxRaza.setEnabled(false);
         //cmbEspecie.setSelectedIndex(-1);
-        cmbEspecie.setEnabled(false);
         chkCastrado.setEnabled(false);
         chkEstado.setEnabled(false);
         chkDesparasitado.setEnabled(false);
@@ -1025,18 +1063,16 @@ public class jdMantMascota extends javax.swing.JDialog {
 
     private void sinEditarP() {
 
-        txtNombre.setEditable(false);
         dtcFechaNacimiento.setEnabled(false);
-        dtcFechaRegistro.setEnabled(false);
+
         txtAltura.setEditable(false);
         txtPeso.setEditable(false);
         txtNotaAdicional.setEditable(false);
-        //cbxSexo.setSelectedIndex(-1);
+        //cbxSexo.setSelectedIndex(1);
         cbxSexo.setEnabled(false);
-        // cbxRaza.setSelectedIndex(-1);
+        //cbxRaza.setSelectedIndex(0);
         cbxRaza.setEnabled(false);
-        //cmbEspecie.setSelectedIndex(-1);
-        cmbEspecie.setEnabled(false);
+
         chkCastrado.setEnabled(false);
         chkEstado.setEnabled(false);
         chkDesparasitado.setEnabled(false);
@@ -1048,7 +1084,7 @@ public class jdMantMascota extends javax.swing.JDialog {
 
         txtNombre.setEditable(true);
         dtcFechaNacimiento.setEnabled(true);
-        dtcFechaRegistro.setEnabled(true);
+
         txtAltura.setEditable(true);
         txtPeso.setEditable(true);
         txtNotaAdicional.setEditable(true);
@@ -1057,7 +1093,7 @@ public class jdMantMascota extends javax.swing.JDialog {
         //cbxRaza.setSelectedIndex(-1);
         cbxRaza.setEnabled(true);
         //cmbEspecie.setSelectedIndex(-1);
-        cmbEspecie.setEnabled(true);
+
         chkCastrado.setEnabled(true);
         chkEstado.setEnabled(true);
         chkDesparasitado.setEnabled(true);
@@ -1069,9 +1105,9 @@ public class jdMantMascota extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarD;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnBuscar1;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnNwEspecie;
     private javax.swing.JButton btnRaza;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -1081,10 +1117,8 @@ public class jdMantMascota extends javax.swing.JDialog {
     private javax.swing.JCheckBox chkCastrado;
     private javax.swing.JCheckBox chkDesparasitado;
     private javax.swing.JCheckBox chkEstado;
-    private javax.swing.JComboBox<String> cmbEspecie;
     private javax.swing.JComboBox<String> cmbEstadoSalud;
     private com.toedter.calendar.JDateChooser dtcFechaNacimiento;
-    private com.toedter.calendar.JDateChooser dtcFechaRegistro;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
@@ -1097,9 +1131,7 @@ public class jdMantMascota extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
