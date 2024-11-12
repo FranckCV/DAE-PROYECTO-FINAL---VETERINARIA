@@ -4,6 +4,7 @@
  */
 package capaPresentacion;
 
+import soporte.*;
 import capaNegocio.clsTipoMedicamento;
 import java.sql.ResultSet;
 import java.util.Vector;
@@ -25,9 +26,9 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         listarTiposMedicamento();
-        btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+        btnRegistrar.setText(Utilidad.BTN_NUEVO);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         
     }
 
@@ -65,9 +66,9 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
     }
 
     private void cancelarAccionTipoMedicamento() {
-        btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
+        btnRegistrar.setText(Utilidad.BTN_NUEVO);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
         usarBotonesTipoMedicamento(true, true, false, false, true); 
         limpiarControles();
         editableControlesTipoMedicamento(true, false);
@@ -370,9 +371,9 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
         try {
-            if (btnRegistrar.getText().equals(frmMenuPrincipal.BTN_NUEVO)) {
-                btnRegistrar.setText(frmMenuPrincipal.BTN_GUARDAR);
-                btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+            if (btnRegistrar.getText().equals(Utilidad.BTN_NUEVO)) {
+                btnRegistrar.setText(Utilidad.BTN_GUARDAR);
+                btnEliminar.setText(Utilidad.BTN_CANCELAR);
                 limpiarControles();
                 editableControlesTipoMedicamento(true, true); 
                 txtId.setText(objTipoMedicamento.generarCodigoTipoMedicamento().toString());
@@ -387,8 +388,8 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "El nombre del tipo de medicamento ya está registrado. Elija un nombre diferente.");
                     return;
                 } else {
-                    btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    btnRegistrar.setText(Utilidad.BTN_NUEVO);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                     objTipoMedicamento.registrarTipoMedicamento(
                             Integer.parseInt(txtId.getText()),
                             txtNombre.getText());
@@ -411,9 +412,9 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
             if (txtId.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo de medicamento para modificar");
             } else {
-                if (btnModificar.getText().equals(frmMenuPrincipal.BTN_MODIFICAR)) {
-                    btnModificar.setText(frmMenuPrincipal.BTN_GUARDAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+                if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                    btnModificar.setText(Utilidad.BTN_GUARDAR);
+                    btnEliminar.setText(Utilidad.BTN_CANCELAR);
                     txtNombre.setEditable(true); // Habilitar el campo de nombre para edición
                     usarBotonesTipoMedicamento(true, false, true, true, false); // Configurar botones
 
@@ -425,8 +426,8 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
                             txtNombre.getText()
                     );
 
-                    btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    btnModificar.setText(Utilidad.BTN_MODIFICAR);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                     txtNombre.setEditable(false); // Bloquear edición después de guardar
                     usarBotonesTipoMedicamento(true, true, true, true, true); // Restablecer los botones
                     limpiarControles();

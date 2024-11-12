@@ -14,6 +14,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
+import soporte.*;
 
 /**
  *
@@ -30,9 +31,9 @@ public class jdMntVacuna extends javax.swing.JDialog {
         formatoSpinner();
         listarVacunas();
         listarEspecies();
-        btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+        btnRegistrar.setText(Utilidad.BTN_NUEVO);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         spnDosis.setEnabled(false);
         chkDisponibilidad.setEnabled(false);
         chkDisponibilidad.setSelected(true);
@@ -106,9 +107,9 @@ public class jdMntVacuna extends javax.swing.JDialog {
     }
 
     private void cancelarAccionVacuna() {
-        btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
+        btnRegistrar.setText(Utilidad.BTN_NUEVO);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
         usarBotonesVacuna(true, true, false, false, true, false);
         limpiarControles();
         editableControlesVacuna(true, false, false, false, false);
@@ -528,9 +529,9 @@ public class jdMntVacuna extends javax.swing.JDialog {
             if (txtId.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar una vacuna para modificar.");
             } else {
-                if (btnModificar.getText().equals(frmMenuPrincipal.BTN_MODIFICAR)) {
-                    btnModificar.setText(frmMenuPrincipal.BTN_GUARDAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+                if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                    btnModificar.setText(Utilidad.BTN_GUARDAR);
+                    btnEliminar.setText(Utilidad.BTN_CANCELAR);
                     editableControlesVacuna(false, true, true, true, false);
                     usarBotonesVacuna(false, false, true, true, true, false);
                     chkDisponibilidad.setEnabled(false);
@@ -543,8 +544,8 @@ public class jdMntVacuna extends javax.swing.JDialog {
                             chkDisponibilidad.isSelected()
                     );
 
-                    btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    btnModificar.setText(Utilidad.BTN_MODIFICAR);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                     editableControlesVacuna(true, false, false, false, false);
                     usarBotonesVacuna(true, true, true, true, true, true);
                     limpiarControles();
@@ -560,10 +561,10 @@ public class jdMntVacuna extends javax.swing.JDialog {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try {
-            if (btnRegistrar.getText().equals(frmMenuPrincipal.BTN_NUEVO)) {
+            if (btnRegistrar.getText().equals(Utilidad.BTN_NUEVO)) {
                 // Cambia a modo guardar
-                btnRegistrar.setText(frmMenuPrincipal.BTN_GUARDAR);
-                btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+                btnRegistrar.setText(Utilidad.BTN_GUARDAR);
+                btnEliminar.setText(Utilidad.BTN_CANCELAR);
                 chkDisponibilidad.setEnabled(true);
                 limpiarControles(); // Limpia los campos
                 editableControlesVacuna(false, true, true, true, false); // Habilita los campos para ingresar datos
@@ -591,8 +592,8 @@ public class jdMntVacuna extends javax.swing.JDialog {
                 );
 
                 // Restablece la interfaz
-                btnRegistrar.setText(frmMenuPrincipal.BTN_NUEVO);
-                btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                btnRegistrar.setText(Utilidad.BTN_NUEVO);
+                btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                 editableControlesVacuna(true, false, false, false, false);
                 usarBotonesVacuna(true, true, false, true, true, false);
                 limpiarControles();
@@ -606,7 +607,7 @@ public class jdMntVacuna extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
-            if (btnRegistrar.getText().equals(frmMenuPrincipal.BTN_GUARDAR) || btnModificar.getText().equals(frmMenuPrincipal.BTN_GUARDAR)) {
+            if (btnRegistrar.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
                 cancelarAccionVacuna();
             } else {
                 if (txtId.getText().isEmpty()) {

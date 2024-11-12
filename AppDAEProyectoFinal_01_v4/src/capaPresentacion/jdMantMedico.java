@@ -4,6 +4,7 @@
  */
 package capaPresentacion;
 
+import soporte.*;
 import capaNegocio.*;
 import java.awt.Color;
 import java.awt.Component;
@@ -51,11 +52,11 @@ public class jdMantMedico extends javax.swing.JDialog {
     public jdMantMedico(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        btnNuevo.setText(frmMenuPrincipal.BTN_NUEVO);
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
-        btnVigencia.setText(frmMenuPrincipal.BTN_VIGENCIA);
-        btnDisponibilidad.setText(frmMenuPrincipal.BTN_DISPONIBILIDAD);
+        btnNuevo.setText(Utilidad.BTN_NUEVO);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+        btnVigencia.setText(Utilidad.BTN_VIGENCIA);
+        btnDisponibilidad.setText(Utilidad.BTN_DISPONIBILIDAD);
     }
 
     /**
@@ -544,7 +545,7 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
-        if (btnNuevo.getText().equals(frmMenuPrincipal.BTN_NUEVO)) {
+        if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
             limpiarControles();
         } else {
             JOptionPane.showMessageDialog(this, "No puede ejecutar esta accion");
@@ -578,7 +579,7 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        if (btnNuevo.getText().equals(frmMenuPrincipal.BTN_GUARDAR) || btnModificar.getText().equals(frmMenuPrincipal.BTN_GUARDAR)) {
+        if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
             cancelarAccion();
         } else {
             eliminarMedico();
@@ -636,7 +637,7 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void txtIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyTyped
         // TODO add your handling code here:
-        frmMenuPrincipal.validarTextoSoloNumero(evt);
+        Utilidad.validarCampoTextoSoloNumero(evt);
     }//GEN-LAST:event_txtIDKeyTyped
 
     private void btnAbrirGestionServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirGestionServiciosActionPerformed
@@ -682,10 +683,10 @@ public class jdMantMedico extends javax.swing.JDialog {
                     rsDato.getString(clsMedico.APE_PATERNO),
                     rsDato.getString(clsMedico.APE_MATERNO),
                     rsDato.getString(clsMedico.DOC_IDENTIDAD),
-                    frmMenuPrincipal.textoBool(rsDato.getBoolean(clsMedico.SEXO), frmMenuPrincipal.SEXO_MAS, frmMenuPrincipal.SEXO_FEM),
-                    frmMenuPrincipal.textoBool(rsDato.getBoolean(clsMedico.DISPONIBILIDAD), frmMenuPrincipal.DISPONIBILIDAD_SI, frmMenuPrincipal.DISPONIBILIDAD_NO),
-                    frmMenuPrincipal.textoBool(rsDato.getBoolean(clsMedico.VIGENCIA), frmMenuPrincipal.VIGENCIA_SI, frmMenuPrincipal.VIGENCIA_NO),
-                    frmMenuPrincipal.textoBool(rsDato.getBoolean("disp_esp"), rsDato.getString(clsEspecialidad.NOMBRE), frmMenuPrincipal.DISPONIBLE_NO_EXT+" "+rsDato.getString(clsEspecialidad.NOMBRE)),
+                    Utilidad.textoBool(rsDato.getBoolean(clsMedico.SEXO), Utilidad.SEXO_MAS, Utilidad.SEXO_FEM),
+                    Utilidad.textoBool(rsDato.getBoolean(clsMedico.DISPONIBILIDAD), Utilidad.DISPONIBILIDAD_SI, Utilidad.DISPONIBILIDAD_NO),
+                    Utilidad.textoBool(rsDato.getBoolean(clsMedico.VIGENCIA), Utilidad.VIGENCIA_SI, Utilidad.VIGENCIA_NO),
+                    Utilidad.textoBool(rsDato.getBoolean("disp_esp"), rsDato.getString(clsEspecialidad.NOMBRE), Utilidad.DISPONIBLE_NO_EXT+" "+rsDato.getString(clsEspecialidad.NOMBRE)),
                     rsDato.getInt(clsMedico.CANT_SERVICIOS)
                 });
             }
@@ -820,9 +821,9 @@ public class jdMantMedico extends javax.swing.JDialog {
     }
     
     private void cancelarAccion() {
-        btnNuevo.setText(frmMenuPrincipal.BTN_NUEVO);
-        btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-        btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);        
+        btnNuevo.setText(Utilidad.BTN_NUEVO);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);        
         editableControles(true, false ,false, false, false,false, false, false, false);
         usarBotones(true, true, true, true, true, true, true,true);
         limpiarControles();
@@ -834,9 +835,9 @@ public class jdMantMedico extends javax.swing.JDialog {
             if (txtID.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
             } else {
-                if (btnModificar.getText().equals(frmMenuPrincipal.BTN_MODIFICAR)) {
-                    btnModificar.setText(frmMenuPrincipal.BTN_GUARDAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+                if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                    btnModificar.setText(Utilidad.BTN_GUARDAR);
+                    btnEliminar.setText(Utilidad.BTN_CANCELAR);
                     editableControles(false, true,true, true, true, true, true, true, true);
                     usarBotones(false, false, true, true, false, false, false,false);
                 } else {
@@ -850,8 +851,8 @@ public class jdMantMedico extends javax.swing.JDialog {
 //                        cldNacimiento.getDateFormatString(),
                         objEs.obteneIdEspecialidad(cmbEspecialidad.getSelectedItem().toString())
                     );
-                    btnModificar.setText(frmMenuPrincipal.BTN_MODIFICAR);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    btnModificar.setText(Utilidad.BTN_MODIFICAR);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                     editableControles(true, false,false, false, false, false, false, false, false);
                     usarBotones(true, true, true, true, true, true, true,true);
                     limpiarControles();
@@ -866,9 +867,9 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void nuevaMedico() {
         try {
-            if (btnNuevo.getText().equals(frmMenuPrincipal.BTN_NUEVO)) {
-                btnNuevo.setText(frmMenuPrincipal.BTN_GUARDAR);
-                btnEliminar.setText(frmMenuPrincipal.BTN_CANCELAR);
+            if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
+                btnNuevo.setText(Utilidad.BTN_GUARDAR);
+                btnEliminar.setText(Utilidad.BTN_CANCELAR);
                 limpiarControles();
                 editableControles(false,true, true, true, true, true, false, false, true);
                 txtID.setText(objTabla.generarIDMedico().toString());
@@ -882,8 +883,8 @@ public class jdMantMedico extends javax.swing.JDialog {
                 } else if (txtDocIdentidad.getText().length()!=8) {
                     JOptionPane.showMessageDialog(this, "DNI invalido");
                 } else {
-                    btnNuevo.setText(frmMenuPrincipal.BTN_NUEVO);
-                    btnEliminar.setText(frmMenuPrincipal.BTN_ELIMINAR);
+                    btnNuevo.setText(Utilidad.BTN_NUEVO);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                     objTabla.registrarMedico(
                         Integer.parseInt(txtID.getText()),
                         txtNombre.getText(),
@@ -973,7 +974,7 @@ public class jdMantMedico extends javax.swing.JDialog {
                     rsDato.getString(clsServicio.ID),
                     rsDato.getString(clsServicio.NOMBRE),
                     rsDato.getString(clsServicio.COSTO),
-                    frmMenuPrincipal.textoBool(rsDato.getBoolean("det_disp"), frmMenuPrincipal.DISPONIBILIDAD_SI, frmMenuPrincipal.DISPONIBILIDAD_NO)
+                    Utilidad.textoBool(rsDato.getBoolean("det_disp"), Utilidad.DISPONIBILIDAD_SI, Utilidad.DISPONIBILIDAD_NO)
                 });
             }
             tblServiciosxMedico.setModel(modelo);

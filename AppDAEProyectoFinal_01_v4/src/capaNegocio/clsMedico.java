@@ -81,7 +81,7 @@ public class clsMedico {
                 + "     med.*,"
                 + "     esp.nom_especialidad, "
                 + "     esp.disponibilidad as disp_esp, "
-                + "     count(det.servicio_id) as CANT_SERVICIOS"
+                + "     count(det.servicio_id) as "+CANT_SERVICIOS
                 + " from medico med "
                 + " LEFT JOIN especialidad esp ON esp.id = med.especialidad_id "
                 + " LEFT JOIN  detalle_servicio det ON det.medico_id = med.id AND det.disponibilidad = true "
@@ -210,6 +210,19 @@ public class clsMedico {
             }
         } catch (Exception e) {
             throw new Exception("Error al buscar codigo de " + TABLA + " con el nombre " + nom + " --> " + e.getMessage());
+        }
+        return 0;
+    }
+
+    public Integer obtenerIDconDoc(String docIdentidad) throws Exception {
+        strSQL = "SELECT id FROM " + TABLA + " WHERE doc_identidad = '" + docIdentidad + "' ";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al buscar código de " + TABLA + " con el documento de identidad " + docIdentidad + " --> " + e.getMessage());
         }
         return 0;
     }

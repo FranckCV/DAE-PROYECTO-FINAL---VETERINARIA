@@ -1,6 +1,6 @@
 create table USUARIO (
   codUsuario int4 not null, 
-  nomusuario varchar(30) not null, 
+  nomusuario varchar(30) not null unique, 
   estado     bool not null, 
   sexo       bool not null, 
   clave      varchar(100) not null, 
@@ -366,6 +366,24 @@ VALUES
     (5, 6, '2024-11-25', 'Finalización de tratamiento', 5, 5);
 
 
+--USUARIOS
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
+VALUES (1, 'jdoe', TRUE, TRUE, 'clave123', 'John', 'Doe', 'Smith', 'V');
+
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
+VALUES (2, 'mgarcia', TRUE, FALSE, 'clave456', 'Maria', 'Garcia', 'Lopez', 'E');
+
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
+VALUES (3, 'arivera', TRUE, TRUE, 'clave789', 'Alex', 'Rivera', 'Martinez', 'A');
+
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
+VALUES (4, 'lfernandez', FALSE, FALSE, 'clave101', 'Laura', 'Fernandez', 'Soto', 'V');
+
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
+VALUES (5, 'cperez', TRUE, TRUE, 'clave102', 'Carlos', 'Perez', 'Gutierrez', 'E');
+
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
+VALUES (6, 'asanchez', FALSE, TRUE, 'clave103', 'Andres', 'Sanchez', 'Lopez', 'V');
 
 
 
