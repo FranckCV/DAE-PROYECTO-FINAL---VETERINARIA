@@ -526,26 +526,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+    //     pack();
+    // }// </editor-fold>                        
 
-    public static String textoBool(boolean vig, String txtTrue, String txtFalse) {
-        if (vig) {
-            return txtTrue;
-        } else {
-            return txtFalse;
-        }
-    }
-
-    public static void validarTextoSoloNumero(java.awt.event.KeyEvent evt) {
-        int key = evt.getKeyChar();
-
-        boolean numeros = key >= 48 && key <= 57;
-
-        if (!(numeros)) {
-            evt.consume();
-        }
-    }
+    
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -699,12 +683,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objForm.setVisible(true);
     }//GEN-LAST:event_mnuEstadoCitaActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // TODO add your handling code here:
         jdMntVacuna objForm = new jdMntVacuna(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
-    }//GEN-LAST:event_mnuEstadoCitaActionPerformed
+    }                                             
 
     private void mnuVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuVacunaActionPerformed
         // TODO add your handling code here:
@@ -734,14 +718,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objForm.setVisible(true);
     }//GEN-LAST:event_btnDueñoActionPerformed
 
-    private void mnuCambiarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCambiarUsuarioActionPerformed
+    private void mnuCambiarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {                                                  
         // TODO add your handling code here:
         txtUsuario.setText("");
         txtCargo.setText("");
         jdInicioSesionVet objForm  = new jdInicioSesionVet(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
-    }//GEN-LAST:event_mnuUsuarioActionPerformed
+    }                                          
 
     private void mnuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuUsuariosActionPerformed
         // TODO add your handling code here:
