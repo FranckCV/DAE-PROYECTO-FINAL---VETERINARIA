@@ -632,6 +632,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 >>>>>>> a0c37b5adb26c64b1097cfe1bd22c178024795cd
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 //         TODO add your handling code here:
+<<<<<<< HEAD
         jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
@@ -654,6 +655,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Error al obtener puesto");
                         break;
                 }
+=======
+//        jdInicioSesionVet objForm= new jdInicioSesionVet(this, true);
+//        objForm.setLocationRelativeTo(this);
+//        objForm.setVisible(true);
+//        txtUsuario.setText(objForm.nombreUsuario);
+//        txtCargo.setText(objForm.cargo);
+>>>>>>> 020f5cca62cf28e3164f9bc16f1bae07e9260a36
     }//GEN-LAST:event_formWindowOpened
 
     private void btnCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCitaActionPerformed
