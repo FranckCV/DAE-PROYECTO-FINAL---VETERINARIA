@@ -81,9 +81,9 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         txtNombreCompleto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtCantServ = new javax.swing.JTextField();
+        txtCantServTotal = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
-        txtCantServ1 = new javax.swing.JTextField();
+        txtCantServDisp = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -402,9 +402,9 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
 
         jLabel4.setText("Cant. Servicios Total");
 
-        txtCantServ.setEditable(false);
-        txtCantServ.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtCantServ.setBorder(null);
+        txtCantServTotal.setEditable(false);
+        txtCantServTotal.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtCantServTotal.setBorder(null);
 
         btnLimpiar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/opacado.png"))); // NOI18N
@@ -417,9 +417,9 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
             }
         });
 
-        txtCantServ1.setEditable(false);
-        txtCantServ1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtCantServ1.setBorder(null);
+        txtCantServDisp.setEditable(false);
+        txtCantServDisp.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtCantServDisp.setBorder(null);
 
         jLabel14.setText("Cant. Servicios Disponibles");
 
@@ -449,11 +449,11 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(53, 53, 53)
-                        .addComponent(txtCantServ, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtCantServTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addGap(18, 18, 18)
-                        .addComponent(txtCantServ1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtCantServDisp, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
@@ -472,17 +472,18 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                             .addComponent(jLabel11)
                             .addComponent(txtNombreCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
-                            .addComponent(txtCantServ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCantServTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtDocIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)
-                            .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtCantServ1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel14)))))
+                                .addComponent(txtCantServDisp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel14))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(txtDocIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7)
+                                .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -546,6 +547,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         buscarMedico();
         listarServiciosDisponibles();
         listarServiciosMedico();
+        mostrarCantidadesServicios();
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -719,6 +721,18 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         }
     }
     
+    private void mostrarCantidadesServicios(){
+        try {
+            int servTotal = objTabla.mostrarCantServiciosTotalXMedico(Integer.parseInt(txtID.getText()));
+            txtCantServTotal.setText(String.valueOf(servTotal));
+            int servDisp = objTabla.mostrarCantServiciosDisponiblesXMedico(Integer.parseInt(txtID.getText()));
+            txtCantServDisp.setText(String.valueOf(servDisp));
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error:" + e.getMessage());
+        }
+    }
+    
     private void buscarMedico() {
         ResultSet rsPro = null;
         try {
@@ -727,7 +741,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                 txtNombreCompleto.setText(rsPro.getString(clsMedico.NOMBRES)+" "+rsPro.getString(clsMedico.APE_PATERNO)+" "+rsPro.getString(clsMedico.APE_MATERNO));
                 txtDocIdentidad.setText(rsPro.getString(clsMedico.DOC_IDENTIDAD));
                 txtEspecialidad.setText(rsPro.getString(clsEspecialidad.NOMBRE));
-                txtCantServ.setText(rsPro.getString(clsMedico.CANT_SERVICIOS));
+                txtCantServTotal.setText(rsPro.getString(clsMedico.CANT_SERVICIOS));
                 rsPro.close();
             } else {
                 JOptionPane.showMessageDialog(this, "Este codigo de "+clsMedico.TABLA+" no existe");
@@ -867,8 +881,8 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable tblServiciosDisponibles;
     private javax.swing.JTable tblServiciosMedico;
-    private javax.swing.JTextField txtCantServ;
-    private javax.swing.JTextField txtCantServ1;
+    private javax.swing.JTextField txtCantServDisp;
+    private javax.swing.JTextField txtCantServTotal;
     private javax.swing.JTextField txtDocIdentidad;
     private javax.swing.JTextField txtEspecialidad;
     private javax.swing.JTextField txtID;

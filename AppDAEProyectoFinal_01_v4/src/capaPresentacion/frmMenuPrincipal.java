@@ -537,11 +537,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
           
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 //         TODO add your handling code here:
-        jdInicioSesionVet objForm= new jdInicioSesionVet(this, true);
-        objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true);
-        txtUsuario.setText(objForm.nombreUsuario);
-        txtCargo.setText(objForm.cargo);
+//        jdInicioSesionVet objForm= new jdInicioSesionVet(this, true);
+//        objForm.setLocationRelativeTo(this);
+//        objForm.setVisible(true);
+//        txtUsuario.setText(objForm.nombreUsuario);
+//        txtCargo.setText(objForm.cargo);
     }//GEN-LAST:event_formWindowOpened
 
     private void btnCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCitaActionPerformed
