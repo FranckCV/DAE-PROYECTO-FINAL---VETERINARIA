@@ -141,6 +141,16 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
         jLabel7.setText("Captcha:");
 
         txtRespuesta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtRespuesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRespuestaActionPerformed(evt);
+            }
+        });
+        txtRespuesta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRespuestaKeyTyped(evt);
+            }
+        });
 
         btnLogin.setBackground(new java.awt.Color(72, 87, 184));
         btnLogin.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -290,24 +300,36 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
+    private void intentos(int count) {
+        if (count < 3) {
+            JOptionPane.showMessageDialog(this, "Inténtelo de nuevo");
+        } else {
+            JOptionPane.showMessageDialog(this, "Alcanzó el máximo de intentos");
+            System.exit(0);
+        }
+    }
+
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         try {
-            if (objCaptcha.validarCaptcha(txtCaptchaEnunciado.getText(), txtRespuesta.getText())
-                    && !objUsuario.login(txtUsuario.getText(), txtClave.getText()).isEmpty()) {
-                nombreUsuario = objUsuario.obtenerUsuario(txtUsuario.getText());
-                cargo = objUsuario.obtenerCargo(txtUsuario.getText());
-                JOptionPane.showMessageDialog(this, "Bienvenido al sistema " + nombreUsuario);
-                this.dispose();
-            } else {
-                count++;
-                if (count < 3) {
-                    JOptionPane.showMessageDialog(this, "Inténtelo de nuevo");
+            if (!txtUsuario.getText().isEmpty() && !txtClave.getText().isEmpty() && !txtRespuesta.getText().isEmpty()) {
+                if (objCaptcha.validarCaptcha(txtCaptchaEnunciado.getText(), txtRespuesta.getText())
+                        && !objUsuario.login(txtUsuario.getText(),txtClave.getText()).isEmpty() && 
+                        objUsuario.validarUsuario(txtUsuario.getText())) {
+                    nombreUsuario = objUsuario.obtenerUsuario(txtUsuario.getText());
+                    cargo = objUsuario.obtenerCargo(txtUsuario.getText());
+                    JOptionPane.showMessageDialog(this, "Bienvenido al sistema " + nombreUsuario);
+                    this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Alcanzó el máximo de intentos");
-                    System.exit(0);
+                    count++;
+                    intentos(count);
                 }
+
             }
+            else{
+                JOptionPane.showMessageDialog(null, "No puedes haber campos vacíos");
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -342,6 +364,18 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtClaveKeyTyped
+
+    private void txtRespuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRespuestaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRespuestaActionPerformed
+
+    private void txtRespuestaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRespuestaKeyTyped
+        // TODO add your handling code here:
+        if(txtRespuesta.getText().length() > 7)
+    {
+        evt.consume();
+    }
+    }//GEN-LAST:event_txtRespuestaKeyTyped
 
     /**
      * @param args the command line arguments
