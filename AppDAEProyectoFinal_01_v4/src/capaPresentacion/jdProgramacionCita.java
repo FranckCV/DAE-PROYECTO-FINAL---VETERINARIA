@@ -984,7 +984,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
 
         try {
 
-            rsCliente = objDuenio.buscarDuenio(txtDocDuenio.getText());
+            rsCliente = objDuenio.buscarDuenioN(txtDocDuenio.getText());
 
             if (rsCliente.next()) {
                 txtCodDuenio.setText(String.valueOf(rsCliente.getString("id")));

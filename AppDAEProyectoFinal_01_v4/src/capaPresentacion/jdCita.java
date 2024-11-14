@@ -1356,7 +1356,7 @@ public class jdCita extends javax.swing.JDialog {
 
         try {
 
-            rsCliente = objDuenio.buscarDuenio(txtDniRuc.getText());
+            rsCliente = objDuenio.buscarDuenioN(txtDniRuc.getText());
 
             if (rsCliente.next()) {
                 txtCodDuenio.setText(String.valueOf(rsCliente.getString("id")));
