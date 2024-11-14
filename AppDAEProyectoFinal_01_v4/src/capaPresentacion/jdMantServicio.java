@@ -102,7 +102,7 @@ public class jdMantServicio extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(138, 238, 238));
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel1.setText("Codigo:");
+        jLabel1.setText("ID:");
 
         txtID.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtID.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -113,6 +113,11 @@ public class jdMantServicio extends javax.swing.JDialog {
 
         txtNombre.setEditable(false);
         txtNombre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel2.setText("Nombre:");
@@ -129,6 +134,11 @@ public class jdMantServicio extends javax.swing.JDialog {
 
         txtCosto.setEditable(false);
         txtCosto.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtCosto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCostoKeyTyped(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel3.setText("Costo:");
@@ -408,6 +418,16 @@ public class jdMantServicio extends javax.swing.JDialog {
         // TODO add your handling code here:
         Utilidad.validarCampoTextoSoloNumero(evt);
     }//GEN-LAST:event_txtIDKeyTyped
+
+    private void txtCostoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCostoKeyTyped
+        // TODO add your handling code here:
+        Utilidad.validarCampoTextoSoloNumeroDecimal(evt);
+    }//GEN-LAST:event_txtCostoKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        // TODO add your handling code here:
+        Utilidad.validarCampoTextoSoloLetras(evt);
+    }//GEN-LAST:event_txtNombreKeyTyped
     
     private void listarServicio(){
         ResultSet rsPro = null;
@@ -568,8 +588,8 @@ public class jdMantServicio extends javax.swing.JDialog {
                 usarBotones(false, true, false, true, false, false);
                 txtID.setText(objTabla.generarIDServicio().toString());
                 txtNombre.requestFocus();
-            }else{
-                if (txtNombre.getText().trim().isBlank() || txtID.getText().trim().isBlank()) {
+            } else {
+                if (txtNombre.getText().trim().isBlank() || txtID.getText().trim().isBlank() || txtCosto.getText().trim().isBlank() || txtDescripcion.getText().trim().isBlank()) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
                 } else if (Utilidad.validarElementoTextoRepetido(clsServicio.TABLA, clsServicio.NOMBRE, txtNombre.getText())){
                     JOptionPane.showMessageDialog(this, "Ya existe un servicio con este nombre");

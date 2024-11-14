@@ -586,24 +586,12 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
 
     private void txtIDServDisponibleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDServDisponibleKeyTyped
         // TODO add your handling code here:
-        int key = evt.getKeyChar();
-
-        boolean numeros = key >= 48 && key <= 57    ;
-
-        if (!(numeros)) {
-            evt.consume();
-        }
+        Utilidad.validarCampoTextoSoloNumero(evt);
     }//GEN-LAST:event_txtIDServDisponibleKeyTyped
 
     private void txtIDServMedicoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDServMedicoKeyTyped
         // TODO add your handling code here:
-        int key = evt.getKeyChar();
-
-        boolean numeros = key >= 48 && key <= 57    ;
-
-        if (!(numeros)) {
-            evt.consume();
-        }
+        Utilidad.validarCampoTextoSoloNumero(evt);
     }//GEN-LAST:event_txtIDServMedicoKeyTyped
 
     private void btnBuscarServicioDisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarServicioDisponibleActionPerformed
@@ -712,12 +700,13 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                     Integer.parseInt(txtID.getText())
             );
         } catch (Exception e) {
-            if (e.getMessage().contains("foranea")) {
-                JOptionPane.showMessageDialog(this, "Error: Hay datos externos asociados al servicio \"" + txtNombreServmedico.getText() + "\" que reliza el medico \""+txtNombreCompleto.getText()+"\". \n"
-                        + "Considere cambiar su disponibilidad para que ya no pueda ser usado");
-            } else {
-                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-            }
+            JOptionPane.showMessageDialog(this, "Error: " + 
+                    Utilidad.mensajeErrorEliminacionForanea(
+                            e, 
+                            "servicio asignado", 
+                            txtNombreServmedico.getText()
+                    )
+            );
         }
     }
     

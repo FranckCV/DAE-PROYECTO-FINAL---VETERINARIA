@@ -78,6 +78,17 @@ public class Utilidad {
             evt.consume();
         }
     }
+        
+    public static void validarCampoTextoSoloNumeroDecimal(java.awt.event.KeyEvent evt){
+        int key = evt.getKeyChar();
+
+        boolean numeros = key >= 48 && key <= 57    ;
+        boolean punto = key == 46;
+
+        if (!(numeros || punto)) {
+            evt.consume();
+        }
+    }
     
     public static void validarCampoTextoSoloLetras(java.awt.event.KeyEvent evt){
         int key = evt.getKeyChar();
@@ -98,6 +109,22 @@ public class Utilidad {
         ((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
     }
     
+        
+    public static void validarCampoTextoDocIdentidad(java.awt.event.KeyEvent evt){
+//        if(evt.getComponent()getText().length() >= 8) {
+//            evt.consume();
+//        }
+        
+        int key = evt.getKeyChar();
+
+        boolean numeros = key >= 48 && key <= 57    ;
+//        boolean guion = key == 45;
+
+        if (!(numeros)) {
+            evt.consume();
+        } 
+    }
+    
 //    Mensajes de Error 
     
     public static String mensajeErrorEliminacionForanea (Exception e , String entidad, String nombre) {
@@ -114,7 +141,7 @@ public class Utilidad {
                 return mensaje;
             }
         }
-        return "Hay datos externos asociados al "+entidad+" \"" + nombre + "\".\n" +
+        return "Hay datos externos asociados a "+entidad+" \"" + nombre + "\".\n" +
                "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. ";
     }
     
