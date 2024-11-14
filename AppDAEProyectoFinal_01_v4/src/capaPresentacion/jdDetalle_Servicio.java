@@ -52,8 +52,8 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblServiciosDisponibles = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
+        btnQuitar = new javax.swing.JButton();
         btnDisponibilidad = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -153,19 +153,19 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel1.setText("Servicios Disponibles que puede escoger:");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/flecha derecha.png"))); // NOI18N
-        jButton1.setText("Agregar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/flecha derecha.png"))); // NOI18N
+        btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAgregarActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/flecha izquierda.png"))); // NOI18N
-        jButton2.setText("Quitar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnQuitar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/flecha izquierda.png"))); // NOI18N
+        btnQuitar.setText("Quitar");
+        btnQuitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnQuitarActionPerformed(evt);
             }
         });
 
@@ -249,7 +249,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(24, 24, 24)
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -260,7 +260,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNombreServDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 2, Short.MAX_VALUE))
+                                .addGap(0, 16, Short.MAX_VALUE))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(75, 75, 75)
@@ -268,7 +268,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnQuitar, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addComponent(btnDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -288,11 +288,11 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNombreServmedico, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(19, 19, 19)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(chkDisponibilidadServicioMedico))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE))
                 .addGap(26, 26, 26))
         );
         jPanel2Layout.setVerticalGroup(
@@ -322,8 +322,8 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
+                    .addComponent(btnAgregar)
+                    .addComponent(btnQuitar)
                     .addComponent(btnDisponibilidad)
                     .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(22, 22, 22))
@@ -400,7 +400,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel3.setText("Nombre Completo:");
 
-        jLabel4.setText("Cant. Servicios Total");
+        jLabel4.setText("Cant. Servicios Asignados en Total");
 
         txtCantServTotal.setEditable(false);
         txtCantServTotal.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -421,7 +421,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         txtCantServDisp.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtCantServDisp.setBorder(null);
 
-        jLabel14.setText("Cant. Servicios Disponibles");
+        jLabel14.setText("Cant. Servicios Asignados Disponibles");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -436,7 +436,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
                     .addComponent(txtDocIdentidad))
-                .addGap(40, 40, 40)
+                .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -444,17 +444,15 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtNombreCompleto, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
                     .addComponent(txtEspecialidad))
-                .addGap(56, 56, 56)
+                .addGap(41, 41, 41)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(53, 53, 53)
-                        .addComponent(txtCantServTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCantServDisp, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCantServDisp, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCantServTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
@@ -545,36 +543,37 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         buscarMedico();
+        mostrarCantidadesServicios();
         listarServiciosDisponibles();
         listarServiciosMedico();
-        mostrarCantidadesServicios();
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         if (tblServiciosDisponibles.getSelectedRow() != -1) {
             guardarAsignacion();
             listarServiciosDisponibles();
             listarServiciosMedico();
             limpiarControles();
-            buscarMedico();
-            buscarMedico();
+//            buscarMedico();
+            mostrarCantidadesServicios();
         } else {
             JOptionPane.showMessageDialog(this, "Seleccione una fila de la 1ra tabla para hacer esta operacion");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
         // TODO add your handling code here:
         if (tblServiciosMedico.getSelectedRow() != -1) {
             eliminarAsignacion();
             listarServiciosDisponibles();
             listarServiciosMedico();
             limpiarControles();
+            mostrarCantidadesServicios();
         } else {
             JOptionPane.showMessageDialog(this, "Seleccione una fila de la 2da tabla para hacer esta operacion");
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnQuitarActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
@@ -635,6 +634,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         cambiarDisponibilidad();
         txtIDServMedico.setText(id);
         btnBuscarServicioMedicoActionPerformed(null);
+        mostrarCantidadesServicios();
     }//GEN-LAST:event_btnDisponibilidadActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -712,7 +712,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                     Integer.parseInt(txtID.getText())
             );
         } catch (Exception e) {
-            if (e.getMessage().contains("referida desde la tabla")) {
+            if (e.getMessage().contains("foranea")) {
                 JOptionPane.showMessageDialog(this, "Error: Hay datos externos asociados al servicio \"" + txtNombreServmedico.getText() + "\" que reliza el medico \""+txtNombreCompleto.getText()+"\". \n"
                         + "Considere cambiar su disponibilidad para que ya no pueda ser usado");
             } else {
@@ -723,9 +723,10 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
     
     private void mostrarCantidadesServicios(){
         try {
-            int servTotal = objTabla.mostrarCantServiciosTotalXMedico(Integer.parseInt(txtID.getText()));
+            int med_id = Integer.parseInt(txtID.getText());
+            int servTotal = objTabla.mostrarCantServiciosTotalXMedico(med_id);
             txtCantServTotal.setText(String.valueOf(servTotal));
-            int servDisp = objTabla.mostrarCantServiciosDisponiblesXMedico(Integer.parseInt(txtID.getText()));
+            int servDisp = objTabla.mostrarCantServiciosDisponiblesXMedico(med_id);
             txtCantServDisp.setText(String.valueOf(servDisp));
         }
         catch (Exception e) {
@@ -741,7 +742,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                 txtNombreCompleto.setText(rsPro.getString(clsMedico.NOMBRES)+" "+rsPro.getString(clsMedico.APE_PATERNO)+" "+rsPro.getString(clsMedico.APE_MATERNO));
                 txtDocIdentidad.setText(rsPro.getString(clsMedico.DOC_IDENTIDAD));
                 txtEspecialidad.setText(rsPro.getString(clsEspecialidad.NOMBRE));
-                txtCantServTotal.setText(rsPro.getString(clsMedico.CANT_SERVICIOS));
+//                txtCantServTotal.setText(rsPro.getString(clsMedico.CANT_SERVICIOS));
                 rsPro.close();
             } else {
                 JOptionPane.showMessageDialog(this, "Este codigo de "+clsMedico.TABLA+" no existe");
@@ -849,13 +850,13 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscarServicioDisponible;
     private javax.swing.JButton btnBuscarServicioMedico;
     private javax.swing.JButton btnDisponibilidad;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnQuitar;
     private javax.swing.JCheckBox chkDisponibilidadServicioMedico;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

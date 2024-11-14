@@ -811,12 +811,13 @@ public class jdMantMedico extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            if (e.getMessage().contains("referida desde la tabla")) {
-                JOptionPane.showMessageDialog(this, "Error: Hay datos externos asociados al medico \"" + txtNombre.getText() +" "+ txtApePat.getText() +" "+ txtApeMat.getText() + "\". \n"
-                        + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado");
-            } else {
-                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-            }
+            JOptionPane.showMessageDialog(this, "Error: " + 
+                    Utilidad.mensajeErrorEliminacionForanea(
+                            e, 
+                            "medico(a)", 
+                            txtNombre.getText() +" "+ txtApePat.getText() +" "+ txtApeMat.getText()
+                    )
+            );
         }
     }
     

@@ -4,16 +4,22 @@
  */
 package soporte;
 
+import capaNegocio.*;
 import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.text.NumberFormatter;
+import capaDatos.clsJDBC;
+import java.sql.ResultSet;
 
 /**
  *
  * @author franc
  */
 public class Utilidad {
+//    clsJDBC objConectar = new clsJDBC();
+//    String strSQL;
+//    ResultSet rs = null;
     
 //    Texto en Botones
     public static final String BTN_NUEVO = "Registrar";
@@ -41,6 +47,23 @@ public class Utilidad {
             return txtTrue;
         } else {
             return txtFalse;
+        }
+    }
+    
+//    Validaciones Mantenimiento
+    
+    public static boolean validarElementoTextoRepetido(String tabla, String columna, String campo) throws Exception{
+        clsJDBC objConectar = new clsJDBC();
+        String strSQL;
+        ResultSet rs = null;
+        
+        strSQL= " select * from "+tabla+
+                " where "+columna+" = '"+campo+"' ";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs.next();
+        } catch (Exception e) {
+            throw new Exception("Error al buscar Elemento "+campo+" en la tabla " + tabla + " / " + e.getMessage());
         }
     }
     
@@ -75,11 +98,25 @@ public class Utilidad {
         ((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
     }
     
+//    Mensajes de Error 
     
-    
-    
-
-    
+    public static String mensajeErrorEliminacionForanea (Exception e , String entidad, String nombre) {
+        String mensaje = e.getMessage();
+        String[] palabras = { 
+            "referida desde la tabla", 
+            "foránea", 
+            "fk", 
+            "ERROR: update o delete en"
+        };
+        
+        for (String keyword : palabras) {
+            if (!mensaje.contains(keyword)) {
+                return mensaje;
+            }
+        }
+        return "Hay datos externos asociados al "+entidad+" \"" + nombre + "\".\n" +
+               "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. ";
+    }
     
     
     

@@ -368,7 +368,7 @@ public class jdMantServicio extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        nuevoEspacioMedico();
+        nuevoServicio();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -387,13 +387,13 @@ public class jdMantServicio extends javax.swing.JDialog {
         if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
             cancelarAccion();
         } else {
-            eliminarEspacioMedico();
+            eliminarServicio();
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        modificarEspacioMedico();
+        modificarServicio();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisponibilidadActionPerformed
@@ -495,7 +495,7 @@ public class jdMantServicio extends javax.swing.JDialog {
         txtCosto.setEditable(cos);
     } 
           
-    private void eliminarEspacioMedico() {
+    private void eliminarServicio() {
         try {
             if (txtID.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un codigo a eliminar!");
@@ -508,12 +508,12 @@ public class jdMantServicio extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            if (e.getMessage().contains("referida desde la tabla")) {
-                JOptionPane.showMessageDialog(this, "Error: Hay datos externos asociados al servicio \"" + txtNombre.getText() + "\". \n"
-                        + "Considere cambiar su disponibilidad para que ya no pueda ser usado");
-            } else {
-                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-            }
+            JOptionPane.showMessageDialog(this, "Error: " + 
+                    Utilidad.mensajeErrorEliminacionForanea(
+                            e, 
+                            "servicio", 
+                            txtNombre.getText())
+            );
         }
     }
     
@@ -527,7 +527,7 @@ public class jdMantServicio extends javax.swing.JDialog {
         usarBotones(true, true, true, true, true, true);
     }
 
-    private void modificarEspacioMedico() {
+    private void modificarServicio() {
         try {
             if (txtID.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
@@ -558,7 +558,7 @@ public class jdMantServicio extends javax.swing.JDialog {
         }
     }    
 
-    private void nuevoEspacioMedico() {
+    private void nuevoServicio() {
         try {
             if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
                 btnNuevo.setText(Utilidad.BTN_GUARDAR);
@@ -571,6 +571,8 @@ public class jdMantServicio extends javax.swing.JDialog {
             }else{
                 if (txtNombre.getText().trim().isBlank() || txtID.getText().trim().isBlank()) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
+                } else if (Utilidad.validarElementoTextoRepetido(clsServicio.TABLA, clsServicio.NOMBRE, txtNombre.getText())){
+                    JOptionPane.showMessageDialog(this, "Ya existe un servicio con este nombre");
                 } else {
                     btnNuevo.setText(Utilidad.BTN_NUEVO);
                     btnEliminar.setText(Utilidad.BTN_ELIMINAR);
@@ -611,14 +613,6 @@ public class jdMantServicio extends javax.swing.JDialog {
     }
     
     
-    
-    private String textoBool(boolean vig, String txtTrue, String txtFalse) {
-        if (vig) {
-            return txtTrue;
-        } else {
-            return txtFalse;
-        }
-    }
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
