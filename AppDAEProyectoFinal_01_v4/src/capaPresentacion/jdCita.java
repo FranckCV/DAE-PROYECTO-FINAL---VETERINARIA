@@ -6,6 +6,7 @@ package capaPresentacion;
 
 import capaNegocio.clsCita;
 import capaNegocio.clsDetalleCita;
+import capaNegocio.clsDetalleMedicamento;
 import capaNegocio.clsDetalle_Servicio;
 import capaNegocio.clsDuenio;
 import capaNegocio.clsEstadoCita;
@@ -17,6 +18,8 @@ import capaNegocio.clsServicio;
 import java.awt.Frame;
 import java.sql.*;
 import java.util.function.ObjDoubleConsumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -38,6 +41,7 @@ public class jdCita extends javax.swing.JDialog {
     clsDetalleCita objDetalleCita = new clsDetalleCita();
     clsRaza objRaza = new clsRaza();
     clsDetalle_Servicio objDetalleServicio = new clsDetalle_Servicio();
+    clsDetalleMedicamento objDetalleMedicamento = new clsDetalleMedicamento();
 
     public jdCita(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -145,6 +149,33 @@ public class jdCita extends javax.swing.JDialog {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Error al llenar campos SER-MED " + e.getMessage());
+        }
+
+    }
+
+    private void llenarDetalleMedicamentosEnTabla() {
+        ResultSet rsDetalleMedicamento;
+        ResultSet rsMedicamento;
+        try {
+            rsDetalleMedicamento = objDetalleMedicamento.obtenerDetalleMedicamentosPorCita(Integer.parseInt(txtNumero.getText()));
+            DefaultTableModel modelo = (DefaultTableModel) tblDetalleMedicamento.getModel();
+            modelo.setRowCount(0);
+            while (rsDetalleMedicamento.next()) {
+                int medicamento_id = rsDetalleMedicamento.getInt("medicamento_id");
+                int servicio_id = rsDetalleMedicamento.getInt("detalle_servicio_servicio_id");
+                int medico_id = rsDetalleMedicamento.getInt("detalle_servicio_medico_id");
+                String dosis = rsDetalleMedicamento.getString("dosis");
+                String indicacion = rsDetalleMedicamento.getString("indicacion");
+                int cantidad = rsDetalleMedicamento.getInt("cantidad");
+                Float costo = rsDetalleMedicamento.getFloat("costo");
+
+                modelo.addRow(new Object[]{medicamento_id, servicio_id, medico_id, dosis, indicacion,
+                    cantidad, costo});
+
+            }
+            tblDetalleMedicamento.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Error al llenar campos tabla ser " + e.getMessage());
         }
 
     }
@@ -287,7 +318,7 @@ public class jdCita extends javax.swing.JDialog {
             }
 
             tblDetalleServicio.setModel(modelo);
-            
+
             calcularTotales();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -339,9 +370,9 @@ public class jdCita extends javax.swing.JDialog {
         txtANotaAdicional = new javax.swing.JTextArea();
         jLabel26 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        btnNuevo = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnDarBaja = new javax.swing.JButton();
+        btnTerminar = new javax.swing.JButton();
+        btnReprogramar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDetalleMedicamento = new javax.swing.JTable();
@@ -439,7 +470,7 @@ public class jdCita extends javax.swing.JDialog {
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -477,24 +508,24 @@ public class jdCita extends javax.swing.JDialog {
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
 
-        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/veterinario.png"))); // NOI18N
-        btnNuevo.setText("Nuevo");
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+        btnTerminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/veterinario.png"))); // NOI18N
+        btnTerminar.setText("Terminar");
+        btnTerminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
+                btnTerminarActionPerformed(evt);
             }
         });
 
-        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/editar.png"))); // NOI18N
-        btnModificar.setText("Modificar");
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+        btnReprogramar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/editar.png"))); // NOI18N
+        btnReprogramar.setText("Reprogramar");
+        btnReprogramar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
+                btnReprogramarActionPerformed(evt);
             }
         });
 
-        btnDarBaja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/darBaja.png"))); // NOI18N
-        btnDarBaja.setText("Dar baja");
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/darBaja.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -502,21 +533,21 @@ public class jdCita extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDarBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnTerminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnReprogramar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnNuevo)
+                .addComponent(btnTerminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnModificar)
+                .addComponent(btnReprogramar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDarBaja)
+                .addComponent(btnCancelar)
                 .addGap(63, 63, 63))
         );
 
@@ -1139,10 +1170,10 @@ public class jdCita extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1185,9 +1216,15 @@ public class jdCita extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnNuevoActionPerformed
+    private void btnTerminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerminarActionPerformed
+        try {
+            objDetalleMedicamento.registrarDetalleMedicamento(Integer.parseInt(txtNumero.getText()), tblDetalleMedicamento);
+            objCita.terminarCita(Integer.parseInt(txtNumero.getText()));
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No se pudo guardar medic " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnTerminarActionPerformed
 
     private void btnBuscarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCitaActionPerformed
         ResultSet rsCitaEncontrada = null;
@@ -1260,7 +1297,7 @@ public class jdCita extends javax.swing.JDialog {
                 btnBuscarMascotaActionPerformed(null);
 
             }
-
+            llenarDetalleMedicamentosEnTabla();
             llenarTablitaServicios();
 
         } catch (Exception e) {
@@ -1323,7 +1360,7 @@ public class jdCita extends javax.swing.JDialog {
                 }
             }
         }
-        
+
         calcularTotales();
     }//GEN-LAST:event_btnAgregarMedicamentoActionPerformed
 
@@ -1539,9 +1576,9 @@ public class jdCita extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnBuscarMedicamentoActionPerformed
 
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+    private void btnReprogramarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReprogramarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnModificarActionPerformed
+    }//GEN-LAST:event_btnReprogramarActionPerformed
 
     private void tblDetalleMedicamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetalleMedicamentoMouseClicked
         txtCodMedicamento.setText(tblDetalleMedicamento.getValueAt(tblDetalleMedicamento.getSelectedRow(), 0).toString());
@@ -1561,12 +1598,12 @@ public class jdCita extends javax.swing.JDialog {
     private javax.swing.JButton btnBuscarDuenio;
     private javax.swing.JButton btnBuscarMascota;
     private javax.swing.JButton btnBuscarMedicamento;
-    private javax.swing.JButton btnDarBaja;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminarMedicamento;
     private javax.swing.JButton btnEliminarProducto2;
     private javax.swing.JButton btnEliminarServicio;
-    private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnReprogramar;
+    private javax.swing.JButton btnTerminar;
     private javax.swing.JComboBox<String> cboEstadoCita;
     private javax.swing.JComboBox<String> cboServicios;
     private com.toedter.calendar.JDateChooser jDateChooser1;

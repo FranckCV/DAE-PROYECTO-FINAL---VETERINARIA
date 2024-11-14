@@ -200,7 +200,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         Date horaCero = calendario.getTime();
         spnHoraEntrada.setValue(horaCero);
         spnHoraSalida.setValue(horaCero);
-        
+
         cboServicios.setSelectedIndex(0);
         txtDocMedico.setText("");
         txtCodServicio.setText("");
@@ -990,6 +990,8 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                 txtCodDuenio.setText(String.valueOf(rsCliente.getString("id")));
                 txtNombreCliente.setText(String.valueOf(rsCliente.getString("nombres") + " " + rsCliente.getString("apepaterno")
                         + " " + rsCliente.getString("apematerno")));
+
+                txtTelefono.setText(rsCliente.getString("telefono"));
 
                 if (rsCliente.getString("doc_identidad").length() != 11) {
                     rdbBoleta.setSelected(true);
