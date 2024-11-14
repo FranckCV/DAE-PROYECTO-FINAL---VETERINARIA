@@ -12,6 +12,7 @@ import java.sql.ResultSet;
  * @author Grupo_Veterinaria
  */
 public class clsEspecie {
+
     String verificar;
     boolean dependencia;
 
@@ -73,7 +74,7 @@ public class clsEspecie {
     }
 
     public void registrarEspecie(int id, String nom) throws Exception {
-        strSQL = "insert into " + TABLA + " values (" + id + ", '" + nom + "')";
+        strSQL = "insert into " + TABLA + " values (" + id + ", '" + nom + "', true )";
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
@@ -116,4 +117,16 @@ public class clsEspecie {
         }
     }
 
+    public boolean validarNombre(String nom) throws Exception {
+        strSQL = "SELECT nombre FROM especie WHERE LOWER(nombre) = LOWER('" + nom + "')";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al validar nombre: " + e.getMessage());
+        }
+        return false;
+    }
 }
