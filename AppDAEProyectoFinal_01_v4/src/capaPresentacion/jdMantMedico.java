@@ -665,17 +665,32 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-        Utilidad.validarCampoTextoSoloLetras(evt);
+        try {
+            Utilidad.validarCampoTextoSoloLetras(evt);
+            Utilidad.validarLimiteCampoTexto(evt, clsMedico.NOMBRES, clsMedico.TABLA);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en el campo "+evt.getSource().getClass().getName()+": " + e.getMessage());
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtApePatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApePatKeyTyped
         // TODO add your handling code here:
-        Utilidad.validarCampoTextoSoloLetras(evt);
+        try {
+            Utilidad.validarCampoTextoSoloLetras(evt);
+            Utilidad.validarLimiteCampoTexto(evt, clsMedico.APE_PATERNO, clsMedico.TABLA);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en el campo "+evt.getSource().getClass().getName()+": " + e.getMessage());
+        }
     }//GEN-LAST:event_txtApePatKeyTyped
 
     private void txtApeMatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApeMatKeyTyped
         // TODO add your handling code here:
-        Utilidad.validarCampoTextoSoloLetras(evt);
+        try {
+            Utilidad.validarCampoTextoSoloLetras(evt);
+            Utilidad.validarLimiteCampoTexto(evt, clsMedico.APE_MATERNO, clsMedico.TABLA);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en el campo "+evt.getSource().getClass().getName()+": " + e.getMessage());
+        }
     }//GEN-LAST:event_txtApeMatKeyTyped
        
     private void listarMedicos(){

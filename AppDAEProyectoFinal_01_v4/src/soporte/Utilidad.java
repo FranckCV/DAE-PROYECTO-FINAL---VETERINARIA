@@ -11,6 +11,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.text.NumberFormatter;
 import capaDatos.clsJDBC;
 import java.sql.ResultSet;
+import javax.swing.JTextField;
 
 /**
  *
@@ -30,6 +31,8 @@ public class Utilidad {
     public static final String BTN_CANCELAR = "Cancelar";
     public static final String BTN_DISPONIBILIDAD = "Cambiar Disponibilidad";    
     public static final String BTN_VIGENCIA = "Dar de Baja";  
+    public static final String BTN_AGREGAR = "Agregar";  
+    public static final String BTN_QUITAR = "Quitar";  
     
 //    Texto en Listados
     public static final String SEXO_MAS = "Masculino";
@@ -67,8 +70,32 @@ public class Utilidad {
         }
     }
     
+    
 //    Validaciones de Elementos de Interfaz
     
+    public static void validarLimiteCampoTexto(java.awt.event.KeyEvent evt, String columna, String tabla) throws Exception{
+        JTextField source = (JTextField) evt.getSource();
+        
+        clsJDBC objConectar = new clsJDBC();
+        String strSQL;
+        ResultSet rs = null;        
+        
+        strSQL= " SELECT character_maximum_length as limite" +
+                " FROM information_schema.columns " +
+                " WHERE table_name = '"+tabla+"'  " +
+                " AND column_name = '"+columna+"' ;";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                if(source.getText().length() >= rs.getInt("limite")) {
+                    evt.consume();
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al marcar limite a Elemento "+source.getName()+" en la tabla " + tabla + " / " + e.getMessage());
+        }
+    }
+        
     public static void validarCampoTextoSoloNumero(java.awt.event.KeyEvent evt){
         int key = evt.getKeyChar();
 
@@ -124,6 +151,15 @@ public class Utilidad {
             evt.consume();
         } 
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 //    Mensajes de Error 
     
