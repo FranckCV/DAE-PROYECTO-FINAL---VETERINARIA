@@ -29,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Junior
  */
-public class jdCita extends javax.swing.JDialog {
+public class jdCita1 extends javax.swing.JDialog {
 
     clsMedicamento objMedicamento = new clsMedicamento();
     clsCita objCita = new clsCita();
@@ -43,7 +43,7 @@ public class jdCita extends javax.swing.JDialog {
     clsDetalle_Servicio objDetalleServicio = new clsDetalle_Servicio();
     clsDetalleMedicamento objDetalleMedicamento = new clsDetalleMedicamento();
 
-    public jdCita(java.awt.Frame parent, boolean modal) {
+    public jdCita1(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
