@@ -101,7 +101,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(138, 238, 238));
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel1.setText("Codigo:");
+        jLabel1.setText("ID:");
 
         txtID.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtID.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -112,6 +112,11 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 
         txtNombre.setEditable(false);
         txtNombre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel2.setText("Nombre:");
@@ -368,14 +373,18 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 
     private void txtIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyTyped
         // TODO add your handling code here:
-        int key = evt.getKeyChar();
-
-        boolean numeros = key >= 48 && key <= 57    ;
-
-        if (!(numeros)) {
-            evt.consume();
-        }
+        Utilidad.validarCampoTextoSoloNumero(evt);
     }//GEN-LAST:event_txtIDKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        // TODO add your handling code here:
+        try {
+            Utilidad.validarCampoTextoSoloLetras(evt);
+            Utilidad.validarLimiteCampoTexto(evt, clsEspecialidad.NOMBRE, clsEspecialidad.TABLA);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en el campo "+evt.getSource().getClass().getName()+": " + e.getMessage());
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
     
     private void listarEspecialidades(){
         ResultSet rsDato = null;
@@ -481,21 +490,12 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            String foranea[] = {"referida", "llave foránea", "referida a la tabla"};
-            boolean contieneErrorForaneo = false;
-
-            for (String palabra : foranea) {
-                if (e.getMessage().contains(palabra)) {
-                    contieneErrorForaneo = true;
-                    break;
-                }
-            }
-
-            if (contieneErrorForaneo) {
-                JOptionPane.showMessageDialog(this, "Error: Hay datos externos asociados a \"" + txtNombre.getText() + "\". \nConsidere cambiar su disponibilidad para que ya no pueda ser usado");
-            } else {
-                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-            }
+            JOptionPane.showMessageDialog(this, "Error: " + 
+                    Utilidad.mensajeErrorEliminacionForanea(
+                            e, 
+                            "especialidad", 
+                            txtNombre.getText())
+            );
         }
     }
       

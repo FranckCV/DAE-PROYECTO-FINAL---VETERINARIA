@@ -64,6 +64,7 @@ public class clsCita {
 //            throw new Exception("Error al insertar cita --> " + e.getLocalizedMessage());
 //        }
 //    }
+    
     public void registrarCita(int estadoCitaId, int custodiamascotaId, int custodiaDuenioId, JTable tblServicios) throws Exception {
         try {
             objConectar.conectar();
@@ -71,7 +72,6 @@ public class clsCita {
             con.setAutoCommit(false);
             sent = con.createStatement();
 
-            // Genera un nuevo ID para la cita
             int idCita = generarCodigoCita();
             String strSQL = "INSERT INTO CITA (id, estado_cita_id, fecha_cita, observacion, CUSTODIAMASCOTAid, CUSTODIADUEniOid) "
                     + "VALUES (" + idCita + ", " + estadoCitaId + ", CURRENT_DATE, '', " + custodiamascotaId + ", " + custodiaDuenioId + ")";
@@ -102,6 +102,36 @@ public class clsCita {
         } catch (Exception e) {
             con.rollback();
             throw new Exception("Error al registrar cita --> " + e.getLocalizedMessage());
+        } finally {
+            objConectar.desconectar();
+        }
+    }
+
+    public void terminarCita(int idCita) throws Exception {
+        // Suponiendo que el estado "finalizado" tiene el ID 3
+        int estadoFinalizadoId = 6;
+        strSQL = "UPDATE CITA SET estado_cita_id = " + estadoFinalizadoId + " WHERE id = " + idCita;
+
+        try {
+            objConectar.conectar();
+            sent = objConectar.getCon().createStatement();
+            sent.executeUpdate(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al finalizar la cita --> " + e.getLocalizedMessage());
+        } finally {
+            objConectar.desconectar();
+        }
+    }
+
+    public void modificarEstado(int idCita, int nuevoEstadoId) throws Exception {
+        strSQL = "UPDATE CITA SET estado_cita_id = " + nuevoEstadoId + " WHERE id = " + idCita;
+
+        try {
+            objConectar.conectar();
+            sent = objConectar.getCon().createStatement();
+            sent.executeUpdate(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al modificar el estado de la cita --> " + e.getLocalizedMessage());
         } finally {
             objConectar.desconectar();
         }

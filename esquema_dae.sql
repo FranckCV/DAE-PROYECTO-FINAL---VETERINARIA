@@ -366,6 +366,8 @@ VALUES
     (5, 6, '2024-11-25', 'Finalización de tratamiento', 5, 5);
 
 
+
+
 --USUARIOS
 INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
 VALUES (1, 'jdoe', TRUE, TRUE, md5('1234' || 'jdoe' || 'CODE146'), 'John', 'Doe', 'Smith', 'V');

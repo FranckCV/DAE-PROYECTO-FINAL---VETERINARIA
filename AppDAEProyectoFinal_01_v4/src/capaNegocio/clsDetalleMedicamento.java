@@ -55,4 +55,21 @@ public class clsDetalleMedicamento {
         }
     }
 
+    public ResultSet obtenerDetalleMedicamentosPorCita(int idCita) throws Exception {
+        strSQL = "SELECT detalle_medicamento.*, medicamento.nombre AS nombre_medicamento, "
+                + "medicamento.costo "
+                + "FROM detalle_medicamento "
+                + "INNER JOIN medicamento ON detalle_medicamento.medicamento_id = medicamento.id "
+                + "WHERE detalle_medicamento.detalle_cita_id = " + idCita;
+
+        try {
+            objConectar.conectar();
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al obtener detalle de medicamentos por cita --> " + e.getLocalizedMessage());
+        } finally {
+            objConectar.desconectar();
+        }
+    }
 }

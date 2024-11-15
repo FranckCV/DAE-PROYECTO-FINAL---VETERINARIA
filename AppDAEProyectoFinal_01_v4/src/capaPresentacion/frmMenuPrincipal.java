@@ -550,28 +550,28 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 //         TODO add your handling code here:
-        jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
-        objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true);
-        txtUsuario.setText(objForm.nombreUsuario);
-        switch (objForm.cargo) {
-                    case "V":
-                        txtCargo.setText("Veterinario");
-                        mnuMantenimiento.setEnabled(false);
-                        break;
-                    case "E":
-                        txtCargo.setText("Empleado");
-                        mnuUsuarios.setEnabled(false);
-                        break;
-                    case "A":
-                        txtCargo.setText("Administrador");
-                        mnuMantenimiento.setEnabled(true);
-                        mnuUsuarios.setEnabled(true);
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(null, "Error al obtener puesto");
-                        break;
-                }
+//        jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
+//        objForm.setLocationRelativeTo(this);
+//        objForm.setVisible(true);
+//        txtUsuario.setText(objForm.nombreUsuario);
+//        switch (objForm.cargo) {
+//                    case "V":
+//                        txtCargo.setText("Veterinario");
+//                        mnuMantenimiento.setEnabled(false);
+//                        break;
+//                    case "E":
+//                        txtCargo.setText("Empleado");
+//                        mnuUsuarios.setEnabled(false);
+//                        break;
+//                    case "A":
+//                        txtCargo.setText("Administrador");
+//                        mnuMantenimiento.setEnabled(true);
+//                        mnuUsuarios.setEnabled(true);
+//                        break;
+//                    default:
+//                        JOptionPane.showMessageDialog(null, "Error al obtener puesto");
+//                        break;
+//                }
 
 //        jdInicioSesionVet objForm= new jdInicioSesionVet(this, true);
 //        objForm.setLocationRelativeTo(this);
@@ -732,9 +732,9 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuUsuariosActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        jdCita objCita = new jdCita(this, true);
-        objCita.setLocationRelativeTo(this);
-        objCita.setVisible(true);
+        jdCitaFirme objCita1 = new jdCitaFirme(this, true);
+        objCita1.setLocationRelativeTo(this);
+        objCita1.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void mnuCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCitaActionPerformed

@@ -141,6 +141,11 @@ public class jdMantMedico extends javax.swing.JDialog {
         txtNombre.setEditable(false);
         txtNombre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtNombre.setBorder(null);
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel2.setText("Nombres:");
@@ -165,10 +170,20 @@ public class jdMantMedico extends javax.swing.JDialog {
         txtApePat.setEditable(false);
         txtApePat.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtApePat.setBorder(null);
+        txtApePat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApePatKeyTyped(evt);
+            }
+        });
 
         txtApeMat.setEditable(false);
         txtApeMat.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtApeMat.setBorder(null);
+        txtApeMat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApeMatKeyTyped(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel5.setText("Disponibilidad:");
@@ -610,19 +625,7 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void txtDocIdentidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocIdentidadKeyTyped
         // TODO add your handling code here:
-        if(txtDocIdentidad.getText().length() >= 8) {
-            evt.consume();
-        }
-        
-        int key = evt.getKeyChar();
-
-        boolean numeros = key >= 48 && key <= 57    ;
-//        boolean guion = key == 45;
-
-        if (!(numeros)) {
-            evt.consume();
-        } 
-        
+        Utilidad.validarCampoTextoDocIdentidad(evt);
     }//GEN-LAST:event_txtDocIdentidadKeyTyped
 
     private void chkDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkDisponibilidadActionPerformed
@@ -659,6 +662,36 @@ public class jdMantMedico extends javax.swing.JDialog {
             listarServiciosxMedico();
         }
     }//GEN-LAST:event_formWindowGainedFocus
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        // TODO add your handling code here:
+        try {
+            Utilidad.validarCampoTextoSoloLetras(evt);
+            Utilidad.validarLimiteCampoTexto(evt, clsMedico.NOMBRES, clsMedico.TABLA);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en el campo "+evt.getSource().getClass().getName()+": " + e.getMessage());
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtApePatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApePatKeyTyped
+        // TODO add your handling code here:
+        try {
+            Utilidad.validarCampoTextoSoloLetras(evt);
+            Utilidad.validarLimiteCampoTexto(evt, clsMedico.APE_PATERNO, clsMedico.TABLA);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en el campo "+evt.getSource().getClass().getName()+": " + e.getMessage());
+        }
+    }//GEN-LAST:event_txtApePatKeyTyped
+
+    private void txtApeMatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApeMatKeyTyped
+        // TODO add your handling code here:
+        try {
+            Utilidad.validarCampoTextoSoloLetras(evt);
+            Utilidad.validarLimiteCampoTexto(evt, clsMedico.APE_MATERNO, clsMedico.TABLA);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en el campo "+evt.getSource().getClass().getName()+": " + e.getMessage());
+        }
+    }//GEN-LAST:event_txtApeMatKeyTyped
        
     private void listarMedicos(){
         ResultSet rsDato = null;
@@ -811,12 +844,13 @@ public class jdMantMedico extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            if (e.getMessage().contains("referida desde la tabla")) {
-                JOptionPane.showMessageDialog(this, "Error: Hay datos externos asociados al medico \"" + txtNombre.getText() +" "+ txtApePat.getText() +" "+ txtApeMat.getText() + "\". \n"
-                        + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado");
-            } else {
-                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-            }
+            JOptionPane.showMessageDialog(this, "Error: " + 
+                    Utilidad.mensajeErrorEliminacionForanea(
+                            e, 
+                            "medico(a)", 
+                            txtNombre.getText() +" "+ txtApePat.getText() +" "+ txtApeMat.getText()
+                    )
+            );
         }
     }
     
