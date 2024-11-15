@@ -4,16 +4,22 @@
  */
 package soporte;
 
+import capaNegocio.*;
 import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.text.NumberFormatter;
+import capaDatos.clsJDBC;
+import java.sql.ResultSet;
 
 /**
  *
  * @author franc
  */
 public class Utilidad {
+//    clsJDBC objConectar = new clsJDBC();
+//    String strSQL;
+//    ResultSet rs = null;
     
 //    Texto en Botones
     public static final String BTN_NUEVO = "Registrar";
@@ -44,6 +50,23 @@ public class Utilidad {
         }
     }
     
+//    Validaciones Mantenimiento
+    
+    public static boolean validarElementoTextoRepetido(String tabla, String columna, String campo) throws Exception{
+        clsJDBC objConectar = new clsJDBC();
+        String strSQL;
+        ResultSet rs = null;
+        
+        strSQL= " select * from "+tabla+
+                " where "+columna+" = '"+campo+"' ";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs.next();
+        } catch (Exception e) {
+            throw new Exception("Error al buscar Elemento "+campo+" en la tabla " + tabla + " / " + e.getMessage());
+        }
+    }
+    
 //    Validaciones de Elementos de Interfaz
     
     public static void validarCampoTextoSoloNumero(java.awt.event.KeyEvent evt){
@@ -52,6 +75,17 @@ public class Utilidad {
         boolean numeros = key >= 48 && key <= 57    ;
 
         if (!(numeros)) {
+            evt.consume();
+        }
+    }
+        
+    public static void validarCampoTextoSoloNumeroDecimal(java.awt.event.KeyEvent evt){
+        int key = evt.getKeyChar();
+
+        boolean numeros = key >= 48 && key <= 57    ;
+        boolean punto = key == 46;
+
+        if (!(numeros || punto)) {
             evt.consume();
         }
     }
@@ -75,11 +109,41 @@ public class Utilidad {
         ((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
     }
     
-    
-    
-    
+        
+    public static void validarCampoTextoDocIdentidad(java.awt.event.KeyEvent evt){
+//        if(evt.getComponent()getText().length() >= 8) {
+//            evt.consume();
+//        }
+        
+        int key = evt.getKeyChar();
 
+        boolean numeros = key >= 48 && key <= 57    ;
+//        boolean guion = key == 45;
+
+        if (!(numeros)) {
+            evt.consume();
+        } 
+    }
     
+//    Mensajes de Error 
+    
+    public static String mensajeErrorEliminacionForanea (Exception e , String entidad, String nombre) {
+        String mensaje = e.getMessage();
+        String[] palabras = { 
+            "referida desde la tabla", 
+            "foránea", 
+            "fk", 
+            "ERROR: update o delete en"
+        };
+        
+        for (String keyword : palabras) {
+            if (!mensaje.contains(keyword)) {
+                return mensaje;
+            }
+        }
+        return "Hay datos externos asociados a "+entidad+" \"" + nombre + "\".\n" +
+               "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. ";
+    }
     
     
     

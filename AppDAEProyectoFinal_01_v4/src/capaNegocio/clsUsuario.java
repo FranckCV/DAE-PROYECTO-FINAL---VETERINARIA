@@ -12,7 +12,7 @@ import java.sql.*;
  * @author franc
  */
 public class clsUsuario {
-    
+
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;
@@ -25,9 +25,9 @@ public class clsUsuario {
             objConectar.conectar();
             micon = objConectar.getCon();
             PreparedStatement sp = micon.prepareStatement(strSQL);
-            sp.setString(1, usu);  
-            sp.setString(2, cont); 
-            sp.setString(3, usu);  
+            sp.setString(1, usu);
+            sp.setString(2, cont);
+            sp.setString(3, usu);
             rs = sp.executeQuery();
             while (rs.next()) {
                 return rs.getString("nombres");
@@ -90,10 +90,25 @@ public class clsUsuario {
     // Método para registrar un nuevo usuario
     public void registrarUsuario(int codUsuario, String nomUsuario, boolean estado, boolean sexo, String clave,
             String nombres, String apPaterno, String apMaterno, String cargo) throws Exception {
-        strSQL = "Insert into usuario Values(" + codUsuario + ",'" + nomUsuario + "'," + estado + "," + sexo + ",'" + clave + "','"
-                + nombres + "','" + apPaterno + "','" + apMaterno + "','" + cargo + "')";
+        strSQL = "Insert into usuario"
+                + " Values(?,?,?,?, md5('?' || '?' || 'CODE146'),?,?,?,?)";
         try {
-            objConectar.ejecutarBD(strSQL);
+            Connection micon = null;
+            objConectar.conectar();
+            micon = objConectar.getCon();
+            PreparedStatement sp = micon.prepareStatement(strSQL);
+            sp.setInt(1, codUsuario);
+            sp.setString(2, nomUsuario);
+            sp.setBoolean(3, estado);
+            sp.setBoolean(4, sexo);
+            sp.setString(5, clave);
+            sp.setString(6, nomUsuario); 
+            sp.setString(7, nombres);
+            sp.setString(8, apPaterno);
+            sp.setString(9, apMaterno);
+            sp.setString(10, cargo);
+
+            sp.executeUpdate();
         } catch (Exception e) {
             throw new Exception("Error al registrar el usuario --> " + e.getMessage());
         }
@@ -157,4 +172,18 @@ public class clsUsuario {
         return 0;
     }
 
+    public boolean validarUsuario(String usu) throws Exception{
+        strSQL="select estado from usuario where nomusuario='"+usu+"'";
+        try{
+            rs=objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return rs.getBoolean("estado");
+            }
+        }
+        catch(Exception e){
+            throw new Exception("Error al validar usuario");
+        }
+        return false;
+    }
+    
 }

@@ -134,6 +134,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/marmota.png"))); // NOI18N
 
         txtCargo.setEditable(false);
+        txtCargo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCargo.setBorder(null);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -210,6 +211,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         txtUsuario.setEditable(false);
         txtUsuario.setBackground(new java.awt.Color(204, 204, 204));
+        txtUsuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtUsuario.setBorder(null);
         txtUsuario.setDisabledTextColor(new java.awt.Color(255, 255, 255));
 
@@ -526,11 +528,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-    //     pack();
-    // }// </editor-fold>                        
-
-    
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -553,28 +550,28 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 //         TODO add your handling code here:
-        jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
-        objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true);
-        txtUsuario.setText(objForm.nombreUsuario);
-        switch (objForm.cargo) {
-                    case "V":
-                        txtCargo.setText("Veterinario");
-                        mnuMantenimiento.setEnabled(false);
-                        break;
-                    case "E":
-                        txtCargo.setText("Empleado");
-                        mnuUsuarios.setEnabled(false);
-                        break;
-                    case "A":
-                        txtCargo.setText("Administrador");
-                        mnuMantenimiento.setEnabled(true);
-                        mnuUsuarios.setEnabled(true);
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(null, "Error al obtener puesto");
-                        break;
-                }
+//        jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
+//        objForm.setLocationRelativeTo(this);
+//        objForm.setVisible(true);
+//        txtUsuario.setText(objForm.nombreUsuario);
+//        switch (objForm.cargo) {
+//                    case "V":
+//                        txtCargo.setText("Veterinario");
+//                        mnuMantenimiento.setEnabled(false);
+//                        break;
+//                    case "E":
+//                        txtCargo.setText("Empleado");
+//                        mnuUsuarios.setEnabled(false);
+//                        break;
+//                    case "A":
+//                        txtCargo.setText("Administrador");
+//                        mnuMantenimiento.setEnabled(true);
+//                        mnuUsuarios.setEnabled(true);
+//                        break;
+//                    default:
+//                        JOptionPane.showMessageDialog(null, "Error al obtener puesto");
+//                        break;
+//                }
 
 //        jdInicioSesionVet objForm= new jdInicioSesionVet(this, true);
 //        objForm.setLocationRelativeTo(this);

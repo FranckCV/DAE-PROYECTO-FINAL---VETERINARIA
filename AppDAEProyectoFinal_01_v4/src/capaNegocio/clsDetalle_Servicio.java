@@ -145,32 +145,36 @@ public class clsDetalle_Servicio {
                 + " LEFT JOIN detalle_servicio det ON det.medico_id = med.id AND det.disponibilidad = true "
                 + " LEFT JOIN servicio ser ON ser.id = det.servicio_id AND ser.disponibilidad = true "
                 + " where med.id = " + med_id + " "
-                + " group by med.id, esp.id ;";
+                + " group by med.id;";
         try {
             rs = objConectar.consultarBD(strSQL);
-            int valor = rs.getInt(clsMedico.CANT_SERVICIOS);
-            return valor;
+            if (rs.next()) {
+                return rs.getInt(clsMedico.CANT_SERVICIOS);
+            }
         } catch (Exception e) {
-            throw new Exception("Error al buscar id: '" + med_id + "' en la tabla " + TABLA + ": " + e.getMessage());
+            throw new Exception("Error: " + e.getMessage());
         }
+        return null;
     }
     
     public Integer mostrarCantServiciosTotalXMedico(int med_id) throws Exception{
-        strSQL = " select "
+        strSQL =  " select "
                 + "     count(det.servicio_id) as "+clsMedico.CANT_SERVICIOS
                 + " from medico med "
                 + " LEFT JOIN especialidad esp ON esp.id = med.especialidad_id "
                 + " LEFT JOIN detalle_servicio det ON det.medico_id = med.id "
                 + " LEFT JOIN servicio ser ON ser.id = det.servicio_id AND ser.disponibilidad = true "
                 + " where med.id = " + med_id + " "
-                + " group by med.id, esp.id ;";
+                + " group by med.id;";
         try {
             rs = objConectar.consultarBD(strSQL);
-            int valor = rs.getInt(clsMedico.CANT_SERVICIOS);
-            return valor;
+            if (rs.next()) {
+                return rs.getInt(clsMedico.CANT_SERVICIOS);
+            }
         } catch (Exception e) {
             throw new Exception("Error al buscar id: '" + med_id + "' en la tabla " + TABLA + ": " + e.getMessage());
         }
+        return null;
     }
     
 
