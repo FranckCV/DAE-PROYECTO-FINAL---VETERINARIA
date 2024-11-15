@@ -378,7 +378,12 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-        Utilidad.validarCampoTextoSoloLetras(evt);
+        try {
+            Utilidad.validarCampoTextoSoloLetras(evt);
+            Utilidad.validarLimiteCampoTexto(evt, clsEspecialidad.NOMBRE, clsEspecialidad.TABLA);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en el campo "+evt.getSource().getClass().getName()+": " + e.getMessage());
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
     
     private void listarEspecialidades(){
