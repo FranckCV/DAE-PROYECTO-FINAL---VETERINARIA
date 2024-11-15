@@ -64,6 +64,42 @@ public class jdCitaFirme extends javax.swing.JDialog {
         txtDosis.setText("");
     }
 
+    private void limpiarTodoAlTerminar() {
+        txtANotaAdicional.setText("");
+        txtCodDuenio.setText("");
+        txtCodMascota.setText("");
+        txtCodMedicamento.setText("");
+        txtCodServicio.setText("");
+        txtDescripcionServicio.setText("");
+        txtDireccion.setText("");
+        txtDniRuc.setText("");
+        txtDocMedico.setText("");
+        txtDosis.setText("");
+        txtEstadoSaludMascota.setText("");
+        txtIgv.setText("");
+        txtIndicacion.setText("");
+        txtNombreDuenio.setText("");
+        txtNombreMascota.setText("");
+        txtNombreMedicamento.setText("");
+        txtNombreMedico.setText("");
+        txtNotaMascota.setText("");
+        txtNumero.setText("");
+        txtRaza.setText("");
+        txtSubtotal.setText("");
+        txtTelefono.setText("");
+        txtTotal.setText("");
+        
+        spnEdad.setValue(0);
+        spnCantidad.setValue(0);
+        jDateChooser1.setDate(null);
+        
+        llenarTablaInicialServicio();
+        llenarTablaInicialMedicamento();
+        
+//        cboEstadoCita.setSelectedIndex(-1);
+//        cboServicios.setSelectedIndex(-1);
+    }
+
     private void llenarTablaInicialServicio() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID SERV_MED");
@@ -1549,6 +1585,15 @@ public class jdCitaFirme extends javax.swing.JDialog {
             objDetalleMedicamento.registrarDetalleMedicamento(Integer.parseInt(txtNumero.getText()), tblDetalleMedicamento);
             objCita.terminarCita(Integer.parseInt(txtNumero.getText()));
 
+            for (int i = 0; i < tblDetalleMedicamento.getRowCount(); i++) {
+                int idMedicamento = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 0).toString());
+                int cantidad = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 5).toString());
+                objMedicamento.reducirStock(idMedicamento, cantidad);
+            }
+            
+            JOptionPane.showMessageDialog(this, "La cita finalizó");
+            limpiarTodoAlTerminar();
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "No se pudo guardar medic " + e.getMessage());
         }
