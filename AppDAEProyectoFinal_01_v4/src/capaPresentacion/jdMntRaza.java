@@ -26,7 +26,7 @@ public class jdMntRaza extends javax.swing.JDialog {
         initComponents();
         listarRazas();
         listarEspecies();
-
+        chkVigente.setEnabled(false);
         btnNuevo.setText("Nuevo");
     }
 
@@ -38,6 +38,7 @@ public class jdMntRaza extends javax.swing.JDialog {
         modelo.addColumn("Id");
         modelo.addColumn("Nombre");
         modelo.addColumn("Especie");
+        modelo.addColumn("Disponibilidad");
         try {
             rsRazas = objRaza.listarRazas();
             while (rsRazas.next()) {
@@ -46,6 +47,7 @@ public class jdMntRaza extends javax.swing.JDialog {
                 registro.add(0, rsRazas.getInt("id"));
                 registro.add(1, rsRazas.getString("nombre"));
                 registro.add(2, especie);
+                registro.add(3, rsRazas.getBoolean("disponibilidad"));
 
                 modelo.addRow(registro);
             }
@@ -63,7 +65,9 @@ public class jdMntRaza extends javax.swing.JDialog {
         try {
             rsMar = objEspecie.listarEspecies();
             while (rsMar.next()) {
-                modeloEspecie.addElement(rsMar.getString("nombre"));
+                if (rsMar.getBoolean("disponibilidad")) {
+                    modeloEspecie.addElement(rsMar.getString("nombre"));
+                }
             }
         } catch (Exception e) {
         }
@@ -91,8 +95,9 @@ public class jdMntRaza extends javax.swing.JDialog {
         btnBuscar = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         cmbEspecie = new javax.swing.JComboBox<>();
+        chkVigente = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -165,11 +170,18 @@ public class jdMntRaza extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel6.setText("Nombre:");
 
+        txtNombre.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtNombre.setBorder(null);
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel4.setText("id: ");
 
+        txtId.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtId.setBorder(null);
         txtId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -198,7 +210,11 @@ public class jdMntRaza extends javax.swing.JDialog {
         jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel14.setText("Especie");
 
+        cmbEspecie.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         cmbEspecie.setBorder(null);
+
+        chkVigente.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        chkVigente.setText("(Vigente)");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -218,9 +234,11 @@ public class jdMntRaza extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel14)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel14)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chkVigente))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -239,7 +257,9 @@ public class jdMntRaza extends javax.swing.JDialog {
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(chkVigente))
                     .addComponent(jLabel6))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
@@ -247,15 +267,15 @@ public class jdMntRaza extends javax.swing.JDialog {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/refugio-de-animales.png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/opacado.png"))); // NOI18N
-        jButton5.setBorder(null);
-        jButton5.setContentAreaFilled(false);
-        jButton5.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/opacado.png"))); // NOI18N
-        jButton5.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/escoba-mascota.png"))); // NOI18N
-        jButton5.setVerifyInputWhenFocusTarget(false);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/opacado.png"))); // NOI18N
+        btnLimpiar.setBorder(null);
+        btnLimpiar.setContentAreaFilled(false);
+        btnLimpiar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/opacado.png"))); // NOI18N
+        btnLimpiar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/escoba-mascota.png"))); // NOI18N
+        btnLimpiar.setVerifyInputWhenFocusTarget(false);
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnLimpiarActionPerformed(evt);
             }
         });
 
@@ -267,19 +287,18 @@ public class jdMntRaza extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addComponent(btnNuevo)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addGap(67, 67, 67)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton5))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnNuevo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLimpiar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -288,7 +307,7 @@ public class jdMntRaza extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
-                    .addComponent(jButton5))
+                    .addComponent(btnLimpiar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -297,7 +316,7 @@ public class jdMntRaza extends javax.swing.JDialog {
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNuevo))
                 .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
                 .addGap(12, 12, 12))
         );
 
@@ -346,26 +365,46 @@ public class jdMntRaza extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdActionPerformed
 
+    private void activarBotones() {
+        btnBuscar.setEnabled(true);
+        btnLimpiar.setEnabled(true);
+        btnModificar.setEnabled(true);
+    }
+
+    private void bloquearBotones() {
+        btnModificar.setEnabled(false);
+        btnBuscar.setEnabled(false);
+        btnLimpiar.setEnabled(false);
+    }
+
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         try {
-            
             boolean ningun_campo = txtId.getText().equals("") && txtNombre.getText().equals("");
-            
-            if ((txtId.getText().equals("") || txtNombre.getText().equals("") || cmbEspecie.getSelectedIndex() == -1) && !ningun_campo) {
+            if ((txtId.getText().equals("") || txtNombre.getText().equals("")) && !ningun_campo) {
                 JOptionPane.showMessageDialog(this, "Llenar todos los campos");
             } else {
                 if (btnNuevo.getText().equals("Nuevo")) {
-                    btnNuevo.setText("Guardar");
-                    limpiarControles();
-                    txtId.setText(objRaza.generarIDRaza().toString());
-                    txtNombre.requestFocus();
-                } else { //Guardar
-                    btnNuevo.setText("Nuevo");
-                    Integer codEspecie = objRaza.obtenerIdEspecie(cmbEspecie.getSelectedItem().toString());
-                    objRaza.registrarRaza(Integer.valueOf(txtId.getText()), txtNombre.getText(), codEspecie);
 
+                    btnNuevo.setText("Guardar");
+                    bloquearBotones();
+                    btnEliminar.setText("Cancelar");
                     limpiarControles();
-                    listarRazas();
+                    txtId.setText(objEspecie.generarIDEspecie().toString());
+                    txtNombre.requestFocus();
+                    tblRazas.setEnabled(false);
+
+                } else { //Guardar
+                    if (!objEspecie.validarNombre(txtNombre.getText())) {
+                        btnNuevo.setText("Nuevo");
+                        activarBotones();
+                        tblRazas.setEnabled(true);
+                        objEspecie.registrarEspecie(Integer.valueOf(txtId.getText()), txtNombre.getText());
+
+                        limpiarControles();
+                        listarEspecies();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ya se registró esa especie");
+                    }
                 }
             }
         } catch (Exception e) {
@@ -373,9 +412,9 @@ public class jdMntRaza extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         limpiarControles();
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
         char c = evt.getKeyChar();
@@ -397,12 +436,12 @@ public class jdMntRaza extends javax.swing.JDialog {
                     Integer id = Integer.valueOf(txtId.getText());
                     String nom = txtNombre.getText();
                     Integer especie_id = objRaza.obtenerIdEspecie(cmbEspecie.getSelectedItem().toString());
-                    
+
                     objRaza.modificarRaza(id, nom, especie_id);
 
                     limpiarControles();
                     listarRazas();
-                    
+
 //                    JOptionPane.showMessageDialog(this, "Se modificó");
                 }
             }
@@ -416,14 +455,33 @@ public class jdMntRaza extends javax.swing.JDialog {
             if (txtId.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código a eliminar");
             } else {
-                int confirmacion = JOptionPane.showConfirmDialog(this, "Estás seguro de que quieres eliminar a la raza con codigo " + txtId.getText(),
-                        "Confirmacion", JOptionPane.YES_NO_OPTION);
-                if (confirmacion == JOptionPane.YES_OPTION) {
-                    objRaza.eliminarRaza(Integer.valueOf(txtId.getText()));
+                if (btnEliminar.getText().equals("Cancelar")) {
+                    activarBotones();
                     limpiarControles();
-                    listarRazas();
+                    btnNuevo.setText("Nuevo");
+                    btnEliminar.setText("Eliminar");
                 } else {
-                    JOptionPane.showMessageDialog(this, "Ok, no se eliminó");
+                    Object[] opciones = {"Sí", "No"};
+                    int confirmacion = JOptionPane.showOptionDialog(this,
+                            "¿Estás seguro de que quieres modificar?",
+                            "Confirmación",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null, opciones, opciones[1]);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+
+                        int num = objEspecie.eliminarEspecie(Integer.valueOf(txtId.getText()));
+
+                        if (num == 0) {
+                            JOptionPane.showMessageDialog(this, "Se eliminó");
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No se eliminó porque está referenciado");
+                        }
+
+                        limpiarControles();
+                        listarEspecies();
+
+                    }
                 }
             }
         } catch (Exception e) {
@@ -451,6 +509,8 @@ public class jdMntRaza extends javax.swing.JDialog {
                 if (rsRaza.next()) {
                     txtNombre.setText(rsRaza.getString("nombre"));
                     cmbEspecie.setSelectedItem(objRaza.obtenerNombreEspecie(rsRaza.getInt("especie_id")));
+                    chkVigente.setSelected(rsRaza.getBoolean("disponibilidad"));
+
                     rsRaza.close();
                 } else {
                     JOptionPane.showMessageDialog(this, "Codigo de raza no existente");
@@ -462,6 +522,15 @@ public class jdMntRaza extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        // TODO add your handling code here:
+        char key = evt.getKeyChar();
+
+        if (!(Character.isLetter(key) || key == ' ')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
     private void limpiarControles() {
         txtId.setText("");
         txtNombre.setText("");
@@ -471,10 +540,11 @@ public class jdMntRaza extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JCheckBox chkVigente;
     private javax.swing.JComboBox<String> cmbEspecie;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
