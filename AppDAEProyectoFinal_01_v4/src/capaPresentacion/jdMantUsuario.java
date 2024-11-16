@@ -40,14 +40,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
 
         listarCargos();
         listarUsuarios();
-        txtUsuario.setEditable(true);
-        txtClave.setEditable(true);
-        txtNombre.setEditable(true);
-        txtApeMat.setEditable(true);
-        txtApePat.setEditable(true);
-        radFemenino.setEnabled(true);
-        radMasculino.setEnabled(true);
-        chkVigencia.setEnabled(true);
+
     }
 
     /**
@@ -209,8 +202,8 @@ public class jdMantUsuario extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(chkVigencia)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLimpiar)
-                        .addContainerGap(22, Short.MAX_VALUE))
+                        .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(22, 22, 22))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -252,18 +245,15 @@ public class jdMantUsuario extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLimpiar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(chkVigencia)
-                            .addComponent(jLabel8)
-                            .addComponent(radFemenino)
-                            .addComponent(radMasculino)
-                            .addComponent(jLabel6))))
+                    .addComponent(btnLimpiar)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(chkVigencia)
+                        .addComponent(jLabel8)
+                        .addComponent(radFemenino)
+                        .addComponent(radMasculino)
+                        .addComponent(jLabel6)))
                 .addGap(63, 63, 63))
         );
 
@@ -409,30 +399,30 @@ public class jdMantUsuario extends javax.swing.JDialog {
                             .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(8, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnNuevo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnModificar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEliminar))
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnNuevo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnModificar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminar)
                         .addGap(12, 12, 12)
                         .addComponent(btnVigencia)))
                 .addGap(20, 20, 20))
@@ -492,6 +482,18 @@ public class jdMantUsuario extends javax.swing.JDialog {
         listarUsuarios();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
+    private void listarCargos() {
+        ResultSet rsCargos = null;
+        DefaultComboBoxModel combo = new DefaultComboBoxModel();
+        combo.addElement("Veterinario");
+        combo.addElement("Empleado");
+        combo.addElement("Administrador");
+
+        cmbCargo.setModel(combo);
+
+    }
+
+
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         listarUsuarios();
@@ -513,6 +515,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
             cancelarAccion();
+           activarControles();
         } else {
             eliminarUsuario();
         }
@@ -549,18 +552,29 @@ public class jdMantUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_txtIdKeyTyped
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        ResultSet rsEspecie = null;
+        ResultSet rsUsuario = null;
 
         try {
             if (txtId.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código para buscar");
             } else {
+                rsUsuario = objUsuario.buscarUsuario(Integer.parseInt(txtId.getText()));
+                if (rsUsuario.next()) {
+                    txtNombre.setText(rsUsuario.getString("nombres"));
+                    txtApeMat.setText(rsUsuario.getString("apmaterno"));
+                    txtApePat.setText(rsUsuario.getString("appaterno"));
+                    if (rsUsuario.getBoolean("sexo")) {
+                        radMasculino.setSelected(true);
+                    } else {
+                        radFemenino.setSelected(true);
+                    }
+                    txtUsuario.setText(rsUsuario.getString("nomusuario"));
+                    chkVigencia.setSelected(rsUsuario.getBoolean("estado"));
+                    cmbCargo.setSelectedItem(Utilidad.obtenerCargoUsuario(rsUsuario.getString("cargo")));
 
-                if (rsEspecie.next()) {
-                    txtNombre.setText(rsEspecie.getString("nombre"));
-                    rsEspecie.close();
+                    rsUsuario.close();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Codigo de especie no existente");
+                    JOptionPane.showMessageDialog(this, "Codigo de usuario no existente");
                     limpiarControles();
                 }
             }
@@ -616,14 +630,6 @@ public class jdMantUsuario extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al listar tabla USUARIO: " + e.getMessage());
         }
-    }
-
-    private void listarCargos() {
-        cmbCargo.removeAllItems();
-
-        cmbCargo.addItem("ADMINISTRADOR");
-        cmbCargo.addItem("VETERINARIO");
-        cmbCargo.addItem("EMPLEADO");
     }
 
     private void buscarUsuario() {
@@ -767,6 +773,19 @@ public class jdMantUsuario extends javax.swing.JDialog {
         }
     }
 
+    private void bloquearControles(){
+        btnBuscar.setEnabled(false);
+        btnLimpiar.setEnabled(false);
+        btnModificar.setEnabled(false);
+        btnVigencia.setEnabled(false);
+    }
+    private void activarControles(){
+        btnBuscar.setEnabled(true);
+        btnLimpiar.setEnabled(true);
+        btnModificar.setEnabled(true);
+        btnVigencia.setEnabled(true);
+    }
+    
     private void nuevoUsuario() {
         try {
             if (btnNuevo.getText().equals("Nuevo")) {
@@ -774,8 +793,10 @@ public class jdMantUsuario extends javax.swing.JDialog {
                 btnEliminar.setText(Utilidad.BTN_CANCELAR);
                 limpiarControles();
                 chkVigencia.setSelected(true);
+                chkVigencia.setEnabled(false);
                 txtNombre.requestFocus();
-                
+                bloquearControles();
+
                 txtId.setText(String.valueOf(objUsuario.generarCodigoUsuario()));
             } else {
                 if (txtNombre.getText().trim().isBlank() || txtId.getText().trim().isBlank()) {
@@ -792,24 +813,26 @@ public class jdMantUsuario extends javax.swing.JDialog {
                         sexo = false;
                     }
                     String cargo = "";
-                    if (cmbCargo.getSelectedItem().toString().equals("ADMINISTRADOR")) {
+                    if (cmbCargo.getSelectedItem().toString().toLowerCase().equals("ADMINISTRADOR")) {
                         cargo = "A";
                     }
 
-                    if (cmbCargo.getSelectedItem().toString().equals("EMPLEADO")) {
+                    if (cmbCargo.getSelectedItem().toString().toLowerCase().equals("EMPLEADO")) {
                         cargo = "E";
                     }
 
-                    if (cmbCargo.getSelectedItem().toString().equals("VETERINARIO")) {
+                    if (cmbCargo.getSelectedItem().toString().toLowerCase().equals("VETERINARIO")) {
                         cargo = "V";
                     }
 
-                    objUsuario.registrarUsuario(Integer.parseInt(txtId.getText()), txtUsuario.getText(), chkVigencia.isSelected(), sexo,
+                    objUsuario.registrarUsuario(Integer.parseInt(txtId.getText()), 
+                            txtUsuario.getText(), chkVigencia.isSelected(), sexo,
                             txtClave.getText(), txtNombre.getText(), txtApePat.getText(),
                             txtApeMat.getText(), cargo);
-                    
+
                     limpiarControles();
                     listarUsuarios();
+                    activarControles();
                     JOptionPane.showMessageDialog(this, "Se registró con exito");
                 }
             }
@@ -817,6 +840,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error:" + e.getMessage());
         }
     }
+
     private String textoBool(boolean vig, String txtTrue, String txtFalse) {
         if (vig) {
             return txtTrue;

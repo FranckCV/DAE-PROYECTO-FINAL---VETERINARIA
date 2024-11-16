@@ -7,6 +7,7 @@ package capaPresentacion;
 import capaNegocio.clsEspecie;
 import capaNegocio.clsRaza;
 import java.sql.ResultSet;
+import java.util.Objects;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -394,11 +395,12 @@ public class jdMntRaza extends javax.swing.JDialog {
                     tblRazas.setEnabled(false);
 
                 } else { //Guardar
-                    if (!objEspecie.validarNombre(txtNombre.getText())) {
+                    if (!objRaza.validarNombre(txtNombre.getText())) {
                         btnNuevo.setText("Nuevo");
                         activarBotones();
                         tblRazas.setEnabled(true);
-                        objEspecie.registrarEspecie(Integer.valueOf(txtId.getText()), txtNombre.getText());
+                        objRaza.registrarRaza(Integer.valueOf(txtId.getText()),
+                                txtNombre.getText(), objEspecie.obtenerIdEspecie(cmbEspecie.getSelectedItem().toString()));
 
                         limpiarControles();
                         listarEspecies();
@@ -429,20 +431,29 @@ public class jdMntRaza extends javax.swing.JDialog {
             if (txtId.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código a modificar");
             } else {
-                int confirmacion = JOptionPane.showConfirmDialog(this, "Estás seguro de que quieres modificar "
-                        + "a la raza con codigo " + txtId.getText(),
-                        "Confirmacion", JOptionPane.YES_NO_OPTION);
+                Object[] options = {"Sí", "No"};
+
+                int confirmacion = JOptionPane.showOptionDialog(this,
+                        "¿Estás seguro de que quieres modificar la raza con código " + txtId.getText() + "?",
+                        "Confirmación",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
+
                 if (confirmacion == JOptionPane.YES_OPTION) {
-                    Integer id = Integer.valueOf(txtId.getText());
                     String nom = txtNombre.getText();
-                    Integer especie_id = objRaza.obtenerIdEspecie(cmbEspecie.getSelectedItem().toString());
 
-                    objRaza.modificarRaza(id, nom, especie_id);
+                        Integer id = Integer.valueOf(txtId.getText());
+                        Integer especie_id = objRaza.obtenerIdEspecie(cmbEspecie.getSelectedItem().toString());
+                        objRaza.modificarRaza(id, nom, especie_id);
+                        limpiarControles();
+                        listarRazas();
 
+                    JOptionPane.showMessageDialog(this, "Se modificó");
+                } else {
                     limpiarControles();
-                    listarRazas();
-
-//                    JOptionPane.showMessageDialog(this, "Se modificó");
                 }
             }
         } catch (Exception e) {
