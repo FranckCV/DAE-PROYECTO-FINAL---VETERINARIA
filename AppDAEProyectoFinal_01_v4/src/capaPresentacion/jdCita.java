@@ -463,6 +463,11 @@ public class jdCita extends javax.swing.JDialog {
         jLabel24.setText("Estado:");
 
         cboEstadoCita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboEstadoCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboEstadoCitaActionPerformed(evt);
+            }
+        });
 
         jLabel25.setText("Estado:");
 
@@ -1614,6 +1619,10 @@ public class jdCita extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "No se pudo guardar medic " + e.getMessage());
         }
     }//GEN-LAST:event_btnTerminarActionPerformed
+
+    private void cboEstadoCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEstadoCitaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboEstadoCitaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
