@@ -96,11 +96,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuMedicamentoActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="mnuExamenes">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Examenes"/>
-                  </Properties>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnuServicio">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Servicios"/>

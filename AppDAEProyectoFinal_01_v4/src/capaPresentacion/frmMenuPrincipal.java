@@ -78,7 +78,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         mnuMedico = new javax.swing.JMenuItem();
         mnuMedicamento = new javax.swing.JMenuItem();
-        mnuExamenes = new javax.swing.JMenuItem();
         mnuServicio = new javax.swing.JMenuItem();
         mnuVacuna = new javax.swing.JMenuItem();
         mnuUsuarios = new javax.swing.JMenuItem();
@@ -365,9 +364,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu5.add(mnuMedicamento);
-
-        mnuExamenes.setText("Examenes");
-        jMenu5.add(mnuExamenes);
 
         mnuServicio.setText("Servicios");
         mnuServicio.addActionListener(new java.awt.event.ActionListener() {
@@ -818,7 +814,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuEspecialidad;
     private javax.swing.JMenuItem mnuEspecie;
     private javax.swing.JMenuItem mnuEstadoCita;
-    private javax.swing.JMenuItem mnuExamenes;
     private javax.swing.JMenu mnuMantenimiento;
     private javax.swing.JMenuItem mnuMascota;
     private javax.swing.JMenuItem mnuMedicamento;
