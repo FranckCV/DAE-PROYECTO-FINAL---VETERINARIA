@@ -129,4 +129,35 @@ public class clsMedicamento {
         return false;
     }
 
+    public void reducirStock(int idProducto, int cantidad) throws Exception {
+        strSQL = "SELECT stock FROM MEDICAMENTO WHERE id = " + idProducto;
+        rs = null;
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                int stockActual = rs.getInt("stock");
+                if (stockActual < cantidad) {
+                    throw new Exception("Stock insuficiente para el producto con ID " + idProducto);
+                }
+            } else {
+                throw new Exception("El producto con ID " + idProducto + " no existe en la base de datos.");
+            }
+
+            strSQL = "UPDATE MEDICAMENTO SET stock = stock - " + cantidad + " WHERE id = " + idProducto;
+            objConectar.ejecutarBD(strSQL);
+
+        } catch (Exception e) {
+            throw new Exception("Error al reducir el stock del producto con ID " + idProducto + " --> " + e.getMessage());
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    System.err.println("Error al cerrar el ResultSet: " + e.getMessage());
+                }
+            }
+        }
+    }
+
 }
