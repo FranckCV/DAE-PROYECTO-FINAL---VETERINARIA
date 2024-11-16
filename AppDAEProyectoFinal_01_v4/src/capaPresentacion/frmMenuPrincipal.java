@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  *
@@ -749,6 +750,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
 
+//    private void mostrarInterfazjDialog(JDialog interfaz){
+//        Class clase = interfaz.getClass();
+//        clase objForm = new clase(this, true);
+//        objForm.setLocationRelativeTo(this);
+//        objForm.setVisible(true);
+//    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCita;
     private javax.swing.JButton btnDueño;
