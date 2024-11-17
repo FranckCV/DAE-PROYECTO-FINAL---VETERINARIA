@@ -391,14 +391,46 @@ INSERT INTO MEDICAMENTO (id, nombre, costo, stock, presentacion, vigencia, tipo_
 (9, 'Tramadol 50mg', 30.00, 40, 'Tableta', true, 2),
 (10, 'Doxiciclina 100mg', 22.00, 25, 'Cápsula', true, 1);
 
+--CITA
 INSERT INTO CITA (id, estado_cita_id, fecha_cita, observacion, CUSTODIAMASCOTAid, CUSTODIADUEniOid) 
 VALUES 
     (1, 1, '2024-11-05', 'Primera revisión general', 1, 1),
     (2, 2, '2024-11-10', 'Vacunación inicial', 2, 2),
     (3, 4, '2024-11-15', 'Control de seguimiento', 3, 3),
     (4, 7, '2024-11-20', 'Consulta cancelada por inasistencia', 4, 4),
-    (5, 6, '2024-11-25', 'Finalización de tratamiento', 5, 5);
-
+    (5, 6, '2024-11-25', 'Finalización de tratamiento', 5, 5), 
+    (6, 1, '2024-12-01', 'Revisión general', 1, 1),
+    (7, 2, '2024-12-05', 'Consulta de control', 2, 2),
+    (8, 4, '2024-12-08', 'Visita de seguimiento', 3, 3),
+    (9, 6, '2024-12-10', 'Control final', 4, 4),
+    (10, 7, '2024-12-12', 'Consulta reprogramada', 5, 5);
+--DETALLE_CITA
+INSERT INTO DETALLE_CITA (cita_id, detalle_servicio_serv_id, detalle_servicio_med_id, horaEntrada, horaSalida, nota_adicional) VALUES
+(1, 1, 1, '08:00', '08:30', 'Consulta general, paciente en buen estado de salud'),
+(2, 2, 1, '09:00', '09:30', 'Vacunación de refuerzo aplicada correctamente'),
+(3, 3, 2, '10:00', '10:45', 'Tratamiento antiparasitario completado'),
+(4, 4, 3, '11:00', '12:30', 'Revisión postoperatoria, paciente en recuperación'),
+(5, 5, 4, '13:00', '13:45', 'Atención de emergencia por accidente menor'),
+(6, 1, 2, '14:00', '14:30', 'Consulta general, síntomas de alergia detectados'),
+(7, 2, 3, '15:00', '15:45', 'Vacunación anual aplicada sin problemas'),
+(8, 3, 4, '08:30', '09:15', 'Desparasitación, paciente sin reacciones adversas'),
+(9, 4, 5, '10:30', '11:45', 'Cirugía menor realizada exitosamente'),
+(10, 5, 1, '12:00', '12:45', 'Atención de emergencia por heridas leves'),
+(11, 1, 3, '14:15', '14:45', 'Consulta, se observó leve deshidratación'),
+(12, 2, 4, '08:00', '08:30', 'Vacunación sin efectos secundarios'),
+(13, 3, 5, '09:00', '09:45', 'Desparasitación preventiva aplicada'),
+(14, 4, 2, '11:15', '12:30', 'Cirugía menor, paciente en recuperación estable'),
+(15, 5, 3, '13:45', '14:30', 'Consulta de emergencia, se estabilizó al paciente'),
+(16, 1, 4, '08:00', '08:30', 'Revisión general, signos de buena salud'),
+(17, 2, 5, '09:00', '09:30', 'Vacunación, sin complicaciones'),
+(18, 3, 1, '10:00', '10:30', 'Tratamiento desparasitario completado'),
+(19, 4, 2, '11:00', '12:00', 'Cirugía programada realizada sin inconvenientes'),
+(20, 5, 3, '13:00', '13:45', 'Atención de emergencia, se controlaron síntomas'),
+(21, 1, 5, '08:30', '09:00', 'Consulta general, en seguimiento por alergias'),
+(22, 2, 1, '09:30', '10:00', 'Vacunación de refuerzo administrada'),
+(23, 3, 4, '10:45', '11:15', 'Desparasitación preventiva exitosa'),
+(24, 4, 3, '12:30', '13:45', 'Cirugía menor, recuperación sin complicaciones'),
+(25, 5, 2, '14:00', '15:00', 'Emergencia, paciente en condiciones estables');
 
 
 

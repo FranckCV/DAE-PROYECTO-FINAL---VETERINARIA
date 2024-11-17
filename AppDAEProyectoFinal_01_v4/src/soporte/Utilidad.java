@@ -22,10 +22,11 @@ import javax.swing.JTextField;
  * @author franc
  */
 public class Utilidad {
+
     clsJDBC objConectar = new clsJDBC();
     String strSQL = "";
     ResultSet rs = null;
-    
+
 //    Texto en Botones
     public static final String BTN_NUEVO = "Registrar";
     public static final String BTN_GUARDAR = "Guardar";
@@ -37,7 +38,7 @@ public class Utilidad {
     public static final String BTN_VIGENCIA = "Dar de Baja";
     public static final String BTN_AGREGAR = "Agregar";
     public static final String BTN_QUITAR = "Quitar";
-   
+
 //    Texto en Listados
     public static final String SEXO_MAS = "Masculino";
     public static final String SEXO_FEM = "Femenino";
@@ -50,7 +51,6 @@ public class Utilidad {
     public static final String DISPONIBLE_NO_EXT = "(No Disp)";
 
 //    Texto de Caracteres
-    
     public static String mostrarEstadoMascota(String est) {
         if (est.equals("T")) {
             return "Terminal";
@@ -61,32 +61,32 @@ public class Utilidad {
         }
         return null;
     }
-    
+
     public static String obtenerCargoxCaracter(String cargo) {
-        if (cargo.equals('A')) {
-            return "Administrador";
-        } else if (cargo.equals('E')){
-            return "Empleado";
-        } else if (cargo.equals('V')){
-            return "Veterinario";
+        switch (cargo) {
+            case "A":
+                return "Administrador";
+            case "E":
+                return "Empleado";
+            case "V":
+                return "Veterinario";
+            default:
+                return null;
         }
-        return null;
     }
-    
+
     public static String obtenerCargoxCadena(String cargo) {
         if (cargo.equalsIgnoreCase("Administrador")) {
             return "A";
-        } else if (cargo.equalsIgnoreCase("Empleado")){
+        } else if (cargo.equalsIgnoreCase("Empleado")) {
             return "E";
-        } else if (cargo.equalsIgnoreCase("Veterinario")){
+        } else if (cargo.equalsIgnoreCase("Veterinario")) {
             return "V";
         }
         return null;
     }
-    
-    
+
 //    Texto de valores Booleanos
-    
     public static String textoBool(boolean valor, String txtTrue, String txtFalse) {
         if (valor) {
             return txtTrue;
@@ -96,7 +96,6 @@ public class Utilidad {
     }
 
 //    INTERFACES
-        
 //    public static void mostrarInterfazjDialog(String nombreClase, JFrame parent) {
 //        try {
 //            Class<?> clase = Class.forName(nombreClase);
@@ -116,15 +115,12 @@ public class Utilidad {
 //            System.out.println("Error al intentar abrir el diálogo: " + e.getMessage());
 //        }
 //    }
-    
 //    private void mostrarInterfazjDialog(JDialog interfaz){
 //        Class clase = interfaz.getClass();
 //        clase objForm = new clase(this, true);
 //        objForm.setLocationRelativeTo(this);
 //        objForm.setVisible(true);
 //    }
-    
-    
 //    Validaciones de Elementos de Interfaz
     public static void validarLimiteCampoTexto(java.awt.event.KeyEvent evt, String columna, String tabla) throws Exception {
         JTextField source = (JTextField) evt.getSource();
@@ -222,15 +218,14 @@ public class Utilidad {
         return "Hay datos externos asociados a " + entidad + " \"" + nombre + "\".\n"
                 + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. ";
     }
-    
+
 //    Validaciones con Base de Datos
-    
     public static boolean validarEliminacionForanea(String tabla, int valor_id) throws Exception {
         clsJDBC objConectar = new clsJDBC();
         String strSQL;
         ResultSet rs = null;
 
-        strSQL = " select sum(cantidad) as total from contar_relaciones('"+tabla+"',"+valor_id+") ";
+        strSQL = " select sum(cantidad) as total from contar_relaciones('" + tabla + "'," + valor_id + ") ";
         try {
             rs = objConectar.consultarBD(strSQL);
             if (rs.next()) {
@@ -244,7 +239,7 @@ public class Utilidad {
         }
         return false;
     }
-    
+
     public static boolean validarElementoTextoRepetido(String tabla, String columna, String campo) throws Exception {
         clsJDBC objConectar = new clsJDBC();
         String strSQL;
@@ -261,21 +256,41 @@ public class Utilidad {
     }
 
     //BLOQUEAR BOTONES
-    public static void desactivarBotones(String botonActivo, JButton... botones) {
+    public static void desactivarBotones(JButton botonActivo, JButton... botones) {
         for (JButton boton : botones) {
-            if (boton.getText().equals(botonActivo)) {
-                boton.setEnabled(true); 
-            } else {
-                boton.setEnabled(false); 
-            }
+            boton.setEnabled(boton.equals(botonActivo));
         }
     }
+
     //ACTIVAR BOTONES
     public static void activarBotones(JButton... botones) {
         for (JButton boton : botones) {
-                boton.setEnabled(true); 
+            boton.setEnabled(true);
         }
     }
-    
+
+    //DESACTIVAR CAMPOS
+    public static void desactivarFields(JTextField textFieldActivo, JTextField... textFields) {
+        for (JTextField textField : textFields) {
+            textField.setEnabled(textField.equals(textFieldActivo));
+        }
+    }
+
+    //ACTIVAR BOTONES
+    public static void activarFields(JTextField... textFields) {
+        for (JTextField textField : textFields) {
+            textField.setEnabled(true);
+        }
+    }
+
+    //VERIFICAR QUE TODOS LOS CAMPOS ESTÁN COMPLETADOS
+    public static boolean verificarCamposLlenos(JTextField... textFields) {
+        for (JTextField textField : textFields) {
+            if (textField.getText().trim().isEmpty()) {
+                return false; 
+            }
+        }
+        return true; 
+    }
 
 }
