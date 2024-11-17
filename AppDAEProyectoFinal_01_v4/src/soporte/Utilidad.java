@@ -15,11 +15,8 @@ import java.sql.ResultSet;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-<<<<<<< HEAD
 import javax.swing.JTable;
-=======
 import javax.swing.JOptionPane;
->>>>>>> 16272af685e9c5b2821f7aace8a645f7c181fb26
 import javax.swing.JTextField;
 
 /**
