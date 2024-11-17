@@ -461,13 +461,13 @@ public class jdMantUsuario extends javax.swing.JDialog {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
 
-        limpiarControles();
         listarUsuarios();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void listarCargos() {
         ResultSet rsCargos = null;
         DefaultComboBoxModel combo = new DefaultComboBoxModel();
+
         combo.addElement("Veterinario");
         combo.addElement("Empleado");
         combo.addElement("Administrador");
@@ -489,8 +489,12 @@ public class jdMantUsuario extends javax.swing.JDialog {
 
     private void tblUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuarioMouseClicked
         // TODO add your handling code here:
-        txtId.setText(String.valueOf(tblUsuario.getValueAt(tblUsuario.getSelectedRow(), 0)));
-        btnBuscarActionPerformed(null);
+        if (tblUsuario.isEnabled() && tblUsuario.getSelectedRow() != -1) {
+
+            txtId.setText(String.valueOf(tblUsuario.getValueAt(tblUsuario.getSelectedRow(), 0)));
+
+            btnBuscarActionPerformed(null);
+        }
     }//GEN-LAST:event_tblUsuarioMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -771,7 +775,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
             txtId.setEnabled(false);
 
             if (btnNuevo.getText().equals("Nuevo")) {
-                chkVigencia.setSelected(true); 
+                chkVigencia.setSelected(true);
                 chkVigencia.setEnabled(false);
 
                 btnNuevo.setText(Utilidad.BTN_GUARDAR);
@@ -785,6 +789,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
                 limpiarControles();
 
                 txtId.setText(String.valueOf(objUsuario.generarCodigoUsuario()));
+
             } else {
                 if (Utilidad.verificarCamposLlenos(txtId, txtApeMat, txtApePat, txtClave, txtNombre, txtUsuario)
                         || cmbCargo.getSelectedIndex() != -1 || radioGenero.getSelection() != null) {

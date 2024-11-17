@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
@@ -287,10 +288,18 @@ public class Utilidad {
     public static boolean verificarCamposLlenos(JTextField... textFields) {
         for (JTextField textField : textFields) {
             if (textField.getText().trim().isEmpty()) {
-                return false; 
+                return false;
             }
         }
-        return true; 
+        return true;
+    }
+
+    //PARA EL MOUSECLICKED
+    public static void buscarPorTabla(JTable tbl, JButton btn, JTextField txt) {
+        if (tbl.isEnabled() && tbl.getSelectedRow() != -1) {
+            txt.setText(String.valueOf(tbl.getValueAt(tbl.getSelectedRow(), 0)));
+            btn.doClick();
+        }
     }
 
 }
