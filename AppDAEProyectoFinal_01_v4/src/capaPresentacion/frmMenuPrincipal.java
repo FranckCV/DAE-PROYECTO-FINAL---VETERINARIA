@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.*;
 
 /**
  *
@@ -123,7 +122,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
 
         panel.setBackground(new java.awt.Color(255, 255, 255));
-        panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -462,7 +460,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         jMenu11.setText("Reportes");
 
-        jMenuItem7.setText("Rp1");
+        jMenuItem7.setText("Historial Clinico");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu11.add(jMenuItem7);
 
         jMenuItem18.setText("Rp2");
@@ -750,13 +753,16 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        jdRepHistorialClinico frm = new jdRepHistorialClinico(this, true);
+        frm.setLocationRelativeTo(this);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
-//    private void mostrarInterfazjDialog(JDialog interfaz){
-//        Class clase = interfaz.getClass();
-//        clase objForm = new clase(this, true);
-//        objForm.setLocationRelativeTo(this);
-//        objForm.setVisible(true);
-//    }
+
+    
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCita;

@@ -204,6 +204,40 @@ alter table DETALLE_MEDICAMENTO add constraint FKDETALLE_ME390069 foreign key (d
 alter table DETALLE_CITA add constraint FKDETALLE_CI377475 foreign key (detalle_servicio_serv_id, detalle_servicio_med_id) references DETALLE_SERVICIO (servicio_id, medico_id);
 
 
+---------------------------------------------------------------
+
+
+CREATE OR REPLACE FUNCTION contar_relaciones(tabla_base TEXT, id_base INT)
+    RETURNS TABLE(tabla_relacionada TEXT, columna_foranea TEXT, cantidad INT) AS $$
+DECLARE
+    consulta_contar TEXT;
+    cuenta INT;
+BEGIN
+    FOR tabla_relacionada, columna_foranea IN
+        SELECT
+            c.conrelid::regclass::text AS tabla_relacionada,
+            a.attname AS columna_foranea
+        FROM
+            pg_constraint c
+        JOIN pg_class t ON c.conrelid = t.oid
+        JOIN pg_attribute a ON a.attnum = ANY (c.conkey) AND a.attrelid = c.conrelid
+        WHERE
+            c.confrelid = tabla_base::regclass
+            AND c.contype = 'f'
+    LOOP
+        consulta_contar := FORMAT(
+            'SELECT COUNT(*) FROM %I WHERE %I = $1',
+            tabla_relacionada,
+            columna_foranea
+        );
+
+        EXECUTE consulta_contar INTO cuenta USING id_base;
+
+        RETURN QUERY SELECT tabla_relacionada, columna_foranea, cuenta;
+    END LOOP;
+END $$ LANGUAGE plpgsql;
+
+
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -392,3 +426,12 @@ VALUES (7, 'fabi', FALSE, TRUE, md5('123' || 'fabi' || 'CODE146'), 'Fabiana', 'P
 
 INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
 VALUES (8, 'Admin_Fab', TRUE, TRUE, md5('123' || 'Admin_Fab' || 'CODE146'), 'Fabiana', 'Paucar', 'Mejia', 'V');
+
+
+
+
+
+
+
+
+

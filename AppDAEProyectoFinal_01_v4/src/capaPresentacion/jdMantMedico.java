@@ -835,6 +835,11 @@ public class jdMantMedico extends javax.swing.JDialog {
         try {
             if (txtID.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un codigo a eliminar!");
+            } else if (Utilidad.validarEliminacionForanea(clsMedico.TABLA, Integer.parseInt(txtID.getText()))){
+                JOptionPane.showMessageDialog(this, 
+                        "Hay datos externos asociados a " + clsMedico.TABLA + " \"" + txtNombre.getText() +" "+ txtApePat.getText() +" "+ txtApeMat.getText() + "\".\n"
+                        + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. "
+                );
             } else {
                 int valor = JOptionPane.showConfirmDialog(null, "Deseas continuar?", "Confirmacion",JOptionPane.YES_NO_OPTION);
                 if (valor == JOptionPane.YES_OPTION) {
@@ -844,13 +849,14 @@ public class jdMantMedico extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + 
-                    Utilidad.mensajeErrorEliminacionForanea(
-                            e, 
-                            "medico(a)", 
-                            txtNombre.getText() +" "+ txtApePat.getText() +" "+ txtApeMat.getText()
-                    )
-            );
+//            JOptionPane.showMessageDialog(this, "Error: " + 
+//                    Utilidad.mensajeErrorEliminacionForanea(
+//                            e, 
+//                            "medico(a)", 
+//                            txtNombre.getText() +" "+ txtApePat.getText() +" "+ txtApeMat.getText()
+//                    )
+//            );
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }
     

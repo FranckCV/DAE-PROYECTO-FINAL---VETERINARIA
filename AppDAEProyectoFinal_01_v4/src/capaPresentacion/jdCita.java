@@ -4,7 +4,7 @@
  */
 package capaPresentacion;
 
-import capaNegocio.clsCita;
+import capaNegocio.*;
 import capaNegocio.clsDetalleCita;
 import capaNegocio.clsDetalleMedicamento;
 import capaNegocio.clsDetalle_Servicio;

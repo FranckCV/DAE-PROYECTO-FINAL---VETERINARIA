@@ -12,6 +12,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.text.NumberFormatter;
 import capaDatos.clsJDBC;
 import java.sql.ResultSet;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 /**
@@ -19,10 +21,10 @@ import javax.swing.JTextField;
  * @author franc
  */
 public class Utilidad {
-//    clsJDBC objConectar = new clsJDBC();
-//    String strSQL;
-//    ResultSet rs = null;
-
+    clsJDBC objConectar = new clsJDBC();
+    String strSQL = "";
+    ResultSet rs = null;
+    
 //    Texto en Botones
     public static final String BTN_NUEVO = "Registrar";
     public static final String BTN_GUARDAR = "Guardar";
@@ -34,47 +36,110 @@ public class Utilidad {
     public static final String BTN_VIGENCIA = "Dar de Baja";
     public static final String BTN_AGREGAR = "Agregar";
     public static final String BTN_QUITAR = "Quitar";
-///////////////////
-    clsJDBC objConectar = new clsJDBC();
-
+   
 //    Texto en Listados
     public static final String SEXO_MAS = "Masculino";
     public static final String SEXO_FEM = "Femenino";
+    public static final String SEXO_MASC_MAS = "Macho";
+    public static final String SEXO_MASC_FEM = "Hembra";
     public static final String VIGENCIA_SI = "Vigente";
     public static final String VIGENCIA_NO = "No Vigente";
     public static final String DISPONIBILIDAD_SI = "Disponible";
     public static final String DISPONIBILIDAD_NO = "No Disponible";
     public static final String DISPONIBLE_NO_EXT = "(No Disp)";
 
-////
-    String strSQL = "";
-    ResultSet rs = null;
-
+//    Texto de Caracteres
+    
+    public static String mostrarEstadoMascota(String est) {
+        if (est.equals("T")) {
+            return "Terminal";
+        } else if (est.equals("C")) {
+            return "Crónica";
+        } else if (est.equals("S")) {
+            return "Saludable";
+        }
+        return null;
+    }
+    
+    public static String obtenerCargoxCaracter(String cargo) {
+        if (cargo.equals('A')) {
+            return "Administrador";
+        } else if (cargo.equals('E')){
+            return "Empleado";
+        } else if (cargo.equals('V')){
+            return "Veterinario";
+        }
+        return null;
+    }
+    
+    public static String obtenerCargoxCadena(String cargo) {
+        if (cargo.equalsIgnoreCase("Administrador")) {
+            return "A";
+        } else if (cargo.equalsIgnoreCase("Empleado")){
+            return "E";
+        } else if (cargo.equalsIgnoreCase("Veterinario")){
+            return "V";
+        }
+        return null;
+    }
+    
+    public static String obtenerCargoUsuario(String cargo) throws Exception {
+        try {
+            switch (cargo) {
+                case "V":
+                    return "Veterinario";
+                case "E":
+                    return "Empleado";
+                case "A":
+                    return "Administrador";
+                default:
+                    throw new IllegalArgumentException("Cargo no reconocido: " + cargo);
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al obtener cargo: " + e.getMessage(), e);
+        }
+    }
+    
 //    Texto de valores Booleanos
-    public static String textoBool(boolean vig, String txtTrue, String txtFalse) {
-        if (vig) {
+    
+    public static String textoBool(boolean valor, String txtTrue, String txtFalse) {
+        if (valor) {
             return txtTrue;
         } else {
             return txtFalse;
         }
     }
 
-//    Validaciones Mantenimiento
-    public static boolean validarElementoTextoRepetido(String tabla, String columna, String campo) throws Exception {
-        clsJDBC objConectar = new clsJDBC();
-        String strSQL;
-        ResultSet rs = null;
-
-        strSQL = " select * from " + tabla
-                + " where " + columna + " = '" + campo + "' ";
-        try {
-            rs = objConectar.consultarBD(strSQL);
-            return rs.next();
-        } catch (Exception e) {
-            throw new Exception("Error al buscar Elemento " + campo + " en la tabla " + tabla + " / " + e.getMessage());
-        }
-    }
-
+//    INTERFACES
+        
+//    public static void mostrarInterfazjDialog(String nombreClase, JFrame parent) {
+//        try {
+//            Class<?> clase = Class.forName(nombreClase);
+//
+//            if (!JDialog.class.isAssignableFrom(clase)) {
+//                throw new IllegalArgumentException("La clase proporcionada no es un JDialog válido.");
+//            }
+//
+//            JDialog objForm = (JDialog) clase
+//                    .getConstructor(java.awt.Frame.class, boolean.class)
+//                    .newInstance(parent, true);
+//
+//            objForm.setLocationRelativeTo(parent);
+//            objForm.setVisible(true);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            System.out.println("Error al intentar abrir el diálogo: " + e.getMessage());
+//        }
+//    }
+    
+//    private void mostrarInterfazjDialog(JDialog interfaz){
+//        Class clase = interfaz.getClass();
+//        clase objForm = new clase(this, true);
+//        objForm.setLocationRelativeTo(this);
+//        objForm.setVisible(true);
+//    }
+    
+    
 //    Validaciones de Elementos de Interfaz
     public static void validarLimiteCampoTexto(java.awt.event.KeyEvent evt, String columna, String tabla) throws Exception {
         JTextField source = (JTextField) evt.getSource();
@@ -154,23 +219,6 @@ public class Utilidad {
         }
     }
 
-    public static String obtenerCargoUsuario(String cargo) throws Exception {
-        try {
-            switch (cargo) {
-                case "V":
-                    return "Veterinario";
-                case "E":
-                    return "Empleado";
-                case "A":
-                    return "Administrador";
-                default:
-                    throw new IllegalArgumentException("Cargo no reconocido: " + cargo);
-            }
-        } catch (Exception e) {
-            throw new Exception("Error al obtener cargo: " + e.getMessage(), e);
-        }
-    }
-
 //    Mensajes de Error 
     public static String mensajeErrorEliminacionForanea(Exception e, String entidad, String nombre) {
         String mensaje = e.getMessage();
@@ -189,5 +237,43 @@ public class Utilidad {
         return "Hay datos externos asociados a " + entidad + " \"" + nombre + "\".\n"
                 + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. ";
     }
+    
+//    Validaciones con Base de Datos
+    
+    public static boolean validarEliminacionForanea(String tabla, int valor_id) throws Exception {
+        clsJDBC objConectar = new clsJDBC();
+        String strSQL;
+        ResultSet rs = null;
+
+        strSQL = " select sum(cantidad) as total from contar_relaciones('"+tabla+"',"+valor_id+") ";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                int total = rs.getInt("total");
+                if (total > 0) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al validar si elemento ID: " + valor_id + " en la tabla " + tabla + " / " + e.getMessage());
+        }
+        return false;
+    }
+    
+    public static boolean validarElementoTextoRepetido(String tabla, String columna, String campo) throws Exception {
+        clsJDBC objConectar = new clsJDBC();
+        String strSQL;
+        ResultSet rs = null;
+
+        strSQL = " select * from " + tabla
+                + " where " + columna + " = '" + campo + "' ";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs.next();
+        } catch (Exception e) {
+            throw new Exception("Error al buscar Elemento " + campo + " en la tabla " + tabla + " / " + e.getMessage());
+        }
+    }
+
 
 }
