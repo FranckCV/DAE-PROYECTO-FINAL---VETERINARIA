@@ -12,6 +12,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.text.NumberFormatter;
 import capaDatos.clsJDBC;
 import java.sql.ResultSet;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -83,22 +84,6 @@ public class Utilidad {
         return null;
     }
     
-    public static String obtenerCargoUsuario(String cargo) throws Exception {
-        try {
-            switch (cargo) {
-                case "V":
-                    return "Veterinario";
-                case "E":
-                    return "Empleado";
-                case "A":
-                    return "Administrador";
-                default:
-                    throw new IllegalArgumentException("Cargo no reconocido: " + cargo);
-            }
-        } catch (Exception e) {
-            throw new Exception("Error al obtener cargo: " + e.getMessage(), e);
-        }
-    }
     
 //    Texto de valores Booleanos
     
@@ -275,5 +260,22 @@ public class Utilidad {
         }
     }
 
+    //BLOQUEAR BOTONES
+    public static void desactivarBotones(String botonActivo, JButton... botones) {
+        for (JButton boton : botones) {
+            if (boton.getText().equals(botonActivo)) {
+                boton.setEnabled(true); 
+            } else {
+                boton.setEnabled(false); 
+            }
+        }
+    }
+    //ACTIVAR BOTONES
+    public static void activarBotones(JButton... botones) {
+        for (JButton boton : botones) {
+                boton.setEnabled(true); 
+        }
+    }
+    
 
 }

@@ -552,7 +552,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
                     }
                     txtUsuario.setText(rsUsuario.getString("nomusuario"));
                     chkVigencia.setSelected(rsUsuario.getBoolean("estado"));
-                    cmbCargo.setSelectedItem(Utilidad.obtenerCargoUsuario(rsUsuario.getString("cargo")));
+                    cmbCargo.setSelectedItem(Utilidad.obtenerCargoxCaracter(rsUsuario.getString("cargo")));
 
                     rsUsuario.close();
                 } else {
