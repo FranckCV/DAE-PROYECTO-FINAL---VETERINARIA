@@ -419,22 +419,24 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 //    }
     
     private void buscarEspecialidad() {
+        String campoID = txtID.getText();
+        int valorID = Integer.parseInt(campoID);
         ResultSet rsEsp = null;
         try {
-            if (txtID.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar una ID para buscar");
+            if (campoID.isBlank()) {
+                Utilidad.mensajeErrorFaltaID(this);
             } else {
                 
                 for (int i = 0; i < tblEspecialidad.getRowCount(); i++) {
                     String valorCodigo = tblEspecialidad.getValueAt(i, 0).toString();
-                    if (valorCodigo.equals(txtID.getText())) {
+                    if (valorCodigo.equals(campoID)) {
                         tblEspecialidad.setRowSelectionInterval(i, i);
                         tblEspecialidad.scrollRectToVisible(tblEspecialidad.getCellRect(i, 0, true));
                         break;
                     }
                 }
                 
-                rsEsp = objTabla.buscarEspecialidad(Integer.parseInt(txtID.getText()));
+                rsEsp = objTabla.buscarEspecialidad(valorID);
                 if (rsEsp.next()){
                     txtNombre.setText(rsEsp.getString(clsEspecialidad.NOMBRE));
                     chkDisponibilidad.setSelected(rsEsp.getBoolean(clsEspecialidad.DISPONIBILIDAD));
@@ -478,24 +480,24 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
     }
           
     private void eliminarEspecialidad() {
+        String campoID = txtID.getText();
+        int valorID = Integer.parseInt(campoID);
         try {
-            if (txtID.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo a eliminar!");
+            if (campoID.isBlank()) {
+                Utilidad.mensajeErrorFaltaID(this);
+            } else if (Utilidad.validarEliminacionForanea(clsEspecialidad.TABLA, valorID)){
+                Utilidad.mensajeErrorNoEliminarForanea(clsEspecialidad.TABLA,txtNombre.getText());
             } else {
-                int valor = JOptionPane.showConfirmDialog(null, "Deseas continuar?", "Confirmacion",JOptionPane.YES_NO_OPTION);
+                int valor = Utilidad.mensajeConfirmarEliminar(clsEspecialidad.TABLA, valorID, txtNombre.getText());
+                
                 if (valor == JOptionPane.YES_OPTION) {
-                    objTabla.eliminarEspecialidad(Integer.parseInt(txtID.getText()));
+                    objTabla.eliminarEspecialidad(valorID);
                     limpiarControles();
                     listarEspecialidades();
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + 
-                    Utilidad.mensajeErrorEliminacionForanea(
-                            e, 
-                            "especialidad", 
-                            txtNombre.getText())
-            );
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage()  );
         }
     }
       
@@ -508,11 +510,13 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         editableControles(true, false);
         usarBotones(true, true, true, true, true ,true);
     }
-
+   
     private void modificarEspecialidad() {
+        String campoID = txtID.getText();
+        int valorID = Integer.parseInt(campoID);
         try {
-            if (txtID.getText().isBlank()) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
+            if (campoID.isBlank()) {
+                Utilidad.mensajeErrorFaltaID(this);
             } else {
                 if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
                     btnModificar.setText(Utilidad.BTN_GUARDAR);
@@ -520,17 +524,22 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                     editableControles(false, true);
                     usarBotones(false, false, true, true, false, false);
                 } else {
-                    objTabla.modificarEspecialidad(
-                        Integer.parseInt(txtID.getText()),
-                        txtNombre.getText()
-                    );
-                    btnModificar.setText(Utilidad.BTN_MODIFICAR);
-                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-                    editableControles(true, false);
-                    usarBotones(true, true, true, true, true, true);
-                    limpiarControles();
-                    listarEspecialidades();
-                    JOptionPane.showMessageDialog(this, "Se modificó con exito");
+                    int valor = Utilidad.mensajeConfirmarModificar(clsEspecialidad.TABLA, valorID,txtNombre.getText());
+                    if (valor == 0) {
+                        objTabla.modificarEspecialidad(
+                            valorID,
+                            txtNombre.getText()
+                        );
+                        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+                        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+                        editableControles(true, false);
+                        usarBotones(true, true, true, true, true, true);
+                        limpiarControles();
+                        listarEspecialidades();
+                        txtID.setText(campoID);
+                        btnBuscarActionPerformed(null);
+                        JOptionPane.showMessageDialog(this, "Se modificó con exito");
+                    }
                 }
             }            
         } catch (Exception e) {
@@ -573,24 +582,24 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
     }
     
     private void cambiarDisponibilidad() {
+        String campoID = txtID.getText();
+        int valorID = Integer.parseInt(campoID);
         try {
-            if (txtID.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo");
+            if (campoID.isBlank()) {
+                Utilidad.mensajeErrorFaltaID(this);
             } else {
-                int valor = JOptionPane.showConfirmDialog(null, "¿Deseas cambiar la Disponibilidad de la especialidad "+txtNombre.getText()+"?", "Confirmacion",JOptionPane.YES_NO_OPTION);
-                if (valor == JOptionPane.YES_OPTION) {
-                    objTabla.cambiarDisponibilidad(Integer.parseInt(txtID.getText()));
+                int valor = Utilidad.mensajeConfirmarDisponibilidad(clsEspecialidad.TABLA, valorID,txtNombre.getText());
+                if (valor == 0) {
+                    objTabla.cambiarDisponibilidad(valorID);
                     limpiarControles();
                     listarEspecialidades();
-                    JOptionPane.showMessageDialog(this, "Se modificó la Disponibilidad de esta Especialidad con exito");
+                    JOptionPane.showMessageDialog(this, "Se cambió la disponibilidad de esta especialidad con exito");
                 }                
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }
-    
-    
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

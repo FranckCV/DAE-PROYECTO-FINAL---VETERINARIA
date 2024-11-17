@@ -141,6 +141,7 @@ create table COMPROBANTE (
   serie_numero));
 comment on column COMPROBANTE.Tipo is '"B" para boleta "F" para factura';
 
+
 create table DETALLE_CITA (
   cita_id                  int4 not null, 
   detalle_servicio_serv_id int4 not null, 
@@ -159,7 +160,8 @@ create table TIPO_MEDICAMENTO (
   id      int4 not null, 
   nomtipo varchar(255) not null, 
   primary key (id));
-  
+
+
 create table MEDICAMENTO (
   id                  int4 not null, 
   nombre              varchar(255) not null, 
@@ -169,6 +171,7 @@ create table MEDICAMENTO (
   vigencia            bool not null, 
   tipo_medicamento_id int4 not null, 
   primary key (id));
+
 
 create table DETALLE_MEDICAMENTO (
   medicamento_id               int4 not null, 
@@ -241,6 +244,40 @@ END $$ LANGUAGE plpgsql;
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+
+
+--USUARIOS
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
+VALUES (1, 'jdoe', TRUE, TRUE, md5('1234' || 'jdoe' || 'CODE146'), 'John', 'Doe', 'Smith', 'V');
+
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
+VALUES (2, 'mgarcia', TRUE, FALSE, md5('4567' || 'mgarcia' || 'CODE146'), 'Maria', 'Garcia', 'Lopez', 'E');
+
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
+VALUES (3, 'arivera', TRUE, TRUE, md5('7890' || 'arivera' || 'CODE146'), 'Alex', 'Rivera', 'Martinez', 'A');
+
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
+VALUES (4, 'lfernandez', FALSE, FALSE, md5('1011' || 'lfernandez' || 'CODE146'), 'Laura', 'Fernandez', 'Soto', 'V');
+
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
+VALUES (5, 'cperez', TRUE, TRUE, md5('1021' || 'cperez' || 'CODE146'), 'Carlos', 'Perez', 'Gutierrez', 'E');
+
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
+VALUES (6, 'asanchez', FALSE, TRUE, md5('1031' || 'asanchez' || 'CODE146'), 'Andres', 'Sanchez', 'Lopez', 'V');
+
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
+VALUES (7, 'fabi', FALSE, TRUE, md5('123' || 'fabi' || 'CODE146'), 'Fabiana', 'Paucar', 'Mejia', 'V');
+
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
+VALUES (8, 'Admin_Fab', TRUE, TRUE, md5('123' || 'Admin_Fab' || 'CODE146'), 'Fabiana', 'Paucar', 'Mejia', 'V');
+
+
+
+
+
+
+
 -- MEDICOS Y SERVICIOS
 
 INSERT INTO ESPECIALIDAD (id, nom_especialidad, disponibilidad) VALUES 
@@ -268,16 +305,17 @@ VALUES
 
 
 INSERT INTO DETALLE_SERVICIO (servicio_id, medico_id, disponibilidad) VALUES
-(1, 1,true), -- Consulta General realizada por el médico con ID 1
-(2, 1,true), -- Vacunación realizada por el médico con ID 1
-(3, 2,true), -- Desparasitación realizada por el médico con ID 2
-(4, 3,true), -- Cirugía menor realizada por el médico con ID 3
-(5, 4,true), -- Emergencia realizada por el médico con ID 4
-(1, 2,true), -- Consulta General realizada también por el médico con ID 2
-(2, 3,true), -- Vacunación realizada por el médico con ID 3
-(3, 4,true), -- Desparasitación realizada por el médico con ID 4
-(4, 5,true), -- Cirugía menor realizada por el médico con ID 5
-(5, 5,true); -- Emergencia realizada también por el médico con ID 5
+(1, 1,true),               
+(2, 1,true),               
+(3, 2,true),               
+(4, 3,true),               
+(1, 3,true),               
+(5, 4,true),               
+(1, 2,true),               
+(2, 3,true),               
+(3, 4,true),               
+(4, 5,true),               
+(5, 5,true);               
 
 
 
@@ -340,23 +378,54 @@ INSERT INTO MASCOTA (id, nombre, fecha_nacimiento, altura, peso, notaAdicional, 
 (9, 'Milo', '2019-02-25', 39.20, 16.80, 'Alergia crónica a ciertos alimentos.', true, false, true, 'C', 1, true),
 (10, 'Chloe', '2015-10-28', 33.50, 11.90, 'Cáncer terminal, con pocos meses de vida.', false, true, true, 'T', 7, true);
 
+
+
+INSERT INTO DUEniO (id, doc_identidad, nombres, apePaterno, apeMaterno, telefono, telefonoAlt, correo, direccion, sexo, vigencia) VALUES
+(11, '71236541', 'Fernando', 'Alvarez', 'Vargas', '987654322', '912345679', 'falvarez@example.com', 'Calle Los Laureles 123', true, true),
+(12, '82768543', 'Gloria', 'Ramos', 'López', '976543211', NULL, 'gramos@example.com', 'Av. Los Jazmines 456', false, true),
+(13, '65432489', 'Ricardo', 'Mendoza', 'Gómez', '964321099', '941234568', 'rmendoza@example.com', 'Jr. Las Palmas 789', true, true),
+(14, '98651454', 'Patricia', 'Quispe', 'Romero', '932165479', NULL, 'pquispe@example.com', 'Av. Los Sauces 456', false, true),
+(15, '73512469', 'Enrique', 'Torres', 'Salazar', '911234570', '998877666', 'etorres@example.com', 'Jr. Los Cipreses 234', true, true),
+(16, '84561534', 'Marta', 'Delgado', 'Castañeda', '945612379', NULL, 'mdelgado@example.com', 'Calle Los Geranios 156', false, true),
+(17, '78912645', 'Héctor', 'Vargas', 'Montes', '987123655', '954321877', 'hvargas@example.com', 'Av. Los Olivos 789', true, true),
+(18, '62341324', 'Sofía', 'Valle', 'Torres', '912345675', NULL, 'svalle@example.com', 'Jr. San Luis 342', false, true),
+(19, '98123457', 'Daniel', 'Miranda', 'Flores', '987412357', '943215679', 'dmiranda@example.com', 'Av. Los Ángeles 342', true, true),
+(20, '81234678', 'Paola', 'Rivera', 'Herrera', '965412379', '976543213', 'privera@example.com', 'Jr. Las Acacias 765', false, true);
+
+
+INSERT INTO MASCOTA (id, nombre, fecha_nacimiento, altura, peso, notaAdicional, sexo, esterilizado, desparasitado, estado_salud, raza_id, vigencia) VALUES
+(11, 'Duke', '2019-04-15', 47.30, 20.50, 'Tiene ansiedad por separación, necesita compañía constante.', true, true, true, 'S', 1, true),
+(12, 'Molly', '2021-02-10', 33.40, 12.80, 'Le encanta jugar con niños y es muy protectora.', false, true, true, 'S', 2, true),
+(13, 'Buddy', '2020-07-22', 49.50, 22.40, 'Ha sido entrenado para obedecer comandos básicos.', true, true, true, 'S', 3, true),
+(14, 'Lola', '2017-11-05', 36.00, 14.90, 'Es muy tímida con extraños pero cariñosa con la familia.', false, false, true, 'S', 4, true),
+(15, 'Bailey', '2015-08-01', 40.20, 18.30, 'Tiene alergias estacionales, necesita medicación.', true, true, true, 'C', 2, true),
+(16, 'Sadie', '2018-05-10', 34.80, 13.50, 'Le encanta correr y es muy activa en las mañanas.', false, true, true, 'S', 5, true),
+(17, 'Oscar', '2016-09-18', 38.70, 16.20, 'Tiene problemas de visión, requiere cuidados adicionales.', true, false, false, 'T', 6, true),
+(18, 'Daisy', '2020-03-25', 45.20, 19.70, 'Es muy juguetona y sociable con otras mascotas.', false, true, true, 'S', 2, true),
+(19, 'Jack', '2019-12-12', 48.00, 21.30, 'Fue rescatado, aún muestra signos de trauma.', true, false, true, 'C', 1, true),
+(20, 'Rosie', '2014-06-28', 32.70, 11.40, 'Sufre de artritis, bajo tratamiento veterinario.', false, true, true, 'T', 8, true);
+
+
+
+
 INSERT INTO CUSTODIA (MASCOTAid, DUEniOid, fecha_adopción) VALUES
-(1, 1, '2020-05-20'), -- Luna adoptada por Carlos
-(2, 2, '2018-12-01'), -- Max adoptado por María
-(3, 3, '2019-10-05'), -- Bella adoptada por José
-(4, 4, '2011-08-01'), -- Simba adoptado por Ana
-(5, 5, '2017-04-10'), -- Rocky adoptado por Luis
-(6, 6, '2022-01-15'), -- Coco adoptada por Rosa
-(7, 7, '2016-07-01'), -- Nala adoptada por Pedro
-(8, 8, '2020-12-10'), -- Charlie adoptado por Luisa
-(9, 9, '2019-03-01'), -- Milo adoptado por Miguel
-(10, 10, '2015-11-01'), -- Chloe adoptada por Carmen
-(10, 1, '2016-01-15'),  -- Chloe también adoptada por Carlos
-(10, 2, '2017-05-20');  -- Chloe también adoptada por María
+(1, 1, '2020-05-20'), 
+(2, 2, '2018-12-01'), 
+(3, 3, '2019-10-05'), 
+(4, 4, '2011-08-01'), 
+(1, 3, '2011-08-01'), 
+(5, 5, '2017-04-10'), 
+(6, 6, '2022-01-15'), 
+(7, 7, '2016-07-01'), 
+(8, 8, '2020-12-10'), 
+(9, 9, '2019-03-01'), 
+(10, 10, '2015-11-01'), 
+(10, 1, '2016-01-15'),  
+(10, 2, '2017-05-20');  
+
 
 
 -- CITAS
-
 
 
 INSERT INTO ESTADO_CITA (id, nombre_estado) VALUES
@@ -366,6 +435,30 @@ INSERT INTO ESTADO_CITA (id, nombre_estado) VALUES
 (4, 'Reprogramada'),
 (6, 'Finalizada'),
 (7, 'No asistió');
+
+
+
+INSERT INTO CITA (id, estado_cita_id, fecha_cita, observacion, CUSTODIAMASCOTAid, CUSTODIADUEniOid) 
+VALUES 
+(1, 1, '2024-11-05', 'Primera revisión general', 1, 1),
+(2, 2, '2024-11-10', 'Vacunación inicial', 2, 2),
+(3, 4, '2024-11-15', 'Control de seguimiento', 3, 3),
+(4, 7, '2024-11-20', 'Consulta cancelada por inasistencia', 4, 4),
+(5, 6, '2024-11-25', 'Finalización de tratamiento', 5, 5);
+
+
+
+INSERT INTO DETALLE_CITA (cita_id, detalle_servicio_serv_id, detalle_servicio_med_id, horaEntrada, horaSalida, nota_adicional) VALUES
+(1, 1, 1, '09:00:00', '09:45:00', 'Consulta general para revisión inicial de la mascota.'),
+(1, 2, 1, '10:00:00', '10:30:00', 'Primera dosis de vacunación aplicada.'),
+(2, 2, 3, '11:00:00', '11:20:00', 'Vacunación inicial para la mascota, se completó el esquema.'),
+(3, 3, 2, '14:00:00', '14:30:00', 'Desparasitación realizada con éxito.'),
+(3, 1, 2, '15:00:00', '15:40:00', 'Consulta general de seguimiento para revisar el progreso.'),
+(4, 1, 3, '08:30:00', '08:50:00', 'Consulta general antes de la cancelación de la cita.'),
+(5, 4, 5, '16:00:00', '17:30:00', 'Cirugía menor completada con éxito.'),
+(5, 5, 5, '18:00:00', '18:45:00', 'Emergencia atendida, se finalizó el tratamiento con indicaciones claras.');
+
+
 
 
 -- MEDICAMENTOS
@@ -391,46 +484,19 @@ INSERT INTO MEDICAMENTO (id, nombre, costo, stock, presentacion, vigencia, tipo_
 (9, 'Tramadol 50mg', 30.00, 40, 'Tableta', true, 2),
 (10, 'Doxiciclina 100mg', 22.00, 25, 'Cápsula', true, 1);
 
-INSERT INTO CITA (id, estado_cita_id, fecha_cita, observacion, CUSTODIAMASCOTAid, CUSTODIADUEniOid) 
-VALUES 
-    (1, 1, '2024-11-05', 'Primera revisión general', 1, 1),
-    (2, 2, '2024-11-10', 'Vacunación inicial', 2, 2),
-    (3, 4, '2024-11-15', 'Control de seguimiento', 3, 3),
-    (4, 7, '2024-11-20', 'Consulta cancelada por inasistencia', 4, 4),
-    (5, 6, '2024-11-25', 'Finalización de tratamiento', 5, 5);
 
 
-
-
---USUARIOS
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (1, 'jdoe', TRUE, TRUE, md5('1234' || 'jdoe' || 'CODE146'), 'John', 'Doe', 'Smith', 'V');
-
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (2, 'mgarcia', TRUE, FALSE, md5('4567' || 'mgarcia' || 'CODE146'), 'Maria', 'Garcia', 'Lopez', 'E');
-
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (3, 'arivera', TRUE, TRUE, md5('7890' || 'arivera' || 'CODE146'), 'Alex', 'Rivera', 'Martinez', 'A');
-
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (4, 'lfernandez', FALSE, FALSE, md5('1011' || 'lfernandez' || 'CODE146'), 'Laura', 'Fernandez', 'Soto', 'V');
-
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (5, 'cperez', TRUE, TRUE, md5('1021' || 'cperez' || 'CODE146'), 'Carlos', 'Perez', 'Gutierrez', 'E');
-
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (6, 'asanchez', FALSE, TRUE, md5('1031' || 'asanchez' || 'CODE146'), 'Andres', 'Sanchez', 'Lopez', 'V');
-
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (7, 'fabi', FALSE, TRUE, md5('123' || 'fabi' || 'CODE146'), 'Fabiana', 'Paucar', 'Mejia', 'V');
-
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (8, 'Admin_Fab', TRUE, TRUE, md5('123' || 'Admin_Fab' || 'CODE146'), 'Fabiana', 'Paucar', 'Mejia', 'V');
-
-
-
-
-
+INSERT INTO DETALLE_MEDICAMENTO (medicamento_id, detalle_cita_id, detalle_servicio_servicio_id, detalle_servicio_medico_id, dosis, indicacion, cantidad) VALUES
+(1, 1, 1, 1, 250.00, 'Administrar una cápsula cada 8 horas durante 7 días.', 7), -- Amoxicilina para la consulta general de la cita 1
+(5, 1, 2, 1, 1.00, 'Administrar la vacuna en una sola dosis.', 1), -- Vacuna Triple Felina en la cita 1
+(3, 2, 2, 3, 150.00, 'Administrar una tableta al día durante 3 días.', 3), -- Drontal Plus en la cita 2
+(4, 3, 3, 2, 25.00, 'Administrar un comprimido cada 12 horas durante 5 días.', 5), -- Carprofeno para desparasitación en la cita 3
+(6, 3, 1, 2, 1.00, 'Administrar una inyección única.', 1), -- Ivermectina en la consulta general de la cita 3
+(8, 2, 2, 3, 1.00, 'Administrar la vacuna como refuerzo anual.', 1), -- Vacuna Antirrábica en la cita 2
+(7, 5, 4, 5, 10.00, 'Administrar cada 24 horas por 3 días.', 3), -- Ketoprofeno para cirugía en la cita 5
+(9, 5, 5, 5, 50.00, 'Administrar una tableta cada 12 horas según necesidad.', 2), -- Tramadol para el tratamiento de emergencia
+(2, 4, 1, 3, 0.50, 'Administrar un comprimido cada 12 horas durante 4 días.', 4), -- Meloxicam para consulta general en la cita 4
+(10, 4, 1, 3, 100.00, 'Administrar una cápsula diaria durante 7 días.', 7); -- Doxiciclina para consulta general en la cita 4
 
 
 

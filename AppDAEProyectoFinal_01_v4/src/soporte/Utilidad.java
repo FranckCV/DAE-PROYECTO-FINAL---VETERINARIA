@@ -14,6 +14,7 @@ import capaDatos.clsJDBC;
 import java.sql.ResultSet;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -61,6 +62,17 @@ public class Utilidad {
         return null;
     }
     
+    public static String extraerEstado(String est) {
+        if (est.equals("Terminal")) {
+            return "T";
+        } else if (est.equals("Crónica")) {
+            return "C";
+        } else if (est.equals("Saludable")) {
+            return "S";
+        }
+        return null;
+    }
+    
     public static String obtenerCargoxCaracter(String cargo) {
         if (cargo.equals('A')) {
             return "Administrador";
@@ -100,6 +112,33 @@ public class Utilidad {
         }
     }
     
+//    Opciones de Cuadros de Dialogo
+    
+    public static final String[] opcionesEliminar = {
+        "Eliminar", 
+        "Cancelar"
+    };
+    
+    public static final String[] opcionesVigencia = {
+        "Dar Baja", 
+        "Cancelar"
+    };
+    
+    public static final String[] opcionesDisponibilidad = {
+        "Cmabiar Disponibilidad", 
+        "Cancelar"
+    };
+    
+    public static final String[] opcionesModificar = {
+        "Modificar", 
+        "Cancelar"
+    };
+    
+    public static final String[] opcionesRegistrar = {
+        "Guardar información", 
+        "Cancelar"
+    };
+    
 //    Texto de valores Booleanos
     
     public static String textoBool(boolean valor, String txtTrue, String txtFalse) {
@@ -110,37 +149,8 @@ public class Utilidad {
         }
     }
 
-//    INTERFACES
-        
-//    public static void mostrarInterfazjDialog(String nombreClase, JFrame parent) {
-//        try {
-//            Class<?> clase = Class.forName(nombreClase);
-//
-//            if (!JDialog.class.isAssignableFrom(clase)) {
-//                throw new IllegalArgumentException("La clase proporcionada no es un JDialog válido.");
-//            }
-//
-//            JDialog objForm = (JDialog) clase
-//                    .getConstructor(java.awt.Frame.class, boolean.class)
-//                    .newInstance(parent, true);
-//
-//            objForm.setLocationRelativeTo(parent);
-//            objForm.setVisible(true);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            System.out.println("Error al intentar abrir el diálogo: " + e.getMessage());
-//        }
-//    }
-    
-//    private void mostrarInterfazjDialog(JDialog interfaz){
-//        Class clase = interfaz.getClass();
-//        clase objForm = new clase(this, true);
-//        objForm.setLocationRelativeTo(this);
-//        objForm.setVisible(true);
-//    }
-    
-    
 //    Validaciones de Elementos de Interfaz
+    
     public static void validarLimiteCampoTexto(java.awt.event.KeyEvent evt, String columna, String tabla) throws Exception {
         JTextField source = (JTextField) evt.getSource();
 
@@ -219,23 +229,77 @@ public class Utilidad {
         }
     }
 
-//    Mensajes de Error 
-    public static String mensajeErrorEliminacionForanea(Exception e, String entidad, String nombre) {
-        String mensaje = e.getMessage();
-        String[] palabras = {
-            "referida desde la tabla",
-            "foránea",
-            "fk",
-            "ERROR: update o delete en"
-        };
-
-        for (String keyword : palabras) {
-            if (!mensaje.contains(keyword)) {
-                return mensaje;
-            }
-        }
-        return "Hay datos externos asociados a " + entidad + " \"" + nombre + "\".\n"
-                + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. ";
+//    Mensajes de Error
+    
+    public static void mensajeErrorFaltaID(JDialog parent) {
+        JOptionPane.showMessageDialog(
+                parent, 
+                " Debe ingresar una ID para continuar esta operación"
+        );
+    }
+    
+    public static int mensajeConfirmarEliminar(String entidad , int id ,String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null, 
+                "¿Está seguro que desea eliminar " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: "+id+")? ",
+                "Confirmar Eliminacion",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesEliminar,
+                opcionesEliminar[0]
+        );
+        return valor;
+    }
+    
+    public static int mensajeConfirmarModificar(String entidad , int id ,String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null, 
+                "¿Está seguro de guardar los cambios en " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: "+id+")? ",
+                "Confirmar Modificación",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesModificar,
+                opcionesModificar[0]
+        );
+        return valor;
+    }
+    
+    public static int mensajeConfirmarDisponibilidad(String entidad , int id ,String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null, 
+                "¿Está seguro cambiar la disponibilidad de " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: "+id+")? ",
+                "Confirmar Cambio de Disponibilidad",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesDisponibilidad,
+                opcionesDisponibilidad[0]
+        );
+        return valor;
+    }
+    
+    public static int mensajeConfirmarVigencia(String entidad , int id ,String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null, 
+                "¿Está seguro dar de baja " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: "+id+")? ",
+                "Confirmar Bar de Baja",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesVigencia,
+                opcionesVigencia[0]
+        );
+        return valor;
+    }
+    
+    public static void mensajeErrorNoEliminarForanea(String entidad , String nombre) {
+        JOptionPane.showMessageDialog(
+                null, 
+                "Hay datos externos asociados a " + entidad.toLowerCase() + " \"" + nombre + "\".\n"
+                + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. "
+        );
     }
     
 //    Validaciones con Base de Datos
@@ -275,5 +339,79 @@ public class Utilidad {
         }
     }
 
-
+    public static boolean verificarElementoParaUso(String tabla , String columna, Integer id ) throws Exception {
+        clsJDBC objConectar = new clsJDBC();
+        ResultSet rs;
+        try {
+            rs = objConectar.consultarBD("select "+columna+" from "+tabla+" where id = "+id+" ");
+            while (rs.next()) {
+                return rs.getBoolean(columna);
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al verificar "+columna+" de ID:" + id + " en tabla " + tabla + ": " + e.getMessage());
+        }
+        return false;
+    }
+    
+    
+    
+    
+    
+    
+//    DESCARTADAS (no borrar aun)
+        
+//    public static void mostrarInterfazjDialog(String nombreClase, JFrame parent) {
+//        try {
+//            Class<?> clase = Class.forName(nombreClase);
+//
+//            if (!JDialog.class.isAssignableFrom(clase)) {
+//                throw new IllegalArgumentException("La clase proporcionada no es un JDialog válido.");
+//            }
+//
+//            JDialog objForm = (JDialog) clase
+//                    .getConstructor(java.awt.Frame.class, boolean.class)
+//                    .newInstance(parent, true);
+//
+//            objForm.setLocationRelativeTo(parent);
+//            objForm.setVisible(true);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            System.out.println("Error al intentar abrir el diálogo: " + e.getMessage());
+//        }
+//    }
+    
+//    private void mostrarInterfazjDialog(JDialog interfaz){
+//        Class clase = interfaz.getClass();
+//        clase objForm = new clase(this, true);
+//        objForm.setLocationRelativeTo(this);
+//        objForm.setVisible(true);
+//    }
+        
+    
+        
+//    public static String mensajeErrorEliminacionForanea(Exception e, String entidad, String nombre) {
+//        String mensaje = e.getMessage();
+//        String[] palabras = {
+//            "referida desde la tabla",
+//            "foránea",
+//            "fk",
+//            "ERROR: update o delete en"
+//        };
+//
+//        for (String keyword : palabras) {
+//            if (!mensaje.contains(keyword)) {
+//                return mensaje;
+//            }
+//        }
+//        return "Hay datos externos asociados a " + entidad + " \"" + nombre + "\".\n"
+//                + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. ";
+//    }
+    
+    
+    
+    
+    
+    
+    
+    
 }

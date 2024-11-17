@@ -576,7 +576,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void mnuMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMascotaActionPerformed
         // TODO add your handling code here:
-
         try {
             // Llamada al constructor que puede lanzar una excepción
             jdMantMascota objForm = new jdMantMascota(null, true);
@@ -585,17 +584,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         } catch (Exception e) {
             // Manejo de la excepción
             JOptionPane.showMessageDialog(this, "Error al abrir el formulario de mascota: " + e.getMessage());
-            e.printStackTrace();
-        }
-        try {
-            // TODO add your handling code here:
-
-            // Llamada al constructor que puede lanzar una excepción
-            jdMantMascota objForm = new jdMantMascota(this, true);
-            objForm.setLocationRelativeTo(this);
-            objForm.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_mnuMascotaActionPerformed
