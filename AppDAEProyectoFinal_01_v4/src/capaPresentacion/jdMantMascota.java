@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import soporte.Utilidad;
 
 public class jdMantMascota extends javax.swing.JDialog {
 
@@ -218,10 +219,10 @@ public class jdMantMascota extends javax.swing.JDialog {
         jLabel8.setText("Fecha Nacimiento:");
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel3.setText("Estado:");
+        jLabel3.setText("Vigencia:");
 
         chkEstado.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        chkEstado.setText("Vivo");
+        chkEstado.setText("(Vigente)");
 
         btnRaza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/patas.png"))); // NOI18N
         btnRaza.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -880,7 +881,7 @@ public class jdMantMascota extends javax.swing.JDialog {
                 String sexoTexto = rsMas.getBoolean("sexo") ? "Macho" : "Hembra";
                 String despaTexto = rsMas.getBoolean("desparasitado") ? "SI" : "NO";
                 String castTexto = rsMas.getBoolean("esterilizado") ? "SI" : "NO";
-                String estado = rsMas.getBoolean("vigencia") ? "VIVO" : "MUERTO";
+                String estado = rsMas.getBoolean("vigencia") ? Utilidad.VIGENCIA_SI : Utilidad.VIGENCIA_NO;
 
                 // Convertir las fechas de Date a String en formato adecuado
                 String fechaNacimiento = rsMas.getDate("fecha_nacimiento") != null

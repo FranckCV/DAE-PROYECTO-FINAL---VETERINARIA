@@ -123,5 +123,18 @@ public class clsRaza {
         }
         return "";
     }
-
+    
+    public boolean validarNombre(String nom) throws Exception {
+        strSQL = "SELECT nombre FROM raza WHERE LOWER(nombre) = LOWER('" + nom + "')";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al validar nombre: " + e.getMessage());
+        }
+        return false;
+    }
+   
 }
