@@ -12,6 +12,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.text.NumberFormatter;
 import capaDatos.clsJDBC;
 import java.sql.ResultSet;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -22,10 +23,11 @@ import javax.swing.JTextField;
  * @author franc
  */
 public class Utilidad {
+
     clsJDBC objConectar = new clsJDBC();
     String strSQL = "";
     ResultSet rs = null;
-    
+
 //    Texto en Botones
     public static final String BTN_NUEVO = "Registrar";
     public static final String BTN_GUARDAR = "Guardar";
@@ -37,7 +39,7 @@ public class Utilidad {
     public static final String BTN_VIGENCIA = "Dar de Baja";
     public static final String BTN_AGREGAR = "Agregar";
     public static final String BTN_QUITAR = "Quitar";
-   
+
 //    Texto en Listados
     public static final String SEXO_MAS = "Masculino";
     public static final String SEXO_FEM = "Femenino";
@@ -50,7 +52,6 @@ public class Utilidad {
     public static final String DISPONIBLE_NO_EXT = "(No Disp)";
 
 //    Texto de Caracteres
-    
     public static String mostrarEstadoMascota(String est) {
         if (est.equals("T")) {
             return "Terminal";
@@ -73,23 +74,26 @@ public class Utilidad {
         return null;
     }
     
+
     public static String obtenerCargoxCaracter(String cargo) {
-        if (cargo.equals('A')) {
-            return "Administrador";
-        } else if (cargo.equals('E')){
-            return "Empleado";
-        } else if (cargo.equals('V')){
-            return "Veterinario";
+        switch (cargo) {
+            case "A":
+                return "Administrador";
+            case "E":
+                return "Empleado";
+            case "V":
+                return "Veterinario";
+            default:
+                return null;
         }
-        return null;
     }
-    
+
     public static String obtenerCargoxCadena(String cargo) {
         if (cargo.equalsIgnoreCase("Administrador")) {
             return "A";
-        } else if (cargo.equalsIgnoreCase("Empleado")){
+        } else if (cargo.equalsIgnoreCase("Empleado")) {
             return "E";
-        } else if (cargo.equalsIgnoreCase("Veterinario")){
+        } else if (cargo.equalsIgnoreCase("Veterinario")) {
             return "V";
         }
         return null;
@@ -139,8 +143,8 @@ public class Utilidad {
         "Cancelar"
     };
     
+
 //    Texto de valores Booleanos
-    
     public static String textoBool(boolean valor, String txtTrue, String txtFalse) {
         if (valor) {
             return txtTrue;
@@ -301,15 +305,14 @@ public class Utilidad {
                 + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. "
         );
     }
-    
+
 //    Validaciones con Base de Datos
-    
     public static boolean validarEliminacionForanea(String tabla, int valor_id) throws Exception {
         clsJDBC objConectar = new clsJDBC();
         String strSQL;
         ResultSet rs = null;
 
-        strSQL = " select sum(cantidad) as total from contar_relaciones('"+tabla+"',"+valor_id+") ";
+        strSQL = " select sum(cantidad) as total from contar_relaciones('" + tabla + "'," + valor_id + ") ";
         try {
             rs = objConectar.consultarBD(strSQL);
             if (rs.next()) {
@@ -323,7 +326,7 @@ public class Utilidad {
         }
         return false;
     }
-    
+
     public static boolean validarElementoTextoRepetido(String tabla, String columna, String campo) throws Exception {
         clsJDBC objConectar = new clsJDBC();
         String strSQL;
@@ -411,7 +414,43 @@ public class Utilidad {
     
     
     
-    
-    
-    
+
+    //BLOQUEAR BOTONES
+    public static void desactivarBotones(JButton botonActivo, JButton... botones) {
+        for (JButton boton : botones) {
+            boton.setEnabled(boton.equals(botonActivo));
+        }
+    }
+
+    //ACTIVAR BOTONES
+    public static void activarBotones(JButton... botones) {
+        for (JButton boton : botones) {
+            boton.setEnabled(true);
+        }
+    }
+
+    //DESACTIVAR CAMPOS
+    public static void desactivarFields(JTextField textFieldActivo, JTextField... textFields) {
+        for (JTextField textField : textFields) {
+            textField.setEnabled(textField.equals(textFieldActivo));
+        }
+    }
+
+    //ACTIVAR BOTONES
+    public static void activarFields(JTextField... textFields) {
+        for (JTextField textField : textFields) {
+            textField.setEnabled(true);
+        }
+    }
+
+    //VERIFICAR QUE TODOS LOS CAMPOS ESTÁN COMPLETADOS
+    public static boolean verificarCamposLlenos(JTextField... textFields) {
+        for (JTextField textField : textFields) {
+            if (textField.getText().trim().isEmpty()) {
+                return false; 
+            }
+        }
+        return true; 
+    }
+
 }
