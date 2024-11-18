@@ -5,6 +5,7 @@
 package capaPresentacion;
 
 import capaNegocio.clsCita;
+import capaNegocio.clsComprobante;
 import capaNegocio.clsDetalleCita;
 import capaNegocio.clsDetalleMedicamento;
 import capaNegocio.clsDetalle_Servicio;
@@ -25,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Leona
+ * @author Grupo_Veterinaria
  */
 public class jdCitaFirme extends javax.swing.JDialog {
 
@@ -40,6 +41,7 @@ public class jdCitaFirme extends javax.swing.JDialog {
     clsRaza objRaza = new clsRaza();
     clsDetalle_Servicio objDetalleServicio = new clsDetalle_Servicio();
     clsDetalleMedicamento objDetalleMedicamento = new clsDetalleMedicamento();
+    clsComprobante objComprobante = new clsComprobante();
 
     public jdCitaFirme(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -88,14 +90,14 @@ public class jdCitaFirme extends javax.swing.JDialog {
         txtSubtotal.setText("");
         txtTelefono.setText("");
         txtTotal.setText("");
-        
+
         spnEdad.setValue(0);
         spnCantidad.setValue(0);
         jDateChooser1.setDate(null);
-        
+
         llenarTablaInicialServicio();
         llenarTablaInicialMedicamento();
-        
+
 //        cboEstadoCita.setSelectedIndex(-1);
 //        cboServicios.setSelectedIndex(-1);
     }
@@ -1455,6 +1457,7 @@ public class jdCitaFirme extends javax.swing.JDialog {
                         txtEstadoSaludMascota.getText());
 
                 if (rsMascota.next()) {
+                    txtNombreMascota.setText(rsMascota.getString("nombre"));
                     txtCodMascota.setText(String.valueOf(rsMascota.getString("id")));
                     txtNotaMascota.setText(String.valueOf(rsMascota.getString("notaAdicional")));
                     txtEstadoSaludMascota.setText(String.valueOf(objMascota.calcularEdadMascota(rsMascota.getInt("id"))));
@@ -1529,9 +1532,9 @@ public class jdCitaFirme extends javax.swing.JDialog {
                 String indicacion = objAniadirMedicamento.getIndic();
 
                 try {
-                    JOptionPane.showMessageDialog(this, "si llego");
+//                    JOptionPane.showMessageDialog(this, "si llego");
                     agregarMedicamento(codMedicamento, cantidad, dosis, indicacion);
-                    JOptionPane.showMessageDialog(this, "pa aca tmb");
+//                    JOptionPane.showMessageDialog(this, "pa aca tmb");
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e.getMessage());
                 }
@@ -1590,12 +1593,27 @@ public class jdCitaFirme extends javax.swing.JDialog {
                 int cantidad = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 5).toString());
                 objMedicamento.reducirStock(idMedicamento, cantidad);
             }
-            
+
+            String tipo;
+
+            if (rdbBoleta.isSelected()) {
+                tipo = "B";
+            } else {
+                tipo = "F";
+            }
+
+            String num = objComprobante.generarNumeroSerieComprobante();
+            java.util.Date utilDate = jDateChooser1.getDate(); 
+            java.sql.Date fecha = new java.sql.Date(utilDate.getTime());
+
+            objComprobante.registrarComprobante(tipo, num, Float.parseFloat(txtTotal.getText()), fecha,
+                    Integer.parseInt(txtNumero.getText()));
+
             JOptionPane.showMessageDialog(this, "La cita finalizó");
             limpiarTodoAlTerminar();
-            
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "No se pudo guardar medic " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "No se pudo terminar " + e.getMessage());
         }
     }//GEN-LAST:event_btnTerminarActionPerformed
 

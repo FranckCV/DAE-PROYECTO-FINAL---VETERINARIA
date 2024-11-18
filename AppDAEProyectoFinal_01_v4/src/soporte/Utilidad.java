@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -144,6 +145,11 @@ public class Utilidad {
         "Cancelar"
     };
     
+    public static final String[] opcionesDarAlta = {
+        "Dar alta", 
+        "Cancelar"
+    };
+    
 
 //    Texto de valores Booleanos
     public static String textoBool(boolean valor, String txtTrue, String txtFalse) {
@@ -257,6 +263,20 @@ public class Utilidad {
         return valor;
     }
     
+    public static int mensajeConfirmarDarAlta(String entidad , int id ,String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null, 
+                "¿Está seguro que desea dar alta " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: "+id+")? ",
+                "Confirmar alta",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesDarAlta,
+                opcionesDarAlta[0]
+        );
+        return valor;
+    }
+    
     public static int mensajeConfirmarModificar(String entidad , int id ,String nombre) {
         int valor = JOptionPane.showOptionDialog(
                 null, 
@@ -359,46 +379,6 @@ public class Utilidad {
     
     
     
-    //BLOQUEAR BOTONES
-    public static void desactivarBotones(JButton botonActivo, JButton... botones) {
-        for (JButton boton : botones) {
-            boton.setEnabled(boton.equals(botonActivo));
-        }
-    }
-
-    //ACTIVAR BOTONES
-    public static void activarBotones(JButton... botones) {
-        for (JButton boton : botones) {
-            boton.setEnabled(true);
-        }
-    }
-
-    //DESACTIVAR CAMPOS
-    public static void desactivarFields(JTextField textFieldActivo, JTextField... textFields) {
-        for (JTextField textField : textFields) {
-            textField.setEnabled(textField.equals(textFieldActivo));
-        }
-    }
-
-    //ACTIVAR BOTONES
-    public static void activarFields(JTextField... textFields) {
-        for (JTextField textField : textFields) {
-            textField.setEnabled(true);
-        }
-    }
-
-    //VERIFICAR QUE TODOS LOS CAMPOS ESTÁN COMPLETADOS
-    public static boolean verificarCamposLlenos(JTextField... textFields) {
-        for (JTextField textField : textFields) {
-            if (textField.getText().trim().isEmpty()) {
-                return false; 
-            }
-        }
-        return true; 
-    }
-
-    
-
     
     
     
@@ -456,6 +436,51 @@ public class Utilidad {
     
     
     
-    
-    
+
+    //BLOQUEAR BOTONES
+    public static void desactivarBotones(JButton botonActivo, JButton... botones) {
+        for (JButton boton : botones) {
+            boton.setEnabled(boton.equals(botonActivo));
+        }
+    }
+
+    //ACTIVAR BOTONES
+    public static void activarBotones(JButton... botones) {
+        for (JButton boton : botones) {
+            boton.setEnabled(true);
+        }
+    }
+
+    //DESACTIVAR CAMPOS
+    public static void desactivarFields(JTextField textFieldActivo, JTextField... textFields) {
+        for (JTextField textField : textFields) {
+            textField.setEnabled(textField.equals(textFieldActivo));
+        }
+    }
+
+    //ACTIVAR BOTONES
+    public static void activarFields(JTextField... textFields) {
+        for (JTextField textField : textFields) {
+            textField.setEnabled(true);
+        }
+    }
+
+    //VERIFICAR QUE TODOS LOS CAMPOS ESTÁN COMPLETADOS
+    public static boolean verificarCamposLlenos(JTextField... textFields) {
+        for (JTextField textField : textFields) {
+            if (textField.getText().trim().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //PARA EL MOUSECLICKED
+    public static void buscarPorTabla(JTable tbl, JButton btn, JTextField txt) {
+        if (tbl.isEnabled() && tbl.getSelectedRow() != -1) {
+            txt.setText(String.valueOf(tbl.getValueAt(tbl.getSelectedRow(), 0)));
+            btn.doClick();
+        }
+    }
+
 }

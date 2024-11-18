@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Vector;
 import javax.swing.ButtonModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,6 +27,8 @@ public class jdMantUsuario extends javax.swing.JDialog {
 
     private static final String BTN_DISPONIBLE = "Cambiar Disponibilidad";
     private static final String BTN_VIGENCIA = "Dar de Baja";
+
+    boolean sexo;
 
     /**
      * Creates new form jdMantMarca
@@ -461,13 +464,13 @@ public class jdMantUsuario extends javax.swing.JDialog {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
 
-        limpiarControles();
         listarUsuarios();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void listarCargos() {
         ResultSet rsCargos = null;
         DefaultComboBoxModel combo = new DefaultComboBoxModel();
+
         combo.addElement("Veterinario");
         combo.addElement("Empleado");
         combo.addElement("Administrador");
@@ -479,7 +482,6 @@ public class jdMantUsuario extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         listarUsuarios();
-        limpiarControles();
     }//GEN-LAST:event_formWindowOpened
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -489,15 +491,22 @@ public class jdMantUsuario extends javax.swing.JDialog {
 
     private void tblUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuarioMouseClicked
         // TODO add your handling code here:
-        txtId.setText(String.valueOf(tblUsuario.getValueAt(tblUsuario.getSelectedRow(), 0)));
-        btnBuscarActionPerformed(null);
+        Utilidad.buscarPorTabla(tblUsuario, btnBuscar, txtId);
+        if (tblUsuario.getValueAt(tblUsuario.getSelectedRow(), 5).equals("Vigente")) {
+            btnVigencia.setText("Dar baja");
+            btnVigencia.setIcon(new ImageIcon(getClass().getResource("/conector/Recursos/darBaja.png")));
+        } else {
+            btnVigencia.setText("Dar alta");
+            btnVigencia.setIcon(new ImageIcon(getClass().getResource("/conector/Recursos/darAlta.png")));
+        }
     }//GEN-LAST:event_tblUsuarioMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
             cancelarAccion();
-            Utilidad.activarBotones(btnBuscar, btnLimpiar, btnModificar, btnVigencia);
+            tblUsuario.setEnabled(true);
+            Utilidad.activarBotones(btnNuevo, btnBuscar, btnLimpiar, btnModificar, btnVigencia);
 
         } else {
             eliminarUsuario();
@@ -516,6 +525,11 @@ public class jdMantUsuario extends javax.swing.JDialog {
     private void btnVigenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVigenciaActionPerformed
         // TODO add your handling code here:
         darBaja();
+        if (tblUsuario.getValueAt(tblUsuario.getSelectedRow(), 5).equals("Vigente")) {
+            darBaja();
+        } else {
+            darAlta();
+        }
     }//GEN-LAST:event_btnVigenciaActionPerformed
 
     private void chkVigenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkVigenciaActionPerformed
@@ -580,7 +594,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
         modelo.addColumn("A. Paterno");
         modelo.addColumn("A. Materno");
         modelo.addColumn("Usuario");
-        modelo.addColumn("Estado");
+        modelo.addColumn("Vigencia");
         modelo.addColumn("Sexo");
         modelo.addColumn("Cargo");
         tblUsuario.setModel(modelo);
@@ -696,7 +710,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
             if (txtId.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un codigo a eliminar!");
             } else {
-                int valor = JOptionPane.showConfirmDialog(null, "Deseas continuar?", "Confirmacion", JOptionPane.YES_NO_OPTION);
+                int valor = Utilidad.mensajeConfirmarEliminar("Usuario", Integer.parseInt(txtId.getText()), txtNombre.getText());
                 if (valor == JOptionPane.YES_OPTION) {
                     objUsuario.eliminarUsuario(Integer.parseInt(txtId.getText()));
                     limpiarControles();
@@ -722,39 +736,38 @@ public class jdMantUsuario extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
             } else {
                 if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                    txtId.setEnabled(false);
+                    Utilidad.activarFields(txtApeMat, txtApePat, txtClave, txtNombre, txtUsuario);
+                    cmbCargo.setEnabled(true);
+                    radFemenino.setEnabled(true);
+                    radMasculino.setEnabled(true);
                     btnModificar.setText(Utilidad.BTN_GUARDAR);
                     btnEliminar.setText(Utilidad.BTN_CANCELAR);
+                    Utilidad.desactivarBotones(btnModificar, btnLimpiar, btnBuscar, btnNuevo, btnVigencia);
+                    tblUsuario.setEnabled(true);
                 } else {
+                    int valor = Utilidad.mensajeConfirmarModificar("Usuario", Integer.parseInt(txtId.getText()), txtNombre.getText());
+                    if (valor == JOptionPane.YES_OPTION) {
+                        boolean sexo;
+                        if (radMasculino.isSelected()) {
+                            sexo = true;
+                        } else {
+                            sexo = false;
+                        }
+                        String cargo = Utilidad.obtenerCargoxCadena(cmbCargo.getSelectedItem().toString());
 
-                    boolean sexo;
-
-                    if (radMasculino.isSelected()) {
-                        sexo = true;
-                    } else {
-                        sexo = false;
+                        objUsuario.modificarUsuario(Integer.parseInt(txtId.getText()), txtUsuario.getText(), chkVigencia.isSelected(), sexo,
+                                txtClave.getText(), txtNombre.getText(), txtApePat.getText(),
+                                txtApeMat.getText(), cargo);
+                        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+                        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+                        Utilidad.activarBotones(btnNuevo, btnBuscar, btnLimpiar, btnModificar, btnVigencia);
+                        limpiarControles();
+                        listarUsuarios();
+                        JOptionPane.showMessageDialog(this, "Se modificó con exito");
+                        tblUsuario.setEnabled(true);
                     }
-                    String cargo = "";
-                    if (cmbCargo.getSelectedItem().toString().equals("ADMINISTRADOR")) {
-                        cargo = "A";
-                    }
 
-                    if (cmbCargo.getSelectedItem().toString().equals("EMPLEADO")) {
-                        cargo = "E";
-                    }
-
-                    if (cmbCargo.getSelectedItem().toString().equals("VETERINARIO")) {
-                        cargo = "V";
-                    }
-
-                    objUsuario.modificarUsuario(Integer.parseInt(txtId.getText()), txtUsuario.getText(), chkVigencia.isSelected(), sexo,
-                            txtClave.getText(), txtNombre.getText(), txtApePat.getText(),
-                            txtApeMat.getText(), cargo);
-                    btnModificar.setText(Utilidad.BTN_MODIFICAR);
-                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-
-                    limpiarControles();
-                    listarUsuarios();
-                    JOptionPane.showMessageDialog(this, "Se modificó con exito");
                 }
             }
         } catch (Exception e) {
@@ -771,43 +784,46 @@ public class jdMantUsuario extends javax.swing.JDialog {
             txtId.setEnabled(false);
 
             if (btnNuevo.getText().equals("Nuevo")) {
-                chkVigencia.setSelected(true); 
-                chkVigencia.setEnabled(false);
-
                 btnNuevo.setText(Utilidad.BTN_GUARDAR);
                 btnEliminar.setText(Utilidad.BTN_CANCELAR);
 
                 Utilidad.desactivarBotones(btnNuevo, btnModificar, btnLimpiar, btnVigencia);
 
                 tblUsuario.setEnabled(false);
-
-                txtNombre.requestFocus();
                 limpiarControles();
+                txtNombre.requestFocus();
+
+                chkVigencia.setSelected(true);
+                chkVigencia.setEnabled(false);
 
                 txtId.setText(String.valueOf(objUsuario.generarCodigoUsuario()));
+
             } else {
                 if (Utilidad.verificarCamposLlenos(txtId, txtApeMat, txtApePat, txtClave, txtNombre, txtUsuario)
-                        || cmbCargo.getSelectedIndex() != -1 || radioGenero.getSelection() != null) {
+                        || cmbCargo.getSelectedIndex() == -1
+                        || radioGenero.getSelection() == null) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
                 } else {
                     btnNuevo.setText("Nuevo");
                     btnEliminar.setText(Utilidad.BTN_ELIMINAR);
 
-                    boolean sexo = radMasculino.isSelected();
+                    if (radMasculino.isSelected()) {
+                        sexo = true;
+                    } else {
+                        sexo = false;
+                    }
 
                     objUsuario.registrarUsuario(Integer.parseInt(txtId.getText()),
                             txtUsuario.getText(), chkVigencia.isSelected(), sexo,
                             txtClave.getText(), txtNombre.getText(), txtApePat.getText(),
                             txtApeMat.getText(), Utilidad.obtenerCargoxCadena(cmbCargo.getSelectedItem().toString()));
 
-                    txtId.setEnabled(true);
+                    tblUsuario.setEnabled(true);
 
                     limpiarControles();
                     listarUsuarios();
 
                     Utilidad.activarBotones(btnBuscar, btnEliminar, btnLimpiar, btnModificar, btnVigencia);
-
-                    tblUsuario.setEnabled(true);
 
                     JOptionPane.showMessageDialog(this, "Se registró con éxito");
                 }
@@ -828,20 +844,48 @@ public class jdMantUsuario extends javax.swing.JDialog {
     private void darBaja() {
         try {
             Integer id = Integer.parseInt(txtId.getText());
-            ResultSet rsCateg = null;
+            ResultSet rsUsuario = null;
             if (id.equals("")) {
                 JOptionPane.showConfirmDialog(this, "Debe ingresar un codigo");
             } else {
-                int valor = JOptionPane.showConfirmDialog(null, "Esta acción no podrá deshacerse.\n ¿Deseas dar de baja este elemento?", "Confirmacion", JOptionPane.YES_NO_OPTION);
+                int valor = Utilidad.mensajeConfirmarVigencia("Usuario", Integer.parseInt(txtId.getText()), txtNombre.getText());
                 if (valor == JOptionPane.YES_OPTION) {
-                    rsCateg = objUsuario.buscarUsuario(id);
-                    if (rsCateg.next()) {
-                        if (rsCateg.getBoolean("estado")) {
+                    rsUsuario = objUsuario.buscarUsuario(id);
+                    if (rsUsuario.next()) {
+                        if (rsUsuario.getBoolean("estado")) {
                             objUsuario.darBaja(id);
                             limpiarControles();
                             listarUsuarios();
+                            JOptionPane.showMessageDialog(null, "Fue dado de baja con éxito");
                         } else {
                             JOptionPane.showMessageDialog(this, "Este elemento ya fue dado de baja");
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }
+
+    private void darAlta() {
+        try {
+            Integer id = Integer.parseInt(txtId.getText());
+            ResultSet rsUsuario = null;
+            if (id.equals("")) {
+                JOptionPane.showConfirmDialog(this, "Debe ingresar un codigo");
+            } else {
+                int valor = Utilidad.mensajeConfirmarVigencia("Usuario", Integer.parseInt(txtId.getText()), txtNombre.getText());
+                if (valor == JOptionPane.YES_OPTION) {
+                    rsUsuario = objUsuario.buscarUsuario(id);
+                    if (rsUsuario.next()) {
+                        if (!rsUsuario.getBoolean("estado")) {
+                            objUsuario.darAlta(id);
+                            limpiarControles();
+                            listarUsuarios();
+                            JOptionPane.showMessageDialog(null, "Fue dado de alta con éxito");
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Este elemento ya fue dado de alta");
                         }
                     }
                 }
