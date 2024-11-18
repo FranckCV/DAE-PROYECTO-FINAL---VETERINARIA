@@ -1,6 +1,7 @@
 package capaPresentacion;
 
 import capaNegocio.*;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -15,6 +16,8 @@ import soporte.Utilidad;
 
 public class jdMantMascota extends javax.swing.JDialog {
 
+    private static jdMantMascota instanciaUnica;
+
     clsMascota objMasco = new clsMascota();
     clsRaza objRaza = new clsRaza();
 
@@ -24,6 +27,13 @@ public class jdMantMascota extends javax.swing.JDialog {
         sinEditarP();
         txtId.requestFocus();
         listarMascotas();
+    }
+
+    public static jdMantMascota getInstance(Frame parent, boolean modal) throws Exception {
+        if (instanciaUnica == null) {
+            instanciaUnica = new jdMantMascota(parent, modal);
+        }
+        return instanciaUnica;
     }
 
     @SuppressWarnings("unchecked")
@@ -589,7 +599,7 @@ public class jdMantMascota extends javax.swing.JDialog {
             // Volver a listar las razas
             listarMascotas();
             listarNombreRaza();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -663,7 +673,7 @@ public class jdMantMascota extends javax.swing.JDialog {
         txtId.setText(String.valueOf(tblMascota.getValueAt(tblMascota.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);
     }//GEN-LAST:event_tblMascotaMouseClicked
- private String getSexoString(boolean sexo) {
+    private String getSexoString(boolean sexo) {
         return sexo ? "Macho" : "Hembra";
     }
 
@@ -676,7 +686,7 @@ public class jdMantMascota extends javax.swing.JDialog {
             } else {
 
                 try {
-                    
+
                     ResultSet rsBus = objMasco.buscarMascota(Integer.parseInt(txtId.getText()));
                     if (rsBus.next()) {
                         // Asignamos los valores obtenidos desde la base de datos a los campos del formulario
@@ -909,8 +919,6 @@ public class jdMantMascota extends javax.swing.JDialog {
             }
         }
     }
-
-  
 
     private void listarNombreRaza() {
         ResultSet rss = null;

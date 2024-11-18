@@ -150,7 +150,6 @@ public class clsUsuario {
     }
 
     public void darBaja(int codUsuario) throws Exception {
-        // Modificar la consulta para la tabla usuario
         strSQL = "UPDATE usuario SET estado = false WHERE codUsuario = " + codUsuario;
 
         try {
@@ -161,7 +160,6 @@ public class clsUsuario {
     }
 
     public void darAlta(int codUsuario) throws Exception {
-        // Modificar la consulta para la tabla usuario
         strSQL = "UPDATE usuario SET estado = true WHERE codUsuario = " + codUsuario;
 
         try {
