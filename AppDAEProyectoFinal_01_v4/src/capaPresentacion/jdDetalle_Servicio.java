@@ -695,19 +695,22 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
    
     private void eliminarAsignacion(){
        int fila = tblServiciosMedico.getSelectedRow();
-       try {
-            objTabla.eliminarAsignacion(
-                    Integer.parseInt(String.valueOf(tblServiciosMedico.getValueAt(fila, 0))),
-                    Integer.parseInt(txtID.getText())
-            );
+        try {
+            if (fila <= -1) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo a eliminar!");
+            } else if (Utilidad.validarEliminacionForanea(clsEspecialidad.TABLA, fila )){
+                JOptionPane.showMessageDialog(this, 
+                        "Hay datos externos asociados al " + "servicio asigando" + " \"" + txtNombreServmedico.getText()+ "\".\n"
+                        + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. "
+                );
+            } else {
+                objTabla.eliminarAsignacion(
+                        Integer.parseInt(String.valueOf(tblServiciosMedico.getValueAt(fila, 0))),
+                        Integer.parseInt(txtID.getText())
+                );
+            }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + 
-                    Utilidad.mensajeErrorEliminacionForanea(
-                            e, 
-                            "servicio asignado", 
-                            txtNombreServmedico.getText()
-                    )
-            );
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }
     

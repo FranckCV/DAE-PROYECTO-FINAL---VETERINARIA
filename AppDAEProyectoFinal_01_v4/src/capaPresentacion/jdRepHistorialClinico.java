@@ -139,8 +139,8 @@ public class jdRepHistorialClinico extends javax.swing.JDialog {
                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(0, 0, 102));
@@ -153,11 +153,11 @@ public class jdRepHistorialClinico extends javax.swing.JDialog {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 1208, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(260, 260, 260)
+            .addComponent(jSeparator3)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel10)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(524, 524, 524))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -298,8 +298,7 @@ public class jdRepHistorialClinico extends javax.swing.JDialog {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jLabel21)
@@ -310,20 +309,23 @@ public class jdRepHistorialClinico extends javax.swing.JDialog {
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel3))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addGap(16, 16, 16))
+                                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(18, Short.MAX_VALUE))))
         );
 
         pack();
@@ -357,17 +359,43 @@ public class jdRepHistorialClinico extends javax.swing.JDialog {
 
         while (rsDato.next()) {
             modelo.addRow(new Object[]{"ID", String.valueOf(rsDato.getString("id"))});
-            modelo.addRow(new Object[]{"Nombre", String.valueOf(rsDato.getString("nombre"))});
-            modelo.addRow(new Object[]{"Fecha Nacimiento", String.valueOf(rsDato.getString("fecha_nacimiento"))});
-            modelo.addRow(new Object[]{"Altura", String.valueOf(rsDato.getString("altura")+" cm")});
-            modelo.addRow(new Object[]{"Peso", String.valueOf(rsDato.getString("peso")+" kg")});
-            modelo.addRow(new Object[]{"Nota Adicional", String.valueOf(rsDato.getString("notaAdicional"))});
-            modelo.addRow(new Object[]{"Sexo", Utilidad.textoBool(rsDato.getBoolean("sexo"), Utilidad.SEXO_MASC_MAS, Utilidad.SEXO_MASC_FEM)});
-            modelo.addRow(new Object[]{"Esterilizacion", String.valueOf(rsDato.getString("esterilizado"))});
-            modelo.addRow(new Object[]{"Desparasitación", String.valueOf(rsDato.getString("desparasitado"))});
-            modelo.addRow(new Object[]{"Condición", String.valueOf(rsDato.getString("estado_salud"))});
-            modelo.addRow(new Object[]{"Vigencia", String.valueOf(rsDato.getString("vigencia"))});
-            modelo.addRow(new Object[]{"Raza", String.valueOf(rsDato.getString("raza_id"))});
+            modelo.addRow(new Object[]{"Nombre", 
+                String.valueOf(rsDato.getString("nombre"))
+            });
+            modelo.addRow(new Object[]{"Fecha Nacimiento", 
+                String.valueOf(rsDato.getString("fecha_nacimiento"))
+            });
+            modelo.addRow(new Object[]{"Especie", 
+                String.valueOf(rsDato.getString("especie_nombre"))
+            });
+            modelo.addRow(new Object[]{"Raza", 
+                String.valueOf(rsDato.getString("raza_nombre"))
+            });
+            modelo.addRow(new Object[]{"Sexo", 
+                Utilidad.textoBool(rsDato.getBoolean("sexo"), Utilidad.SEXO_MASC_MAS, Utilidad.SEXO_MASC_FEM)
+            });
+            modelo.addRow(new Object[]{"Altura", 
+                String.valueOf(rsDato.getString("altura")+" cm")
+            });
+            modelo.addRow(new Object[]{
+                "Peso", 
+                String.valueOf(rsDato.getString("peso")+" kg")
+            });
+            modelo.addRow(new Object[]{"Esterilizacion", 
+                Utilidad.textoBool(rsDato.getBoolean("esterilizado"), "Si", "No")
+            });
+            modelo.addRow(new Object[]{"Desparasitación", 
+                Utilidad.textoBool(rsDato.getBoolean("desparasitado"), "Si", "No")
+            });
+            modelo.addRow(new Object[]{"Condición Actual", 
+                Utilidad.mostrarEstadoMascota(String.valueOf(rsDato.getString("estado_salud")))
+            });
+            modelo.addRow(new Object[]{"Vigente", 
+                Utilidad.textoBool(rsDato.getBoolean("vigencia"), "Si", "No")
+            });
+            modelo.addRow(new Object[]{"Nota Adicional", 
+                String.valueOf(rsDato.getString("notaAdicional"))
+            });
         }
         tblDatos.setModel(modelo);        
     }
