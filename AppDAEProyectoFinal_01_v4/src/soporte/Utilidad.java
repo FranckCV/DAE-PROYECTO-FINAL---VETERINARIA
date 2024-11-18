@@ -13,6 +13,7 @@ import javax.swing.text.NumberFormatter;
 import capaDatos.clsJDBC;
 import java.sql.ResultSet;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -358,6 +359,47 @@ public class Utilidad {
     
     
     
+    //BLOQUEAR BOTONES
+    public static void desactivarBotones(JButton botonActivo, JButton... botones) {
+        for (JButton boton : botones) {
+            boton.setEnabled(boton.equals(botonActivo));
+        }
+    }
+
+    //ACTIVAR BOTONES
+    public static void activarBotones(JButton... botones) {
+        for (JButton boton : botones) {
+            boton.setEnabled(true);
+        }
+    }
+
+    //DESACTIVAR CAMPOS
+    public static void desactivarFields(JTextField textFieldActivo, JTextField... textFields) {
+        for (JTextField textField : textFields) {
+            textField.setEnabled(textField.equals(textFieldActivo));
+        }
+    }
+
+    //ACTIVAR BOTONES
+    public static void activarFields(JTextField... textFields) {
+        for (JTextField textField : textFields) {
+            textField.setEnabled(true);
+        }
+    }
+
+    //VERIFICAR QUE TODOS LOS CAMPOS ESTÁN COMPLETADOS
+    public static boolean verificarCamposLlenos(JTextField... textFields) {
+        for (JTextField textField : textFields) {
+            if (textField.getText().trim().isEmpty()) {
+                return false; 
+            }
+        }
+        return true; 
+    }
+
+    
+
+    
     
     
     
@@ -414,43 +456,6 @@ public class Utilidad {
     
     
     
-
-    //BLOQUEAR BOTONES
-    public static void desactivarBotones(JButton botonActivo, JButton... botones) {
-        for (JButton boton : botones) {
-            boton.setEnabled(boton.equals(botonActivo));
-        }
-    }
-
-    //ACTIVAR BOTONES
-    public static void activarBotones(JButton... botones) {
-        for (JButton boton : botones) {
-            boton.setEnabled(true);
-        }
-    }
-
-    //DESACTIVAR CAMPOS
-    public static void desactivarFields(JTextField textFieldActivo, JTextField... textFields) {
-        for (JTextField textField : textFields) {
-            textField.setEnabled(textField.equals(textFieldActivo));
-        }
-    }
-
-    //ACTIVAR BOTONES
-    public static void activarFields(JTextField... textFields) {
-        for (JTextField textField : textFields) {
-            textField.setEnabled(true);
-        }
-    }
-
-    //VERIFICAR QUE TODOS LOS CAMPOS ESTÁN COMPLETADOS
-    public static boolean verificarCamposLlenos(JTextField... textFields) {
-        for (JTextField textField : textFields) {
-            if (textField.getText().trim().isEmpty()) {
-                return false; 
-            }
-        }
-        return true; 
-    }
-
+    
+    
 }

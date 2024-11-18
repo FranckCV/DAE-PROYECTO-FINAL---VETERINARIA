@@ -151,6 +151,7 @@ public class jdMantServicio extends javax.swing.JDialog {
         txtDescripcion.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtDescripcion.setLineWrap(true);
         txtDescripcion.setRows(5);
+        txtDescripcion.setWrapStyleWord(true);
         txtDescripcion.setAutoscrolls(false);
         jScrollPane2.setViewportView(txtDescripcion);
 

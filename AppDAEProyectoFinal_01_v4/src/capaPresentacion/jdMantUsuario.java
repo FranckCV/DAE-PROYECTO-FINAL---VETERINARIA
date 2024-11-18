@@ -33,10 +33,10 @@ public class jdMantUsuario extends javax.swing.JDialog {
     public jdMantUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        btnNuevo.setText("Nuevo");
+        btnNuevo.setText(Utilidad.BTN_NUEVO);
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-        btnVigencia.setText(BTN_VIGENCIA);
+        btnVigencia.setText(Utilidad.BTN_VIGENCIA);
         listarCargos();
         listarUsuarios();
     }
