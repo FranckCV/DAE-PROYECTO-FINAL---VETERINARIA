@@ -144,6 +144,11 @@ public class Utilidad {
         "Cancelar"
     };
     
+    public static final String[] opcionesDarAlta = {
+        "Dar alta", 
+        "Cancelar"
+    };
+    
 
 //    Texto de valores Booleanos
     public static String textoBool(boolean valor, String txtTrue, String txtFalse) {
@@ -253,6 +258,20 @@ public class Utilidad {
                 null,
                 opcionesEliminar,
                 opcionesEliminar[0]
+        );
+        return valor;
+    }
+    
+    public static int mensajeConfirmarDarAlta(String entidad , int id ,String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null, 
+                "¿Está seguro que desea dar alta " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: "+id+")? ",
+                "Confirmar alta",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesDarAlta,
+                opcionesDarAlta[0]
         );
         return valor;
     }
@@ -448,10 +467,10 @@ public class Utilidad {
     public static boolean verificarCamposLlenos(JTextField... textFields) {
         for (JTextField textField : textFields) {
             if (textField.getText().trim().isEmpty()) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     //PARA EL MOUSECLICKED

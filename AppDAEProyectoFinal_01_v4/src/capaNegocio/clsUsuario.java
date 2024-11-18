@@ -90,13 +90,14 @@ public class clsUsuario {
     // Método para registrar un nuevo usuario
     public void registrarUsuario(int codUsuario, String nomUsuario, boolean estado, boolean sexo, String clave,
             String nombres, String apPaterno, String apMaterno, String cargo) throws Exception {
-        strSQL = "Insert into usuario"
-                + " Values(?,?,?,?, md5('?' || '?' || 'CODE146'),?,?,?,?)";
+        String strSQL = "INSERT INTO usuario (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) "
+                + "VALUES (?, ?, ?, ?, md5(? || ? || 'CODE146'), ?, ?, ?, ?)";
         try {
             Connection micon = null;
             objConectar.conectar();
             micon = objConectar.getCon();
             PreparedStatement sp = micon.prepareStatement(strSQL);
+
             sp.setInt(1, codUsuario);
             sp.setString(2, nomUsuario);
             sp.setBoolean(3, estado);
@@ -159,6 +160,17 @@ public class clsUsuario {
         }
     }
 
+    public void darAlta(int codUsuario) throws Exception {
+        // Modificar la consulta para la tabla usuario
+        strSQL = "UPDATE usuario SET estado = true WHERE codUsuario = " + codUsuario;
+
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al modificar la tabla usuario: " + e.getMessage());
+        }
+    }
+    
     public Integer generarCodigoUsuario() throws Exception {
         strSQL = "Select COALESCE(Max(codUsuario), 0) + 1 as codigo from usuario";
         try {
@@ -172,18 +184,17 @@ public class clsUsuario {
         return 0;
     }
 
-    public boolean validarUsuario(String usu) throws Exception{
-        strSQL="select estado from usuario where nomusuario='"+usu+"'";
-        try{
-            rs=objConectar.consultarBD(strSQL);
+    public boolean validarUsuario(String usu) throws Exception {
+        strSQL = "select estado from usuario where nomusuario='" + usu + "'";
+        try {
+            rs = objConectar.consultarBD(strSQL);
             if (rs.next()) {
                 return rs.getBoolean("estado");
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             throw new Exception("Error al validar usuario");
         }
         return false;
     }
-    
+
 }
