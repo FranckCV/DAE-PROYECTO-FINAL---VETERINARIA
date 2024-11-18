@@ -47,6 +47,7 @@ public class clsDuenio {
         }
     }
 
+<<<<<<< HEAD
     public void darBaja(Integer id) throws Exception {
         strSQL = "update " + TABLA + " set " + VIGENCIA + " = false, " + DISPONIBILIDAD + " = false where " + ID + " = '" + id + "'";
         try {
@@ -81,6 +82,24 @@ public class clsDuenio {
         }
     }
 
+=======
+    public void registrarDuenio(int id, String numDoc, String nom, String app, String apm,
+            String tel, String telAlt, String correo, String direc,
+            boolean sexo, boolean vig) throws Exception {
+        // Construcción de la consulta de inserción
+        strSQL = "INSERT INTO DUEniO (id, doc_identidad, nombres, apePaterno, apeMaterno, "
+                + "telefono, telefonoAlt, correo, direccion, sexo, vigencia) "
+                + "VALUES (" + id + ", '" + numDoc + "', '" + nom + "', '" + app + "', '" + apm + "', '"
+                + tel + "', '" + telAlt + "', '" + correo + "', '" + direc + "', " + sexo + ", "
+                + vig + ")";
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al registrar dueño: " + e.getMessage());
+        }
+    }
+
+>>>>>>> a85048652bcbea4b1aac788a595c411c3a7b0fd9
     public Integer generarCodigoDuenio() throws Exception {
         strSQL = "Select COALESCE(Max(id), 0)+1 as codigo from DUEnio";
         try {
@@ -117,6 +136,7 @@ public class clsDuenio {
         }
     }
 
+<<<<<<< HEAD
     public void darAlta(int codDueño) throws Exception {
         strSQL = "UPDATE duenio SET estado = true WHERE codUsuario = " + codDueño;
 
@@ -129,6 +149,11 @@ public class clsDuenio {
     
     public ResultSet buscarDuenioN(String numDoc) throws Exception {
         strSQL = "SELECT * FROM duenio where doc_identidad= '" + numDoc + "' ;";
+=======
+//buscar
+    public ResultSet buscarDuenio(String id) throws Exception {
+        strSQL = "SELECT * FROM duenio where id=" + id;
+>>>>>>> a85048652bcbea4b1aac788a595c411c3a7b0fd9
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -136,4 +161,17 @@ public class clsDuenio {
             throw new Exception("Error al buscar Dueño por número de documento");
         }
     }
+<<<<<<< HEAD
+=======
+
+    public ResultSet buscarDuenioN(String numDoc) throws Exception {
+        strSQL = "SELECT * FROM duenio where doc_identidad= '" + numDoc + "' ;";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar Dueño por número de documento");
+        }
+    }
+>>>>>>> a85048652bcbea4b1aac788a595c411c3a7b0fd9
 }
