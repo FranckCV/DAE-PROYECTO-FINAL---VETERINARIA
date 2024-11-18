@@ -9,7 +9,6 @@ import java.sql.ResultSet;
  *
  * @author Grupo_Veterinaria
  */
-
 public class clsDuenio {
 
     clsJDBC objConectar = new clsJDBC();
@@ -29,22 +28,22 @@ public class clsDuenio {
         }
     }
 
-
-  public void registrarDuenio(int id,String numDoc, String nom, String app, String apm,
-                           String tel, String telAlt, String correo, String direc, 
-                           boolean sexo, boolean vig) throws Exception {
-    // Construcción de la consulta de inserción
-    strSQL = "INSERT INTO DUEniO (id, doc_identidad, nombres, apePaterno, apeMaterno, " +
-             "telefono, telefonoAlt, correo, direccion, sexo, vigencia) " +
-             "VALUES (" + id + ", '"+ numDoc + "', '" + nom + "', '" + app + "', '" + apm + "', '" +
-             tel + "', '" + telAlt + "', '" + correo + "', '" + direc + "', " + sexo + ", " +
-             vig + ")";
-    try {
-        objConectar.ejecutarBD(strSQL);
-    } catch (Exception e) {
-        throw new Exception("Error al registrar dueño: " + e.getMessage());
+    public void registrarDuenio(int id, String numDoc, String nom, String app, String apm,
+            String tel, String telAlt, String correo, String direc,
+            boolean sexo, boolean vig) throws Exception {
+        // Construcción de la consulta de inserción
+        strSQL = "INSERT INTO DUEniO (id, doc_identidad, nombres, apePaterno, apeMaterno, "
+                + "telefono, telefonoAlt, correo, direccion, sexo, vigencia) "
+                + "VALUES (" + id + ", '" + numDoc + "', '" + nom + "', '" + app + "', '" + apm + "', '"
+                + tel + "', '" + telAlt + "', '" + correo + "', '" + direc + "', " + sexo + ", "
+                + vig + ")";
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al registrar dueño: " + e.getMessage());
+        }
     }
-}
+
     public Integer generarCodigoDuenio() throws Exception {
         strSQL = "Select COALESCE(Max(id), 0)+1 as codigo from DUEnio";
         try {
@@ -58,33 +57,32 @@ public class clsDuenio {
         return 0;
     }
 
-public void modificarDuenio(int id, String doc, String nom, String app, String apm,
-                           String tel, String telAlt, String correo, String direc, 
-                           boolean sexo, boolean vig) throws Exception {
-    strSQL = "UPDATE duenio SET " +
-             "nombres = '" + nom + "', " +
-             "apepaterno = '" + app + "', " +
-             "apematerno = '" + apm + "', " +
-             "sexo = " + sexo + ", " +
-             "doc_identidad = ' " + doc + "' , "+
-             "telefono = '" + tel + "', " +
-             "telefonoalt = '" + telAlt + "', " +
-             " correo = '" + correo + "', " +
-             " direccion = '" + direc + "', " + 
-             " vigencia = " + vig  + 
-             " where id = " + id  ; 
+    public void modificarDuenio(int id, String doc, String nom, String app, String apm,
+            String tel, String telAlt, String correo, String direc,
+            boolean sexo, boolean vig) throws Exception {
+        strSQL = "UPDATE duenio SET "
+                + "nombres = '" + nom + "', "
+                + "apepaterno = '" + app + "', "
+                + "apematerno = '" + apm + "', "
+                + "sexo = " + sexo + ", "
+                + "doc_identidad = ' " + doc + "' , "
+                + "telefono = '" + tel + "', "
+                + "telefonoalt = '" + telAlt + "', "
+                + " correo = '" + correo + "', "
+                + " direccion = '" + direc + "', "
+                + " vigencia = " + vig
+                + " where id = " + id;
 
-    try {
-        objConectar.ejecutarBD(strSQL);
-    } catch (Exception e) {
-        throw new Exception("Error al modificar id: " + id + " en la tabla Dueño --> " + e.getMessage());
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al modificar id: " + id + " en la tabla Dueño --> " + e.getMessage());
+        }
     }
-}
 
 //buscar
-
     public ResultSet buscarDuenio(String id) throws Exception {
-        strSQL = "SELECT * FROM duenio where id=" + id ;
+        strSQL = "SELECT * FROM duenio where id=" + id;
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -92,13 +90,14 @@ public void modificarDuenio(int id, String doc, String nom, String app, String a
             throw new Exception("Error al buscar Dueño");
         }
     }
+
     public ResultSet buscarDuenioN(String numDoc) throws Exception {
-            strSQL = "SELECT * FROM duenio where doc_identidad= '" + numDoc + "' ;";
-            try {
-                rs = objConectar.consultarBD(strSQL);
-                return rs;
-            } catch (Exception e) {
-                throw new Exception("Error al buscar Dueño por número de documento");
-            }
+        strSQL = "SELECT * FROM duenio where doc_identidad= '" + numDoc + "' ;";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar Dueño por número de documento");
         }
+    }
 }
