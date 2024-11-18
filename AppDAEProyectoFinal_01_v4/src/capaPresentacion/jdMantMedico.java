@@ -1018,7 +1018,7 @@ public class jdMantMedico extends javax.swing.JDialog {
                     rsDato.getString(clsServicio.COSTO),
                     Utilidad.textoBool(rsDato.getBoolean("det_disp"), Utilidad.DISPONIBILIDAD_SI, Utilidad.DISPONIBILIDAD_NO)
                 });
-            }
+                }
             tblServiciosxMedico.setModel(modelo);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al listar tabla "+clsServicio.TABLA+": " + e.getMessage());
