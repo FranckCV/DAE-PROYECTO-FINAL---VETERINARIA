@@ -532,6 +532,8 @@ public class jdMntVacuna extends javax.swing.JDialog {
                     editableControlesVacuna(false, true, true, true, false);
                     usarBotonesVacuna(false, false, true, true, true, false);
                     chkDisponibilidad.setEnabled(false);
+                    tblVacunas.setEnabled(false);
+
                 } else {
                     objVacuna.modificarVacuna(
                             Integer.parseInt(txtId.getText()),
@@ -547,6 +549,7 @@ public class jdMntVacuna extends javax.swing.JDialog {
                     usarBotonesVacuna(true, true, true, true, true, true);
                     limpiarControles();
                     listarVacunas();
+                    tblVacunas.setEnabled(true);
                     JOptionPane.showMessageDialog(this, "Vacuna modificada con éxito");
                 }
             }
@@ -559,16 +562,16 @@ public class jdMntVacuna extends javax.swing.JDialog {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try {
             if (btnRegistrar.getText().equals(Utilidad.BTN_NUEVO)) {
-                // Cambia a modo guardar
+
                 btnRegistrar.setText(Utilidad.BTN_GUARDAR);
                 btnEliminar.setText(Utilidad.BTN_CANCELAR);
                 chkDisponibilidad.setEnabled(true);
-                limpiarControles(); // Limpia los campos
-                editableControlesVacuna(false, true, true, true, false); // Habilita los campos para ingresar datos
-                txtId.setText(objVacuna.generarIDVacuna().toString()); // Genera un nuevo ID
-                chkDisponibilidad.setSelected(true); // Disponibilidad predeterminada
+                limpiarControles();
+                editableControlesVacuna(false, true, true, true, false);
+                txtId.setText(objVacuna.generarIDVacuna().toString());
+                chkDisponibilidad.setSelected(true);
                 usarBotonesVacuna(true, true, false, true, false, false);
-                txtNombre.requestFocus(); // Foco en el nombre
+                txtNombre.requestFocus();
             } else {
                 // Guardar los datos
                 if (txtNombre.getText().trim().isEmpty() || spnDosis.getValue() == null || cmbEspecie.getSelectedIndex() == -1) {
@@ -588,7 +591,6 @@ public class jdMntVacuna extends javax.swing.JDialog {
                         chkDisponibilidad.isSelected()
                 );
 
-                // Restablece la interfaz
                 btnRegistrar.setText(Utilidad.BTN_NUEVO);
                 btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                 editableControlesVacuna(true, false, false, false, false);
@@ -607,8 +609,11 @@ public class jdMntVacuna extends javax.swing.JDialog {
             if (btnRegistrar.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
                 cancelarAccionVacuna();
             } else {
-                if (txtId.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Debe ingresar un código para eliminar!");
+                if (txtId.getText().equals("")) {
+                    Utilidad.mensajeErrorFaltaID(this);
+                } else if (Utilidad.validarEliminacionForanea("vacuna", Integer.parseInt(txtId.getText()))) {
+                    JOptionPane.showMessageDialog(this, "Hay datos externos asociados a" + "vacuna" + "\" " + txtNombre.getText() + "\".\n"
+                            + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado");
                 } else {
                     int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que quieres eliminar la vacuna con código " + txtId.getText() + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
                     if (confirmacion == JOptionPane.YES_OPTION) {
@@ -632,6 +637,11 @@ public class jdMntVacuna extends javax.swing.JDialog {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void tblVacunasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVacunasMouseClicked
+        if (btnModificar.getText().equals(Utilidad.BTN_GUARDAR) || btnRegistrar.getText().equals(Utilidad.BTN_GUARDAR)) {
+            JOptionPane.showMessageDialog(this, "Porfavor, antes de realizar otra operación "
+                    + "complete el proceso actual");
+            return;
+        }
         txtId.setText(String.valueOf(tblVacunas.getValueAt(tblVacunas.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);
         usarBotonesVacuna(true, true, true, true, true, true);

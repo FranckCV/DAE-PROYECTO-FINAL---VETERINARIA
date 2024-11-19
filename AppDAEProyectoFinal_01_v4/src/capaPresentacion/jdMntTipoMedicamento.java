@@ -85,7 +85,10 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
     private void eliminarTipoMedicamento() {
         try {
             if (txtId.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un código para eliminar.");
+                Utilidad.mensajeErrorFaltaID(this);
+            } else if (Utilidad.validarEliminacionForanea("tipo_medicamento", Integer.parseInt(txtId.getText()))) {
+                JOptionPane.showMessageDialog(this, "Hay datos externos asociados a" + "tipo_medicamento" + "\" " + txtNombre.getText() + "\".\n"
+                        + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado");
             } else {
                 int valor = JOptionPane.showConfirmDialog(null, "¿Deseas eliminar el tipo de medicamento?", "Confirmación", JOptionPane.YES_NO_OPTION);
                 if (valor == JOptionPane.YES_OPTION) {
@@ -328,8 +331,8 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRegistrar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(270, 270, 270))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(244, 244, 244))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -345,8 +348,8 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -361,8 +364,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -417,12 +419,11 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
                 if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
                     btnModificar.setText(Utilidad.BTN_GUARDAR);
                     btnEliminar.setText(Utilidad.BTN_CANCELAR);
-                    txtNombre.setEditable(true); // Habilitar el campo de nombre para edición
-                    usarBotonesTipoMedicamento(true, false, true, true, false); // Configurar botones
-
-                    txtNombre.requestFocus(); // Enfocar en el campo de nombre
+                    txtNombre.setEditable(true);
+                    usarBotonesTipoMedicamento(true, false, true, true, false);
+                    txtNombre.requestFocus();
                 } else {
-                    // Realiza la modificación
+
                     objTipoMedicamento.modificarTipoMedicamento(
                             Integer.parseInt(txtId.getText()),
                             txtNombre.getText()
@@ -430,10 +431,11 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
 
                     btnModificar.setText(Utilidad.BTN_MODIFICAR);
                     btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-                    txtNombre.setEditable(false); // Bloquear edición después de guardar
-                    usarBotonesTipoMedicamento(true, true, true, true, true); // Restablecer los botones
+                    txtNombre.setEditable(false);
+                    usarBotonesTipoMedicamento(true, true, true, true, true);
                     limpiarControles();
-                    listarTiposMedicamento(); // Actualizar la tabla de tipos de medicamentos
+                    listarTiposMedicamento();
+                    tblTipoMedicamento.setEnabled(true);
                     JOptionPane.showMessageDialog(this, "Tipo de Medicamento modificado con éxito");
                 }
             }
@@ -446,6 +448,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (btnRegistrar.getText().equals("Guardar") || btnModificar.getText().equals("Guardar")) {
             cancelarAccionTipoMedicamento();
+            tblTipoMedicamento.setEnabled(true);
         } else {
             eliminarTipoMedicamento();
         }
@@ -453,6 +456,11 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
 
     private void tblTipoMedicamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTipoMedicamentoMouseClicked
         // TODO add your handling code here:
+        if (btnModificar.getText().equals(Utilidad.BTN_GUARDAR) || btnRegistrar.getText().equals(Utilidad.BTN_GUARDAR)) {
+            JOptionPane.showMessageDialog(this, "Porfavor, antes de realizar otra operación "
+                    + "complete el proceso actual");
+            return;
+        }
         txtId.setText(String.valueOf(tblTipoMedicamento.getValueAt(tblTipoMedicamento.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);
         usarBotonesTipoMedicamento(true, true, true, true, true);
