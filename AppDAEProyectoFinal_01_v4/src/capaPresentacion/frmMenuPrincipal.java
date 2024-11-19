@@ -642,6 +642,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jdMantMedico objForm = new jdMantMedico(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
+        
     }//GEN-LAST:event_mnuMedicoActionPerformed
 
     private void mnuEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEspecialidadActionPerformed
