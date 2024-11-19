@@ -123,6 +123,7 @@ public class clsCita {
         }
     }
 
+    
     public void modificarEstado(int idCita, int nuevoEstadoId) throws Exception {
         strSQL = "UPDATE CITA SET estado_cita_id = " + nuevoEstadoId + " WHERE id = " + idCita;
 
@@ -137,4 +138,28 @@ public class clsCita {
         }
     }
 
+    
+    public ResultSet listarCitasxMascota(int mas_id) throws Exception {
+        strSQL =  " SELECT "
+                    + " C.id AS id_cita, "
+                    + " C.fecha_cita, "
+                    + " C.observacion, "
+                    + " EC.nombre_estado AS estado_cita "
+                + " FROM CITA C "
+                + " LEFT JOIN CUSTODIA CU ON C.CUSTODIAMASCOTAid = CU.MASCOTAid AND C.CUSTODIADUEniOid = CU.DUEniOid "
+                + " LEFT JOIN MASCOTA M ON CU.MASCOTAid = M.id "
+                + " LEFT JOIN ESTADO_CITA EC ON C.estado_cita_id = EC.id "
+                + " WHERE M.id = "+mas_id
+                + " order by C.fecha_cita desc"
+                ;
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error: "+e.getMessage());
+        }
+    }
+    
+    
+    
 }

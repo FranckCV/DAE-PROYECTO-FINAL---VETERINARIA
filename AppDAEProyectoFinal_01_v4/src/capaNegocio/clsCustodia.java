@@ -202,22 +202,23 @@ public class clsCustodia {
     
     public ResultSet listarDueniosxMascota(int mas_id) throws Exception {
         strSQL =  " SELECT "
-                + " m.*,"
-                + " c.MASCOTAid as id_mas,"
-                + " c.DUEniOid as id_due, "
-                + " m.nombre as nom_mas, "
-                + " d.nombres as due_mas, "
-                + " c.fecha_adopción as fa "
-                + "FROM MASCOTA m "
-                + "INNER JOIN CUSTODIA c ON m.id = c.MASCOTAid "
-                + "INNER JOIN DUEniO d ON c.DUEniOid = d.id "
-                + "ORDER BY nom_mas";
-
+                + " D.id, "
+                + " D.nombres, "
+                + " D.apePaterno, " 
+                + " D.apeMaterno, " 
+                + " D.doc_identidad, " 
+                + " D.telefono, " 
+                + " D.correo, " 
+                + " D.direccion, " 
+                + " D.vigencia"
+                + " FROM CUSTODIA CU "
+                + " LEFT JOIN DUEniO D ON CU.DUEniOid = D.id "
+                + " WHERE CU.MASCOTAid = "+mas_id;
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
         } catch (Exception e) {
-            throw new Exception("Error al listar las custodias");
+            throw new Exception("Error: "+e.getMessage());
         }
     }
     

@@ -13,6 +13,7 @@ import javax.swing.text.NumberFormatter;
 import capaDatos.clsJDBC;
 import java.sql.ResultSet;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JTable;
@@ -375,6 +376,7 @@ public class Utilidad {
         }
         return false;
     }
+    
     
     
     
