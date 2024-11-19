@@ -21,12 +21,13 @@ public class clsVacuna {
     public static final String DISPONIBILIDAD = "disponibilidad";
 
     public ResultSet listarVacunas() throws Exception {
-        strSQL = "select * from " + TABLA + " order by id";
+        String strSQL = "SELECT v.id, v.nombre, v.dosis_x_kgpeso, e.nombre AS nombre_especie, v.disponibilidad "
+                + "FROM vacuna v "
+                + "INNER JOIN especie e ON v.especie_id = e.id";
         try {
-            rs = objConectar.consultarBD(strSQL);
-            return rs;
+            return objConectar.consultarBD(strSQL);
         } catch (Exception e) {
-            throw new Exception("Error en listar la tabla " + TABLA + " / " + e.getMessage());
+            throw new Exception("Error al listar las vacunas: " + e.getMessage());
         }
     }
 
@@ -43,18 +44,18 @@ public class clsVacuna {
         return 0;
     }
 
-        public Integer obtenerIdEspecie(String nom) throws Exception {
-            strSQL = "Select " + ID + " from especie where " + NOMBRE + " = '" + nom + "' ";
-            try {
-                rs = objConectar.consultarBD(strSQL);
-                if (rs.next()) {
-                    return rs.getInt(ID);
-                }
-            } catch (Exception e) {
-                throw new Exception("Error al buscar ID de " + TABLA + " con el nombre " + nom + " --> " + e.getMessage());
+    public Integer obtenerIdEspecie(String nom) throws Exception {
+        strSQL = "Select " + ID + " from especie where " + NOMBRE + " = '" + nom + "' ";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return rs.getInt(ID);
             }
-            return 0;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar ID de " + TABLA + " con el nombre " + nom + " --> " + e.getMessage());
         }
+        return 0;
+    }
 
     public Integer generarIDVacuna() throws Exception {
         strSQL = "Select COALESCE(MAX(" + ID + "),0)+1 as valor from " + TABLA;
