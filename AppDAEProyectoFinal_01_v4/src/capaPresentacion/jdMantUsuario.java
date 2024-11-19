@@ -833,7 +833,11 @@ public class jdMantUsuario extends javax.swing.JDialog {
                         || cmbCargo.getSelectedIndex() == -1
                         || radioGenero.getSelection() == null) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
-                } else {
+                }
+                else if(Utilidad.validarElementoTextoRepetido("usuario", "nomusuario", txtUsuario.getText())){
+                    JOptionPane.showMessageDialog(this, "Ya existe este nombre de usuario");
+                }
+                else {
                     btnNuevo.setText("Nuevo");
                     btnEliminar.setText(Utilidad.BTN_ELIMINAR);
 
