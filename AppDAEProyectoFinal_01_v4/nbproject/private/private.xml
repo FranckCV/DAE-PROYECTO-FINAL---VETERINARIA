@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/soporte/Utilidad.java</file>
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMantServicio.java</file>
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMntVacuna.java</file>
@@ -14,6 +15,9 @@
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/frmMenuPrincipal.java</file>
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaDatos/clsJDBC.java</file>
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaNegocio/clsVacuna.java</file>
+=======
+            <file>file:/D:/Descargas/veterinaria_dae/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMantUsuario.java</file>
+>>>>>>> d40f9983db88420beac64483d048921e8290efb6
         </group>
     </open-files>
 </project-private>

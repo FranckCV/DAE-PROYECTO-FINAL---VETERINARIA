@@ -127,6 +127,8 @@ public class jdRepHistorialClinico extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel2.setText("Citas asignadas (desde la más reciente):");
 
+        jScrollPane2.setToolTipText("");
+
         tblCitas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -135,6 +137,7 @@ public class jdRepHistorialClinico extends javax.swing.JDialog {
 
             }
         ));
+        tblCitas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tblCitas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblCitasMouseClicked(evt);
@@ -513,7 +516,7 @@ public class jdRepHistorialClinico extends javax.swing.JDialog {
             listarServiciosCita();
             cantidadFilas(tblCitaServicios, txtNumCitaServicios);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Listar Medicamentos de Cita");
+            JOptionPane.showMessageDialog(this, "Error: "+ex.getMessage());
         }
     }//GEN-LAST:event_tblCitasMouseClicked
 
@@ -785,7 +788,7 @@ public class jdRepHistorialClinico extends javax.swing.JDialog {
                 });
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al listar servicios de mascota ID: "+valorID+" / "+ e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al listar medicamentos de mascota ID: "+valorID+" / "+ e.getMessage());
         }
     }
     
