@@ -65,12 +65,7 @@ public class clsDuenio {
         }
     }
 
-<<<<<<< HEAD
 
-
-=======
-  
->>>>>>> 9cf6d0e97b3469cc3189e9d0bf5b4d0f33f55630
     public void registrarDuenio(int id, String numDoc, String nom, String app, String apm,
             String tel, String telAlt, String correo, String direc,
             boolean sexo, boolean vig) throws Exception {
@@ -132,12 +127,7 @@ public class clsDuenio {
             throw new Exception("Error al modificar la tabla usuario: " + e.getMessage());
         }
     }
-    
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> 9cf6d0e97b3469cc3189e9d0bf5b4d0f33f55630
     public ResultSet buscarDuenio(String id) throws Exception {
         strSQL = "SELECT * FROM duenio where id=" + id;
         try {
