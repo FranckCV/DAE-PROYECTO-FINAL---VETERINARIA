@@ -102,6 +102,11 @@ public class jdMantUsuario extends javax.swing.JDialog {
 
         txtNombre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtNombre.setBorder(null);
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel2.setText("Nombres:");
@@ -114,9 +119,19 @@ public class jdMantUsuario extends javax.swing.JDialog {
 
         txtApePat.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtApePat.setBorder(null);
+        txtApePat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApePatKeyTyped(evt);
+            }
+        });
 
         txtApeMat.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtApeMat.setBorder(null);
+        txtApeMat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApeMatKeyTyped(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel7.setText("Nombre de usuario:");
@@ -463,7 +478,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
-
+        limpiarControles();
         listarUsuarios();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
@@ -585,6 +600,21 @@ public class jdMantUsuario extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error " + e.getLocalizedMessage());
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        // TODO add your handling code here:
+        Utilidad.validarCampoTextoSoloLetras(evt);
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtApePatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApePatKeyTyped
+        // TODO add your handling code here:
+        Utilidad.validarCampoTextoSoloLetras(evt);
+    }//GEN-LAST:event_txtApePatKeyTyped
+
+    private void txtApeMatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApeMatKeyTyped
+        // TODO add your handling code here:
+        Utilidad.validarCampoTextoSoloLetras(evt);
+    }//GEN-LAST:event_txtApeMatKeyTyped
 
     private void listarUsuarios() {
         ResultSet rsDato = null;
@@ -783,7 +813,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
             radMasculino.setEnabled(true);
             txtId.setEnabled(false);
 
-            if (btnNuevo.getText().equals("Nuevo")) {
+            if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
                 btnNuevo.setText(Utilidad.BTN_GUARDAR);
                 btnEliminar.setText(Utilidad.BTN_CANCELAR);
 
@@ -803,7 +833,11 @@ public class jdMantUsuario extends javax.swing.JDialog {
                         || cmbCargo.getSelectedIndex() == -1
                         || radioGenero.getSelection() == null) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
-                } else {
+                }
+                else if(Utilidad.validarElementoTextoRepetido("usuario", "nomusuario", txtUsuario.getText())){
+                    JOptionPane.showMessageDialog(this, "Ya existe este nombre de usuario");
+                }
+                else {
                     btnNuevo.setText("Nuevo");
                     btnEliminar.setText(Utilidad.BTN_ELIMINAR);
 

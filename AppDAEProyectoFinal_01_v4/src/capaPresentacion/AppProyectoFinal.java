@@ -14,7 +14,7 @@ public class AppProyectoFinal {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        new frmMenuPrincipal().setVisible(true);
-  
+        frmMenuPrincipal objFrm = new frmMenuPrincipal();
+        objFrm.setVisible(true);
     }
 }
