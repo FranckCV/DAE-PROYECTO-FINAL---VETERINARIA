@@ -23,6 +23,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
         initComponents();
         btnNuevo.setText("Nuevo");
         listarEspecies();
+        chkVigencia.setEnabled(false);
     }
 
     private void listarEspecies() {
@@ -40,10 +41,9 @@ public class jdMntEspecie extends javax.swing.JDialog {
                 registro.add(0, rsEspecies.getInt("id"));
                 registro.add(1, rsEspecies.getString("nombre"));
                 if (rsEspecies.getString("disponibilidad").equals("t")) {
-                    vigencia="Vigente";
-                }
-                else{
-                    vigencia="No vigente";
+                    vigencia = "Vigente";
+                } else {
+                    vigencia = "No vigente";
                 }
 
                 modelo.addRow(registro);
@@ -91,10 +91,10 @@ public class jdMntEspecie extends javax.swing.JDialog {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(155, 155, 155)
                 .addComponent(jLabel2)
-                .addGap(165, 165, 165))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,6 +149,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel6.setText("Nombre:");
 
+        txtNombre.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtNombre.setBorder(null);
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,6 +165,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel4.setText("id: ");
 
+        txtId.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtId.setBorder(null);
         txtId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -190,32 +192,27 @@ public class jdMntEspecie extends javax.swing.JDialog {
         });
 
         chkVigencia.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        chkVigencia.setText("Vigente");
+        chkVigencia.setText("(Vigente)");
         chkVigencia.setContentAreaFilled(false);
-        chkVigencia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkVigenciaActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chkVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chkVigencia)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,41 +250,40 @@ public class jdMntEspecie extends javax.swing.JDialog {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(57, 57, 57)
+                        .addGap(53, 53, 53)
                         .addComponent(btnLimpiar))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(btnNuevo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(28, 28, 28)
                         .addComponent(btnModificar)
-                        .addGap(32, 32, 32)
+                        .addGap(20, 20, 20)
                         .addComponent(btnEliminar))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(btnLimpiar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnNuevo))
-                        .addGap(12, 12, 12))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminar)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(0, 12, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnLimpiar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNuevo)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -312,12 +308,12 @@ public class jdMntEspecie extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -356,29 +352,25 @@ public class jdMntEspecie extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Llenar todos los campos");
             } else {
                 if (btnNuevo.getText().equals("Nuevo")) {
-                    
+
                     btnNuevo.setText("Guardar");
                     bloquearBotones();
                     btnEliminar.setText("Cancelar");
                     limpiarControles();
                     txtId.setText(objEspecie.generarIDEspecie().toString());
-                    chkVigencia.setEnabled(false);
-                    chkVigencia.setSelected(true);
                     txtNombre.requestFocus();
                     tblEspecies.setEnabled(false);
-                    
+
                 } else { //Guardar
                     if (!objEspecie.validarNombre(txtNombre.getText())) {
                         btnNuevo.setText("Nuevo");
                         activarBotones();
-                        chkVigencia.setEnabled(true);
                         tblEspecies.setEnabled(true);
                         objEspecie.registrarEspecie(Integer.valueOf(txtId.getText()), txtNombre.getText());
 
                         limpiarControles();
                         listarEspecies();
-                    }
-                    else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "Ya se registró esa especie");
                     }
                 }
@@ -411,6 +403,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
 
                 if (rsEspecie.next()) {
                     txtNombre.setText(rsEspecie.getString("nombre"));
+                    chkVigencia.setSelected(rsEspecie.getBoolean("disponibilidad"));
                     rsEspecie.close();
                 } else {
                     JOptionPane.showMessageDialog(this, "Codigo de especie no existente");
@@ -427,9 +420,9 @@ public class jdMntEspecie extends javax.swing.JDialog {
             if (txtId.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código a modificar");
             } else {
-                
+
                 Object[] opciones = {"Sí", "No"};
-                
+
                 int confirmacion = JOptionPane.showOptionDialog(this,
                         "¿Estás seguro de que quieres modificar?",
                         "Confirmación",
@@ -474,7 +467,6 @@ public class jdMntEspecie extends javax.swing.JDialog {
                     activarBotones();
                     limpiarControles();
                     btnNuevo.setText("Nuevo");
-                    chkVigencia.setSelected(true);
                     btnEliminar.setText("Eliminar");
                 } else {
                     Object[] opciones = {"Sí", "No"};
@@ -520,14 +512,9 @@ public class jdMntEspecie extends javax.swing.JDialog {
 
     }//GEN-LAST:event_txtNombreKeyTyped
 
-    private void chkVigenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkVigenciaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkVigenciaActionPerformed
-
     public void limpiarControles() {
         txtId.setText("");
         txtNombre.setText("");
-        chkVigencia.setSelected(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

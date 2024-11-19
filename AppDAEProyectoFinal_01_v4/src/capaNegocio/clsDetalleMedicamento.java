@@ -72,4 +72,55 @@ public class clsDetalleMedicamento {
             objConectar.desconectar();
         }
     }
+    
+    public ResultSet listarMedicamentosxMascota(int mas_id) throws Exception {
+        strSQL= " SELECT " +
+                "    ME.id AS med_id, " +
+                "    ME.nombre AS medicamento, " +
+                "    ME.presentacion, " +
+                "    ME.costo, " +
+                "    count(me.id) as cantidad" +
+                " FROM DETALLE_MEDICAMENTO DM " +
+                " LEFT JOIN MEDICAMENTO ME ON DM.medicamento_id = ME.id " +
+                " LEFT JOIN DETALLE_CITA DC ON DM.detalle_cita_id = DC.cita_id  " +
+                " LEFT JOIN CITA C ON DC.cita_id = C.id " +
+                " LEFT JOIN CUSTODIA CU ON C.CUSTODIAMASCOTAid = CU.MASCOTAid AND C.CUSTODIADUEniOid = CU.DUEniOid " +
+                " WHERE CU.MASCOTAid = "+mas_id+
+                " group by med_id "+
+                " order by med_id "
+                ;
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error: "+e.getMessage());
+        }
+    }
+    
+    public ResultSet listarMedicamentosxMascotaxCita(int mas_id , int id_cita) throws Exception {
+        strSQL= " SELECT DISTINCT " +
+                "    ME.id AS med_id, " +
+                "    ME.nombre AS medicamento, " +
+                "    ME.presentacion, " +
+                "    ME.costo, " +
+                "    DM.dosis, " +
+                "    DM.cantidad, " +
+                "    DM.indicacion, " +                
+                "    DM.detalle_cita_id " +
+                " FROM DETALLE_MEDICAMENTO DM " +
+                " LEFT JOIN MEDICAMENTO ME ON DM.medicamento_id = ME.id " +
+                " LEFT JOIN DETALLE_CITA DC ON DM.detalle_cita_id = DC.cita_id  " +
+                " LEFT JOIN CITA C ON DC.cita_id = C.id " +
+                " LEFT JOIN CUSTODIA CU ON C.CUSTODIAMASCOTAid = CU.MASCOTAid AND C.CUSTODIADUEniOid = CU.DUEniOid " +
+                " WHERE CU.MASCOTAid = "+mas_id+" and DC.cita_id = "+id_cita+
+                " order by med_id"
+                ;
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error: "+e.getMessage());
+        }
+    }
+    
 }

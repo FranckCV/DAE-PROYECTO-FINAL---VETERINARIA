@@ -1,6 +1,7 @@
 package capaPresentacion;
 
 import capaNegocio.*;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -11,8 +12,11 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import soporte.Utilidad;
 
 public class jdMantMascota extends javax.swing.JDialog {
+
+    private static jdMantMascota instanciaUnica;
 
     clsMascota objMasco = new clsMascota();
     clsRaza objRaza = new clsRaza();
@@ -23,6 +27,13 @@ public class jdMantMascota extends javax.swing.JDialog {
         sinEditarP();
         txtId.requestFocus();
         listarMascotas();
+    }
+
+    public static jdMantMascota getInstance(Frame parent, boolean modal) throws Exception {
+        if (instanciaUnica == null) {
+            instanciaUnica = new jdMantMascota(parent, modal);
+        }
+        return instanciaUnica;
     }
 
     @SuppressWarnings("unchecked")
@@ -218,10 +229,10 @@ public class jdMantMascota extends javax.swing.JDialog {
         jLabel8.setText("Fecha Nacimiento:");
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel3.setText("Estado:");
+        jLabel3.setText("Vigencia:");
 
         chkEstado.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        chkEstado.setText("Vivo");
+        chkEstado.setText("(Vigente)");
 
         btnRaza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/patas.png"))); // NOI18N
         btnRaza.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -588,7 +599,7 @@ public class jdMantMascota extends javax.swing.JDialog {
             // Volver a listar las razas
             listarMascotas();
             listarNombreRaza();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -662,7 +673,7 @@ public class jdMantMascota extends javax.swing.JDialog {
         txtId.setText(String.valueOf(tblMascota.getValueAt(tblMascota.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);
     }//GEN-LAST:event_tblMascotaMouseClicked
- private String getSexoString(boolean sexo) {
+    private String getSexoString(boolean sexo) {
         return sexo ? "Macho" : "Hembra";
     }
 
@@ -675,7 +686,7 @@ public class jdMantMascota extends javax.swing.JDialog {
             } else {
 
                 try {
-                    
+
                     ResultSet rsBus = objMasco.buscarMascota(Integer.parseInt(txtId.getText()));
                     if (rsBus.next()) {
                         // Asignamos los valores obtenidos desde la base de datos a los campos del formulario
@@ -880,7 +891,7 @@ public class jdMantMascota extends javax.swing.JDialog {
                 String sexoTexto = rsMas.getBoolean("sexo") ? "Macho" : "Hembra";
                 String despaTexto = rsMas.getBoolean("desparasitado") ? "SI" : "NO";
                 String castTexto = rsMas.getBoolean("esterilizado") ? "SI" : "NO";
-                String estado = rsMas.getBoolean("vigencia") ? "VIVO" : "MUERTO";
+                String estado = rsMas.getBoolean("vigencia") ? Utilidad.VIGENCIA_SI : Utilidad.VIGENCIA_NO;
 
                 // Convertir las fechas de Date a String en formato adecuado
                 String fechaNacimiento = rsMas.getDate("fecha_nacimiento") != null
@@ -908,8 +919,6 @@ public class jdMantMascota extends javax.swing.JDialog {
             }
         }
     }
-
-  
 
     private void listarNombreRaza() {
         ResultSet rss = null;

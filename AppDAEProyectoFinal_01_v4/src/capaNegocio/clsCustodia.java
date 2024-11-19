@@ -23,7 +23,7 @@ public class clsCustodia {
     Connection con = null;
     Statement sent;
 
-//listarDueños
+    //listarDueños
     public ResultSet listarDueniosV() throws Exception {
         strSQL = "SELECT * FROM DUEniO where vigencia= true order by 1";
         try {
@@ -34,6 +34,7 @@ public class clsCustodia {
         }
     }
 
+    
     public ResultSet listarMascotasV() throws Exception {
         strSQL = "SELECT ma.*,d.nombres as d_nom, ra.nombre AS raza_nombre FROM MASCOTA ma INNER JOIN raza ra ON ra.id = ma.raza_id "
                 + " INNER JOIN CUSTODIA c ON ma.id = c.MASCOTAid "
@@ -47,6 +48,7 @@ public class clsCustodia {
         }
     }
 
+    
     public ResultSet filtrarDuenioV(int id) throws Exception {
         strSQL = "SELECT * FROM duenio where vigencia= true and id=" + id;
         try {
@@ -57,6 +59,7 @@ public class clsCustodia {
         }
     }
 
+    
     public ResultSet filtrarDuenioNV(String numDoc) throws Exception {
         strSQL = "SELECT * FROM duenio where vigencia= true and doc_identidad= '" + numDoc + "' ;";
         try {
@@ -67,6 +70,7 @@ public class clsCustodia {
         }
     }
 
+    
     public ResultSet filtrarMascota(int id) throws Exception {
         strSQL = "SELECT ma.*, ra.nombre AS raza_nombre, ma.id as ma_id ,ma.nombre as nom_mas "
                 + "FROM MASCOTA ma "
@@ -81,7 +85,8 @@ public class clsCustodia {
         }
     }
 
-  public ResultSet filtrarMascota(String nom) throws Exception {
+    
+    public ResultSet filtrarMascota(String nom) throws Exception {
     // Asegurarse de sanitizar la entrada para evitar problemas de inyección SQL
     strSQL = "SELECT m.*, ra.nombre AS raza_nombre, m.id as ma_id, m.nombre as nom_mas "
            + "FROM MASCOTA m "
@@ -112,6 +117,7 @@ public class clsCustodia {
         }
     }
 
+    
     public void registrarCustodia(int mas_id, int due_id, Date F_A) throws Exception {
         // Si la fecha es null, se debe insertar 'NULL' como valor en la base de datos
         String fecha = (F_A == null) ? "NULL" : "'" + new java.sql.Date(F_A.getTime()) + "'";
@@ -128,6 +134,7 @@ public class clsCustodia {
         }
     }
 
+    
     public ResultSet filtrarCustodia(int nom_M) throws Exception {
         strSQL = "SELECT m.*, c.duenioid as id_d, c.mascotaid as id_m,m.nombre as nom_mas, d.nombres as due_mas, c.fecha_adopción as fa "
                 + "FROM MASCOTA m "
@@ -142,6 +149,7 @@ public class clsCustodia {
         }
     }
 
+    
     public ResultSet filtrarCustodiaD(int nom_D) throws Exception {
          strSQL = "SELECT m.*, c.duenioid as id_d, c.mascotaid as id_m, m.nombre as nom_mas, d.nombres as due_mas, c.fecha_adopción as fa "
                 + "FROM MASCOTA m "
@@ -156,6 +164,7 @@ public class clsCustodia {
         }
     }
 
+    
     public void eliminarCustodiaMAscota(int id_M, int id_DAntiguo) throws Exception {
         strSQL = "DELETE FROM custodia WHERE MASCOTAid = " + id_M + " AND DUEniOid = " + id_DAntiguo;
 
@@ -166,7 +175,9 @@ public class clsCustodia {
         }
         
     }
-      public boolean existeCustodia(int dueId, int masId) throws Exception {
+    
+    
+    public boolean existeCustodia(int dueId, int masId) throws Exception {
         String strSQL = "SELECT COUNT(*) FROM custodia WHERE duenioid = " + dueId + " AND mascotaid = " + masId;
         ResultSet rs = null;
 
@@ -188,4 +199,31 @@ public class clsCustodia {
         return false;
     }
 
+    
+    public ResultSet listarDueniosxMascota(int mas_id) throws Exception {
+        strSQL =  " SELECT "
+                + " D.id, "
+                + " D.nombres, "
+                + " D.apePaterno, " 
+                + " D.apeMaterno, " 
+                + " D.doc_identidad, " 
+                + " D.telefono, " 
+                + " D.correo, " 
+                + " D.direccion, " 
+                + " D.vigencia"
+                + " FROM CUSTODIA CU "
+                + " LEFT JOIN DUEniO D ON CU.DUEniOid = D.id "
+                + " WHERE CU.MASCOTAid = "+mas_id;
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error: "+e.getMessage());
+        }
+    }
+    
+    
+    
+    
+    
 }

@@ -151,6 +151,7 @@ public class jdMantServicio extends javax.swing.JDialog {
         txtDescripcion.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtDescripcion.setLineWrap(true);
         txtDescripcion.setRows(5);
+        txtDescripcion.setWrapStyleWord(true);
         txtDescripcion.setAutoscrolls(false);
         jScrollPane2.setViewportView(txtDescripcion);
 
@@ -523,7 +524,12 @@ public class jdMantServicio extends javax.swing.JDialog {
     private void eliminarServicio() {
         try {
             if (txtID.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo a eliminar!");
+                Utilidad.mensajeErrorFaltaID(this);
+            } else if (Utilidad.validarEliminacionForanea(clsServicio.TABLA, Integer.parseInt(txtID.getText()))){
+                JOptionPane.showMessageDialog(this, 
+                        "Hay datos externos asociados a " + clsServicio.TABLA + " \"" + txtNombre.getText()+ "\".\n"
+                        + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. "
+                );
             } else {
                 int valor = JOptionPane.showConfirmDialog(null, "Deseas continuar?", "Confirmacion",JOptionPane.YES_NO_OPTION);
                 if (valor == JOptionPane.YES_OPTION) {
@@ -533,11 +539,7 @@ public class jdMantServicio extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + 
-                    Utilidad.mensajeErrorEliminacionForanea(
-                            e, 
-                            "servicio", 
-                            txtNombre.getText())
+            JOptionPane.showMessageDialog(this, "Error: " +e.getMessage()
             );
         }
     }

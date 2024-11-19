@@ -129,7 +129,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         });
         jScrollPane2.setViewportView(tblServiciosMedico);
 
-        jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel10.setText("Servicios que realizará o está realizando:");
 
         tblServiciosDisponibles.setModel(new javax.swing.table.DefaultTableModel(
@@ -150,7 +150,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         });
         jScrollPane3.setViewportView(tblServiciosDisponibles);
 
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel1.setText("Servicios Disponibles que puede escoger:");
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/flecha derecha.png"))); // NOI18N
@@ -260,40 +260,41 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNombreServDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 16, Short.MAX_VALUE))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(24, 24, 24))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(jLabel1)))
-                .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnQuitar, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(btnDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtIDServMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(88, 88, 88)
-                                .addComponent(jLabel10))
+                                .addComponent(btnQuitar, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(btnDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtIDServMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnBuscarServicioMedico)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(94, 94, 94)
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNombreServmedico, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chkDisponibilidadServicioMedico))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE))
-                .addGap(26, 26, 26))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(chkDisponibilidadServicioMedico))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE))
+                        .addGap(26, 26, 26))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(198, 198, 198)
+                        .addComponent(jLabel10)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,7 +319,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                     .addComponent(btnBuscarServicioMedico))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -404,6 +405,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
 
         txtCantServTotal.setEditable(false);
         txtCantServTotal.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtCantServTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCantServTotal.setBorder(null);
 
         btnLimpiar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -419,6 +421,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
 
         txtCantServDisp.setEditable(false);
         txtCantServDisp.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtCantServDisp.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCantServDisp.setBorder(null);
 
         jLabel14.setText("Cant. Servicios Asignados Disponibles");
@@ -482,7 +485,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                                 .addComponent(txtDocIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel7)
                                 .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -694,19 +697,22 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
    
     private void eliminarAsignacion(){
        int fila = tblServiciosMedico.getSelectedRow();
-       try {
-            objTabla.eliminarAsignacion(
-                    Integer.parseInt(String.valueOf(tblServiciosMedico.getValueAt(fila, 0))),
-                    Integer.parseInt(txtID.getText())
-            );
+        try {
+            if (fila <= -1) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo a eliminar!");
+            } else if (Utilidad.validarEliminacionForanea(clsEspecialidad.TABLA, fila )){
+                JOptionPane.showMessageDialog(this, 
+                        "Hay datos externos asociados al " + "servicio asigando" + " \"" + txtNombreServmedico.getText()+ "\".\n"
+                        + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. "
+                );
+            } else {
+                objTabla.eliminarAsignacion(
+                        Integer.parseInt(String.valueOf(tblServiciosMedico.getValueAt(fila, 0))),
+                        Integer.parseInt(txtID.getText())
+                );
+            }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + 
-                    Utilidad.mensajeErrorEliminacionForanea(
-                            e, 
-                            "servicio asignado", 
-                            txtNombreServmedico.getText()
-                    )
-            );
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }
     

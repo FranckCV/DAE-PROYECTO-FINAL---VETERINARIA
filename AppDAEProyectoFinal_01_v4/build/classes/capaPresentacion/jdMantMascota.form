@@ -609,7 +609,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Century Gothic" size="14" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Estado:"/>
+                    <Property name="text" type="java.lang.String" value="Vigencia:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chkEstado">
@@ -617,7 +617,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Century Gothic" size="14" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Vivo"/>
+                    <Property name="text" type="java.lang.String" value="(Vigente)"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnRaza">
