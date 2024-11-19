@@ -29,7 +29,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         btnRegistrar.setText(Utilidad.BTN_NUEVO);
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-        
+
     }
 
     public void listarTiposMedicamento() {
@@ -69,7 +69,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         btnRegistrar.setText(Utilidad.BTN_NUEVO);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
-        usarBotonesTipoMedicamento(true, true, false, false, true); 
+        usarBotonesTipoMedicamento(true, true, false, false, true);
         limpiarControles();
         editableControlesTipoMedicamento(true, false);
         listarTiposMedicamento();
@@ -375,30 +375,32 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
                 btnRegistrar.setText(Utilidad.BTN_GUARDAR);
                 btnEliminar.setText(Utilidad.BTN_CANCELAR);
                 limpiarControles();
-                editableControlesTipoMedicamento(true, true); 
+                editableControlesTipoMedicamento(true, true);
                 txtId.setText(objTipoMedicamento.generarCodigoTipoMedicamento().toString());
-                usarBotonesTipoMedicamento(false, true, false, true, true); 
+                usarBotonesTipoMedicamento(false, true, false, true, true);
                 txtNombre.requestFocus();
             } else {
-
+                // Validación de campos vacíos
                 if (txtNombre.getText().trim().isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
+                    JOptionPane.showMessageDialog(this, "Debe llenar todos los campos antes de registrar.", "Error", JOptionPane.WARNING_MESSAGE);
+                    return; // Salir del método si hay campos vacíos
                 }
+
                 if (objTipoMedicamento.existeNombreTipoMedicamento(txtNombre.getText())) {
                     JOptionPane.showMessageDialog(this, "El nombre del tipo de medicamento ya está registrado. Elija un nombre diferente.");
-                    return;
-                } else {
-                    btnRegistrar.setText(Utilidad.BTN_NUEVO);
-                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-                    objTipoMedicamento.registrarTipoMedicamento(
-                            Integer.parseInt(txtId.getText()),
-                            txtNombre.getText());
-                    editableControlesTipoMedicamento(false, false);
-                    usarBotonesTipoMedicamento(true, true, false, false, true);
-                    limpiarControles();
-                    listarTiposMedicamento();
-                    JOptionPane.showMessageDialog(this, "Tipo de Medicamento registrado con éxito");
+                    return; // Salir del método si el nombre ya existe
                 }
+
+                btnRegistrar.setText(Utilidad.BTN_NUEVO);
+                btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+                objTipoMedicamento.registrarTipoMedicamento(
+                        Integer.parseInt(txtId.getText()),
+                        txtNombre.getText());
+                editableControlesTipoMedicamento(false, false);
+                usarBotonesTipoMedicamento(true, true, false, false, true);
+                limpiarControles();
+                listarTiposMedicamento();
+                JOptionPane.showMessageDialog(this, "Tipo de Medicamento registrado con éxito");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());

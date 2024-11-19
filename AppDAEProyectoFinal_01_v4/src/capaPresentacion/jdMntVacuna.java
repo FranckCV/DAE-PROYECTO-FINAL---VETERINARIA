@@ -54,7 +54,7 @@ public class jdMntVacuna extends javax.swing.JDialog {
         try {
             rsEspec = objEspecie.listarEspecies();
             while (rsEspec.next()) {
-                modeloEspecie.addElement(rsEspec.getString("nombre"));
+                modeloEspecie.addElement(rsEspec.getString("nombre")); // Muestra nombres
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al listar especies: " + e.getMessage());
@@ -76,11 +76,12 @@ public class jdMntVacuna extends javax.swing.JDialog {
             while (rsVac.next()) {
                 boolean disponibilidad = rsVac.getBoolean("disponibilidad");
                 String disponibleText = disponibilidad ? "Disponible" : "No disponible";
+
                 modelo.addRow(new Object[]{
                     rsVac.getInt("id"),
                     rsVac.getString("nombre"),
                     rsVac.getDouble("dosis_x_kgpeso"),
-                    rsVac.getString("especie_id"),
+                    rsVac.getString("nombre_especie"),
                     disponibleText
                 });
             }
@@ -581,7 +582,7 @@ public class jdMntVacuna extends javax.swing.JDialog {
 
                 objVacuna.registrarVacuna(
                         Integer.parseInt(txtId.getText()),
-                        txtNombre.getText(), 
+                        txtNombre.getText(),
                         (Double) spnDosis.getValue(),
                         objEspecie.obtenerIdEspecie(cmbEspecie.getSelectedItem().toString()),
                         chkDisponibilidad.isSelected()
