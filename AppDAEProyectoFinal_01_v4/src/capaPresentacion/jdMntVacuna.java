@@ -54,7 +54,7 @@ public class jdMntVacuna extends javax.swing.JDialog {
         try {
             rsEspec = objEspecie.listarEspecies();
             while (rsEspec.next()) {
-                modeloEspecie.addElement(rsEspec.getString("nombre"));
+                modeloEspecie.addElement(rsEspec.getString("nombre")); // Muestra nombres
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al listar especies: " + e.getMessage());
@@ -76,11 +76,12 @@ public class jdMntVacuna extends javax.swing.JDialog {
             while (rsVac.next()) {
                 boolean disponibilidad = rsVac.getBoolean("disponibilidad");
                 String disponibleText = disponibilidad ? "Disponible" : "No disponible";
+
                 modelo.addRow(new Object[]{
                     rsVac.getInt("id"),
                     rsVac.getString("nombre"),
                     rsVac.getDouble("dosis_x_kgpeso"),
-                    rsVac.getString("especie_id"),
+                    rsVac.getString("nombre_especie"),
                     disponibleText
                 });
             }
@@ -305,14 +306,14 @@ public class jdMntVacuna extends javax.swing.JDialog {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(24, 24, 24)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel14)
                     .addComponent(jLabel4)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7)
                     .addComponent(jLabel8))
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -326,19 +327,18 @@ public class jdMntVacuna extends javax.swing.JDialog {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(chkDisponibilidad)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(33, 33, 33)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDisponibilidad, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                    .addComponent(btnDisponibilidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDisponibilidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, Short.MAX_VALUE))
-                .addGap(27, 27, 27))
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(10, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(btnRegistrar)
@@ -370,7 +370,7 @@ public class jdMntVacuna extends javax.swing.JDialog {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(chkDisponibilidad)
                             .addComponent(jLabel8))))
-                .addContainerGap())
+                .addGap(9, 9, 9))
         );
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/vacuna.png"))); // NOI18N
@@ -392,33 +392,31 @@ public class jdMntVacuna extends javax.swing.JDialog {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(146, 146, 146)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLimpiar)
-                .addGap(52, 52, 52))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80)
+                        .addComponent(btnLimpiar)
+                        .addGap(76, 76, 76))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(10, 10, 10)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLimpiar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -535,6 +533,8 @@ public class jdMntVacuna extends javax.swing.JDialog {
                     editableControlesVacuna(false, true, true, true, false);
                     usarBotonesVacuna(false, false, true, true, true, false);
                     chkDisponibilidad.setEnabled(false);
+                    tblVacunas.setEnabled(false);
+
                 } else {
                     objVacuna.modificarVacuna(
                             Integer.parseInt(txtId.getText()),
@@ -550,6 +550,7 @@ public class jdMntVacuna extends javax.swing.JDialog {
                     usarBotonesVacuna(true, true, true, true, true, true);
                     limpiarControles();
                     listarVacunas();
+                    tblVacunas.setEnabled(true);
                     JOptionPane.showMessageDialog(this, "Vacuna modificada con éxito");
                 }
             }
@@ -562,16 +563,16 @@ public class jdMntVacuna extends javax.swing.JDialog {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try {
             if (btnRegistrar.getText().equals(Utilidad.BTN_NUEVO)) {
-                // Cambia a modo guardar
+
                 btnRegistrar.setText(Utilidad.BTN_GUARDAR);
                 btnEliminar.setText(Utilidad.BTN_CANCELAR);
                 chkDisponibilidad.setEnabled(true);
-                limpiarControles(); // Limpia los campos
-                editableControlesVacuna(false, true, true, true, false); // Habilita los campos para ingresar datos
-                txtId.setText(objVacuna.generarIDVacuna().toString()); // Genera un nuevo ID
-                chkDisponibilidad.setSelected(true); // Disponibilidad predeterminada
+                limpiarControles();
+                editableControlesVacuna(false, true, true, true, false);
+                txtId.setText(objVacuna.generarIDVacuna().toString());
+                chkDisponibilidad.setSelected(true);
                 usarBotonesVacuna(true, true, false, true, false, false);
-                txtNombre.requestFocus(); // Foco en el nombre
+                txtNombre.requestFocus();
             } else {
                 // Guardar los datos
                 if (txtNombre.getText().trim().isEmpty() || spnDosis.getValue() == null || cmbEspecie.getSelectedIndex() == -1) {
@@ -585,13 +586,12 @@ public class jdMntVacuna extends javax.swing.JDialog {
 
                 objVacuna.registrarVacuna(
                         Integer.parseInt(txtId.getText()),
-                        txtNombre.getText(), 
+                        txtNombre.getText(),
                         (Double) spnDosis.getValue(),
                         objEspecie.obtenerIdEspecie(cmbEspecie.getSelectedItem().toString()),
                         chkDisponibilidad.isSelected()
                 );
 
-                // Restablece la interfaz
                 btnRegistrar.setText(Utilidad.BTN_NUEVO);
                 btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                 editableControlesVacuna(true, false, false, false, false);
@@ -610,8 +610,11 @@ public class jdMntVacuna extends javax.swing.JDialog {
             if (btnRegistrar.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
                 cancelarAccionVacuna();
             } else {
-                if (txtId.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Debe ingresar un código para eliminar!");
+                if (txtId.getText().equals("")) {
+                    Utilidad.mensajeErrorFaltaID(this);
+                } else if (Utilidad.validarEliminacionForanea("vacuna", Integer.parseInt(txtId.getText()))) {
+                    JOptionPane.showMessageDialog(this, "Hay datos externos asociados a" + "vacuna" + "\" " + txtNombre.getText() + "\".\n"
+                            + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado");
                 } else {
                     int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que quieres eliminar la vacuna con código " + txtId.getText() + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
                     if (confirmacion == JOptionPane.YES_OPTION) {
@@ -635,6 +638,11 @@ public class jdMntVacuna extends javax.swing.JDialog {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void tblVacunasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVacunasMouseClicked
+        if (btnModificar.getText().equals(Utilidad.BTN_GUARDAR) || btnRegistrar.getText().equals(Utilidad.BTN_GUARDAR)) {
+            JOptionPane.showMessageDialog(this, "Porfavor, antes de realizar otra operación "
+                    + "complete el proceso actual");
+            return;
+        }
         txtId.setText(String.valueOf(tblVacunas.getValueAt(tblVacunas.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);
         usarBotonesVacuna(true, true, true, true, true, true);

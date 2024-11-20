@@ -4,6 +4,7 @@
  */
 package soporte;
 
+
 import java.sql.*;
 import capaNegocio.*;
 import javax.swing.JFormattedTextField;
@@ -13,6 +14,7 @@ import javax.swing.text.NumberFormatter;
 import capaDatos.clsJDBC;
 import java.sql.ResultSet;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JTable;
@@ -381,6 +383,7 @@ public class Utilidad {
     
     
     
+    
 //    DESCARTADAS (no borrar aun)
         
 //    public static void mostrarInterfazjDialog(String nombreClase, JFrame parent) {
@@ -452,14 +455,14 @@ public class Utilidad {
     //DESACTIVAR CAMPOS
     public static void desactivarFields(JTextField textFieldActivo, JTextField... textFields) {
         for (JTextField textField : textFields) {
-            textField.setEnabled(textField.equals(textFieldActivo));
+            textField.setEditable(textField.equals(textFieldActivo));
         }
     }
 
-    //ACTIVAR BOTONES
+    //ACTIVAR CAMPOS
     public static void activarFields(JTextField... textFields) {
         for (JTextField textField : textFields) {
-            textField.setEnabled(true);
+            textField.setEditable(true);
         }
     }
 

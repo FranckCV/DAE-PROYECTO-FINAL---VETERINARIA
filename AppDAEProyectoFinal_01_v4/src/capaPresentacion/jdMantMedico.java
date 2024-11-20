@@ -5,6 +5,7 @@
 package capaPresentacion;
 
 import soporte.*;
+import soporte.Utilidad;
 import capaNegocio.*;
 import java.awt.Color;
 import java.awt.Component;
@@ -610,10 +611,8 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void btnDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisponibilidadActionPerformed
         // TODO add your handling code here:
-        String id = txtID.getText();
+//        String id = txtID.getText();
         cambiarDisponibilidad();
-        txtID.setText(id);
-        btnBuscarActionPerformed(null);
     }//GEN-LAST:event_btnDisponibilidadActionPerformed
 
     private void radFemeninoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radFemeninoActionPerformed
@@ -816,7 +815,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         chkDisponibilidad.setSelected(false);
         chkVigencia.setSelected(false);
         cmbEspecialidad.setSelectedIndex(-1);
-        
+        tblMedico.setEnabled(true);
         txtID.requestFocus();        
     }
    
@@ -851,13 +850,6 @@ public class jdMantMedico extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, "Error: " + 
-//                    Utilidad.mensajeErrorEliminacionForanea(
-//                            e, 
-//                            "medico(a)", 
-//                            txtNombre.getText() +" "+ txtApePat.getText() +" "+ txtApeMat.getText()
-//                    )
-//            );
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }
@@ -868,6 +860,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);        
         editableControles(true, false ,false, false, false,false, false, false, false);
         usarBotones(true, true, true, true, true, true, true,true);
+        tblMedico.setEnabled(true);
         limpiarControles();
         listarMedicos();
     }
@@ -912,18 +905,22 @@ public class jdMantMedico extends javax.swing.JDialog {
             if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
                 btnNuevo.setText(Utilidad.BTN_GUARDAR);
                 btnEliminar.setText(Utilidad.BTN_CANCELAR);
+                listarMedicos();
                 limpiarControles();
                 editableControles(false,true, true, true, true, true, false, false, true);
                 txtID.setText(objTabla.generarIDMedico().toString());
                 chkDisponibilidad.setSelected(true);
                 chkVigencia.setSelected(true);
+                tblMedico.setEnabled(false);
                 usarBotones(false, true, false, true, false, false, false,false);
                 txtNombre.requestFocus();
             } else {
                 if (txtNombre.getText().trim().isBlank() || txtDocIdentidad.getText().trim().isBlank()) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
-                } else if (txtDocIdentidad.getText().length()!=8) {
-                    JOptionPane.showMessageDialog(this, "DNI invalido");
+                } else if (
+                        Utilidad.validarElementoTextoRepetido(clsMedico.TABLA, clsMedico.DOC_IDENTIDAD, txtDocIdentidad.getText())
+                        ) {
+                    JOptionPane.showMessageDialog(this, "Ya existe un medico con este numero de documento de identificacion");
                 } else {
                     btnNuevo.setText(Utilidad.BTN_NUEVO);
                     btnEliminar.setText(Utilidad.BTN_ELIMINAR);
@@ -940,6 +937,7 @@ public class jdMantMedico extends javax.swing.JDialog {
                     usarBotones(true, true, true, true, true, true, true,true);
                     limpiarControles();
                     listarMedicos();
+                    tblMedico.setEnabled(true);
                     JOptionPane.showMessageDialog(this, "Se registró con exito");
                 }
             }
@@ -949,19 +947,25 @@ public class jdMantMedico extends javax.swing.JDialog {
     }
     
     private void cambiarDisponibilidad() {
+        String campoID = txtID.getText();
+        int valorID ;
+
         try {
             ResultSet rsCateg = null;
-            if (txtID.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo");
+            if (campoID.isBlank()) {
+                Utilidad.mensajeErrorFaltaID(this);
             } else {
-                rsCateg = objTabla.buscarMedico(Integer.parseInt(txtID.getText()));
+                valorID = Integer.parseInt(campoID);
+                rsCateg = objTabla.buscarMedico(valorID);
                 int valor = JOptionPane.showConfirmDialog(null, "¿Deseas cambiar la Disponibilidad del medico "+txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText()+"?", "Confirmacion",JOptionPane.YES_NO_OPTION);
                 if (rsCateg.next()) {
                     if (rsCateg.getBoolean(clsMedico.VIGENCIA)) {
                         if (valor == JOptionPane.YES_OPTION) {
-                            objTabla.cambiarDisponibilidad(Integer.parseInt(txtID.getText()));
+                            objTabla.cambiarDisponibilidad(valorID);
                             limpiarControles();
                             listarMedicos();
+                            txtID.setText(String.valueOf(valorID));
+                            btnBuscarActionPerformed(null);
                             JOptionPane.showMessageDialog(this, "Se modificó la Disponibilidad de este médico con exito");
                         }
                     } else {
@@ -979,7 +983,7 @@ public class jdMantMedico extends javax.swing.JDialog {
             ResultSet rsCateg = null;                
             int id_med;           
             if (txtID.getText().isBlank()) {
-                JOptionPane.showConfirmDialog(this, "Debe ingresar un codigo");
+                Utilidad.mensajeErrorFaltaID(this);
             } else {
                 id_med = Integer.parseInt(txtID.getText());
                 int valor = JOptionPane.showConfirmDialog(null, "Esta acción no podrá deshacerse.\n ¿Deseas dar de baja este elemento?", "Confirmacion",JOptionPane.YES_NO_OPTION);

@@ -1,6 +1,10 @@
 package capaNegocio;
 
 import capaDatos.clsJDBC;
+import static capaNegocio.clsMedico.DISPONIBILIDAD;
+import static capaNegocio.clsMedico.ID;
+import static capaNegocio.clsMedico.TABLA;
+import static capaNegocio.clsMedico.VIGENCIA;
 import com.sun.jdi.connect.spi.Connection;
 import java.beans.Statement;
 import java.sql.ResultSet;
@@ -17,6 +21,21 @@ public class clsDuenio {
     Connection con = null;
     Statement sent;
 
+    public static final String DISPONIBILIDAD = "disponibilidad";
+    public static final String VIGENCIA = "vigencia";
+    public static final String TABLA = "DUENIO";
+
+    
+     public ResultSet buscarDuenio(Integer codDueño) throws Exception {
+        strSQL = "Select * from duenio where id=" + codDueño;
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar el dueño --> " + e.getMessage());
+        }
+    }
+    
 //listarDueños
     public ResultSet listarDuenios() throws Exception {
         strSQL = "SELECT * FROM DUEniO order by 1";
@@ -27,6 +46,25 @@ public class clsDuenio {
             throw new Exception("Error al listar Dueño");
         }
     }
+
+    public void darBaja(Integer id) throws Exception {
+        strSQL = "update " + TABLA + " set " + VIGENCIA + " = false, " + DISPONIBILIDAD + " = false where " + ID + " = '" + id + "'";
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al modificar tabla " + TABLA + ": " + e.getMessage());
+        }
+    }
+
+    public void eliminarDuenio(int id) throws Exception {
+        strSQL = "delete from duenio where id = '" + id + "'";
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al eliminar ID: " + id + " en tabla dueño: " + e.getMessage());
+        }
+    }
+
 
     public void registrarDuenio(int id, String numDoc, String nom, String app, String apm,
             String tel, String telAlt, String correo, String direc,
@@ -80,16 +118,26 @@ public class clsDuenio {
         }
     }
 
-//buscar
+    public void darAlta(int codDueño) throws Exception {
+        strSQL = "UPDATE duenio SET estado = true WHERE codUsuario = " + codDueño;
+
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al modificar la tabla usuario: " + e.getMessage());
+        }
+    }
+
     public ResultSet buscarDuenio(String id) throws Exception {
         strSQL = "SELECT * FROM duenio where id=" + id;
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
         } catch (Exception e) {
-            throw new Exception("Error al buscar Dueño");
+            throw new Exception("Error al buscar Dueño por número de documento");
         }
     }
+
 
     public ResultSet buscarDuenioN(String numDoc) throws Exception {
         strSQL = "SELECT * FROM duenio where doc_identidad= '" + numDoc + "' ;";

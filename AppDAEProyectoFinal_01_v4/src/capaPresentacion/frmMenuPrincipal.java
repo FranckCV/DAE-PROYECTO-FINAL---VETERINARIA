@@ -5,6 +5,7 @@
 package capaPresentacion;
 
 import capaNegocio.*;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.SQLException;
@@ -18,8 +19,8 @@ import javax.swing.JOptionPane;
  */
 public class frmMenuPrincipal extends javax.swing.JFrame {
 
-    private String IMG_ICON = "logo_marmota.png";        
-    clsUsuario objUsuario= new clsUsuario();
+    private String IMG_ICON = "logo_marmota.png";
+    clsUsuario objUsuario = new clsUsuario();
 
     /**
      * Creates new form frmMenuPrincipal
@@ -38,7 +39,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     @Override
 
     public Image getIconImage() {
-        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("conector/Recursos/"+IMG_ICON));
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("conector/Recursos/" + IMG_ICON));
         return retValue;
     }
 
@@ -81,7 +82,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mnuServicio = new javax.swing.JMenuItem();
         mnuVacuna = new javax.swing.JMenuItem();
         mnuUsuarios = new javax.swing.JMenuItem();
-        jMenu10 = new javax.swing.JMenu();
+        mnuInfoAdicional = new javax.swing.JMenu();
         mnuEstadoCita = new javax.swing.JMenuItem();
         mnuTipoMedicamento = new javax.swing.JMenuItem();
         mnuEspecialidad = new javax.swing.JMenuItem();
@@ -389,7 +390,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         mnuMantenimiento.add(jMenu5);
 
-        jMenu10.setText("Información Adicional");
+        mnuInfoAdicional.setText("Información Adicional");
 
         mnuEstadoCita.setText("Estados de Citas");
         mnuEstadoCita.addActionListener(new java.awt.event.ActionListener() {
@@ -397,7 +398,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 mnuEstadoCitaActionPerformed(evt);
             }
         });
-        jMenu10.add(mnuEstadoCita);
+        mnuInfoAdicional.add(mnuEstadoCita);
 
         mnuTipoMedicamento.setText("Tipo de medicamento");
         mnuTipoMedicamento.addActionListener(new java.awt.event.ActionListener() {
@@ -405,7 +406,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 mnuTipoMedicamentoActionPerformed(evt);
             }
         });
-        jMenu10.add(mnuTipoMedicamento);
+        mnuInfoAdicional.add(mnuTipoMedicamento);
 
         mnuEspecialidad.setText("Especialidades");
         mnuEspecialidad.addActionListener(new java.awt.event.ActionListener() {
@@ -413,7 +414,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 mnuEspecialidadActionPerformed(evt);
             }
         });
-        jMenu10.add(mnuEspecialidad);
+        mnuInfoAdicional.add(mnuEspecialidad);
 
         mnuEspecie.setText("Especies");
         mnuEspecie.addActionListener(new java.awt.event.ActionListener() {
@@ -421,7 +422,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 mnuEspecieActionPerformed(evt);
             }
         });
-        jMenu10.add(mnuEspecie);
+        mnuInfoAdicional.add(mnuEspecie);
 
         mnuRazas.setText("Razas");
         mnuRazas.addActionListener(new java.awt.event.ActionListener() {
@@ -429,9 +430,9 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 mnuRazasActionPerformed(evt);
             }
         });
-        jMenu10.add(mnuRazas);
+        mnuInfoAdicional.add(mnuRazas);
 
-        mnuMantenimiento.add(jMenu10);
+        mnuMantenimiento.add(mnuInfoAdicional);
 
         jMenuBar1.add(mnuMantenimiento);
 
@@ -538,28 +539,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 //         TODO add your handling code here:
-//        jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
-//        objForm.setLocationRelativeTo(this);
-//        objForm.setVisible(true);
-//        txtUsuario.setText(objForm.nombreUsuario);
-//        switch (objForm.cargo) {
-//                    case "V":
-//                        txtCargo.setText("Veterinario");
-//                        mnuMantenimiento.setEnabled(false);
-//                        break;
-//                    case "E":
-//                        txtCargo.setText("Empleado");
-//                        mnuUsuarios.setEnabled(false);
-//                        break;
-//                    case "A":
-//                        txtCargo.setText("Administrador");
-//                        mnuMantenimiento.setEnabled(true);
-//                        mnuUsuarios.setEnabled(true);
-//                        break;
-//                    default:
-//                        JOptionPane.showMessageDialog(null, "Error al obtener puesto");
-//                        break;
-//                }
+//        login();
 
 //        jdInicioSesionVet objForm= new jdInicioSesionVet(this, true);
 //        objForm.setLocationRelativeTo(this);
@@ -585,11 +565,19 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
             // Manejo de la excepción
             JOptionPane.showMessageDialog(this, "Error al abrir el formulario de mascota: " + e.getMessage());
         }
-
+        // try {
+        //     jdMantMascota objFormq = new jdMantMascota(this, true);
+        //     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        //     int x = (screenSize.width - objFormq.getWidth()) / 2;
+        //     int y = (screenSize.height - objFormq.getHeight()) / 2;
+        //     objFormq.setLocation(x, y);
+        //     objFormq.setVisible(true);
+        // } catch (SQLException ex) {
+        //     Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        // }
     }//GEN-LAST:event_mnuMascotaActionPerformed
 
     private void mnuEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEspecieActionPerformed
-        // TODO add your handling code here:
         jdMntEspecie objForm = new jdMntEspecie(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
@@ -599,7 +587,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         jdMntRaza objForm = new jdMntRaza(this, true);
         objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true);
     }//GEN-LAST:event_mnuRazasActionPerformed
 
     private void mnuDueñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDueñoActionPerformed
@@ -608,13 +595,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
     }//GEN-LAST:event_mnuDueñoActionPerformed
-
-    private void mnuMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMedicoActionPerformed
-        // TODO add your handling code here:
-        jdMantMedico objForm = new jdMantMedico(this, true);
-        objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true);
-    }//GEN-LAST:event_mnuMedicoActionPerformed
 
     private void mnuEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEspecialidadActionPerformed
         // TODO add your handling code here:
@@ -652,12 +632,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objForm.setVisible(true);
     }//GEN-LAST:event_mnuEstadoCitaActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         jdMntVacuna objForm = new jdMntVacuna(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
-    }                                             
+    }
 
     private void mnuVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuVacunaActionPerformed
         // TODO add your handling code here:
@@ -687,13 +667,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objForm.setVisible(true);
     }//GEN-LAST:event_btnDueñoActionPerformed
 
-    private void mnuCambiarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+    private void mnuCambiarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         txtUsuario.setText("");
         txtCargo.setText("");
-        jdInicioSesionVet objForm  = new jdInicioSesionVet(this, true);
-        objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true);
+        login();
     }                                          
 
     private void mnuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuUsuariosActionPerformed
@@ -715,7 +693,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objCita.setVisible(true);
     }//GEN-LAST:event_mnuCitaActionPerformed
 
-
     private void mnuCustodiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCustodiaActionPerformed
         // TODO add your handling code here:
         jdCustodia objCus = null;
@@ -730,7 +707,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-         jsDetalleVacunacion objCita = null;
+        jsDetalleVacunacion objCita = null;
         try {
             objCita = new jsDetalleVacunacion(this, true);
         } catch (SQLException ex) {
@@ -738,7 +715,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         }
         objCita.setLocationRelativeTo(this);
         objCita.setVisible(true);
-        
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
@@ -748,7 +725,44 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void mnuMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMedicoActionPerformed
+        // TODO add your handling code here:
+        jdMantMedico objForm = new jdMantMedico(this, true);
+        objForm.setLocationRelativeTo(this);
+        objForm.setVisible(true); 
+    }//GEN-LAST:event_mnuMedicoActionPerformed
+                                                                        
 
+    private void login(){ 
+        jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
+        objForm.setLocationRelativeTo(this);
+        objForm.setVisible(true);
+        
+        txtUsuario.setText(objForm.nombreUsuario);
+        switch (objForm.cargo) {
+            case "V":
+                txtCargo.setText("Veterinario");
+                mnuMantenimiento.setVisible(false);
+                mnuUsuarios.setVisible(false);
+                mnuInfoAdicional.setVisible(false);
+                break;
+            case "E":
+                txtCargo.setText("Empleado");
+                mnuMantenimiento.setVisible(true);
+                mnuUsuarios.setVisible(false);
+                mnuInfoAdicional.setVisible(false);
+                break;
+            case "A":
+                txtCargo.setText("Administrador");
+                mnuMantenimiento.setVisible(true);
+                mnuUsuarios.setVisible(true);
+                mnuInfoAdicional.setVisible(true);
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Error al obtener puesto");
+                break;
+        }
+    }
     
     
     
@@ -762,7 +776,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
@@ -799,6 +812,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuEspecialidad;
     private javax.swing.JMenuItem mnuEspecie;
     private javax.swing.JMenuItem mnuEstadoCita;
+    private javax.swing.JMenu mnuInfoAdicional;
     private javax.swing.JMenu mnuMantenimiento;
     private javax.swing.JMenuItem mnuMascota;
     private javax.swing.JMenuItem mnuMedicamento;

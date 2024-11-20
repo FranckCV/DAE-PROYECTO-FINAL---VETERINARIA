@@ -32,6 +32,7 @@ public class clsDetalleCita {
 //            throw new Exception("Error al insertar detalle de cita --> " + e.getLocalizedMessage());
 //        }
 //    }
+    
     public ResultSet buscarDetalleCita(Integer numCita) throws Exception {
         strSQL = "SELECT DETALLE_CITA.*, "
                 + "SERVICIO.nom_servicio AS servicio_nombre, SERVICIO.descripcion AS servicio_descripcion, SERVICIO.costo AS costo,"
@@ -119,9 +120,84 @@ public class clsDetalleCita {
         }
     }
 
-//    public void insertarDetalleCita(int idCita, int idServicio, int idMedico, String horaInicio, String horaFin, String notaAdicional) throws Exception {
-//        strSQL = "INSERT INTO DETALLE_CITA (cita_id, detalle_servicio_serv_id, detalle_servicio_med_id, horaEntrada, horaSalida, nota_adicional) "
-//                + "VALUES (" + idCita + ", " + idServicio + ", " + idMedico + ", '" + horaInicio + "', '" + horaFin + "', '" + (notaAdicional != null ? notaAdicional : "") + "')";
-//        objConectar.ejecutarBD(strSQL);
-//    }
+    public ResultSet listarServiciosxMascota(int mas_id) throws Exception {
+        strSQL= " SELECT DISTINCT " +
+                    " S."+clsServicio.ID+" as ser_id, " +
+                    " S.nom_servicio, " +
+                    " S.descripcion, " +
+                    " S.costo, " +
+                    " S.disponibilidad " +
+                " FROM DETALLE_CITA DC " +
+                " LEFT JOIN DETALLE_SERVICIO DS ON DC.detalle_servicio_serv_id = DS.servicio_id AND DC.detalle_servicio_med_id = DS.medico_id " +
+                " LEFT JOIN SERVICIO S ON DS.servicio_id = S.id " +
+                " LEFT JOIN CITA C ON DC.cita_id = C.id " +
+                " LEFT JOIN CUSTODIA CU ON C.CUSTODIAMASCOTAid = CU.MASCOTAid AND C.CUSTODIADUEniOid = CU.DUEniOid " +
+                " WHERE CU.MASCOTAid = "+mas_id+
+                " order by ser_id"
+                ;
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error: "+e.getMessage());
+        }
+    }
+    
+    public ResultSet listarServiciosxMascotaCita(int mas_id , int cita_id) throws Exception {
+        strSQL= " SELECT " +
+                    " DC.cita_id, " +
+                    " S.id as ser_id, " +
+                    " S.nom_servicio, " +
+                    " DC.horaentrada, " +
+                    " DC.horasalida, " +
+                    " ME.id as med_id , " +
+                    " ME.nombres, " +
+                    " ME.apepaterno, " +
+                    " ME.apematerno " +
+                " FROM DETALLE_CITA DC " +
+                " LEFT JOIN DETALLE_SERVICIO DS ON DC.detalle_servicio_serv_id = DS.servicio_id AND DC.detalle_servicio_med_id = DS.medico_id " +
+                " LEFT JOIN SERVICIO S ON DS.servicio_id = S.id " +
+                " LEFT JOIN CITA C ON DC.cita_id = C.id " +
+                " LEFT JOIN CUSTODIA CU ON C.CUSTODIAMASCOTAid = CU.MASCOTAid AND C.CUSTODIADUEniOid = CU.DUEniOid " +
+                " LEFT JOIN MEDICO ME ON ME.id = DS.medico_id " +
+                " WHERE CU.MASCOTAid = "+mas_id+" and dc.cita_id = "+cita_id+
+                " order by dc.horaentrada "
+                ;
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error: "+e.getMessage());
+        }
+    }
+        
+    public ResultSet listarMedicosxMascota(int mas_id) throws Exception {
+        strSQL= " SELECT DISTINCT " +
+                "    MD.id AS id_medico, " +
+                "    MD.nombres AS nombre_medico, " +
+                "    MD.apePaterno AS apellido_paterno, " +
+                "    MD.apeMaterno AS apellido_materno, " +
+                "    MD.doc_identidad, " +
+                "    E.nom_especialidad AS especialidad " +
+                " FROM DETALLE_CITA DC " +
+                " LEFT JOIN DETALLE_SERVICIO DS ON DC.detalle_servicio_serv_id = DS.servicio_id AND DC.detalle_servicio_med_id = DS.medico_id " +
+                " LEFT JOIN MEDICO MD ON DS.medico_id = MD.id " +
+                " LEFT JOIN ESPECIALIDAD E ON MD.especialidad_id = E.id " +
+                " LEFT JOIN CITA C ON DC.cita_id = C.id " +
+                " LEFT JOIN CUSTODIA CU ON C.CUSTODIAMASCOTAid = CU.MASCOTAid AND C.CUSTODIADUEniOid = CU.DUEniOid " +
+                " WHERE CU.MASCOTAid = "+mas_id+
+                " order by id_medico "
+                ;
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error: "+e.getMessage());
+        }
+    }
+    
+    
+    
+    
+    
 }

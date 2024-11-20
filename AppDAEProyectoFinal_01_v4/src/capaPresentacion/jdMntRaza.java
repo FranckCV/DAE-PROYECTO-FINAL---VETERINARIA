@@ -213,6 +213,11 @@ public class jdMntRaza extends javax.swing.JDialog {
 
         cmbEspecie.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         cmbEspecie.setBorder(null);
+        cmbEspecie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEspecieActionPerformed(evt);
+            }
+        });
 
         chkVigente.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         chkVigente.setText("(Vigente)");
@@ -541,6 +546,9 @@ public class jdMntRaza extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreKeyTyped
+    private void cmbEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEspecieActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbEspecieActionPerformed
 
     private void limpiarControles() {
         txtId.setText("");

@@ -405,6 +405,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
 
         txtCantServTotal.setEditable(false);
         txtCantServTotal.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtCantServTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCantServTotal.setBorder(null);
 
         btnLimpiar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -420,6 +421,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
 
         txtCantServDisp.setEditable(false);
         txtCantServDisp.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtCantServDisp.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCantServDisp.setBorder(null);
 
         jLabel14.setText("Cant. Servicios Asignados Disponibles");

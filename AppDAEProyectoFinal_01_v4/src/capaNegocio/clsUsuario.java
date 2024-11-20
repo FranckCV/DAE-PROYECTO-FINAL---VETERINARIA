@@ -38,6 +38,27 @@ public class clsUsuario {
         return "";
     }
 
+    public String obtenerNombreUsuario(String usu, String cont) throws Exception {
+        strSQL = "select * from usuario where nomusuario = ? "
+                + "and clave = md5(? || ? || 'CODE146')";
+        try {
+            Connection micon = null;
+            objConectar.conectar();
+            micon = objConectar.getCon();
+            PreparedStatement sp = micon.prepareStatement(strSQL);
+            sp.setString(1, usu);
+            sp.setString(2, cont);
+            sp.setString(3, usu);
+            rs = sp.executeQuery();
+            while (rs.next()) {
+                return rs.getString("nomusuario");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al iniciar sesión");
+        }
+        return "";
+    }
+
     public String obtenerUsuario(String usu) throws Exception {
         strSQL = "SELECT CONCAT(nombres, ' ', appaterno) AS nombre_completo FROM usuario WHERE nomusuario = '" + usu + "'";
         try {
@@ -103,7 +124,7 @@ public class clsUsuario {
             sp.setBoolean(3, estado);
             sp.setBoolean(4, sexo);
             sp.setString(5, clave);
-            sp.setString(6, nomUsuario); 
+            sp.setString(6, nomUsuario);
             sp.setString(7, nombres);
             sp.setString(8, apPaterno);
             sp.setString(9, apMaterno);
@@ -117,7 +138,7 @@ public class clsUsuario {
 
     // Método para buscar un usuario por su código
     public ResultSet buscarUsuario(Integer codUsuario) throws Exception {
-        strSQL = "Select * from usuario where codUsuario=" + codUsuario;
+        strSQL = "select * from (select* from usuario where cargo != 'A' or codUsuario = 8) where codusuario = " + codUsuario;
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -150,7 +171,6 @@ public class clsUsuario {
     }
 
     public void darBaja(int codUsuario) throws Exception {
-        // Modificar la consulta para la tabla usuario
         strSQL = "UPDATE usuario SET estado = false WHERE codUsuario = " + codUsuario;
 
         try {
@@ -161,7 +181,6 @@ public class clsUsuario {
     }
 
     public void darAlta(int codUsuario) throws Exception {
-        // Modificar la consulta para la tabla usuario
         strSQL = "UPDATE usuario SET estado = true WHERE codUsuario = " + codUsuario;
 
         try {
@@ -170,7 +189,7 @@ public class clsUsuario {
             throw new Exception("Error al modificar la tabla usuario: " + e.getMessage());
         }
     }
-    
+
     public Integer generarCodigoUsuario() throws Exception {
         strSQL = "Select COALESCE(Max(codUsuario), 0) + 1 as codigo from usuario";
         try {
@@ -195,6 +214,26 @@ public class clsUsuario {
             throw new Exception("Error al validar usuario");
         }
         return false;
+    }
+
+    public void modificarContraseña(Integer cod, String usu, String clave) throws Exception {
+        strSQL = "update usuario set clave= md5(? || ? || 'CODE146') where codusuario="+cod;
+        try {
+            Connection micon = null;
+            objConectar.conectar();
+            micon = objConectar.getCon();
+            PreparedStatement sp = micon.prepareStatement(strSQL);
+
+
+            sp.setString(1, clave);
+            sp.setString(2, usu);
+            sp.setInt(3,cod);
+
+
+            sp.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Error al modificar contraseña");
+        }
     }
 
 }
