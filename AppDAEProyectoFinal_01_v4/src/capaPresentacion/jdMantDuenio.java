@@ -19,7 +19,7 @@ public class jdMantDuenio extends javax.swing.JDialog {
         initComponents();
         sinEditarP();
         txtId.requestFocus();
-
+        inicializarComboSexo();
     }
 
     @SuppressWarnings("unchecked")
@@ -35,26 +35,25 @@ public class jdMantDuenio extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         cmbSexo = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        txtNombres = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        txtPaterno = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        txtNumC = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        txtMaterno = new javax.swing.JTextField();
-        txtCorreo = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        txtNumCA = new javax.swing.JTextField();
-        txtDireccion = new javax.swing.JTextField();
         chkVigencia = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        numDoc = new javax.swing.JTextField();
         btnBuscar1 = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
+        txtNombres = new javax.swing.JTextField();
+        txtPaterno = new javax.swing.JTextField();
+        txtNumC = new javax.swing.JTextField();
+        txtNumCA = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JTextField();
+        numDoc = new javax.swing.JTextField();
+        txtMaterno = new javax.swing.JTextField();
+        txtCorreo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDuenio = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
@@ -63,8 +62,10 @@ public class jdMantDuenio extends javax.swing.JDialog {
         btnAgregarMas = new javax.swing.JButton();
         btnModificar1 = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
         txtId = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -116,25 +117,11 @@ public class jdMantDuenio extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel7.setText("Nombres:");
 
-        txtNombres.setBorder(null);
-        txtNombres.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNombresKeyTyped(evt);
-            }
-        });
-
         jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel10.setText("Apellido Paterno:");
 
         jLabel15.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel15.setText("Sexo:");
-
-        txtPaterno.setBorder(null);
-        txtPaterno.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPaternoKeyTyped(evt);
-            }
-        });
 
         jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel9.setText("Apellido Materno:");
@@ -142,44 +129,14 @@ public class jdMantDuenio extends javax.swing.JDialog {
         jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel12.setText("Teléfono:");
 
-        txtNumC.setBorder(null);
-        txtNumC.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNumCKeyTyped(evt);
-            }
-        });
-
         jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel14.setText("Correo Electrónico:");
 
         jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel13.setText("Dirección:");
 
-        txtMaterno.setBorder(null);
-        txtMaterno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMaternoActionPerformed(evt);
-            }
-        });
-        txtMaterno.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtMaternoKeyTyped(evt);
-            }
-        });
-
-        txtCorreo.setBorder(null);
-
         jLabel16.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel16.setText("Teléfono Alternativo:");
-
-        txtNumCA.setBorder(null);
-        txtNumCA.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNumCAKeyTyped(evt);
-            }
-        });
-
-        txtDireccion.setBorder(null);
 
         chkVigencia.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         chkVigencia.setText("Vigencia");
@@ -189,13 +146,6 @@ public class jdMantDuenio extends javax.swing.JDialog {
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel5.setText("Número de Doc.:");
-
-        numDoc.setBorder(null);
-        numDoc.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                numDocKeyTyped(evt);
-            }
-        });
 
         btnBuscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar-pequeño.png"))); // NOI18N
         btnBuscar1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -208,84 +158,155 @@ public class jdMantDuenio extends javax.swing.JDialog {
             }
         });
 
+        txtNombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombresKeyTyped(evt);
+            }
+        });
+
+        txtPaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPaternoKeyTyped(evt);
+            }
+        });
+
+        txtNumC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumCActionPerformed(evt);
+            }
+        });
+        txtNumC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumCKeyTyped(evt);
+            }
+        });
+
+        txtNumCA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumCAActionPerformed(evt);
+            }
+        });
+        txtNumCA.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumCAKeyTyped(evt);
+            }
+        });
+
+        txtDireccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDireccionActionPerformed(evt);
+            }
+        });
+        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionKeyTyped(evt);
+            }
+        });
+
+        numDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numDocActionPerformed(evt);
+            }
+        });
+        numDoc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                numDocKeyTyped(evt);
+            }
+        });
+
+        txtMaterno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMaternoActionPerformed(evt);
+            }
+        });
+        txtMaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMaternoKeyTyped(evt);
+            }
+        });
+
+        txtCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCorreoActionPerformed(evt);
+            }
+        });
+        txtCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCorreoKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chkVigencia)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel16)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNumCA, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel14)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtNumC)
+                            .addComponent(txtPaterno, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombres, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(37, 37, 37)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(numDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel13))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addGap(36, 42, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel7)
-                                        .addComponent(jLabel10))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtMaterno)
-                                        .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel12)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtNumC, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(37, 37, 37)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel9)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel15)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(numDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(87, 87, 87)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGap(6, 6, 6)
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(chkVigencia))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel13)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(0, 0, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtNumCA, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtDireccion))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
+                        .addGap(14, 14, 14)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel7)
                                     .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10)
-                                    .addComponent(txtMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel10)
+                                    .addComponent(txtPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel12)
                                     .addComponent(txtNumC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -293,43 +314,32 @@ public class jdMantDuenio extends javax.swing.JDialog {
                                     .addComponent(jLabel5)
                                     .addComponent(numDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel9)
-                                    .addComponent(txtPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel15)
-                                    .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel16)
-                        .addComponent(txtNumCA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel14)
-                        .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(txtNumCA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14)
+                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chkVigencia)
                     .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
-
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar-pequeño.png"))); // NOI18N
-        btnBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnBuscar.setBorderPainted(false);
-        btnBuscar.setContentAreaFilled(false);
-        btnBuscar.setName(""); // NOI18N
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
 
         tblDuenio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -394,13 +404,13 @@ public class jdMantDuenio extends javax.swing.JDialog {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnAgregarMas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnModificar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificar1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregarMas))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -411,19 +421,58 @@ public class jdMantDuenio extends javax.swing.JDialog {
                 .addComponent(btnModificar1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLimpiar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(btnAgregarMas, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel8.setText("Código:");
+        jPanel6.setBackground(new java.awt.Color(138, 238, 238));
 
         txtId.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIdKeyTyped(evt);
             }
         });
+
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar-pequeño.png"))); // NOI18N
+        btnBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnBuscar.setBorderPainted(false);
+        btnBuscar.setContentAreaFilled(false);
+        btnBuscar.setName(""); // NOI18N
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jLabel8.setText("Id:");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(11, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -432,27 +481,24 @@ public class jdMantDuenio extends javax.swing.JDialog {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addComponent(jLabel4))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addGap(23, 23, 23)
-                                        .addComponent(jLabel4))
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel3))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -460,28 +506,18 @@ public class jdMantDuenio extends javax.swing.JDialog {
                 .addComponent(jLabel3)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(48, 48, 48)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addGap(28, 28, 28)
-                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel8)
-                                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(48, 48, 48)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -534,8 +570,8 @@ public class jdMantDuenio extends javax.swing.JDialog {
 
                 if (rsDuenio.next()) {
                     txtNombres.setText(rsDuenio.getString("nombres"));
-                    txtPaterno.setText(rsDuenio.getString("apePaterno"));
-                    txtMaterno.setText(rsDuenio.getString("apeMaterno"));
+                    txtMaterno.setText(rsDuenio.getString("apePaterno"));
+                    txtPaterno.setText(rsDuenio.getString("apeMaterno"));
                     txtNumC.setText(rsDuenio.getString("telefono"));
                     txtNumCA.setText(rsDuenio.getString("telefonoAlt"));
                     txtCorreo.setText(rsDuenio.getString("correo"));
@@ -562,10 +598,10 @@ public class jdMantDuenio extends javax.swing.JDialog {
         limpiarControles();
         listarDuenios();
         sinEditarP();
+        inicializarComboSexo();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        
         try {
             if (btnRegistrar.getText().equals("Agregar Dueño")) {
                 btnRegistrar.setText("Guardar Datos");
@@ -573,45 +609,54 @@ public class jdMantDuenio extends javax.swing.JDialog {
                 btnModificar1.setEnabled(false);
                 btnLimpiar.setEnabled(false);
                 btnAgregarMas.setEnabled(false);
+                btnBuscar1.setEnabled(false);
                 limpiarControles();
+                inicializarComboSexo();
                 editar();
                 txtId.setText(objDuenio.generarCodigoDuenio().toString());
                 txtNombres.requestFocus();
                 txtId.setEditable(false);
+                chkVigencia.setEnabled(false);
+                chkVigencia.setSelected(true);
             } else {
-                if (camposEstanLlenos()) {
-                    btnRegistrar.setText("Agregar Dueño");
-                    editar();
-                    boolean sexo = cmbSexo.getSelectedItem().toString().equals("Masculino");
+                if (!camposEstanLlenos()) {
+                    return;
+                }
+                try {
+                    boolean sexo = cmbSexo.getSelectedItem().toString().equals("");
                     objDuenio.registrarDuenio(
                             Integer.parseInt(txtId.getText()),
                             numDoc.getText(),
                             txtNombres.getText(),
-                            txtPaterno.getText(),
                             txtMaterno.getText(),
+                            txtPaterno.getText(),
                             txtNumC.getText(),
                             txtNumCA.getText(),
                             txtCorreo.getText(),
                             txtDireccion.getText(),
                             sexo,
                             chkVigencia.isSelected());
-                    // Limpiar los controles una vez se guarda el dueño
-                    listarDuenios();  // Actualiza la lista de dueños
+                    listarDuenios();
                     limpiarControles();
-                    JOptionPane.showMessageDialog(null, "Dueño registrado con éxito!");
+                    inicializarComboSexo();
 
+                    JOptionPane.showMessageDialog(null, "Dueño registrado con éxito!");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Error al registrar la mascota: " + e.getMessage());
+                    return;
                 }
+
                 btnBuscar.setEnabled(true);
                 btnModificar1.setEnabled(true);
                 btnLimpiar.setEnabled(true);
                 btnAgregarMas.setEnabled(true);
                 txtId.requestFocus();
+                btnBuscar1.setEnabled(true);
                 sinEditarP();
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Error: uno de los campos numéricos tiene formato incorrecto");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al registrar al dueño: " + e.getMessage());
+
         }
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
@@ -619,6 +664,7 @@ public class jdMantDuenio extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         listarDuenios();
+        inicializarComboSexo();
 
     }//GEN-LAST:event_formWindowOpened
 
@@ -631,8 +677,10 @@ public class jdMantDuenio extends javax.swing.JDialog {
     private void btnAgregarMasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMasActionPerformed
         try {
             abrirOtroJDialog();
+
         } catch (SQLException ex) {
-            Logger.getLogger(jdMantDuenio.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdMantDuenio.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         dispose();
     }//GEN-LAST:event_btnAgregarMasActionPerformed
@@ -647,48 +695,52 @@ public class jdMantDuenio extends javax.swing.JDialog {
                 null,
                 opciones,
                 opciones[0]);
-        if (respuesta == 0) { // Si la respuesta es "Sí"
+        if (respuesta == 0) {
             try {
-                // Validar que txtNumDoc no esté vacío
                 if (txtId.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
+                    return;
+                }
+                if (btnModificar1.getText().equals("Modificar")) {
+                    btnModificar1.setText("Guardar Datos");
+                    btnBuscar.setEnabled(false);
+                    btnBuscar1.setEnabled(false);
+                    btnRegistrar.setEnabled(false);
+
+                    editar();
+                    txtId.setEditable(false);
                 } else {
-                    if (btnModificar1.getText().equals("Modificar")) {
-                        btnModificar1.setText("Guardar Datos");
-                        btnBuscar.setEnabled(false);
-                        editar();
-                        txtId.setEditable(false);
-                    } else {
-                        if (camposEstanLlenos()) {
-                            btnModificar1.setText("Modificar");
-                            objDuenio.modificarDuenio(
-                                    Integer.parseInt(txtId.getText()),
-                                    numDoc.getText(),// numDoc debe ir primero
-                                    txtNombres.getText(),
-                                    txtPaterno.getText(),
-                                    txtMaterno.getText(),
-                                    txtNumC.getText(),
-                                    txtNumCA.getText(),
-                                    txtCorreo.getText(),
-                                    txtDireccion.getText(),
-                                    cmbSexo.getSelectedItem().toString().equals("Masculino"), // Booleano para el sexo
-                                    chkVigencia.isSelected());
-                            // Limpiar controles y actualizar la lista de dueños
-                            listarDuenios();
-                            limpiarControles();
-                            sinEditarP();
-                            JOptionPane.showMessageDialog(this, "Se Modificó con exito");
-                            btnBuscar.setEnabled(true);
-                        } else {
+                    if (!camposEstanLlenos()) {
+                        return;
+                    }
+                    try {
+                        objDuenio.modificarDuenio(
+                                Integer.parseInt(txtId.getText()),
+                                numDoc.getText(),// numDoc debe ir primero
+                                txtNombres.getText(),
+                                txtMaterno.getText(),
+                                txtPaterno.getText(),
+                                txtNumC.getText(),
+                                txtNumCA.getText(),
+                                txtCorreo.getText(),
+                                txtDireccion.getText(),
+                                cmbSexo.getSelectedItem().toString().equals("Masculino"), // Booleano para el sexo
+                                chkVigencia.isSelected());
+                        JOptionPane.showMessageDialog(this, "Información modificada con exito");
 
-                        }
-
+                        // Limpiar controles y actualizar la lista de dueños
+                        listarDuenios();
+                        limpiarControles();
+                        btnModificar1.setText("Modificar");
+                        inicializarComboSexo();
+                        sinEditarP();
+                        btnBuscar.setEnabled(true);
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, "Error al modificar la mascota: " + e.getMessage());
                     }
                 }
             } catch (Exception e) {
-                // Manejo de excepciones con mensaje más legible
-                JOptionPane.showMessageDialog(this, "Ocurrió un problema interno en el sistema: " + e.getMessage());
-
+                JOptionPane.showMessageDialog(this, "Error al modificar la mascota: " + e.getMessage());
             }
         }
     }//GEN-LAST:event_btnModificar1ActionPerformed
@@ -699,7 +751,7 @@ public class jdMantDuenio extends javax.swing.JDialog {
 
     private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
         // TODO add your handling code here:
-         ResultSet rsDuenio = null;
+        ResultSet rsDuenio = null;
         try {
             if (numDoc.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un número de documento para buscar");
@@ -711,19 +763,19 @@ public class jdMantDuenio extends javax.swing.JDialog {
                 if (rsDuenio.next()) {
                     txtId.setText(rsDuenio.getString("id"));
                     txtNombres.setText(rsDuenio.getString("nombres"));
-                    txtPaterno.setText(rsDuenio.getString("apePaterno"));
-                    txtMaterno.setText(rsDuenio.getString("apeMaterno"));
+                    txtMaterno.setText(rsDuenio.getString("apePaterno"));
+                    txtPaterno.setText(rsDuenio.getString("apeMaterno"));
                     txtNumC.setText(rsDuenio.getString("telefono"));
                     txtNumCA.setText(rsDuenio.getString("telefonoAlt"));
                     txtCorreo.setText(rsDuenio.getString("correo"));
                     txtDireccion.setText(rsDuenio.getString("direccion"));
                     cmbSexo.setSelectedItem(getSexoString(rsDuenio.getBoolean("sexo")));
                     chkVigencia.setSelected(rsDuenio.getBoolean("vigencia"));
- 
+
                     sinEditarP();
-                  
+
                 } else {
-                    JOptionPane.showMessageDialog(this, "Código de Dueño no existe");
+                    JOptionPane.showMessageDialog(this, "El número de documento no existe");
                     limpiarControles();
                     sinEditarP();
                 }
@@ -732,54 +784,76 @@ public class jdMantDuenio extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Ocurrió un error del sistema en la búsqueda");
 
         }
-        
+
     }//GEN-LAST:event_btnBuscar1ActionPerformed
 
-    private void numDocKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numDocKeyTyped
-        // TODO add your handling code here:
-        
-         char c = evt.getKeyChar();
-        // Verifica si el carácter no es un dígito
-        if (!Character.isDigit(c)) {
-            evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
-        }
-    }//GEN-LAST:event_numDocKeyTyped
-
     private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
-        // TODO add your handling code here:
-         char c = evt.getKeyChar();
-        // Verifica si el carácter no es un dígito
+        char c = evt.getKeyChar();
         if (!Character.isDigit(c)) {
-            evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
+            evt.consume();
         }
     }//GEN-LAST:event_txtIdKeyTyped
 
+    private void txtNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombresKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isLetter(c) && c != ' ') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombresKeyTyped
+
+    private void txtPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPaternoKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isLetter(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPaternoKeyTyped
+
     private void txtNumCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumCKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
-        // Verifica si el carácter no es un dígito
+        char c = evt.getKeyChar();
         if (!Character.isDigit(c)) {
-            evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
+            evt.consume();
         }
     }//GEN-LAST:event_txtNumCKeyTyped
 
+    private void txtNumCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumCActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_txtNumCActionPerformed
+
+    private void txtNumCAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumCAActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumCAActionPerformed
+
     private void txtNumCAKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumCAKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
-        // Verifica si el carácter no es un dígito
+        char c = evt.getKeyChar();
         if (!Character.isDigit(c)) {
-            evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
+            evt.consume();
         }
     }//GEN-LAST:event_txtNumCAKeyTyped
 
-    private void txtNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombresKeyTyped
+    private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
-        // Verifica si el carácter no es una letra y tampoco un espacio
-        if (!Character.isLetter(c) && c != ' ') {
-            evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
+    }//GEN-LAST:event_txtDireccionActionPerformed
+
+    private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDireccionKeyTyped
+
+    private void numDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numDocActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numDocActionPerformed
+
+    private void numDocKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numDocKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
         }
-    }//GEN-LAST:event_txtNombresKeyTyped
+    }//GEN-LAST:event_numDocKeyTyped
 
     private void txtMaternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaternoActionPerformed
         // TODO add your handling code here:
@@ -787,30 +861,27 @@ public class jdMantDuenio extends javax.swing.JDialog {
 
     private void txtMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMaternoKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
-        // Verifica si el carácter no es una letra y tampoco un espacio
-        if (!Character.isLetter(c) && c != ' ') {
-            evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
+        char c = evt.getKeyChar();
+        if (!Character.isLetter(c)) {
+            evt.consume();
         }
     }//GEN-LAST:event_txtMaternoKeyTyped
 
-    private void txtPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPaternoKeyTyped
+    private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
-        // Verifica si el carácter no es una letra y tampoco un espacio
-        if (!Character.isLetter(c) && c != ' ') {
-            evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
-        }
-    }//GEN-LAST:event_txtPaternoKeyTyped
+    }//GEN-LAST:event_txtCorreoActionPerformed
+
+    private void txtCorreoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCorreoKeyTyped
 
     private String getSexoString(boolean sexo) {
         return sexo ? "Masculino" : "Femenino";
     }
 
     private boolean camposEstanLlenos() {
-        // Verificar si los campos de texto están llenos
-        if (txtId.getText().isEmpty() || txtNombres.getText().isEmpty() || txtPaterno.getText().isEmpty()
-                || numDoc.getText().isEmpty() || txtMaterno.getText().isEmpty()
+        if (txtId.getText().isEmpty() || txtNombres.getText().isEmpty() || txtMaterno.getText().isEmpty()
+                || numDoc.getText().isEmpty() || txtPaterno.getText().isEmpty()
                 || txtNumC.getText().isEmpty() || txtDireccion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Los campos más importantes deben estar llenos.");
             return false; // Retorna false si falta algún campo importante
@@ -832,12 +903,21 @@ public class jdMantDuenio extends javax.swing.JDialog {
         }
     }
 
+    private void inicializarComboSexo() {
+        DefaultComboBoxModel<String> modeloSexo = new DefaultComboBoxModel<>();
+        modeloSexo.addElement("-Selecciona-");
+        modeloSexo.addElement("Masculino");
+        modeloSexo.addElement("Femenino");
+        cmbSexo.setModel(modeloSexo);
+        cmbSexo.setSelectedIndex(0);
+    }
+
     private void sinEditar() {
         txtId.setEditable(false);
         numDoc.setEditable(false);
         txtNombres.setEditable(false);
-        txtPaterno.setEditable(false);
         txtMaterno.setEditable(false);
+        txtPaterno.setEditable(false);
         txtNumC.setEditable(false);
         txtNumCA.setEditable(false);
         txtCorreo.setEditable(false);
@@ -847,10 +927,10 @@ public class jdMantDuenio extends javax.swing.JDialog {
     }
 
     private void sinEditarP() {
-        
+
         txtNombres.setEditable(false);
-        txtPaterno.setEditable(false);
         txtMaterno.setEditable(false);
+        txtPaterno.setEditable(false);
         txtNumC.setEditable(false);
         txtNumCA.setEditable(false);
         txtCorreo.setEditable(false);
@@ -864,8 +944,8 @@ public class jdMantDuenio extends javax.swing.JDialog {
         txtId.setEditable(true);
         numDoc.setEditable(true);
         txtNombres.setEditable(true);
-        txtPaterno.setEditable(true);
         txtMaterno.setEditable(true);
+        txtPaterno.setEditable(true);
         txtNumC.setEditable(true);
         txtNumCA.setEditable(true);
         txtCorreo.setEditable(true);
@@ -924,8 +1004,8 @@ public class jdMantDuenio extends javax.swing.JDialog {
 
         txtId.setText("");
         txtNombres.setText("");
-        txtPaterno.setText("");
         txtMaterno.setText("");
+        txtPaterno.setText("");
         txtNumC.setText("");
         txtNumCA.setText("");
         txtCorreo.setText("");
@@ -965,6 +1045,7 @@ public class jdMantDuenio extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField numDoc;
