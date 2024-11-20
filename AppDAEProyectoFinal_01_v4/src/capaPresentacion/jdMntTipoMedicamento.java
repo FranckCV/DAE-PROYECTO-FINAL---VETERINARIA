@@ -4,6 +4,7 @@
  */
 package capaPresentacion;
 
+import capaNegocio.clsMedico;
 import soporte.*;
 import capaNegocio.clsTipoMedicamento;
 import java.sql.ResultSet;
@@ -224,6 +225,12 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
             }
         });
         txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtIdKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtIdKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIdKeyTyped(evt);
             }
@@ -296,7 +303,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -356,8 +363,8 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -390,7 +397,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
 
                 if (objTipoMedicamento.existeNombreTipoMedicamento(txtNombre.getText())) {
                     JOptionPane.showMessageDialog(this, "El nombre del tipo de medicamento ya está registrado. Elija un nombre diferente.");
-                    return; // Salir del método si el nombre ya existe
+                    return;
                 }
 
                 btnRegistrar.setText(Utilidad.BTN_NUEVO);
@@ -414,31 +421,54 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             if (txtId.getText().isBlank()) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo de medicamento para modificar");
-            } else {
-                if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
-                    btnModificar.setText(Utilidad.BTN_GUARDAR);
-                    btnEliminar.setText(Utilidad.BTN_CANCELAR);
-                    txtNombre.setEditable(true);
-                    usarBotonesTipoMedicamento(true, false, true, true, false);
-                    txtNombre.requestFocus();
-                } else {
-
-                    objTipoMedicamento.modificarTipoMedicamento(
-                            Integer.parseInt(txtId.getText()),
-                            txtNombre.getText()
-                    );
-
-                    btnModificar.setText(Utilidad.BTN_MODIFICAR);
-                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-                    txtNombre.setEditable(false);
-                    usarBotonesTipoMedicamento(true, true, true, true, true);
-                    limpiarControles();
-                    listarTiposMedicamento();
-                    tblTipoMedicamento.setEnabled(true);
-                    JOptionPane.showMessageDialog(this, "Tipo de Medicamento modificado con éxito");
-                }
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo de medicamento para modificar.");
+                return; 
             }
+
+            if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                btnModificar.setText(Utilidad.BTN_GUARDAR);
+                btnEliminar.setText(Utilidad.BTN_CANCELAR);
+                txtNombre.setEditable(true);
+                usarBotonesTipoMedicamento(false, false, true, true, false);
+                txtNombre.requestFocus();
+                return;
+            }
+
+            if (txtNombre.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe llenar todos los campos antes de modificar.", "Error", JOptionPane.WARNING_MESSAGE);
+                return; // Early return si el campo está vacío
+            }
+
+            if (objTipoMedicamento.existeNombreTipoMedicamento(txtNombre.getText())) {
+                JOptionPane.showMessageDialog(this, "El nombre del tipo de medicamento ya está registrado. Elija un nombre diferente.");
+                return; 
+            }
+
+            int confirmacion = JOptionPane.showConfirmDialog(
+                    this,
+                    "¿Está seguro de que desea guardar los cambios realizados?",
+                    "Confirmar modificación",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirmacion != JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(this, "No se realizo ningún cambio");
+                return; 
+            }
+
+            objTipoMedicamento.modificarTipoMedicamento(
+                    Integer.parseInt(txtId.getText()),
+                    txtNombre.getText()
+            );
+
+            btnModificar.setText(Utilidad.BTN_MODIFICAR);
+            btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+            txtNombre.setEditable(false);
+            usarBotonesTipoMedicamento(true, true, true, true, true); // Habilitar todos los botones
+            limpiarControles();
+            listarTiposMedicamento();
+            JOptionPane.showMessageDialog(this, "Tipo de Medicamento modificado con éxito.");
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
@@ -535,6 +565,35 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         editableControlesTipoMedicamento(true, false);
         usarBotonesTipoMedicamento(true, true, false, false, false);
     }//GEN-LAST:event_formWindowOpened
+
+    private void txtIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            try {
+                if (txtId.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Ingrese un ID válido.", "Error", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                int id = Integer.parseInt(txtId.getText());
+                ResultSet rs = objTipoMedicamento.buscarTipoMedicamento(id);
+
+                if (rs.next()) {
+                    txtNombre.setText(rs.getString("nomtipo"));
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontró información para el ID ingresado.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    txtNombre.setText("");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error al buscar información: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+    }//GEN-LAST:event_txtIdKeyPressed
+
+    private void txtIdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdKeyReleased
 
     /**
      * @param args the command line arguments

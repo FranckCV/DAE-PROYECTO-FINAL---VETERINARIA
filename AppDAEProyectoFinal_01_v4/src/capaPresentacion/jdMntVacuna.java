@@ -239,6 +239,9 @@ public class jdMntVacuna extends javax.swing.JDialog {
             }
         });
         txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtIdKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIdKeyTyped(evt);
             }
@@ -525,38 +528,50 @@ public class jdMntVacuna extends javax.swing.JDialog {
         try {
             if (txtId.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar una vacuna para modificar.");
-            } else {
-                if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
-                    btnModificar.setText(Utilidad.BTN_GUARDAR);
-                    btnEliminar.setText(Utilidad.BTN_CANCELAR);
-                    editableControlesVacuna(false, true, true, true, false);
-                    usarBotonesVacuna(false, false, true, true, true, false);
-                    chkDisponibilidad.setEnabled(false);
-                    tblVacunas.setEnabled(false);
-
-                } else {
-                    objVacuna.modificarVacuna(
-                            Integer.parseInt(txtId.getText()),
-                            txtNombre.getText(),
-                            (Double) spnDosis.getValue(),
-                            objEspecie.obtenerIdEspecie(cmbEspecie.getSelectedItem().toString()),
-                            chkDisponibilidad.isSelected()
-                    );
-
-                    btnModificar.setText(Utilidad.BTN_MODIFICAR);
-                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-                    editableControlesVacuna(true, false, false, false, false);
-                    usarBotonesVacuna(true, true, true, true, true, true);
-                    limpiarControles();
-                    listarVacunas();
-                    tblVacunas.setEnabled(true);
-                    JOptionPane.showMessageDialog(this, "Vacuna modificada con éxito");
-                }
+                return; 
+                
             }
+
+            if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                btnModificar.setText(Utilidad.BTN_GUARDAR);
+                btnEliminar.setText(Utilidad.BTN_CANCELAR);
+                editableControlesVacuna(false, true, true, true, false);
+                usarBotonesVacuna(false, false, true, true, true, false);
+                chkDisponibilidad.setEnabled(false);
+                return; 
+            }
+
+            int confirmacion = JOptionPane.showConfirmDialog(
+                    this,
+                    "¿Está seguro de que desea guardar los cambios realizados?",
+                    "Confirmar modificación",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirmacion != JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(this, "No se realizó ningún cambio");
+                return; 
+            }
+
+            objVacuna.modificarVacuna(
+                    Integer.parseInt(txtId.getText()),
+                    txtNombre.getText(),
+                    (Double) spnDosis.getValue(),
+                    objEspecie.obtenerIdEspecie(cmbEspecie.getSelectedItem().toString()),
+                    chkDisponibilidad.isSelected()
+            );
+
+            btnModificar.setText(Utilidad.BTN_MODIFICAR);
+            btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+            editableControlesVacuna(true, false, false, false, false);
+            usarBotonesVacuna(true, true, true, true, true, true);
+            limpiarControles();
+            listarVacunas();
+            JOptionPane.showMessageDialog(this, "Vacuna modificada con éxito.");
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al modificar la vacuna: " + e.getMessage());
         }
-
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -654,11 +669,31 @@ public class jdMntVacuna extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Seleccione una vacuna para cambiar su disponibilidad.");
                 return;
             }
+
+            // Obtener el estado actual de disponibilidad
             boolean disponibilidadActual = chkDisponibilidad.isSelected();
-            objVacuna.actualizarDisponibilidad(Integer.parseInt(txtId.getText()), !disponibilidadActual);
-            chkDisponibilidad.setSelected(!disponibilidadActual);
-            listarVacunas();
-            JOptionPane.showMessageDialog(this, "Disponibilidad actualizada con éxito.");
+            String estadoActual = disponibilidadActual ? "Disponible" : "No Disponible";
+            String nuevoEstado = disponibilidadActual ? "No Disponible" : "Disponible";
+
+            // Confirmar el cambio de disponibilidad
+            int confirmacion = JOptionPane.showConfirmDialog(
+                    this,
+                    "La vacuna \"" + txtNombre.getText() + "\" actualmente está " + estadoActual + ".\n"
+                    + "¿Desea cambiar su estado a \"" + nuevoEstado + "\"?",
+                    "Confirmación de cambio de disponibilidad",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                // Actualizar la disponibilidad en la base de datos
+                objVacuna.actualizarDisponibilidad(Integer.parseInt(txtId.getText()), !disponibilidadActual);
+
+                // Refrescar los controles
+                chkDisponibilidad.setSelected(!disponibilidadActual);
+                listarVacunas();
+
+                JOptionPane.showMessageDialog(this, "Disponibilidad actualizada con éxito.");
+            } else {
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al actualizar disponibilidad: " + e.getMessage());
         }
@@ -679,15 +714,7 @@ public class jdMntVacuna extends javax.swing.JDialog {
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-        int key = evt.getKeyChar();
-
-        boolean mayusculas = key >= 65 && key <= 90;
-        boolean minusculas = key >= 97 && key <= 122;
-        boolean espacio = key == 32;
-
-        if (!(minusculas || mayusculas || espacio)) {
-            evt.consume();
-        }
+        Utilidad.validarCampoTextoSoloLetras(evt);
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void spnDosisKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spnDosisKeyTyped
@@ -698,6 +725,34 @@ public class jdMntVacuna extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_spnDosisKeyTyped
+
+    private void txtIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) { // Detectar Enter
+            try {
+                if (txtId.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Ingrese un ID válido.", "Error", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                int id = Integer.parseInt(txtId.getText());
+                ResultSet rsVac = objVacuna.buscarVacuna(id);
+
+                if (rsVac.next()) {
+                    txtNombre.setText(rsVac.getString("nombre"));
+                    spnDosis.setValue(rsVac.getDouble("dosis_x_kgpeso"));
+                    cmbEspecie.setSelectedItem(rsVac.getString("nombre_especie"));
+                    chkDisponibilidad.setSelected(rsVac.getBoolean("disponibilidad"));
+                    rsVac.close();
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se encontró información para el ID ingresado.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    limpiarControles();
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al buscar información: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_txtIdKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

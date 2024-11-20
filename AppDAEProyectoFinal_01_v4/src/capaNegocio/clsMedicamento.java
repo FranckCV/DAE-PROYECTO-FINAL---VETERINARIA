@@ -54,7 +54,10 @@ public class clsMedicamento {
     }
 
     public ResultSet buscarMedicamento(Integer id) throws Exception {
-        strSQL = "Select * from medicamento where id=" + id;
+        strSQL = "SELECT m.id, m.nombre, m.costo, m.stock, m.presentacion, m.vigencia, t.nomtipo AS tipo_medicamento "
+                + "FROM medicamento m "
+                + "JOIN tipo_medicamento t ON m.tipo_medicamento_id = t.id "
+                + "WHERE m.id = " + id;
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
