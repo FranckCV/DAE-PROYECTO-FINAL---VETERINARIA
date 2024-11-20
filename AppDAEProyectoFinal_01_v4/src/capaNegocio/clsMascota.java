@@ -82,13 +82,17 @@ public class clsMascota {
 
     // Método para buscar una mascota por su ID
     public ResultSet buscarMascota(int id) throws Exception {
-        strSQL = "SELECT ma.*, ra.nombre AS raza_nombre, es.nombre AS especie_nombre "
+ strSQL = "SELECT ma.*, ra.nombre AS raza_nombre, es.nombre AS especie_nombre "
                 + "FROM MASCOTA ma "
                 + "INNER JOIN raza ra ON ra.id = ma.raza_id "
                 + "INNER JOIN especie es ON es.id = ra.especie_id "
-                + "WHERE ma.id = ?";
+                + "WHERE ma.id ="+ id;
+ try {
+            return objConectar.consultarBD(strSQL);
 
-        return objConectar.consultarBDConParametros(strSQL, new Object[]{id});
+        } catch (Exception e) {
+            throw new Exception("Error al buscar Mascotas: " + e.getMessage());
+        }
     }
 
     public ResultSet buscarMascota(String nom) throws Exception {
@@ -131,6 +135,19 @@ public class clsMascota {
         }
     }
 
+     public ResultSet filtrarID(int id) throws Exception {
+        strSQL = "SELECT ma.*, ra.nombre AS raza_nombre, es.nombre AS especie_nombre "
+                + "FROM MASCOTA ma "
+                + "INNER JOIN raza ra ON ra.id = ma.raza_id "
+                + "INNER JOIN especie es ON es.id = ra.especie_id "
+                + "WHERE ma.id ="+ id;
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al filtrar mascotas por Código" + e.getMessage());
+        }
+    }
     // Método para obtener el código de una raza a partir de su nombre
     public Integer obtenerCodigoRaza(String nombreRaza) throws Exception {
         strSQL = "SELECT id FROM raza WHERE nombre = ?";

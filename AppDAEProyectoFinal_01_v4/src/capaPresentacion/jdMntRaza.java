@@ -213,6 +213,11 @@ public class jdMntRaza extends javax.swing.JDialog {
 
         cmbEspecie.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         cmbEspecie.setBorder(null);
+        cmbEspecie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEspecieActionPerformed(evt);
+            }
+        });
 
         chkVigente.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         chkVigente.setText("(Vigente)");
@@ -298,7 +303,11 @@ public class jdMntRaza extends javax.swing.JDialog {
                         .addGap(67, 67, 67)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+<<<<<<< HEAD
                         .addComponent(btnLimpiar))
+=======
+                        .addComponent(jButton5))
+>>>>>>> 1e08c282a5e19da6921fad72546c3f1fa3c914ca
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -533,6 +542,7 @@ public class jdMntRaza extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+<<<<<<< HEAD
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
         char key = evt.getKeyChar();
@@ -541,6 +551,11 @@ public class jdMntRaza extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreKeyTyped
+=======
+    private void cmbEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEspecieActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbEspecieActionPerformed
+>>>>>>> 1e08c282a5e19da6921fad72546c3f1fa3c914ca
 
     private void limpiarControles() {
         txtId.setText("");
