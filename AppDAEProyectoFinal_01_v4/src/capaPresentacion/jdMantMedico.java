@@ -5,6 +5,7 @@
 package capaPresentacion;
 
 import soporte.*;
+import soporte.Utilidad;
 import capaNegocio.*;
 import java.awt.Color;
 import java.awt.Component;
