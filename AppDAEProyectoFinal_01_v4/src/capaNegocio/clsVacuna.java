@@ -23,7 +23,7 @@ public class clsVacuna {
     public ResultSet listarVacunas() throws Exception {
         String strSQL = "SELECT v.id, v.nombre, v.dosis_x_kgpeso, e.nombre AS nombre_especie, v.disponibilidad "
                 + "FROM vacuna v "
-                + "INNER JOIN especie e ON v.especie_id = e.id";
+                + "INNER JOIN especie e ON v.especie_id = e.id order by id";
         try {
             return objConectar.consultarBD(strSQL);
         } catch (Exception e) {

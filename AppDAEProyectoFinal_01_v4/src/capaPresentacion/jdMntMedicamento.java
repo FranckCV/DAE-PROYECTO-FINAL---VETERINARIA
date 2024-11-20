@@ -547,6 +547,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                 txtId.setText(objMedicamento.generarCodigoMedicamento().toString());
                 usarBotonesMedicamento(false, true, false, true, false, false);
                 txtNombre.requestFocus();
+                
             } else {
                 // Validación de campos
                 if (txtNombre.getText().trim().isEmpty() || txtCosto.getText().trim().isEmpty() || txtPresentacion.getText().trim().isEmpty()) {
@@ -576,6 +577,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                     usarBotonesMedicamento(true, true, false, false, true, false);
                     limpiarControles();
                     listarMedicamentos();
+                    
                     JOptionPane.showMessageDialog(this, "Medicamento registrado con éxito");
                 }
             }
@@ -597,8 +599,8 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                     btnEliminar.setText(Utilidad.BTN_CANCELAR);
                     editableControlesMedicamento(false, true, true, true, true, false, true);
                     usarBotonesMedicamento(false, false, true, true, true, false);
-
                     chkVigencia.setEnabled(false);
+
                 } else {
                     objMedicamento.modificarMedicamento(
                             Integer.parseInt(txtId.getText()),
@@ -611,7 +613,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                     btnModificar.setText(Utilidad.BTN_MODIFICAR);
                     btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                     editableControlesMedicamento(true, false, false, false, false, false, false);
-                    usarBotonesMedicamento(true, true, false, true, true, true);
+                    usarBotonesMedicamento(true, true, true, true, true, true);
                     limpiarControles();
                     listarMedicamentos();
                     JOptionPane.showMessageDialog(this, "Medicamento modificado con éxito");
@@ -626,6 +628,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (btnRegistrar.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
             cancelarAccionMedicamento();
+            tblMedicamento.setEnabled(true);
         } else {
             eliminarMedicamento();
         }
@@ -684,9 +687,14 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
     private void tblMedicamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMedicamentoMouseClicked
         // TODO add your handling code here:
+        if (btnModificar.getText().equals(Utilidad.BTN_GUARDAR) || btnRegistrar.getText().equals(Utilidad.BTN_GUARDAR)) {
+            JOptionPane.showMessageDialog(this, "Porfavor, antes de realizar otra operación "
+                    + "complete el proceso actual");
+            return;
+        }
         txtId.setText(String.valueOf(tblMedicamento.getValueAt(tblMedicamento.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);
-        usarBotonesMedicamento(true, true, true, true, true, true); // Habilita todos los botones
+        usarBotonesMedicamento(true, true, true, true, true, true);
     }//GEN-LAST:event_tblMedicamentoMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -789,7 +797,10 @@ public class jdMntMedicamento extends javax.swing.JDialog {
     private void eliminarMedicamento() {
         try {
             if (txtId.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un código para eliminar!");
+                Utilidad.mensajeErrorFaltaID(this);
+            } else if (Utilidad.validarEliminacionForanea("medicamento", Integer.parseInt(txtId.getText()))) {
+                JOptionPane.showMessageDialog(this, "Hay datos externos asociados a" + "medicamento" + "\" " + txtNombre.getText() + "\".\n"
+                        + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado");
             } else {
                 int valor = JOptionPane.showConfirmDialog(null, "¿Deseas eliminarlo?", "Confirmación", JOptionPane.YES_NO_OPTION);
                 if (valor == JOptionPane.YES_OPTION) {
