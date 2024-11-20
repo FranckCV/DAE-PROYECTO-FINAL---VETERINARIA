@@ -539,32 +539,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 //         TODO add your handling code here:
-<<<<<<< HEAD
-        login();
-=======
-        jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
-        objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true);
-        txtUsuario.setText(objForm.nombreUsuario);
-        switch (objForm.cargo) {
-            case "V":
-                txtCargo.setText("Veterinario");
-                mnuMantenimiento.setEnabled(false);
-                break;
-            case "E":
-                txtCargo.setText("Empleado");
-                mnuUsuarios.setEnabled(false);
-                break;
-            case "A":
-                txtCargo.setText("Administrador");
-                mnuMantenimiento.setEnabled(true);
-                mnuUsuarios.setEnabled(true);
-                break;
-            default:
-                JOptionPane.showMessageDialog(null, "Error al obtener puesto");
-                break;
-        }
->>>>>>> 1e08c282a5e19da6921fad72546c3f1fa3c914ca
+//        login();
 
 //        jdInicioSesionVet objForm= new jdInicioSesionVet(this, true);
 //        objForm.setLocationRelativeTo(this);
@@ -580,7 +555,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCitaActionPerformed
 
     private void mnuMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMascotaActionPerformed
-<<<<<<< HEAD
         // TODO add your handling code here:
         try {
             // Llamada al constructor que puede lanzar una excepción
@@ -590,22 +564,20 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         } catch (Exception e) {
             // Manejo de la excepción
             JOptionPane.showMessageDialog(this, "Error al abrir el formulario de mascota: " + e.getMessage());
-=======
-        try {
-            jdMantMascota objFormq = new jdMantMascota(this, true);
-            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            int x = (screenSize.width - objFormq.getWidth()) / 2;
-            int y = (screenSize.height - objFormq.getHeight()) / 2;
-            objFormq.setLocation(x, y);
-            objFormq.setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
->>>>>>> 1e08c282a5e19da6921fad72546c3f1fa3c914ca
         }
+        // try {
+        //     jdMantMascota objFormq = new jdMantMascota(this, true);
+        //     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        //     int x = (screenSize.width - objFormq.getWidth()) / 2;
+        //     int y = (screenSize.height - objFormq.getHeight()) / 2;
+        //     objFormq.setLocation(x, y);
+        //     objFormq.setVisible(true);
+        // } catch (SQLException ex) {
+        //     Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        // }
     }//GEN-LAST:event_mnuMascotaActionPerformed
 
     private void mnuEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEspecieActionPerformed
-        // TODO add your handling code here:
         jdMntEspecie objForm = new jdMntEspecie(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
@@ -615,7 +587,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         jdMntRaza objForm = new jdMntRaza(this, true);
         objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true);
     }//GEN-LAST:event_mnuRazasActionPerformed
 
     private void mnuDueñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDueñoActionPerformed
@@ -624,14 +595,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
     }//GEN-LAST:event_mnuDueñoActionPerformed
-
-    private void mnuMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMedicoActionPerformed
-        // TODO add your handling code here:
-        jdMantMedico objForm = new jdMantMedico(this, true);
-        objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true);
-        
-    }//GEN-LAST:event_mnuMedicoActionPerformed
 
     private void mnuEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEspecialidadActionPerformed
         // TODO add your handling code here:
@@ -708,15 +671,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         txtUsuario.setText("");
         txtCargo.setText("");
-<<<<<<< HEAD
         login();
     }                                          
-=======
-        jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
-        objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true);
-    }
->>>>>>> 1e08c282a5e19da6921fad72546c3f1fa3c914ca
 
     private void mnuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuUsuariosActionPerformed
         // TODO add your handling code here:
@@ -768,6 +724,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         frm.setLocationRelativeTo(this);
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void mnuMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMedicoActionPerformed
+        // TODO add your handling code here:
+        jdMantMedico objForm = new jdMantMedico(this, true);
+        objForm.setLocationRelativeTo(this);
+        objForm.setVisible(true); 
+    }//GEN-LAST:event_mnuMedicoActionPerformed
+                                                                        
 
     private void login(){ 
         jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);

@@ -66,6 +66,7 @@ public class jdMantMascota extends javax.swing.JDialog {
         dtcFechaNacimiento = new com.toedter.calendar.JDateChooser();
         jLabel15 = new javax.swing.JLabel();
         cbxSexo = new javax.swing.JComboBox<>();
+        cbxRaza = new javax.swing.JComboBox<>();
         txtNombre = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         txtAltura = new javax.swing.JTextField();
@@ -83,6 +84,7 @@ public class jdMantMascota extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         txtId = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        btnRaza = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         btnModificar = new javax.swing.JButton();
@@ -93,7 +95,8 @@ public class jdMantMascota extends javax.swing.JDialog {
         chkEstado = new javax.swing.JCheckBox();
         chkCastrado = new javax.swing.JCheckBox();
         chkDesparasitado = new javax.swing.JCheckBox();
-        jLabel13 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();        
+        jLabel3 = new javax.swing.JLabel();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -241,7 +244,6 @@ public class jdMantMascota extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel8.setText("Fecha Nacimiento:");
 
-<<<<<<< HEAD
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel3.setText("Vigencia:");
 
@@ -257,8 +259,6 @@ public class jdMantMascota extends javax.swing.JDialog {
             }
         });
 
-=======
->>>>>>> 1e08c282a5e19da6921fad72546c3f1fa3c914ca
         btnBuscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar.png"))); // NOI18N
         btnBuscar1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnBuscar1.setBorderPainted(false);
@@ -671,10 +671,8 @@ public class jdMantMascota extends javax.swing.JDialog {
             inicializarComboSexo();
             listarNombreEspecie();
             listarNombreRaza();
-<<<<<<< HEAD
-=======
+
             inicializarComboEstado();
->>>>>>> 1e08c282a5e19da6921fad72546c3f1fa3c914ca
 
         } catch (SQLException ex) {
             Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
@@ -752,7 +750,6 @@ public class jdMantMascota extends javax.swing.JDialog {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void tblMascotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMascotaMouseClicked
-<<<<<<< HEAD
         // TODO add your handling code here:
         txtId.setText(String.valueOf(tblMascota.getValueAt(tblMascota.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);
@@ -761,7 +758,7 @@ public class jdMantMascota extends javax.swing.JDialog {
         return sexo ? "Macho" : "Hembra";
     }
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:
         try {
             if (txtId.getText().equals("")) {
@@ -800,16 +797,17 @@ public class jdMantMascota extends javax.swing.JDialog {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado: " + e.getMessage());
-=======
-        try {
-            txtId.setText(String.valueOf(tblMascota.getValueAt(tblMascota.getSelectedRow(), 0)));
-            mostrarCampos();
-        } catch (Exception ex) {
-            Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
->>>>>>> 1e08c282a5e19da6921fad72546c3f1fa3c914ca
         }
+        // try {
+        //     txtId.setText(String.valueOf(tblMascota.getValueAt(tblMascota.getSelectedRow(), 0)));
+        //     mostrarCampos();
+        // } catch (Exception ex) {
+        //     Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
+        // }
 
-    }//GEN-LAST:event_tblMascotaMouseClicked
+    }
+    
+                                           
     private void inicializarComboSexo() {
         DefaultComboBoxModel<String> modeloSexo = new DefaultComboBoxModel<>();
         modeloSexo.addElement("-Selecciona-");
@@ -829,76 +827,76 @@ public class jdMantMascota extends javax.swing.JDialog {
         cmbEstadoSalud.setSelectedIndex(0);
     }
 
-    private String getSexoString(boolean sexo) {
-        return sexo ? "Macho" : "Hembra";
-    }
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        ResultSet rsMas = null;
-        DefaultTableModel modeloM = new DefaultTableModel();
-        modeloM.addColumn("Cóodigo");
-        modeloM.addColumn("Nombre");
-        modeloM.addColumn("Fecha Nacimiento");
-        modeloM.addColumn("Altura");
-        modeloM.addColumn("Peso");
-        modeloM.addColumn("Sexo");
-        modeloM.addColumn("Nota Adicional");
-        modeloM.addColumn("Esterilizado");
-        modeloM.addColumn("Desparasitado");
-        modeloM.addColumn("Condición");
-        modeloM.addColumn("Estado");
-        modeloM.addColumn("Raza");
-        tblMascota.setModel(modeloM);
-        try {
-            if (txtId.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe completar el campo de búsqueda.");
-                listarMascotas();
-                return;
-            }
-            rsMas = objMasco.filtrarID(Integer.parseInt(txtId.getText()));
-            boolean hayResultados = false;
-            mostrarCampos();
-            while (rsMas.next()) {
-                hayResultados = true;
-                String sexoTexto = rsMas.getBoolean("sexo") ? "Macho" : "Hembra";
-                String despaTexto = rsMas.getBoolean("desparasitado") ? "SI" : "NO";
-                String castTexto = rsMas.getBoolean("esterilizado") ? "SI" : "NO";
-                String estado = rsMas.getBoolean("vigencia") ? "VIVO" : "MUERTO";
-                String fechaNacimiento = rsMas.getDate("fecha_nacimiento") != null
-                        ? rsMas.getDate("fecha_nacimiento").toString() : "Sin fecha";
+    // private String getSexoString(boolean sexo) {
+    //     return sexo ? "Macho" : "Hembra";
+    // }
+    // private void btnBuscarActionPerformed2(java.awt.event.ActionEvent evt) {
+    //     ResultSet rsMas = null;
+    //     DefaultTableModel modeloM = new DefaultTableModel();
+    //     modeloM.addColumn("Cóodigo");
+    //     modeloM.addColumn("Nombre");
+    //     modeloM.addColumn("Fecha Nacimiento");
+    //     modeloM.addColumn("Altura");
+    //     modeloM.addColumn("Peso");
+    //     modeloM.addColumn("Sexo");
+    //     modeloM.addColumn("Nota Adicional");
+    //     modeloM.addColumn("Esterilizado");
+    //     modeloM.addColumn("Desparasitado");
+    //     modeloM.addColumn("Condición");
+    //     modeloM.addColumn("Estado");
+    //     modeloM.addColumn("Raza");
+    //     tblMascota.setModel(modeloM);
+    //     try {
+    //         if (txtId.getText().trim().equals("")) {
+    //             JOptionPane.showMessageDialog(this, "Debe completar el campo de búsqueda.");
+    //             listarMascotas();
+    //             return;
+    //         }
+    //         rsMas = objMasco.filtrarID(Integer.parseInt(txtId.getText()));
+    //         boolean hayResultados = false;
+    //         mostrarCampos();
+    //         while (rsMas.next()) {
+    //             hayResultados = true;
+    //             String sexoTexto = rsMas.getBoolean("sexo") ? "Macho" : "Hembra";
+    //             String despaTexto = rsMas.getBoolean("desparasitado") ? "SI" : "NO";
+    //             String castTexto = rsMas.getBoolean("esterilizado") ? "SI" : "NO";
+    //             String estado = rsMas.getBoolean("vigencia") ? "VIVO" : "MUERTO";
+    //             String fechaNacimiento = rsMas.getDate("fecha_nacimiento") != null
+    //                     ? rsMas.getDate("fecha_nacimiento").toString() : "Sin fecha";
 
-                modeloM.addRow(new Object[]{
-                    rsMas.getInt("id"),
-                    rsMas.getString("nombre"),
-                    fechaNacimiento,
-                    rsMas.getString("altura"),
-                    rsMas.getString("peso"),
-                    sexoTexto,
-                    rsMas.getString("notaAdicional"),
-                    castTexto,
-                    despaTexto,
-                    mostrarEstado(rsMas.getString("estado_salud")),
-                    estado,
-                    rsMas.getString("raza_nombre"),}
-                );
-            }
+    //             modeloM.addRow(new Object[]{
+    //                 rsMas.getInt("id"),
+    //                 rsMas.getString("nombre"),
+    //                 fechaNacimiento,
+    //                 rsMas.getString("altura"),
+    //                 rsMas.getString("peso"),
+    //                 sexoTexto,
+    //                 rsMas.getString("notaAdicional"),
+    //                 castTexto,
+    //                 despaTexto,
+    //                 mostrarEstado(rsMas.getString("estado_salud")),
+    //                 estado,
+    //                 rsMas.getString("raza_nombre"),}
+    //             );
+    //         }
 
-            if (!hayResultados) {
-                JOptionPane.showMessageDialog(this, "No se encontraron mascotas con ese nombre.");
-                listarMascotas();
-                inicializarComboSexo();
-                listarNombreEspecie();
-                listarNombreRaza();
-                inicializarComboEstado();
-            }
-        } catch (Exception e) {
-            try {
-                JOptionPane.showMessageDialog(this, "Error al listar Mascotas: " + e.getMessage());
-                listarMascotas();
-            } catch (SQLException ex) {
-                Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_btnBuscarActionPerformed
+    //         if (!hayResultados) {
+    //             JOptionPane.showMessageDialog(this, "No se encontraron mascotas con ese nombre.");
+    //             listarMascotas();
+    //             inicializarComboSexo();
+    //             listarNombreEspecie();
+    //             listarNombreRaza();
+    //             inicializarComboEstado();
+    //         }
+    //     } catch (Exception e) {
+    //         try {
+    //             JOptionPane.showMessageDialog(this, "Error al listar Mascotas: " + e.getMessage());
+    //             listarMascotas();
+    //         } catch (SQLException ex) {
+    //             Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
+    //         }
+    //     }
+    // }                                         
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         Object[] opciones = {"Sí", "No"};
@@ -1008,6 +1006,13 @@ public class jdMantMascota extends javax.swing.JDialog {
         objForm.setVisible(true);
 
     }//GEN-LAST:event_btnAgregarDActionPerformed
+
+    private void btnRazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRazaActionPerformed
+        jdMantDuenio objForm = new jdMantDuenio(null, true);
+        objForm.setLocationRelativeTo(this);
+        objForm.setVisible(true);
+
+    }//GEN-LAST:event_btnRazaActionPerformed
 
     private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
         try {
@@ -1119,13 +1124,10 @@ public class jdMantMascota extends javax.swing.JDialog {
                 String sexoTexto = rsMas.getBoolean("sexo") ? "Macho" : "Hembra";
                 String despaTexto = rsMas.getBoolean("desparasitado") ? "SI" : "NO";
                 String castTexto = rsMas.getBoolean("esterilizado") ? "SI" : "NO";
-<<<<<<< HEAD
                 String estado = rsMas.getBoolean("vigencia") ? Utilidad.VIGENCIA_SI : Utilidad.VIGENCIA_NO;
 
                 // Convertir las fechas de Date a String en formato adecuado
-=======
-                String estado = rsMas.getBoolean("vigencia") ? "VIVO" : "MUERTO";
->>>>>>> 1e08c282a5e19da6921fad72546c3f1fa3c914ca
+//                String estado = rsMas.getBoolean("vigencia") ? "VIVO" : "MUERTO";
                 String fechaNacimiento = rsMas.getDate("fecha_nacimiento") != null
                         ? rsMas.getDate("fecha_nacimiento").toString() : "Sin fecha";
 
@@ -1410,6 +1412,7 @@ public class jdMantMascota extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarD;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnRaza;
     private javax.swing.JButton btnBuscar1;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
@@ -1423,6 +1426,7 @@ public class jdMantMascota extends javax.swing.JDialog {
     private javax.swing.JCheckBox chkDesparasitado;
     private javax.swing.JCheckBox chkEstado;
     private javax.swing.JComboBox<String> cmbEstadoSalud;
+    private javax.swing.JComboBox<String> cbxRaza;
     private com.toedter.calendar.JDateChooser dtcFechaNacimiento;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
@@ -1430,6 +1434,7 @@ public class jdMantMascota extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;

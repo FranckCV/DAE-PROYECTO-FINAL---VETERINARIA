@@ -579,41 +579,6 @@
                     <Property name="text" type="java.lang.String" value="Fecha Nacimiento:"/>
                   </Properties>
                 </Component>
-<<<<<<< HEAD
-                <Component class="javax.swing.JLabel" name="jLabel3">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Century Gothic" size="14" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Vigencia:"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JCheckBox" name="chkEstado">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Century Gothic" size="14" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="(Vigente)"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JButton" name="btnRaza">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/conector/Recursos/patas.png"/>
-                    </Property>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
-                        <EmptyBorder/>
-                      </Border>
-                    </Property>
-                    <Property name="borderPainted" type="boolean" value="false"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRazaActionPerformed"/>
-                  </Events>
-                </Component>
-=======
->>>>>>> 1e08c282a5e19da6921fad72546c3f1fa3c914ca
                 <Component class="javax.swing.JButton" name="btnBuscar1">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
