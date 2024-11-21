@@ -269,7 +269,7 @@ VALUES (6, 'asanchez', FALSE, TRUE, md5('1031' || 'asanchez' || 'CODE146'), 'And
 INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
 VALUES (7, 'fabi', FALSE, TRUE, md5('123' || 'fabi' || 'CODE146'), 'Fabiana', 'Paucar', 'Mejia', 'V');
 
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) s
+INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
 VALUES (8, 'Admin_Fab', TRUE, TRUE, md5('123' || 'Admin_Fab' || 'CODE146'), 'Fabiana', 'Paucar', 'Mejia', 'V');
 
 
@@ -676,7 +676,7 @@ VALUES
 (11, 3, '2024-12-01', 'Consulta de urgencia por accidente', 11, 11),
 (12, 2, '2024-12-02', 'Terapia física para rehabilitación', 12, 12),
 (13, 1, '2024-12-03', 'Chequeo oftalmológico por irritación', 13, 13),
-(14, 1, '2024-12-04', 'Endoscopía programada', 14, 13), -- Ajustado para corresponder a CUSTODIA
+(14, 1, '2024-12-04', 'Endoscopía programada', 30, 15), -- Ajustado para corresponder a CUSTODIA
 (15, 3, '2024-12-05', 'Atención de emergencia por fractura', 15, 15),
 (16, 2, '2024-12-06', 'Consulta exótica para reptil', 16, 16),
 (17, 1, '2024-12-07', 'Consulta geriátrica', 17, 17),
@@ -684,59 +684,58 @@ VALUES
 (19, 2, '2024-12-09', 'Vacunación múltiple', 19, 19),
 (20, 1, '2024-12-10', 'Chequeo general con radiografía', 20, 20),
 (21, 1, '2024-12-11', 'Consulta dermatológica por caída de pelo', 21, 21),
-(22, 2, '2024-12-12', 'Pruebas alérgicas', 22, 22),
-(23, 1, '2024-12-13', 'Consulta por dolor articular', 23, 23),
-(24, 3, '2024-12-14', 'Consulta urgente por pérdida de apetito', 24, 24),
-(25, 1, '2024-12-15', 'Chequeo cardiológico programado', 25, 13), -- Ajustado para corresponder a CUSTODIA
-(26, 2, '2024-12-16', 'Limpieza dental', 26, 13), -- Ajustado
+(22, 2, '2024-12-12', 'Pruebas alérgicas', 25, 13),
+(23, 1, '2024-12-13', 'Consulta por dolor articular', 32, 16),
+(24, 3, '2024-12-14', 'Consulta urgente por pérdida de apetito', 35, 18),
+(25, 1, '2024-12-15', 'Chequeo cardiológico programado', 37, 19), -- Ajustado para corresponder a CUSTODIA
+(26, 2, '2024-12-16', 'Limpieza dental', 24, 24), -- Ajustado
 (27, 1, '2024-12-17', 'Cirugía menor para esterilización', 27, 14),
 (28, 2, '2024-12-18', 'Consulta de segunda opinión', 28, 14),
 (29, 1, '2024-12-19', 'Corte de uñas y chequeo', 29, 15),
-(30, 3, '2024-12-20', 'Emergencia por envenenamiento', 30, 15);
+(30, 3, '2024-12-20', 'Emergencia por envenenamiento', 40, 20);
 
 
 INSERT INTO DETALLE_CITA (cita_id, detalle_servicio_serv_id, detalle_servicio_med_id, horaEntrada, horaSalida, nota_adicional) 
 VALUES
 (1, 1, 1, '09:00:00', '09:30:00', 'Consulta general sin complicaciones'),
-(2, 2, 2, '10:00:00', '10:20:00', 'Vacunación antirrábica completada'),
+(2, 2, 1, '10:00:00', '10:20:00', 'Vacunación antirrábica completada'),
 (3, 9, 5, '11:00:00', '11:45:00', 'Chequeo de presión arterial normal'),
-(4, 3, 3, '12:00:00', '12:30:00', 'Desparasitación realizada sin problemas'),
+(4, 3, 2, '12:00:00', '12:30:00', 'Desparasitación realizada sin problemas'),
 (5, 12, 6, '13:00:00', '13:40:00', 'Diagnóstico dermatológico inicial realizado'),
-(6, 4, 4, '14:00:00', '16:00:00', 'Cirugía menor completada con éxito'),
-(7, 5, 7, '01:00:00', '01:45:00', 'Atención de emergencia satisfactoria'),
-(8, 24, 8, '15:00:00', '15:30:00', 'Consulta geriátrica con recomendaciones nutricionales'),
-(9, 28, 9, '16:00:00', '16:45:00', 'Pruebas alérgicas completadas sin reacciones adversas'),
-(10, 8, 10, '17:00:00', '17:30:00', 'Limpieza dental realizada'),
-(11, 11, 11, '09:30:00', '10:00:00', 'Atención a herida superficial'),
-(12, 20, 12, '10:30:00', '11:00:00', 'Masaje terapéutico aplicado con éxito'),
-(13, 27, 13, '11:30:00', '12:00:00', 'Consulta oftalmológica sin hallazgos'),
-(14, 18, 14, '12:30:00', '13:30:00', 'Endoscopía realizada con diagnóstico inicial'),
-(15, 5, 15, '01:00:00', '01:30:00', 'Emergencia por fractura estabilizada'),
-(16, 30, 16, '14:30:00', '15:00:00', 'Consulta exótica para reptil completada'),
-(17, 24, 17, '15:30:00', '16:00:00', 'Consulta geriátrica con recomendaciones de ejercicios'),
-(18, 7, 18, '16:30:00', '17:00:00', 'Atención nocturna por intoxicación resuelta'),
-(19, 21, 19, '17:30:00', '18:00:00', 'Vacunación múltiple sin reacciones adversas'),
-(20, 6, 20, '18:30:00', '19:00:00', 'Radiografía para diagnóstico general'),
-(21, 3, 1, '08:00:00', '08:30:00', 'Consulta dermatológica con diagnóstico inicial'),
-(22, 12, 2, '08:45:00', '09:15:00', 'Pruebas alérgicas completadas'),
-(23, 10, 3, '09:30:00', '10:00:00', 'Tratamiento dental básico realizado'),
-(24, 13, 4, '10:15:00', '10:45:00', 'Chequeo cardiológico de rutina'),
-(25, 5, 5, '11:00:00', '11:30:00', 'Consulta dermatológica programada'),
-(26, 2, 6, '11:45:00', '12:15:00', 'Vacunación completada'),
-(27, 1, 7, '12:30:00', '13:00:00', 'Consulta general sin hallazgos relevantes'),
-(28, 8, 8, '13:15:00', '13:45:00', 'Limpieza dental programada'),
-(29, 14, 9, '14:00:00', '14:30:00', 'Chequeo geriátrico detallado'),
-(30, 9, 10, '14:45:00', '15:15:00', 'Consulta oftalmológica finalizada'),
-(31, 15, 11, '15:30:00', '16:00:00', 'Atención de emergencia'),
-(32, 19, 12, '16:15:00', '16:45:00', 'Corte de uñas'),
-(33, 4, 13, '17:00:00', '17:30:00', 'Consulta general'),
-(34, 23, 14, '17:45:00', '18:15:00', 'Chequeo geriátrico programado'),
-(35, 22, 15, '18:30:00', '19:00:00', 'Consulta de segunda opinión'),
-(36, 21, 16, '19:15:00', '19:45:00', 'Consulta dermatológica'),
-(37, 13, 17, '20:00:00', '20:30:00', 'Endoscopía programada'),
-(38, 17, 18, '20:45:00', '21:15:00', 'Consulta geriátrica'),
-(39, 14, 19, '21:30:00', '22:00:00', 'Limpieza dental programada'),
-(40, 6, 20, '22:15:00', '22:45:00', 'Radiografía para diagnóstico general');
+(6, 4, 2, '14:00:00', '16:00:00', 'Cirugía menor completada con éxito'),
+(7, 5, 3, '01:00:00', '01:45:00', 'Atención de emergencia satisfactoria'),
+(8, 11, 26, '15:00:00', '15:30:00', 'Consulta geriátrica con recomendaciones nutricionales'),
+(9, 20, 30, '16:00:00', '16:45:00', 'Pruebas alérgicas completadas sin reacciones adversas'),
+(10, 8, 14, '17:00:00', '17:30:00', 'Limpieza dental realizada'),
+(11, 11, 16, '09:30:00', '10:00:00', 'Atención a herida superficial'),
+(12, 20, 20, '10:30:00', '11:00:00', 'Masaje terapéutico aplicado con éxito'),
+(13, 6, 13, '11:30:00', '12:00:00', 'Consulta oftalmológica sin hallazgos'),
+(14, 8, 14, '12:30:00', '13:30:00', 'Endoscopía realizada con diagnóstico inicial'),
+(15, 5, 13, '01:00:00', '01:30:00', 'Emergencia por fractura estabilizada'),
+(16, 11, 16, '14:30:00', '15:00:00', 'Consulta exótica para reptil completada'),
+(17, 13, 17, '15:30:00', '16:00:00', 'Consulta geriátrica con recomendaciones de ejercicios'),
+(18, 15, 18, '16:30:00', '17:00:00', 'Atención nocturna por intoxicación resuelta'),
+(19, 18, 19, '17:30:00', '18:00:00', 'Vacunación múltiple sin reacciones adversas'),
+(20, 6, 13, '18:30:00', '19:00:00', 'Radiografía para diagnóstico general'),
+(21, 3, 12, '08:00:00', '08:30:00', 'Consulta dermatológica con diagnóstico inicial'),
+(22, 12, 16, '08:45:00', '09:15:00', 'Pruebas alérgicas completadas'),
+(23, 10, 5, '09:30:00', '10:00:00', 'Tratamiento dental básico realizado'),
+(24, 13, 7, '10:15:00', '10:45:00', 'Chequeo cardiológico de rutina'),
+(25, 5, 13, '11:00:00', '11:30:00', 'Consulta dermatológica programada'),
+(26, 2, 21, '11:45:00', '12:15:00', 'Vacunación completada'),
+(27, 1, 11, '12:30:00', '13:00:00', 'Consulta general sin hallazgos relevantes'),
+(28, 8, 24, '13:15:00', '13:45:00', 'Limpieza dental programada'),
+(29, 14, 17, '14:00:00', '14:30:00', 'Chequeo geriátrico detallado'),
+(30, 9, 15, '14:45:00', '15:15:00', 'Consulta oftalmológica finalizada'),
+(23, 19, 20, '16:15:00', '16:45:00', 'Corte de uñas'),
+(23, 4, 22, '17:00:00', '17:30:00', 'Consulta general'),
+(15, 7, 14, '17:45:00', '18:15:00', 'Chequeo geriátrico programado'),
+(12, 10, 15, '18:30:00', '19:00:00', 'Consulta de segunda opinión'),
+(8, 12,16, '19:15:00', '19:45:00', 'Consulta dermatológica'),
+(8, 14, 17, '20:00:00', '20:30:00', 'Endoscopía programada'),
+(9, 15, 18, '20:45:00', '21:15:00', 'Consulta geriátrica'),
+(11, 17, 19, '21:30:00', '22:00:00', 'Limpieza dental programada'),
+(24, 20, 20, '22:15:00', '22:45:00', 'Radiografía para diagnóstico general');
 
 
 -- MEDICAMENTOS
@@ -760,51 +759,55 @@ INSERT INTO MEDICAMENTO (id, nombre, costo, stock, presentacion, vigencia, tipo_
 (7, 'Ketoprofeno 10mg', 20.00, 60, 'Inyección', true, 4),
 (8, 'Vacuna Antirrábica', 60.00, 15, 'Inyección', true, 5),
 (9, 'Tramadol 50mg', 30.00, 40, 'Tableta', true, 2),
-(10, 'Doxiciclina 100mg', 22.00, 25, 'Cápsula', true, 1);
-
+(10, 'Doxiciclina 100mg', 22.00, 25, 'Cápsula', true, 1),
+(11, 'Enrofloxacina 50mg', 28.00, 35, 'Tableta', true, 1),
+(12, 'Metoclopramida 10mg', 18.00, 40, 'Cápsula', true, 2),
+(13, 'Furosemida 40mg', 12.50, 50, 'Comprimido', true, 3),
+(14, 'Clorhexidina 0.5%', 15.00, 60, 'Solución', true, 4),
+(15, 'Vitamina B12', 10.00, 75, 'Inyección', true, 5),
+(16, 'Omeprazol 20mg', 25.00, 20, 'Cápsula', true, 2),
+(17, 'Albendazol 400mg', 22.00, 30, 'Tableta', true, 3),
+(18, 'Gabapentina 100mg', 45.00, 10, 'Cápsula', true, 4),
+(19, 'Desloratadina 5mg', 14.00, 50, 'Comprimido', true, 1),
+(20, 'Prednisolona 5mg', 20.00, 25, 'Tableta', true, 2);
 
 INSERT INTO DETALLE_MEDICAMENTO (medicamento_id, detalle_cita_id, detalle_servicio_servicio_id, detalle_servicio_medico_id, dosis, indicacion, cantidad) VALUES
-(1, 1, 1, 1, 250.00, 'Administrar cada 8 horas por 7 días', 21),
-(2, 1, 2, 1, 0.50, 'Tomar cada 12 horas en caso de dolor', 14),
-(3, 2, 2, 3, 150.00, 'Desparasitar según peso, una vez', 1),
-(4, 3, 3, 2, 25.00, 'Administrar cada 12 horas por 5 días', 10),
-(5, 2, 2, 1, 0.00, 'Vacuna aplicada subcutánea', 1),
-(6, 4, 4, 3, 1.00, 'Inyectar cada semana por 3 semanas', 3),
-(7, 5, 5, 4, 10.00, 'Administrar en caso de inflamación', 5),
-(8, 6, 1, 2, 0.00, 'Vacuna subcutánea, dosis única', 1),
-(9, 7, 2, 3, 50.00, 'Administrar cada 6 horas por dolor', 28),
-(10, 8, 3, 4, 100.00, 'Tomar una cápsula diaria por 10 días', 10),
-(1, 9, 4, 5, 250.00, 'Tratamiento de infección, 7 días', 21),
-(2, 10, 5, 1, 0.50, 'Alivio del dolor, cada 12 horas', 14),
-(3, 11, 1, 3, 150.00, 'Desparasitación preventiva', 1),
-(4, 12, 2, 4, 25.00, 'Administrar cada 12 horas por 5 días', 10),
-(5, 13, 3, 5, 0.00, 'Aplicación subcutánea anual', 1),
-(6, 14, 4, 2, 1.00, 'Tratamiento antiparasitario semanal', 3),
-(7, 15, 5, 3, 10.00, 'Inflamación, tomar según necesidad', 5),
-(8, 16, 1, 4, 0.00, 'Vacuna única para prevención', 1),
-(9, 17, 2, 5, 50.00, 'Control del dolor, cada 6 horas', 28),
-(10, 18, 3, 1, 100.00, 'Tomar cada 24 horas por 7 días', 7),
-(1, 19, 4, 2, 250.00, 'Administrar durante recuperación', 14),
-(2, 20, 5, 3, 0.50, 'Uso según necesidad del paciente', 10),
-(3, 21, 1, 5, 150.00, 'Desparasitación en seguimiento', 1),
-(4, 22, 2, 1, 25.00, 'Dosis ajustada según peso', 10),
-(5, 23, 3, 4, 0.00, 'Vacunación complementaria', 1),
-(6, 24, 4, 3, 1.00, 'Tratamiento semanal', 4),
-(7, 25, 5, 2, 10.00, 'Administrar según signos clínicos', 5);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+(1, 1, 1, 1, 250.00, 'Tomar cada 8 horas con alimentos', 10),
+(2, 2, 2, 1, 0.50, 'Administrar después de las comidas', 5),
+(3, 4, 3, 2, 150.00, 'Tomar una tableta cada 24 horas con abundante agua', 7),
+(4, 6, 4, 2, 25.00, 'Solo en caso de dolor, cada 12 horas', 6),
+(5, 7, 5, 3, 1.00, 'Vacuna inyectada subcutáneamente', 1),
+(6, 8, 11, 26, 1.00, 'Inyección de 1ml cada 7 días, uso veterinario', 3),
+(7, 9, 20, 30, 10.00, 'Administrar cada 8 horas durante la inflamación', 4),
+(8, 10, 8, 14, 1.00, 'Inyección intramuscular, dosis única', 1),
+(9, 11, 11, 16, 50.00, 'Tomar cada 12 horas con leche', 8),
+(10, 12, 20, 20, 100.00, 'Evitar exposición al sol, cada 24 horas', 2),
+(11, 13, 6, 13, 50.00, 'Tomar cada 12 horas, revisar efectos secundarios', 5),
+(12, 15, 5, 13, 10.00, 'Suspender en caso de efectos adversos, cada 24 horas', 3),
+(13, 17, 13, 17, 40.00, 'Para uso exclusivo bajo prescripción, cada 8 horas', 6),
+(14, 18, 15, 18, 2.00, 'Aplicar 2 veces al día, uso tópico', 1),
+(15, 19, 18, 19, 1.00, 'Administrar intramuscularmente, dosis única', 1),
+(16, 21, 3, 12, 20.00, 'Evitar en pacientes con gastritis, cada 12 horas', 4),
+(17, 22, 12, 16, 400.00, 'Administrar con alimentos, dosis única', 2),
+(18, 24, 13, 7, 100.00, 'Solo bajo receta médica, cada 8 horas', 3),
+(19, 25, 5, 13, 5.00, 'No exceder la dosis indicada, cada 24 horas', 7),
+(20, 26, 2, 21, 5.00, 'Administrar en la noche, cada 24 horas', 3),
+(1, 27, 1,11, 250.00, 'Solo en caso de infección, cada 8 horas', 5),
+(2, 28, 8, 24, 0.50, 'Uso limitado, cada 12 horas', 4),
+(3, 12, 10, 15, 150.00, 'Revisar efectos adversos, cada 7 días', 3),
+(4, 30, 9, 15, 25.00, 'Suspender en caso de reacciones alérgicas, cada 12 horas', 2),
+(5, 8, 11, 26, 1.00, 'Administrar subcutáneamente, dosis única', 1),
+(6, 10, 8, 14, 1.00, 'Inyección de 1ml cada 30 días', 1),
+(7, 11, 11, 16, 10.00, 'Evitar mezclar con otros medicamentos, cada 24 horas', 3),
+(8, 12, 20, 20, 1.00, 'Inyección intramuscular, dosis única', 1),
+(9, 13, 6, 13, 50.00, 'Consultar antes de suspender, cada 12 horas', 5),
+(10, 15, 5, 13, 100.00, 'Evitar exposición al sol, cada 8 horas', 2),
+(11, 17, 13, 17, 50.00, 'Tomar con alimentos, cada 24 horas', 6),
+(12, 18, 15, 18, 10.00, 'Solo durante tratamiento específico, cada 12 horas', 4),
+(13, 19, 18, 19, 40.00, 'Revisar efectos adversos, cada 8 horas', 5),
+(14, 20, 6, 13, 2.00, 'Aplicar 2 veces al día, uso tópico', 2),
+(15, 21, 3, 12, 1.00, 'Dosis única, administrar intramuscular', 1),
+(16, 22, 12, 16, 20.00, 'Evitar en pacientes con úlceras, cada 12 horas', 3),
+(17, 23, 10, 5, 400.00, 'Uso limitado bajo supervisión, cada 7 días', 2);
 
 
