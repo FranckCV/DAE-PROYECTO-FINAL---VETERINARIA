@@ -32,6 +32,15 @@ public class clsRaza {
         }
     }
 
+     public ResultSet listarRazasE(Integer cod) throws Exception {
+        strSQL = "select nombre from raza rs where especie_id=" + cod;
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error en listar la tabla " + TABLA + " / " + e.getMessage());
+        }
+    }
     public Integer obtenerIdRaza(String nom) throws Exception {
         strSQL = "Select " + ID + " from " + TABLA + " where " + NOMBRE + " = '" + nom + "' ";
         try {

@@ -17,9 +17,9 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
 
     clsUsuario objUsuario = new clsUsuario();
     clsCaptcha objCaptcha = new clsCaptcha();
-    public String nombreUsuario = "";
+    public static String nombreUsuario = "";
     public String cargo = "";
-    public String usuario = "";
+    public static String usuario = "";
     public String usuario_id = "";
 
     int count = 0;
@@ -305,31 +305,24 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         try {
-            if (txtUsuario.getText().isEmpty() || txtClave.getText().isEmpty() || txtRespuesta.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No puedes dejar campos vacíos.");
-                return;
-            }
 
-            if (!objCaptcha.validarCaptcha(txtCaptchaEnunciado.getText(), txtRespuesta.getText())) {
-                count++; 
-                if (count >= 3) {
-                    JOptionPane.showMessageDialog(this, "Alcanzaste el máximo de intentos. El sistema se cerrará.");
-                    System.exit(0); 
+            if (!txtUsuario.getText().isEmpty() && !txtClave.getText().isEmpty() && !txtRespuesta.getText().isEmpty()) {
+                if (objCaptcha.validarCaptcha(txtCaptchaEnunciado.getText(), txtRespuesta.getText())
+                        && !objUsuario.login(txtUsuario.getText(), txtClave.getText()).isEmpty()
+                        && objUsuario.validarUsuario(txtUsuario.getText())) {
+                    usuario = objUsuario.obtenerNombreUsuario(txtUsuario.getText(), txtClave.getText());
+                    nombreUsuario = objUsuario.obtenerUsuario(txtUsuario.getText());
+                    cargo = objUsuario.obtenerCargo(txtUsuario.getText());
+                    JOptionPane.showMessageDialog(this, "Bienvenido al sistema " + nombreUsuario);
+                    this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Captcha incorrecto. \nInténtalo de nuevo. Intentos:" + count);
                     cambioCaptcha(); 
                     txtRespuesta.setText(""); 
                     return;
                 }
-            }
-            if (!objUsuario.login(txtUsuario.getText(), txtClave.getText()).isEmpty()
-                    && objUsuario.validarUsuario(txtUsuario.getText())) {
-                nombreUsuario = objUsuario.obtenerUsuario(txtUsuario.getText());
-                cargo = objUsuario.obtenerCargo(txtUsuario.getText());
-                JOptionPane.showMessageDialog(this, "Bienvenido al sistema " + nombreUsuario);
-                this.dispose(); 
             } else {
-                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.");
+                JOptionPane.showMessageDialog(null, "No pueden haber campos vacíos");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());

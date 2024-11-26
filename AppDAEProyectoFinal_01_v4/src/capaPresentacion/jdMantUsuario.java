@@ -7,6 +7,7 @@ package capaPresentacion;
 import soporte.*;
 import capaNegocio.*;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -85,6 +86,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        btnContraseña = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -211,7 +213,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(chkVigencia)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                         .addGap(22, 22, 22))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -367,7 +369,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBuscar)
                 .addGap(12, 12, 12))
@@ -384,52 +386,67 @@ public class jdMantUsuario extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnContraseña.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        btnContraseña.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/bloquear.png"))); // NOI18N
+        btnContraseña.setText("Modificar contraseña");
+        btnContraseña.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContraseñaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnContraseña, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnVigencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE))
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(16, 16, 16))
+                        .addContainerGap()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnNuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar)
-                        .addGap(12, 12, 12)
-                        .addComponent(btnVigencia)))
-                .addGap(14, 14, 14))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVigencia)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnContraseña)))
+                .addGap(10, 10, 10))
         );
 
         jPanel4.setBackground(new java.awt.Color(0, 0, 102));
@@ -576,7 +593,6 @@ public class jdMantUsuario extends javax.swing.JDialog {
                 radFemenino.setEnabled(false);
                 chkVigencia.setEnabled(false);
                 cmbCargo.setEnabled(false);
-                txtClave.setText("Confidencial");
                 if (rsUsuario.next()) {
                     txtNombre.setText(rsUsuario.getString("nombres"));
                     txtApeMat.setText(rsUsuario.getString("apmaterno"));
@@ -616,6 +632,26 @@ public class jdMantUsuario extends javax.swing.JDialog {
         Utilidad.validarCampoTextoSoloLetras(evt);
     }//GEN-LAST:event_txtApeMatKeyTyped
 
+    private void btnContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContraseñaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnContraseñaActionPerformed
+
+    private void modificarContraseña(){
+        try{
+            if (!txtId.getText().isEmpty()) {
+             JOptionPane.showMessageDialog(this, "Debe ingresar un id para modificar");
+            }
+            else{
+                objUsuario.modificarContraseña(Integer.parseInt(txtId.getText()), txtUsuario.getText(), txtClave.getText());
+            }
+   
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(this,"Error al modificar -->"+e.getMessage());
+        }
+    }
+    
+    
     private void listarUsuarios() {
         ResultSet rsDato = null;
         DefaultTableModel modelo = new DefaultTableModel();
@@ -647,22 +683,32 @@ public class jdMantUsuario extends javax.swing.JDialog {
                         cargo = "";
                         break;
                 }
+                System.out.println(rsDato.getString("nomusuario").equals(jdInicioSesionVet.usuario));
+                System.out.println(jdInicioSesionVet.usuario);
+                if (cargo.equals("ADMINISTRADOR") && rsDato.getString("nomusuario").equals(jdInicioSesionVet.usuario)) {
+                    agregarFila(modelo, rsDato, cargo);
+                } else if (!cargo.equals("ADMINISTRADOR")) {
+                    agregarFila(modelo, rsDato, cargo);
+                }
 
-                modelo.addRow(new Object[]{
-                    rsDato.getString("codusuario"),
-                    rsDato.getString("nombres"),
-                    rsDato.getString("appaterno"),
-                    rsDato.getString("apmaterno"),
-                    rsDato.getString("nomusuario"),
-                    textoBool(rsDato.getBoolean("estado"), "Vigente", "No Vigente"),
-                    textoBool(rsDato.getBoolean("sexo"), "Masculino", "Femenino"),
-                    cargo
-                });
             }
             tblUsuario.setModel(modelo);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al listar tabla USUARIO: " + e.getMessage());
         }
+    }
+
+    private void agregarFila(DefaultTableModel modelo, ResultSet rsDato, String cargo) throws SQLException {
+        modelo.addRow(new Object[]{
+            rsDato.getString("codusuario"),
+            rsDato.getString("nombres"),
+            rsDato.getString("appaterno"),
+            rsDato.getString("apmaterno"),
+            rsDato.getString("nomusuario"),
+            textoBool(rsDato.getBoolean("estado"), "Vigente", "No Vigente"),
+            textoBool(rsDato.getBoolean("sexo"), "Masculino", "Femenino"),
+            cargo
+        });
     }
 
     private void buscarUsuario() {
@@ -833,11 +879,9 @@ public class jdMantUsuario extends javax.swing.JDialog {
                         || cmbCargo.getSelectedIndex() == -1
                         || radioGenero.getSelection() == null) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
-                }
-                else if(Utilidad.validarElementoTextoRepetido("usuario", "nomusuario", txtUsuario.getText())){
+                } else if (Utilidad.validarElementoTextoRepetido("usuario", "nomusuario", txtUsuario.getText())) {
                     JOptionPane.showMessageDialog(this, "Ya existe este nombre de usuario");
-                }
-                else {
+                } else {
                     btnNuevo.setText("Nuevo");
                     btnEliminar.setText(Utilidad.BTN_ELIMINAR);
 
@@ -932,6 +976,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnContraseña;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;

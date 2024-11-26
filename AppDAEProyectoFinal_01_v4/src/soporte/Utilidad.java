@@ -4,6 +4,7 @@
  */
 package soporte;
 
+
 import java.sql.*;
 import capaNegocio.*;
 import javax.swing.JFormattedTextField;
@@ -454,14 +455,14 @@ public class Utilidad {
     //DESACTIVAR CAMPOS
     public static void desactivarFields(JTextField textFieldActivo, JTextField... textFields) {
         for (JTextField textField : textFields) {
-            textField.setEnabled(textField.equals(textFieldActivo));
+            textField.setEditable(textField.equals(textFieldActivo));
         }
     }
 
-    //ACTIVAR BOTONES
+    //ACTIVAR CAMPOS
     public static void activarFields(JTextField... textFields) {
         for (JTextField textField : textFields) {
-            textField.setEnabled(true);
+            textField.setEditable(true);
         }
     }
 
