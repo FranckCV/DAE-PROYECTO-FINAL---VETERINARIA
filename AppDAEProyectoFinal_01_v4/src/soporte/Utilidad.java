@@ -151,6 +151,10 @@ public class Utilidad {
         "Cancelar"
     };
     
+    public static final String[] opcionesModificarContraseña = {
+        "Modificar contraseña", 
+        "Cancelar"
+    };
 
 //    Texto de valores Booleanos
     public static String textoBool(boolean valor, String txtTrue, String txtFalse) {
@@ -316,6 +320,20 @@ public class Utilidad {
                 null,
                 opcionesVigencia,
                 opcionesVigencia[0]
+        );
+        return valor;
+    }
+    
+    public static int mensajeConfirmarModificarContraseña(String entidad , int id ,String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null, 
+                "¿Está seguro de modificar contraseña " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: "+id+")? ",
+                "Confirmar modificación de contraseña",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesModificarContraseña,
+                opcionesModificarContraseña[0]
         );
         return valor;
     }
