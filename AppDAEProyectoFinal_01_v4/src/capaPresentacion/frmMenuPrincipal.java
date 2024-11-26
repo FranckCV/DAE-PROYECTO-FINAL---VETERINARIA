@@ -96,7 +96,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem24 = new javax.swing.JMenuItem();
-        jMenuItem29 = new javax.swing.JMenuItem();
+        mnuIngresoPorServicio = new javax.swing.JMenuItem();
         jMenuItem30 = new javax.swing.JMenuItem();
         jMenuItem31 = new javax.swing.JMenuItem();
         jMenuItem33 = new javax.swing.JMenuItem();
@@ -475,8 +475,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem24.setText("Rp3");
         jMenu11.add(jMenuItem24);
 
-        jMenuItem29.setText("Rp4");
-        jMenu11.add(jMenuItem29);
+        mnuIngresoPorServicio.setText("Reporte de ingresos por servicio");
+        mnuIngresoPorServicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuIngresoPorServicioActionPerformed(evt);
+            }
+        });
+        jMenu11.add(mnuIngresoPorServicio);
 
         jMenuItem30.setText("Rp5");
         jMenu11.add(jMenuItem30);
@@ -731,6 +736,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true); 
     }//GEN-LAST:event_mnuMedicoActionPerformed
+
+    private void mnuIngresoPorServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuIngresoPorServicioActionPerformed
+        // TODO add your handling code here:
+        jdRepServiciosMasSolicitados objFrm = new jdRepServiciosMasSolicitados(this, true);
+        objFrm.setVisible(true);
+    }//GEN-LAST:event_mnuIngresoPorServicioActionPerformed
                                                                         
 
     private void login(){ 
@@ -789,7 +800,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem26;
-    private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem30;
     private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem33;
@@ -813,6 +823,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuEspecie;
     private javax.swing.JMenuItem mnuEstadoCita;
     private javax.swing.JMenu mnuInfoAdicional;
+    private javax.swing.JMenuItem mnuIngresoPorServicio;
     private javax.swing.JMenu mnuMantenimiento;
     private javax.swing.JMenuItem mnuMascota;
     private javax.swing.JMenuItem mnuMedicamento;
