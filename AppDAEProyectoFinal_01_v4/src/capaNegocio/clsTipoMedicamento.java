@@ -14,7 +14,7 @@ public class clsTipoMedicamento {
     ResultSet rs = null;
 
     public ResultSet listarTiposMedicamentos() throws Exception {
-        strSQL = "SELECT * FROM tipo_medicamento";
+        strSQL = "SELECT * FROM tipo_medicamento order by id";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -87,7 +87,7 @@ public class clsTipoMedicamento {
     }
 
     public void modificarTipoMedicamento(Integer id, String nombre) throws Exception {
-        strSQL = "UPDATE tipo_medicamento SET nomtipo = '" + nombre + "' WHERE id = " + id;
+        strSQL = "UPDATE tipo_medicamento SET nomtipo = '" + nombre + "' WHERE id = " + id ;
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {

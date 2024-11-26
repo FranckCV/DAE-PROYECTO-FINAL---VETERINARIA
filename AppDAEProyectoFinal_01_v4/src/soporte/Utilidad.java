@@ -4,26 +4,17 @@
  */
 package soporte;
 
-import java.sql.*;
-import capaNegocio.*;
+import capaDatos.clsJDBC;
+import java.sql.ResultSet;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.text.NumberFormatter;
-import capaDatos.clsJDBC;
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.sql.ResultSet;
-import java.util.HashMap;
-import java.util.Map;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDesktopPane;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JTable;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 /**
  *
@@ -69,7 +60,7 @@ public class Utilidad {
         }
         return null;
     }
-    
+
     public static String extraerEstado(String est) {
         if (est.equals("Terminal")) {
             return "T";
@@ -80,7 +71,6 @@ public class Utilidad {
         }
         return null;
     }
-    
 
     public static String obtenerCargoxCaracter(String cargo) {
         switch (cargo) {
@@ -105,7 +95,7 @@ public class Utilidad {
         }
         return null;
     }
-    
+
     public static String obtenerCargoUsuario(String cargo) throws Exception {
         try {
             switch (cargo) {
@@ -122,39 +112,37 @@ public class Utilidad {
             throw new Exception("Error al obtener cargo: " + e.getMessage(), e);
         }
     }
-    
+
 //    Opciones de Cuadros de Dialogo
-    
     public static final String[] opcionesEliminar = {
-        "Eliminar", 
+        "Eliminar",
         "Cancelar"
     };
-    
+
     public static final String[] opcionesVigencia = {
-        "Dar Baja", 
+        "Dar Baja",
         "Cancelar"
     };
-    
+
     public static final String[] opcionesDisponibilidad = {
         "Cambiar Disponibilidad", 
         "Cancelar"
     };
-    
+
     public static final String[] opcionesModificar = {
-        "Modificar", 
+        "Modificar",
         "Cancelar"
     };
-    
+
     public static final String[] opcionesRegistrar = {
-        "Guardar información", 
+        "Guardar información",
         "Cancelar"
     };
-    
+
     public static final String[] opcionesDarAlta = {
-        "Dar alta", 
+        "Dar alta",
         "Cancelar"
     };
-    
 
 //    Texto de valores Booleanos
     public static String textoBool(boolean valor, String txtTrue, String txtFalse) {
@@ -166,7 +154,6 @@ public class Utilidad {
     }
 
 //    Validaciones de Elementos de Interfaz
-    
     public static void validarLimiteCampoTexto(java.awt.event.KeyEvent evt, String columna, String tabla) throws Exception {
         JTextField source = (JTextField) evt.getSource();
 
@@ -246,18 +233,17 @@ public class Utilidad {
     }
 
 //    Mensajes de Error
-    
     public static void mensajeErrorFaltaID(JDialog parent) {
         JOptionPane.showMessageDialog(
-                parent, 
+                parent,
                 " Debe ingresar una ID para continuar esta operación"
         );
     }
-    
-    public static int mensajeConfirmarEliminar(String entidad , int id ,String nombre) {
+
+    public static int mensajeConfirmarEliminar(String entidad, int id, String nombre) {
         int valor = JOptionPane.showOptionDialog(
-                null, 
-                "¿Está seguro que desea eliminar " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: "+id+")? ",
+                null,
+                "¿Está seguro que desea eliminar " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: " + id + ")? ",
                 "Confirmar Eliminacion",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
@@ -267,8 +253,8 @@ public class Utilidad {
         );
         return valor;
     }
-    
-    public static int mensajeConfirmarDarAlta(String entidad , int id ,String nombre) {
+
+    public static int mensajeConfirmarDarAlta(String entidad, int id, String nombre) {
         int valor = JOptionPane.showOptionDialog(
                 null, 
                 "¿Está seguro que desea dar alta " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: "+id+")? ",
@@ -281,11 +267,11 @@ public class Utilidad {
         );
         return valor;
     }
-    
-    public static int mensajeConfirmarModificar(String entidad , int id ,String nombre) {
+
+    public static int mensajeConfirmarModificar(String entidad, int id, String nombre) {
         int valor = JOptionPane.showOptionDialog(
-                null, 
-                "¿Está seguro de guardar los cambios en " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: "+id+")? ",
+                null,
+                "¿Está seguro de guardar los cambios en " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: " + id + ")? ",
                 "Confirmar Modificación",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
@@ -295,11 +281,11 @@ public class Utilidad {
         );
         return valor;
     }
-    
-    public static int mensajeConfirmarDisponibilidad(String entidad , int id ,String nombre) {
+
+    public static int mensajeConfirmarDisponibilidad(String entidad, int id, String nombre) {
         int valor = JOptionPane.showOptionDialog(
-                null, 
-                "¿Está seguro cambiar la disponibilidad de " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: "+id+")? ",
+                null,
+                "¿Está seguro cambiar la disponibilidad de " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: " + id + ")? ",
                 "Confirmar Cambio de Disponibilidad",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
@@ -309,11 +295,11 @@ public class Utilidad {
         );
         return valor;
     }
-    
-    public static int mensajeConfirmarVigencia(String entidad , int id ,String nombre) {
+
+    public static int mensajeConfirmarVigencia(String entidad, int id, String nombre) {
         int valor = JOptionPane.showOptionDialog(
-                null, 
-                "¿Está seguro dar de baja " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: "+id+")? ",
+                null,
+                "¿Está seguro dar de baja " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: " + id + ")? ",
                 "Confirmar Bar de Baja",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
@@ -323,10 +309,10 @@ public class Utilidad {
         );
         return valor;
     }
-    
-    public static void mensajeErrorNoEliminarForanea(String entidad , String nombre) {
+
+    public static void mensajeErrorNoEliminarForanea(String entidad, String nombre) {
         JOptionPane.showMessageDialog(
-                null, 
+                null,
                 "Hay datos externos asociados a " + entidad.toLowerCase() + " \"" + nombre + "\".\n"
                 + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. "
         );
@@ -395,11 +381,11 @@ public class Utilidad {
         }
     }
 
-    public static boolean verificarElementoParaUso(String tabla , String columna, Integer id ) throws Exception {
+    public static boolean verificarElementoParaUso(String tabla, String columna, Integer id) throws Exception {
         clsJDBC objConectar = new clsJDBC();
         ResultSet rs;
         try {
-            rs = objConectar.consultarBD("select "+columna+" from "+tabla+" where id = "+id+" ");
+            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where id = " + id + " ");
             while (rs.next()) {
                 return !rs.getBoolean(columna);
             }
@@ -408,15 +394,8 @@ public class Utilidad {
         }
         return false;
     }
-    
-    
-    
-    
-    
-    
-    
+
 //    DESCARTADAS (no borrar aun)
-        
 //    public static void mostrarInterfazjDialog(String nombreClase, JFrame parent) {
 //        try {
 //            Class<?> clase = Class.forName(nombreClase);
@@ -436,16 +415,12 @@ public class Utilidad {
 //            System.out.println("Error al intentar abrir el diálogo: " + e.getMessage());
 //        }
 //    }
-    
 //    private void mostrarInterfazjDialog(JDialog interfaz){
 //        Class clase = interfaz.getClass();
 //        clase objForm = new clase(this, true);
 //        objForm.setLocationRelativeTo(this);
 //        objForm.setVisible(true);
 //    }
-        
-    
-        
 //    public static String mensajeErrorEliminacionForanea(Exception e, String entidad, String nombre) {
 //        String mensaje = e.getMessage();
 //        String[] palabras = {
@@ -463,12 +438,6 @@ public class Utilidad {
 //        return "Hay datos externos asociados a " + entidad + " \"" + nombre + "\".\n"
 //                + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. ";
 //    }
-    
-    
-    
-    
-    
-
     //BLOQUEAR BOTONES
     public static void desactivarBotones(JButton botonActivo, JButton... botones) {
         for (JButton boton : botones) {
@@ -486,14 +455,14 @@ public class Utilidad {
     //DESACTIVAR CAMPOS
     public static void desactivarFields(JTextField textFieldActivo, JTextField... textFields) {
         for (JTextField textField : textFields) {
-            textField.setEnabled(textField.equals(textFieldActivo));
+            textField.setEditable(textField.equals(textFieldActivo));
         }
     }
 
-    //ACTIVAR BOTONES
+    //ACTIVAR CAMPOS
     public static void activarFields(JTextField... textFields) {
         for (JTextField textField : textFields) {
-            textField.setEnabled(true);
+            textField.setEditable(true);
         }
     }
 
@@ -546,5 +515,29 @@ public class Utilidad {
     
     
     
+
+    public static boolean buscarYConfigurar(String tabla, String columna, int id, JTextField txtNombre, JButton btnModificar, JButton btnEliminar) throws Exception {
+        clsJDBC objConectar = new clsJDBC();
+        String strSQL = "SELECT nomtipo FROM " + tabla + " WHERE " + columna + " = " + id;
+        ResultSet rs = null;
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                txtNombre.setText(rs.getString("nomtipo"));
+                txtNombre.setEditable(false);
+                btnModificar.setEnabled(true);
+                btnEliminar.setEnabled(true);
+                return true;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al buscar en la tabla: " + e.getMessage());
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return false;
+    }
 
 }
