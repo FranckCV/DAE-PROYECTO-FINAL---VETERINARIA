@@ -233,10 +233,13 @@
                 <Property name="text" type="java.lang.String" value="Rp3"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem29">
+            <MenuItem class="javax.swing.JMenuItem" name="mnuIngresoPorServicio">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Rp4"/>
+                <Property name="text" type="java.lang.String" value="Reporte de ingresos por servicio"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuIngresoPorServicioActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem30">
               <Properties>
