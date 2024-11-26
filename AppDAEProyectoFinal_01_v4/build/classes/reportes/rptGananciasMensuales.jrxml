@@ -2,7 +2,11 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptGananciasMensuales" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="03c6db41-a61d-47a9-8156-5cf8253961a8">
 	<property name="ireport.zoom" value="1.1000000000000016"/>
 	<property name="ireport.x" value="0"/>
+<<<<<<< HEAD
 	<property name="ireport.y" value="0"/>
+=======
+	<property name="ireport.y" value="427"/>
+>>>>>>> f9bae37f8507d22ef1461d81564f8e4abe0162f0
 	<parameter name="parAnioReporte" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -167,6 +171,7 @@ ORDER BY
 		<band height="6" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
+<<<<<<< HEAD
 		<band height="23" splitType="Stretch">
 			<staticText>
 				<reportElement x="11" y="3" width="208" height="20" uuid="e5ac2def-1ce6-43d9-8e2e-b8b162d1f4e5"/>
@@ -185,6 +190,9 @@ ORDER BY
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
+=======
+		<band height="4" splitType="Stretch"/>
+>>>>>>> f9bae37f8507d22ef1461d81564f8e4abe0162f0
 	</pageFooter>
 	<summary>
 		<band height="571" splitType="Stretch">

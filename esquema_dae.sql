@@ -242,6 +242,48 @@ END $$ LANGUAGE plpgsql;
 
 
 
+
+
+CREATE OR REPLACE FUNCTION contar_relaciones_compuestas(tabla_base TEXT, id_base1 INT, id_base2 INT)
+    RETURNS TABLE(tabla_relacionada TEXT, columnas_foraneas TEXT, cantidad INT) AS $$
+DECLARE
+    consulta_contar TEXT;
+    cuenta INT;
+    columnas TEXT[];
+BEGIN
+    FOR tabla_relacionada, columnas IN
+        SELECT
+            c.conrelid::regclass::text AS tabla_relacionada,
+            ARRAY_AGG(a.attname) AS columnas_foraneas
+        FROM
+            pg_constraint c
+        JOIN pg_class t ON c.conrelid = t.oid
+        JOIN pg_attribute a ON a.attnum = ANY (c.conkey) AND a.attrelid = c.conrelid
+        WHERE
+            c.confrelid = tabla_base::regclass
+            AND c.contype = 'f'
+        GROUP BY c.conrelid
+    LOOP
+        -- Verifica si hay exactamente 2 columnas en la clave compuesta
+        IF array_length(columnas, 1) = 2 THEN
+            consulta_contar := FORMAT(
+                'SELECT COUNT(*) FROM %I WHERE (%I, %I) = ($1, $2)',
+                tabla_relacionada,
+                columnas[1],
+                columnas[2]
+            );
+
+            EXECUTE consulta_contar INTO cuenta USING id_base1, id_base2;
+
+            RETURN QUERY SELECT tabla_relacionada, array_to_string(columnas, ', '), cuenta;
+        END IF;
+    END LOOP;
+END $$ LANGUAGE plpgsql;
+
+
+
+
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 
 

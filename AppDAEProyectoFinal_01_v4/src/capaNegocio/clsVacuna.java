@@ -71,12 +71,15 @@ public class clsVacuna {
     }
 
     public ResultSet buscarVacuna(Integer id) throws Exception {
-        strSQL = "select * from " + TABLA + " where " + ID + " = " + id;
+        strSQL = "SELECT v.id, v.nombre, v.dosis_x_kgpeso, e.nombre AS nombre_especie, v.disponibilidad "
+                + "FROM vacuna v "
+                + "INNER JOIN especie e ON v.especie_id = e.id "
+                + "WHERE v.id = " + id;
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
         } catch (Exception e) {
-            throw new Exception("Error al buscar en la tabla " + TABLA + ": " + e.getMessage());
+            throw new Exception("Error al buscar vacuna en la tabla " + TABLA + ": " + e.getMessage());
         }
     }
 

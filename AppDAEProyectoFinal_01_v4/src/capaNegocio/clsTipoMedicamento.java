@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package capaNegocio;
 
 import capaDatos.clsJDBC;
@@ -5,16 +9,17 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author Grupo_Veterinaria
+ * @author franc
  */
 public class clsTipoMedicamento {
+    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;
 
     public ResultSet listarTiposMedicamentos() throws Exception {
-        strSQL = "SELECT * FROM tipo_medicamento";
+        strSQL = "SELECT * FROM tipo_medicamento order by id";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -87,7 +92,7 @@ public class clsTipoMedicamento {
     }
 
     public void modificarTipoMedicamento(Integer id, String nombre) throws Exception {
-        strSQL = "UPDATE tipo_medicamento SET nomtipo = '" + nombre + "' WHERE id = " + id;
+        strSQL = "UPDATE tipo_medicamento SET nomtipo = '" + nombre + "' WHERE id = " + id ;
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
