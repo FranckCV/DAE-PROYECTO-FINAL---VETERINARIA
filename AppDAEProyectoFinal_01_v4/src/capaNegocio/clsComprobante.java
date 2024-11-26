@@ -5,12 +5,12 @@
 package capaNegocio;
 
 import capaDatos.clsJDBC;
-import java.sql.ResultSet;
 import java.sql.Date;
+import java.sql.ResultSet;
 
 /**
  *
- * @author Junior
+ * @author franc
  */
 public class clsComprobante {
 
@@ -80,4 +80,5 @@ public class clsComprobante {
 //        }
 //        return "000001";
 //    }
+    
 }
