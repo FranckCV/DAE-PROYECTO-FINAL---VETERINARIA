@@ -4,15 +4,20 @@
  */
 package capaPresentacion;
 
+import capaDatos.clsReporte;
 import capaNegocio.*;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.swing.JRViewer;
 import soporte.Utilidad;
 
 /**
@@ -21,10 +26,8 @@ import soporte.Utilidad;
  */
 public class jdRepHistorialClinico extends javax.swing.JDialog {
     clsMascota objMasco = new clsMascota();
-    clsCustodia objCustodia = new clsCustodia();
-    clsDetalleCita objDetCita = new clsDetalleCita();
-    clsCita objCita = new clsCita();
-    clsDetalleMedicamento objDetMedicamento = new clsDetalleMedicamento();
+    String docReporte = "rptHistorialClinica1";
+    String par = "id_masc";
     
     private int valorID = 0;
     
@@ -46,46 +49,18 @@ public class jdRepHistorialClinico extends javax.swing.JDialog {
     private void initComponents() {
 
         cmbEspecialidad = new javax.swing.JComboBox<>();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jSeparator3 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblCitas = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblDatos = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tblServicios = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        tblMedicos = new javax.swing.JTable();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        tblDuenios = new javax.swing.JTable();
-        jScrollPane8 = new javax.swing.JScrollPane();
-        txtNotaAd = new javax.swing.JTextArea();
-        jLabel14 = new javax.swing.JLabel();
-        txtNumDuenios = new javax.swing.JTextField();
-        txtNumMedicos = new javax.swing.JTextField();
-        txtNumCitas = new javax.swing.JTextField();
-        txtNumServicios = new javax.swing.JTextField();
-        txtNumMedicamentos = new javax.swing.JTextField();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        tblMedicamentos = new javax.swing.JTable();
-        jLabel6 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblMascotas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        txtNumCitaServicios = new javax.swing.JTextField();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        tblCitaServicios = new javax.swing.JTable();
-        jLabel7 = new javax.swing.JLabel();
-        jScrollPane10 = new javax.swing.JScrollPane();
-        tblCitaMedicamentos = new javax.swing.JTable();
-        txtNumCitaMedicamentos = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        btnSalir = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        report = new javax.swing.JDesktopPane();
 
         cmbEspecialidad.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cmbEspecialidad.setBorder(null);
@@ -98,174 +73,26 @@ public class jdRepHistorialClinico extends javax.swing.JDialog {
             }
         });
 
-        jPanel5.setBackground(new java.awt.Color(0, 0, 102));
+        jPanel2.setBackground(new java.awt.Color(153, 204, 255));
 
-        jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 36)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Historial Clínico");
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator3)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(332, 332, 332)
-                .addComponent(jLabel10)
-                .addContainerGap(737, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel2.setText("Citas asignadas (desde la más reciente):");
-
-        jScrollPane2.setToolTipText("");
-
-        tblCitas.setModel(new javax.swing.table.DefaultTableModel(
+        tblMascotas.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        tblMascotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
 
             }
         ));
-        tblCitas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        tblCitas.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblMascotas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblCitasMouseClicked(evt);
+                tblMascotasMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(tblCitas);
-
-        tblDatos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane3.setViewportView(tblDatos);
-
-        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel4.setText("Datos de la Mascota:");
-
-        tblServicios.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane4.setViewportView(tblServicios);
-
-        jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel5.setText("Servicios realizados:");
-
-        tblMedicos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane5.setViewportView(tblMedicos);
-
-        jLabel21.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel21.setText("Medicos encargados:");
-
-        jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel13.setText("Nota Adicional:");
-
-        tblDuenios.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane7.setViewportView(tblDuenios);
-
-        txtNotaAd.setEditable(false);
-        txtNotaAd.setColumns(10);
-        txtNotaAd.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtNotaAd.setLineWrap(true);
-        txtNotaAd.setRows(5);
-        txtNotaAd.setWrapStyleWord(true);
-        txtNotaAd.setAutoscrolls(false);
-        jScrollPane8.setViewportView(txtNotaAd);
-
-        jLabel14.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel14.setText("Dueños de la mascota:");
-
-        txtNumDuenios.setEditable(false);
-        txtNumDuenios.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtNumDuenios.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtNumDuenios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNumDueniosActionPerformed(evt);
-            }
-        });
-
-        txtNumMedicos.setEditable(false);
-        txtNumMedicos.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtNumMedicos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtNumMedicos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNumMedicosActionPerformed(evt);
-            }
-        });
-
-        txtNumCitas.setEditable(false);
-        txtNumCitas.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtNumCitas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtNumCitas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNumCitasActionPerformed(evt);
-            }
-        });
-
-        txtNumServicios.setEditable(false);
-        txtNumServicios.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtNumServicios.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtNumServicios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNumServiciosActionPerformed(evt);
-            }
-        });
-
-        txtNumMedicamentos.setEditable(false);
-        txtNumMedicamentos.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtNumMedicamentos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtNumMedicamentos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNumMedicamentosActionPerformed(evt);
-            }
-        });
-
-        tblMedicamentos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane6.setViewportView(tblMedicamentos);
-
-        jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel6.setText("Medicamentos recetados:");
+        jScrollPane1.setViewportView(tblMascotas);
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel1.setText("ID:");
@@ -280,49 +107,98 @@ public class jdRepHistorialClinico extends javax.swing.JDialog {
             }
         });
 
-        txtNumCitaServicios.setEditable(false);
-        txtNumCitaServicios.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtNumCitaServicios.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtNumCitaServicios.addActionListener(new java.awt.event.ActionListener() {
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBuscar)))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBackground(new java.awt.Color(0, 0, 102));
+
+        jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 36)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Historial Clínico");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator3)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(375, Short.MAX_VALUE)
+                .addComponent(jLabel10)
+                .addGap(524, 524, 524))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/salir.png"))); // NOI18N
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNumCitaServiciosActionPerformed(evt);
+                btnSalirActionPerformed(evt);
             }
         });
 
-        tblCitaServicios.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
-            },
-            new String [] {
+        javax.swing.GroupLayout reportLayout = new javax.swing.GroupLayout(report);
+        report.setLayout(reportLayout);
+        reportLayout.setHorizontalGroup(
+            reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 884, Short.MAX_VALUE)
+        );
+        reportLayout.setVerticalGroup(
+            reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 437, Short.MAX_VALUE)
+        );
 
-            }
-        ));
-        jScrollPane9.setViewportView(tblCitaServicios);
-
-        jLabel7.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel7.setText("Servicios realizados en cita seleccionada:");
-
-        tblCitaMedicamentos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane10.setViewportView(tblCitaMedicamentos);
-
-        txtNumCitaMedicamentos.setEditable(false);
-        txtNumCitaMedicamentos.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtNumCitaMedicamentos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtNumCitaMedicamentos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNumCitaMedicamentosActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel8.setText("Medicamentos recetados en cita seleccionada:");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(report, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(report, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -330,146 +206,44 @@ public class jdRepHistorialClinico extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jLabel4)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addGap(6, 6, 6)
-                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnBuscar)
-                .addGap(126, 126, 126)
-                .addComponent(jLabel21)
-                .addGap(12, 12, 12)
-                .addComponent(txtNumMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(134, 134, 134)
-                .addComponent(jLabel2)
-                .addGap(6, 6, 6)
-                .addComponent(txtNumCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(jLabel5)
-                        .addGap(6, 6, 6)
-                        .addComponent(txtNumServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel7)
-                        .addGap(6, 6, 6)
-                        .addComponent(txtNumCitaServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(95, 95, 95)
-                .addComponent(jLabel14)
-                .addGap(12, 12, 12)
-                .addComponent(txtNumDuenios, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(157, 157, 157)
-                .addComponent(jLabel6)
-                .addGap(12, 12, 12)
-                .addComponent(txtNumMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(92, 92, 92)
-                .addComponent(jLabel8)
-                .addGap(6, 6, 6)
-                .addComponent(txtNumCitaMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar)
-                    .addComponent(txtNumMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNumCitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel21)
-                            .addComponent(jLabel2))))
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(jLabel13)
-                        .addGap(6, 6, 6)
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(jLabel5))
-                            .addComponent(txtNumServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(jLabel7))
-                            .addComponent(txtNumCitaServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNumDuenios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNumMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNumCitaMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel8))))
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSalir))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-//        try {
-//            listarMascotas();
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, "Error al listar Mascotas: " + e.getMessage());
-//        }
+        try {
+            listarMascotas();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al listar Mascotas: " + e.getMessage());
+        }
     }//GEN-LAST:event_formWindowOpened
+
+    private void tblMascotasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMascotasMouseClicked
+        // TODO add your handling code here:
+        txtID.setText(String.valueOf(tblMascotas.getValueAt(tblMascotas.getSelectedRow(), 0)));
+        btnBuscarActionPerformed(null);
+    }//GEN-LAST:event_tblMascotasMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
@@ -478,428 +252,113 @@ public class jdRepHistorialClinico extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Mascota no encontrada");
 
         }
+//        mostrar();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void txtNumDueniosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumDueniosActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumDueniosActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void txtNumMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumMedicosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumMedicosActionPerformed
 
-    private void txtNumCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumCitasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumCitasActionPerformed
-
-    private void txtNumServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumServiciosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumServiciosActionPerformed
-
-    private void txtNumMedicamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumMedicamentosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumMedicamentosActionPerformed
-
-    private void txtNumCitaServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumCitaServiciosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumCitaServiciosActionPerformed
-
-    private void txtNumCitaMedicamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumCitaMedicamentosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumCitaMedicamentosActionPerformed
-
-    private void tblCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCitasMouseClicked
+    private void mostrar(){
         try {
-            // TODO add your handling code here:
-            listarMedicamentosCita();
-            cantidadFilas(tblCitaMedicamentos, txtNumCitaMedicamentos);
-            listarServiciosCita();
-            cantidadFilas(tblCitaServicios, txtNumCitaServicios);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error: "+ex.getMessage());
+            Container contenedor = this.report;
+            contenedor.setLayout(new BorderLayout());
+            contenedor.removeAll();
+            Map parametros = new HashMap();
+            parametros.put(
+                    par,
+                    Integer.parseInt(txtID.getText())
+            );
+            
+            JRViewer objReporte = new clsReporte().reporteInterno(docReporte+".jasper", parametros);
+            contenedor.add(objReporte);
+           
+            contenedor.revalidate();
+            contenedor.repaint();
+            
+            report.setPreferredSize(new Dimension(884,437));
+            this.report.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    " Error en Reporte "+e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
-    }//GEN-LAST:event_tblCitasMouseClicked
-
-    public void listarDatos() throws Exception{
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Campo");
-        modelo.addColumn("Dato");
-                
-        ResultSet rsDato = objMasco.buscarMascota(Integer.parseInt(txtID.getText()));
-
-        while (rsDato.next()) {
-            modelo.addRow(new Object[]{"ID", String.valueOf(rsDato.getString("id"))});
-            modelo.addRow(new Object[]{"Nombre", 
-                String.valueOf(rsDato.getString("nombre"))
-            });
-            modelo.addRow(new Object[]{"Fecha Nacimiento", 
-                String.valueOf(rsDato.getString("fecha_nacimiento"))
-            });
-            modelo.addRow(new Object[]{"Especie", 
-                String.valueOf(rsDato.getString("especie_nombre"))
-            });
-            modelo.addRow(new Object[]{"Raza", 
-                String.valueOf(rsDato.getString("raza_nombre"))
-            });
-            modelo.addRow(new Object[]{"Sexo", 
-                Utilidad.textoBool(rsDato.getBoolean("sexo"), Utilidad.SEXO_MASC_MAS, Utilidad.SEXO_MASC_FEM)
-            });
-            modelo.addRow(new Object[]{"Altura", 
-                String.valueOf(rsDato.getString("altura")+" cm")
-            });
-            modelo.addRow(new Object[]{
-                "Peso", 
-                String.valueOf(rsDato.getString("peso")+" kg")
-            });
-            modelo.addRow(new Object[]{"Esterilizacion", 
-                Utilidad.textoBool(rsDato.getBoolean("esterilizado"), "Si", "No")
-            });
-            modelo.addRow(new Object[]{"Desparasitación", 
-                Utilidad.textoBool(rsDato.getBoolean("desparasitado"), "Si", "No")
-            });
-            modelo.addRow(new Object[]{"Condición Actual", 
-                Utilidad.mostrarEstadoMascota(String.valueOf(rsDato.getString("estado_salud")))
-            });
-            modelo.addRow(new Object[]{"Vigente", 
-                Utilidad.textoBool(rsDato.getBoolean("vigencia"), "Si", "No")
-            });
-//            modelo.addRow(new Object[]{"Nota Adicional", 
-//                String.valueOf(rsDato.getString("notaAdicional"))
-//            });
-            txtNotaAd.setText(String.valueOf(rsDato.getString("notaAdicional")));
-        }
-        tblDatos.setModel(modelo);        
     }
     
     private void buscarMascota() throws Exception{
         try {
             if (txtID.getText().isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
-//                listarMascotas();
+                listarMascotas();
             } else {
-//                for (int i = 0; i < tblMascotas.getRowCount(); i++) {
-//                    String valorCodigo = tblMascotas.getValueAt(i, 0).toString();
-//                    if (valorCodigo.equals(txtID.getText())) {
-//                        tblMascotas.setRowSelectionInterval(i, i);
-//                        tblMascotas.scrollRectToVisible(tblMascotas.getCellRect(i, 0, true));
-//                        break;
-//                    }
-//                }
+                for (int i = 0; i < tblMascotas.getRowCount(); i++) {
+                    String valorCodigo = tblMascotas.getValueAt(i, 0).toString();
+                    if (valorCodigo.equals(txtID.getText())) {
+                        tblMascotas.setRowSelectionInterval(i, i);
+                        tblMascotas.scrollRectToVisible(tblMascotas.getCellRect(i, 0, true));
+                        break;
+                    }
+                }
                 ResultSet rsBus = objMasco.buscarMascota(Integer.parseInt(txtID.getText()));
                 if (rsBus.next()) {
-                    listarDatos();
-                    listarDuenios();
-                    listarCitas();
-                    listarServicios();
-                    listarMedicos();
-                    listarMedicamentos();
-                    cantidadFilas(tblCitas, txtNumCitas);
-                    cantidadFilas(tblDuenios, txtNumDuenios);
-                    cantidadFilas(tblMedicos, txtNumMedicos);
-                    cantidadFilas(tblMedicamentos, txtNumMedicamentos);
-                    cantidadFilas(tblServicios, txtNumServicios);
-                    
-                    DefaultTableModel dataModel = new DefaultTableModel();
-                    tblCitaMedicamentos.setModel(dataModel);
-                    tblCitaServicios.setModel(dataModel);
-
+                    mostrar();
                 } else {
                     JOptionPane.showMessageDialog(this, "Mascota no encontrada");
-//                    listarMascotas();
+                    listarMascotas();
                 }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
-//            listarMascotas();
+            listarMascotas();
         }
     }
     
-    private void listarDuenios() throws Exception {
-        String campoID = txtID.getText();
-        int valorID = Integer.parseInt(campoID);
-        ResultSet rsDato = null;
+    
+    private void listarMascotas() throws Exception {
+        ResultSet rsMas = null;
         DefaultTableModel modeloM = new DefaultTableModel();
 
-        modeloM.addColumn("ID");
-        modeloM.addColumn("Nombre Completo");
-        modeloM.addColumn("Doc. Identidad");
-        modeloM.addColumn("Vigencia");
-        tblDuenios.setModel(modeloM);
+        modeloM.addColumn("Id");
+        modeloM.addColumn("Nombre");
+        tblMascotas.setModel(modeloM);
 
         try {
-            rsDato = objCustodia.listarDueniosxMascota(valorID);
-            while (rsDato.next()) {
+            rsMas = objMasco.listarMascotas();  // Obtener el ResultSet de mascotas
+            while (rsMas.next()) {
                 modeloM.addRow(new Object[]{
-                    rsDato.getInt("id"),
-                    rsDato.getString("nombres")+" "+rsDato.getString("apepaterno")+" "+rsDato.getString("apematerno"),
-                    rsDato.getString("doc_identidad"),
-                    Utilidad.textoBool(rsDato.getBoolean("vigencia"), Utilidad.VIGENCIA_SI, Utilidad.VIGENCIA_NO)
+                    rsMas.getInt("id"),
+                    rsMas.getString("nombre"),
                 });
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al listar dueños de mascota ID: "+valorID+" / "+ e.getMessage());
-        }
-    }
-    
-    private void listarCitas() throws Exception {
-        String campoID = txtID.getText();
-        int valorID = Integer.parseInt(campoID);
-        ResultSet rsDato = null;
-        DefaultTableModel modeloM = new DefaultTableModel();
-
-        modeloM.addColumn("ID");
-        modeloM.addColumn("Fecha de Cita");
-        modeloM.addColumn("Observación");
-        modeloM.addColumn("Estado de Cita");
-        tblCitas.setModel(modeloM);
-
-        try {
-            rsDato = objCita.listarCitasxMascota(valorID);
-            while (rsDato.next()) {
-                modeloM.addRow(new Object[]{
-                    rsDato.getInt("id_cita"),
-                    rsDato.getString("fecha_cita"),
-                    rsDato.getString("observacion"),
-                    rsDato.getString("estado_cita")
-                });
+            JOptionPane.showMessageDialog(this, "Error al listar Mascotas: " + e.getMessage());
+        } finally {
+            if (rsMas != null) {
+                rsMas.close();
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al listar dueños de mascota ID: "+valorID+" / "+ e.getMessage());
-        }
-    }
-    
-    private void listarServicios() throws Exception {
-        String campoID = txtID.getText();
-        int valorID = Integer.parseInt(campoID);
-        ResultSet rsDato = null;
-        DefaultTableModel modeloM = new DefaultTableModel();
-
-        modeloM.addColumn("ID");
-        modeloM.addColumn("Servicio");
-        modeloM.addColumn("Descripcion");
-//        modeloM.addColumn("Costo");
-        modeloM.addColumn("Disponibilidad");
-        tblServicios.setModel(modeloM);
-
-        try {
-            rsDato = objDetCita.listarServiciosxMascota(valorID);
-            while (rsDato.next()) {
-                modeloM.addRow(new Object[]{
-                    rsDato.getInt("ser_id"),
-                    rsDato.getString("nom_servicio"),
-                    rsDato.getString("descripcion"),
-//                    rsDato.getString("costo"),
-                    Utilidad.textoBool(rsDato.getBoolean("disponibilidad"), Utilidad.DISPONIBILIDAD_SI, Utilidad.DISPONIBILIDAD_NO)
-                });
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al listar servicios de mascota ID: "+valorID+" / "+ e.getMessage());
-        }
-    }
-    
-    private void listarMedicos() throws Exception {
-        String campoID = txtID.getText();
-        int valorID = Integer.parseInt(campoID);
-        ResultSet rsDato = null;
-        DefaultTableModel modeloM = new DefaultTableModel();
-
-        modeloM.addColumn("ID");
-        modeloM.addColumn("Nombre Completo");
-        modeloM.addColumn("Doc. Identidad");
-        modeloM.addColumn("Especialidad");
-        tblMedicos.setModel(modeloM);
-
-        try {
-            rsDato = objDetCita.listarMedicosxMascota(valorID);
-            while (rsDato.next()) {
-                modeloM.addRow(new Object[]{
-                    rsDato.getInt("id_medico"),
-                    rsDato.getString("nombre_medico")+" "+rsDato.getString("apellido_paterno")+" "+rsDato.getString("apellido_materno"),
-                    rsDato.getString("doc_identidad"),
-                    rsDato.getString("especialidad")
-                });
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al listar servicios de mascota ID: "+valorID+" / "+ e.getMessage());
-        }
-    }
-    
-    private void listarMedicamentos() throws Exception {
-        String campoID = txtID.getText();
-        int valorID = Integer.parseInt(campoID);
-        ResultSet rsDato = null;
-        DefaultTableModel modeloM = new DefaultTableModel();
-
-        modeloM.addColumn("ID");
-        modeloM.addColumn("Medicamento");
-        modeloM.addColumn("Presentación");
-        modeloM.addColumn("Costo");
-        modeloM.addColumn("Cant Veces");
-//        modeloM.addColumn("Dosis");
-//        modeloM.addColumn("Cantidad");
-//        modeloM.addColumn("Indicacion");
-
-        tblMedicamentos.setModel(modeloM);
-
-        try {
-            rsDato = objDetMedicamento.listarMedicamentosxMascota(valorID);
-            while (rsDato.next()) {
-                modeloM.addRow(new Object[]{
-                    rsDato.getInt("med_id"),
-                    rsDato.getString("medicamento"),
-                    rsDato.getString("presentacion"),
-                    rsDato.getString("costo"),
-                    rsDato.getString("cantidad")
-                });
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al listar servicios de mascota ID: "+valorID+" / "+ e.getMessage());
-        }
-    }
-    
-    private void listarMedicamentosCita() throws Exception {
-        String campoID = txtID.getText();
-        int valorID = Integer.parseInt(campoID);
-        ResultSet rsDato = null;
-        DefaultTableModel modeloM = new DefaultTableModel();
-
-        modeloM.addColumn("ID");
-        modeloM.addColumn("Medicamento");
-        modeloM.addColumn("Presentación");
-        modeloM.addColumn("Costo");
-        modeloM.addColumn("Dosis");
-        modeloM.addColumn("Cantidad");
-        modeloM.addColumn("Indicacion");
-
-        tblCitaMedicamentos.setModel(modeloM);
-        int idCita = (int) tblCitas.getValueAt(tblCitas.getSelectedRow(), 0);
-        
-        try {
-            rsDato = objDetMedicamento.listarMedicamentosxMascotaxCita(valorID,idCita);
-            while (rsDato.next()) {
-                modeloM.addRow(new Object[]{
-                    rsDato.getInt("med_id"),
-                    rsDato.getString("medicamento"),
-                    rsDato.getString("presentacion"),
-                    rsDato.getString("costo"),
-                    rsDato.getString("dosis"),
-                    rsDato.getString("cantidad"),
-                    rsDato.getString("indicacion")
-                });
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al listar medicamentos de mascota ID: "+valorID+" / "+ e.getMessage());
-        }
-    }
-    
-    private void listarServiciosCita() throws Exception {
-        String campoID = txtID.getText();
-        int valorID = Integer.parseInt(campoID);
-        ResultSet rsDato = null;
-        DefaultTableModel modeloM = new DefaultTableModel();
-
-        modeloM.addColumn("ID");
-        modeloM.addColumn("Servicio");
-        modeloM.addColumn("Hora Entrada");
-        modeloM.addColumn("Hora Salida");
-        modeloM.addColumn("ID Med");
-        modeloM.addColumn("Nombre Completo");
-        
-        tblCitaServicios.setModel(modeloM);
-        int idCita = (int) tblCitas.getValueAt(tblCitas.getSelectedRow(), 0);
-
-        try {
-            rsDato = objDetCita.listarServiciosxMascotaCita(valorID,idCita);
-            while (rsDato.next()) {
-                modeloM.addRow(new Object[]{
-                    rsDato.getInt("ser_id"),
-                    rsDato.getString("nom_servicio"),
-                    rsDato.getString("horaentrada"),
-                    rsDato.getString("horasalida"),
-                    rsDato.getString("med_id"),
-                    rsDato.getString("nombres")+" "+rsDato.getString("apepaterno")+" "+rsDato.getString("apematerno")
-                });
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al listar servicios de mascota ID: "+valorID+" / "+ e.getMessage());
         }
     }
     
     
-    
-//    private void listarMascotas() throws Exception {
-//        ResultSet rsMas = null;
-//        DefaultTableModel modeloM = new DefaultTableModel();
-//
-//        modeloM.addColumn("Id");
-//        modeloM.addColumn("Nombre");
-//        tblMascotas.setModel(modeloM);
-//
-//        try {
-//            rsMas = objMasco.listarMascotas();  // Obtener el ResultSet de mascotas
-//            while (rsMas.next()) {
-//                modeloM.addRow(new Object[]{
-//                    rsMas.getInt("id"),
-//                    rsMas.getString("nombre"),
-//                });
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, "Error al listar Mascotas: " + e.getMessage());
-//        } finally {
-//            if (rsMas != null) {
-//                rsMas.close();
-//            }
-//        }
-//    }
-    
-    private void cantidadFilas(JTable tabla , JTextField texto) {
-        texto.setText(String.valueOf(tabla.getRowCount()));
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cmbEspecialidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane10;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTable tblCitaMedicamentos;
-    private javax.swing.JTable tblCitaServicios;
-    private javax.swing.JTable tblCitas;
-    private javax.swing.JTable tblDatos;
-    private javax.swing.JTable tblDuenios;
-    private javax.swing.JTable tblMedicamentos;
-    private javax.swing.JTable tblMedicos;
-    private javax.swing.JTable tblServicios;
+    private javax.swing.JDesktopPane report;
+    private javax.swing.JTable tblMascotas;
     private javax.swing.JTextField txtID;
-    private javax.swing.JTextArea txtNotaAd;
-    private javax.swing.JTextField txtNumCitaMedicamentos;
-    private javax.swing.JTextField txtNumCitaServicios;
-    private javax.swing.JTextField txtNumCitas;
-    private javax.swing.JTextField txtNumDuenios;
-    private javax.swing.JTextField txtNumMedicamentos;
-    private javax.swing.JTextField txtNumMedicos;
-    private javax.swing.JTextField txtNumServicios;
     // End of variables declaration//GEN-END:variables
 }

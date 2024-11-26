@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptCitasPendientes" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a405aa29-e4d1-4047-af86-83121865e6dc">
+	<property name="ireport.zoom" value="1.0000000000000073"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="193"/>
+	<queryString>
+		<![CDATA[SELECT
+     ci."id" AS ci_id,
+     ci."fecha_cita" AS ci_fecha_cita,
+     ci."observacion" AS ci_observacion,
+     est."nombre_estado" AS est_nombre_estado,
+     mas."nombre" AS mas_nombre,
+     raz."nombre" AS raz_nombre,
+     esp."nombre" AS esp_nombre,
+     mas."sexo" AS mas_sexo,
+     due."nombres" AS due_nombres,
+     due."apepaterno" AS due_apepaterno,
+     due."apematerno" AS due_apematerno,
+     due."doc_identidad" AS due_doc_identidad,
+     due."telefono" AS due_telefono,
+     due."telefonoalt" AS due_telefonoalt,
+     due."correo" AS due_correo,
+     det."horaentrada" AS det_horaentrada,
+     det."horasalida" AS det_horasalida,
+     det."nota_adicional" AS det_nota_adicional,
+     ser."nom_servicio" AS ser_nom_servicio,
+     med."nombres" AS med_nombres,
+     med."apepaterno" AS med_apepaterno,
+     med."apematerno" AS med_apematerno,
+     med."doc_identidad" AS med_doc_identidad,
+     med."sexo" AS med_sexo,
+     epe."nom_especialidad" AS epe_nom_especialidad,
+     med."vigencia" AS med_vigencia
+FROM
+     "detalle_cita" det INNER JOIN "cita" ci ON det."cita_id" = ci."id"
+     INNER JOIN "custodia" cus ON ci."custodiamascotaid" = cus."mascotaid"
+     AND cus."duenioid" = ci."custodiaduenioid"
+     INNER JOIN "estado_cita" est ON ci."estado_cita_id" = est."id"
+     INNER JOIN "mascota" mas ON cus."mascotaid" = mas."id"
+     INNER JOIN "duenio" due ON cus."duenioid" = due."id"
+     INNER JOIN "raza" raz ON mas."raza_id" = raz."id"
+     INNER JOIN "especie" esp ON raz."especie_id" = esp."id"
+     INNER JOIN "detalle_servicio" des ON det."detalle_servicio_med_id" = des."medico_id"
+     AND des."servicio_id" = det."detalle_servicio_serv_id"
+     INNER JOIN "medico" med ON des."medico_id" = med."id"
+     INNER JOIN "servicio" ser ON des."servicio_id" = ser."id"
+     INNER JOIN "especialidad" epe ON med."especialidad_id" = epe."id"
+WHERE
+     ci.estado_cita_id = 1
+ORDER BY
+     ci.fecha_cita ASC,
+     ci.id ASC,
+     det.horaentrada ASC]]>
+	</queryString>
+	<field name="ci_id" class="java.lang.Integer"/>
+	<field name="ci_fecha_cita" class="java.sql.Date"/>
+	<field name="ci_observacion" class="java.lang.String"/>
+	<field name="est_nombre_estado" class="java.lang.String"/>
+	<field name="mas_nombre" class="java.lang.String"/>
+	<field name="raz_nombre" class="java.lang.String"/>
+	<field name="esp_nombre" class="java.lang.String"/>
+	<field name="mas_sexo" class="java.lang.Boolean"/>
+	<field name="due_nombres" class="java.lang.String"/>
+	<field name="due_apepaterno" class="java.lang.String"/>
+	<field name="due_apematerno" class="java.lang.String"/>
+	<field name="due_doc_identidad" class="java.lang.String"/>
+	<field name="due_telefono" class="java.lang.String"/>
+	<field name="due_telefonoalt" class="java.lang.String"/>
+	<field name="due_correo" class="java.lang.String"/>
+	<field name="det_horaentrada" class="java.sql.Time"/>
+	<field name="det_horasalida" class="java.sql.Time"/>
+	<field name="det_nota_adicional" class="java.lang.String"/>
+	<field name="ser_nom_servicio" class="java.lang.String"/>
+	<field name="med_nombres" class="java.lang.String"/>
+	<field name="med_apepaterno" class="java.lang.String"/>
+	<field name="med_apematerno" class="java.lang.String"/>
+	<field name="med_doc_identidad" class="java.lang.String"/>
+	<field name="med_sexo" class="java.lang.Boolean"/>
+	<field name="epe_nom_especialidad" class="java.lang.String"/>
+	<field name="med_vigencia" class="java.lang.Boolean"/>
+	<variable name="ci_id_1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[$F{ci_id}]]></variableExpression>
+	</variable>
+	<variable name="ci_id_2" class="java.lang.Integer" resetType="Page" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{ci_id}]]></variableExpression>
+	</variable>
+	<variable name="ci_id_3" class="java.lang.Integer" resetType="Page" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{ci_id}]]></variableExpression>
+	</variable>
+	<variable name="ci_id_4" class="java.lang.Integer" resetType="Page" calculation="Count">
+		<variableExpression><![CDATA[$F{ci_id}]]></variableExpression>
+	</variable>
+	<variable name="ci_id_5" class="java.lang.Integer" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{ci_id}]]></variableExpression>
+	</variable>
+	<group name="grupo_detalle">
+		<groupExpression><![CDATA[$F{ci_id}]]></groupExpression>
+		<groupHeader>
+			<band height="298">
+				<textField>
+					<reportElement x="19" y="45" width="86" height="20" uuid="b89a125c-792a-4d82-813e-97ad1cad2ef2"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["ID: "+$F{ci_id}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="195" y="45" width="94" height="20" uuid="2761451d-d1d5-4609-89d2-48c4ba5925aa"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ci_fecha_cita}.toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="105" y="76" width="417" height="20" uuid="70beef03-b1cc-45b5-abd7-0af7322acc68"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="Century Gothic" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ci_observacion}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="363" y="45" width="159" height="20" uuid="9fb812cb-69bb-476a-b9e8-0023e27e1b79"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{est_nombre_estado}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="100" y="142" width="114" height="20" uuid="531759cc-7e4a-44fd-a728-37b910c7418f"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{mas_nombre}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="100" y="182" width="114" height="20" uuid="8491b2d1-feb5-40ed-bb02-1de3189e1813"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{raz_nombre}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="100" y="162" width="114" height="20" uuid="d8d2d57b-b7bb-4bd8-970a-0e7f6b4d9d55"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{esp_nombre}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="100" y="202" width="114" height="20" uuid="5a26ef02-7e87-4977-acdf-d3e2f7bf5715"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{mas_sexo} ? "Macho" : "Hembra"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="375" y="142" width="121" height="20" uuid="912b8241-da99-426e-ad09-1c3dfa59333a"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{due_nombres}+" "+$F{due_apepaterno}+" "+$F{due_apematerno}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="375" y="162" width="121" height="20" uuid="64c958d2-3b4c-4e3b-bea5-25eb7b8419e8"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{due_doc_identidad}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="375" y="182" width="121" height="20" uuid="6920fd25-4f2a-4feb-afc0-b40b8d55eed6"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{due_telefono}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="375" y="202" width="121" height="20" uuid="4209a3d1-562e-416f-852a-bc79b724bf70"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{due_telefonoalt}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="19" y="76" width="86" height="20" uuid="c6aedfc3-5586-4d44-9b07-1835a34ad935"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="Century Gothic" size="12" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Observación: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="146" y="45" width="49" height="20" uuid="fb2683a0-e031-4f63-b4a3-26899f825c7f"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="12" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Fecha: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="319" y="45" width="44" height="20" uuid="e78338c9-ce77-42b0-9425-87a66a34a4bd"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="12" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Estado: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="268" y="142" width="107" height="20" uuid="901de5bb-14a4-4d97-8260-a6c48b517377"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="10" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Nombre Completo: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="268" y="162" width="107" height="20" uuid="e62eaa4f-3ae8-49b7-9b5b-5f1a8f45f473"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="10" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Doc Identidad: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="268" y="182" width="107" height="20" uuid="db323fa2-4584-4262-b3f7-2fc7b7d9a38e"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="10" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Teléfono 1: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="268" y="202" width="107" height="20" uuid="b4e266fa-1a03-41e4-b9b9-db131b98383d"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="10" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Teléfono 2: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="52" y="202" width="48" height="20" uuid="e9387a6a-6897-40ea-a8bc-83d3d9f78b2d"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="10" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Sexo: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="52" y="142" width="48" height="20" uuid="3bfd7dfc-f624-4f8b-a462-5c8370a4487b"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="10" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Nombre: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="52" y="162" width="48" height="20" uuid="38fe8534-e9ac-4be1-87a7-706d89350f0f"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="10" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Especie: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="52" y="182" width="48" height="20" uuid="e51c599d-a2c9-4af9-b42c-65eab0fcfbaa"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="10" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Raza: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="52" y="112" width="162" height="20" uuid="7149e539-97fe-45f6-9c46-c18e1675f1b5"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Datos de Mascota:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="268" y="112" width="228" height="20" uuid="0d66ea20-417f-4801-bffc-f9b3ad1cd699"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Datos de Dueño acompañante:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="297" width="555" height="1" uuid="169a793e-7614-400f-90b2-e21f65dbbcc7"/>
+					<graphicElement>
+						<pen lineWidth="1.0" lineColor="#333333"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="0" y="277" width="555" height="1" uuid="89630abe-e202-4fe1-81ac-c7ba89c4da01"/>
+					<graphicElement>
+						<pen lineWidth="1.0" lineColor="#333333"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="156" y="278" width="124" height="20" uuid="6975b7b1-509a-48a1-a383-fc9dee53802c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nombre Completo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="457" y="278" width="98" height="20" uuid="523e95e7-b3e6-4569-9e65-7b930e1ca878"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Servicio Realizado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="349" y="278" width="108" height="20" uuid="0c874baa-4c48-4898-91d5-8c00332188ba"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Especialidad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="280" y="278" width="69" height="20" uuid="54c9b2ad-0c27-45c3-afcf-2238cb7e3650"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Doc. Identidad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="78" y="278" width="78" height="20" uuid="df73251a-5672-47e3-81d6-27e45484f355"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Hora Salida]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="278" width="78" height="20" uuid="1d761eaa-620c-4191-acb0-2de0dd4c86d1"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Hora Entrada]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="141" y="246" width="276" height="20" uuid="426a512b-f99c-435d-9f9e-5f295f142e30"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Médicos y servicios:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="0" width="555" height="1" uuid="bf430edc-b8e8-4008-8dfd-1833b49f7e4f"/>
+					<graphicElement>
+						<pen lineWidth="3.0" lineColor="#3366FF"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="33"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement x="131" y="70" width="218" height="20" uuid="25c18aa1-802c-4910-9f6b-dad64808c109"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad Total de Citas Pendientes: ]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="349" y="70" width="68" height="20" uuid="4cc0c649-5fbc-4df1-b768-a112b0551c8a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ci_id_5}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="156" y="13" width="227" height="35" forecolor="#003399" uuid="8591cb27-a4b8-482e-bbd7-89567193d66d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Citas Pendientes]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="7" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="2" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="78" height="20" uuid="92e01504-9759-42c5-86d1-7e2b9e56ef22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{det_horaentrada}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="78" y="0" width="78" height="20" uuid="eb4cc1f3-659b-44a4-9f69-3036b5d6a08d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{det_horasalida}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="457" y="0" width="98" height="20" uuid="3a295865-a88e-41d5-965a-8e917ff8f462"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ser_nom_servicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="156" y="0" width="124" height="20" uuid="fca130b4-6e88-4348-bca0-8d86dd5e1be9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{med_nombres}+" "+$F{med_apepaterno}+" "+$F{med_apematerno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="69" height="20" uuid="40fc8926-8baf-4fe4-9c4b-86b64cb4390e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{med_doc_identidad}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="e6a011a3-32cd-4762-8b46-591d7fa2682b"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineColor="#333333"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="349" y="0" width="108" height="20" uuid="3044b15a-6eb5-4058-93e9-0f9add3a517c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{epe_nom_especialidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="3" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="195" height="20" uuid="93233849-8277-4842-856f-c4afe834cfde"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Elaborado por Franco Cortez Villaseca]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="442" y="1" width="70" height="20" uuid="9a401b87-9df5-4151-b9a3-b9cc0ec98682"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pag. "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="512" y="1" width="40" height="20" uuid="30e391b0-f246-471a-9487-1cdeeba15a3c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="227" y="0" width="100" height="20" uuid="ae39b647-3968-47c4-ad90-84164126c8b5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="1" splitType="Stretch"/>
+	</summary>
+</jasperReport>
