@@ -324,9 +324,7 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
                     count++;
                     intentos(count);
                 }
-
-            }
-            else{
+            } else{
                 JOptionPane.showMessageDialog(null, "No puedes haber campos vacíos");
             }
 

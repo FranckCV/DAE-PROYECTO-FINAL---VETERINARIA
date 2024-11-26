@@ -25,6 +25,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         initComponents();
         btnNuevo.setText(Utilidad.BTN_NUEVO);
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnDisponibilidad.setText(Utilidad.BTN_DISPONIBILIDAD);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
     }
 
@@ -78,7 +79,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator2)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(121, 121, 121)
+                .addGap(198, 198, 198)
                 .addComponent(jLabel5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -134,34 +135,36 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNombre)
-                    .addComponent(chkDisponibilidad))
-                .addContainerGap(50, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLimpiar)
-                .addContainerGap())
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(75, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(chkDisponibilidad)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLimpiar)
+                        .addGap(18, 18, 18))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(chkDisponibilidad))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLimpiar)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnLimpiar)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(chkDisponibilidad))))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         tblEspecialidad.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -187,7 +190,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 
         btnNuevo.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/veterinario.png"))); // NOI18N
-        btnNuevo.setText("Registrar");
+        btnNuevo.setText("reg");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
@@ -196,7 +199,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 
         btnModificar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/editar.png"))); // NOI18N
-        btnModificar.setText("Modificar");
+        btnModificar.setText("mod");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
@@ -205,7 +208,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 
         btnEliminar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/eliminar.png"))); // NOI18N
-        btnEliminar.setText("Eliminar");
+        btnEliminar.setText("eli");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -214,7 +217,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 
         btnDisponibilidad.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnDisponibilidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/disponible.png"))); // NOI18N
-        btnDisponibilidad.setText("Disponible");
+        btnDisponibilidad.setText("disp");
         btnDisponibilidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDisponibilidadActionPerformed(evt);
@@ -254,7 +257,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,25 +276,22 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(21, 21, 21)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btnDisponibilidad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                                .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDisponibilidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -367,8 +367,14 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 
     private void tblEspecialidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEspecialidadMouseClicked
         // TODO add your handling code here:
-        txtID.setText(String.valueOf(tblEspecialidad.getValueAt(tblEspecialidad.getSelectedRow(), 0)));
-        btnBuscarActionPerformed(null);        
+        try {
+            txtID.setText(String.valueOf(tblEspecialidad.getValueAt(tblEspecialidad.getSelectedRow(), 0)));
+            btnBuscarActionPerformed(null);  
+        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(this,"Error: "+e.getMessage());
+            JOptionPane.showMessageDialog(this,"Debe finalizar la operacion actual primero");
+        }
+      
     }//GEN-LAST:event_tblEspecialidadMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -387,10 +393,15 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 
     private void btnDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisponibilidadActionPerformed
         // TODO add your handling code here:
-        String id = txtID.getText();
-        cambiarDisponibilidad();
-        txtID.setText(id);
-        btnBuscarActionPerformed(null);
+        if (!txtID.getText().isBlank()) {
+            String id = txtID.getText();
+            cambiarDisponibilidad();
+            txtID.setText(id);
+            btnBuscarActionPerformed(null);
+        } else {
+            Utilidad.mensajeErrorFaltaID(this);
+
+        }
     }//GEN-LAST:event_btnDisponibilidadActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
@@ -440,24 +451,22 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 //    }
     
     private void buscarEspecialidad() {
-        String campoID = txtID.getText();
-        int valorID = Integer.parseInt(campoID);
         ResultSet rsEsp = null;
         try {
-            if (campoID.isBlank()) {
+            if (txtID.getText().isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
             } else {
                 
                 for (int i = 0; i < tblEspecialidad.getRowCount(); i++) {
                     String valorCodigo = tblEspecialidad.getValueAt(i, 0).toString();
-                    if (valorCodigo.equals(campoID)) {
+                    if (valorCodigo.equals(txtID.getText())) {
                         tblEspecialidad.setRowSelectionInterval(i, i);
                         tblEspecialidad.scrollRectToVisible(tblEspecialidad.getCellRect(i, 0, true));
                         break;
                     }
                 }
                 
-                rsEsp = objTabla.buscarEspecialidad(valorID);
+                rsEsp = objTabla.buscarEspecialidad(Integer.parseInt(txtID.getText()));
                 if (rsEsp.next()){
                     txtNombre.setText(rsEsp.getString(clsEspecialidad.NOMBRE));
                     chkDisponibilidad.setSelected(rsEsp.getBoolean(clsEspecialidad.DISPONIBILIDAD));
@@ -501,18 +510,16 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
     }
           
     private void eliminarEspecialidad() {
-        String campoID = txtID.getText();
-        int valorID = Integer.parseInt(campoID);
         try {
-            if (campoID.isBlank()) {
+            if (txtID.getText().isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
-            } else if (Utilidad.validarEliminacionForanea(clsEspecialidad.TABLA, valorID)){
+            } else if (Utilidad.validarEliminacionForanea(clsEspecialidad.TABLA, Integer.parseInt(txtID.getText()))){
                 Utilidad.mensajeErrorNoEliminarForanea(clsEspecialidad.TABLA,txtNombre.getText());
             } else {
-                int valor = Utilidad.mensajeConfirmarEliminar(clsEspecialidad.TABLA, valorID, txtNombre.getText());
+                int valor = Utilidad.mensajeConfirmarEliminar(clsEspecialidad.TABLA, Integer.parseInt(txtID.getText()), txtNombre.getText());
                 
-                if (valor == JOptionPane.YES_OPTION) {
-                    objTabla.eliminarEspecialidad(valorID);
+                if (valor == 0) {
+                    objTabla.eliminarEspecialidad(Integer.parseInt(txtID.getText()));
                     limpiarControles();
                     listarEspecialidades();
                 }
@@ -533,10 +540,8 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
     }
    
     private void modificarEspecialidad() {
-        String campoID = txtID.getText();
-        int valorID = Integer.parseInt(campoID);
         try {
-            if (campoID.isBlank()) {
+            if (txtID.getText().isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
             } else {
                 if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
@@ -545,10 +550,10 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                     editableControles(false, true);
                     usarBotones(false, false, true, true, false, false);
                 } else {
-                    int valor = Utilidad.mensajeConfirmarModificar(clsEspecialidad.TABLA, valorID,txtNombre.getText());
+                    int valor = Utilidad.mensajeConfirmarModificar(clsEspecialidad.TABLA, Integer.parseInt(txtID.getText()),txtNombre.getText());
                     if (valor == 0) {
                         objTabla.modificarEspecialidad(
-                            valorID,
+                            Integer.parseInt(txtID.getText()),
                             txtNombre.getText()
                         );
                         btnModificar.setText(Utilidad.BTN_MODIFICAR);
@@ -557,7 +562,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                         usarBotones(true, true, true, true, true, true);
                         limpiarControles();
                         listarEspecialidades();
-                        txtID.setText(campoID);
+                        txtID.setText(txtID.getText());
                         btnBuscarActionPerformed(null);
                         JOptionPane.showMessageDialog(this, "Se modificó con exito");
                     }
@@ -604,14 +609,14 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
     
     private void cambiarDisponibilidad() {
         String campoID = txtID.getText();
-        int valorID = Integer.parseInt(campoID);
+        int valorID = Integer.parseInt(txtID.getText());
         try {
             if (campoID.isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
             } else {
-                int valor = Utilidad.mensajeConfirmarDisponibilidad(clsEspecialidad.TABLA, valorID,txtNombre.getText());
+                int valor = Utilidad.mensajeConfirmarDisponibilidad(clsEspecialidad.TABLA, Integer.parseInt(txtID.getText()),txtNombre.getText());
                 if (valor == 0) {
-                    objTabla.cambiarDisponibilidad(valorID);
+                    objTabla.cambiarDisponibilidad(Integer.parseInt(txtID.getText()));
                     limpiarControles();
                     listarEspecialidades();
                     JOptionPane.showMessageDialog(this, "Se cambió la disponibilidad de esta especialidad con exito");

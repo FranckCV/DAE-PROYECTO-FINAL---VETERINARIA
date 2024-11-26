@@ -11,9 +11,14 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.text.NumberFormatter;
 import capaDatos.clsJDBC;
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JTable;
@@ -131,7 +136,7 @@ public class Utilidad {
     };
     
     public static final String[] opcionesDisponibilidad = {
-        "Cmabiar Disponibilidad", 
+        "Cambiar Disponibilidad", 
         "Cancelar"
     };
     
@@ -267,7 +272,7 @@ public class Utilidad {
         int valor = JOptionPane.showOptionDialog(
                 null, 
                 "¿Está seguro que desea dar alta " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: "+id+")? ",
-                "Confirmar alta",
+                "Confirmar Dar de Alta",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
@@ -326,6 +331,13 @@ public class Utilidad {
                 + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. "
         );
     }
+    
+    public static void mensajeElementoNoVigente(String entidad , String nombre) {
+        JOptionPane.showMessageDialog(
+                null, 
+                "La informacion del " + entidad.toLowerCase() + " \"" + nombre + "\" no se encuentra vigente para esta operación. "
+        );
+    }
 
 //    Validaciones con Base de Datos
     public static boolean validarEliminacionForanea(String tabla, int valor_id) throws Exception {
@@ -343,7 +355,27 @@ public class Utilidad {
                 }
             }
         } catch (Exception e) {
-            throw new Exception("Error al validar si elemento ID: " + valor_id + " en la tabla " + tabla + " / " + e.getMessage());
+            throw new Exception("Error al validar si elemento ID: " + valor_id + " en la tabla " + tabla.toLowerCase() + " / " + e.getMessage());
+        }
+        return false;
+    }
+    
+    public static boolean validarEliminacionForaneaCompuesta(String tabla, int valor_id1, int valor_id2) throws Exception {
+        clsJDBC objConectar = new clsJDBC();
+        String strSQL;
+        ResultSet rs = null;
+
+        strSQL = " select sum(cantidad) as total from contar_relaciones_compuestas('" + tabla + "'," + valor_id1 + " , "+valor_id2+") ";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                int total = rs.getInt("total");
+                if (total > 0) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al validar si elemento ID: " + valor_id1 +" con ID: "+ valor_id2+" en la tabla " + tabla.toLowerCase() + " / " + e.getMessage());
         }
         return false;
     }
@@ -359,7 +391,7 @@ public class Utilidad {
             rs = objConectar.consultarBD(strSQL);
             return rs.next();
         } catch (Exception e) {
-            throw new Exception("Error al buscar Elemento " + campo + " en la tabla " + tabla + " / " + e.getMessage());
+            throw new Exception("Error al buscar Elemento " + campo.toLowerCase() + " en la tabla " + tabla.toLowerCase() + " / " + e.getMessage());
         }
     }
 
@@ -369,10 +401,10 @@ public class Utilidad {
         try {
             rs = objConectar.consultarBD("select "+columna+" from "+tabla+" where id = "+id+" ");
             while (rs.next()) {
-                return rs.getBoolean(columna);
+                return !rs.getBoolean(columna);
             }
         } catch (Exception e) {
-            throw new Exception("Error al verificar "+columna+" de ID:" + id + " en tabla " + tabla + ": " + e.getMessage());
+            throw new Exception("Error al verificar "+columna.toLowerCase()+" de ID:" + id + " en tabla " + tabla.toLowerCase() + ": " + e.getMessage());
         }
         return false;
     }
@@ -482,5 +514,37 @@ public class Utilidad {
             btn.doClick();
         }
     }
+    
+//    REPORTES 
+    
+//    public static void reporte(JDesktopPane vistareporte){
+//        try {
+//            Container contenedor = vistareporte;
+//            contenedor.setLayout(new BorderLayout());
+//            contenedor.removeAll();
+//            Map parametros = new HashMap();
+//            parametros.put(par,Integer.parseInt(txtCodCat.getText()));
+//            
+//            JRViewer objReporte = new clsReporte().reporteInterno(docReporte+".jasper", parametros);
+//            contenedor.add(objReporte);
+//            
+//            contenedor.revalidate();
+//            contenedor.repaint();
+//            
+//            this.vistareporte.setVisible(true);
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(
+//                    this,
+//                    e.getMessage()+" Error en Reporte ",
+//                    "Error",
+//                    JOptionPane.ERROR_MESSAGE
+//            );
+//        }
+//    }
+    
+    
+    
+    
+    
 
 }

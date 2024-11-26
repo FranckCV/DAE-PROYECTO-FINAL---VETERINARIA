@@ -58,8 +58,6 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        btnBuscarServicioMedico = new javax.swing.JButton();
-        btnBuscarServicioDisponible = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         txtIDServDisponible = new javax.swing.JTextField();
         txtNombreServDisponible = new javax.swing.JTextField();
@@ -68,6 +66,9 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         jButton7 = new javax.swing.JButton();
         chkDisponibilidadServicioMedico = new javax.swing.JCheckBox();
         jLabel13 = new javax.swing.JLabel();
+        btnBuscarServicioDisponible = new javax.swing.JButton();
+        btnBuscarServicioMedico = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -82,7 +83,6 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtCantServTotal = new javax.swing.JTextField();
-        btnLimpiar = new javax.swing.JButton();
         txtCantServDisp = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
 
@@ -183,20 +183,6 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
 
         jLabel8.setText("Nombre:");
 
-        btnBuscarServicioMedico.setText("Buscar");
-        btnBuscarServicioMedico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarServicioMedicoActionPerformed(evt);
-            }
-        });
-
-        btnBuscarServicioDisponible.setText("Buscar");
-        btnBuscarServicioDisponible.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarServicioDisponibleActionPerformed(evt);
-            }
-        });
-
         jLabel12.setText("Nombre:");
 
         txtIDServDisponible.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -237,6 +223,39 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel13.setText("Disponibilidad:");
 
+        btnBuscarServicioDisponible.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        btnBuscarServicioDisponible.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar.png"))); // NOI18N
+        btnBuscarServicioDisponible.setBorder(null);
+        btnBuscarServicioDisponible.setBorderPainted(false);
+        btnBuscarServicioDisponible.setContentAreaFilled(false);
+        btnBuscarServicioDisponible.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarServicioDisponibleActionPerformed(evt);
+            }
+        });
+
+        btnBuscarServicioMedico.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        btnBuscarServicioMedico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar.png"))); // NOI18N
+        btnBuscarServicioMedico.setBorder(null);
+        btnBuscarServicioMedico.setBorderPainted(false);
+        btnBuscarServicioMedico.setContentAreaFilled(false);
+        btnBuscarServicioMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarServicioMedicoActionPerformed(evt);
+            }
+        });
+
+        btnLimpiar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/opacado.png"))); // NOI18N
+        btnLimpiar.setBorder(null);
+        btnLimpiar.setBorderPainted(false);
+        btnLimpiar.setContentAreaFilled(false);
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -253,10 +272,10 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtIDServDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtIDServDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnBuscarServicioDisponible)
-                                .addGap(30, 30, 30)
+                                .addGap(39, 39, 39)
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNombreServDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -267,59 +286,74 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                         .addGap(54, 54, 54)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGap(266, 266, 266)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombreServmedico, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 27, Short.MAX_VALUE)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chkDisponibilidadServicioMedico)
+                        .addGap(12, 12, 12))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(btnQuitar, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(27, 27, 27)
-                                .addComponent(btnDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtIDServMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnBuscarServicioMedico)
-                                .addGap(94, 94, 94)
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombreServmedico, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(chkDisponibilidadServicioMedico))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE))
-                        .addGap(26, 26, 26))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(198, 198, 198)
-                        .addComponent(jLabel10)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(btnDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(212, 212, 212)
+                                        .addComponent(jLabel10))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtIDServMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnBuscarServicioMedico)))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(26, 26, 26))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel12)
-                    .addComponent(txtIDServDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombreServDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13)
-                    .addComponent(chkDisponibilidadServicioMedico)
-                    .addComponent(txtNombreServmedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(txtIDServMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(btnBuscarServicioDisponible)
-                    .addComponent(btnBuscarServicioMedico))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel1))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBuscarServicioMedico))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(btnBuscarServicioDisponible))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                    .addGap(22, 22, 22)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel5)
+                                        .addComponent(jLabel12)
+                                        .addComponent(txtIDServDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtNombreServDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel13)
+                                        .addComponent(chkDisponibilidadServicioMedico)
+                                        .addComponent(txtNombreServmedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel8)
+                                        .addComponent(txtIDServMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel6))))))
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -408,17 +442,6 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         txtCantServTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCantServTotal.setBorder(null);
 
-        btnLimpiar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/opacado.png"))); // NOI18N
-        btnLimpiar.setBorder(null);
-        btnLimpiar.setBorderPainted(false);
-        btnLimpiar.setContentAreaFilled(false);
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
-            }
-        });
-
         txtCantServDisp.setEditable(false);
         txtCantServDisp.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtCantServDisp.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -439,7 +462,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
                     .addComponent(txtDocIdentidad))
-                .addGap(34, 34, 34)
+                .addGap(43, 43, 43)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -447,45 +470,38 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtNombreCompleto, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
                     .addComponent(txtEspecialidad))
-                .addGap(41, 41, 41)
+                .addGap(71, 71, 71)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jLabel14))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtCantServDisp, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCantServTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGap(47, 47, 47))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11)
-                            .addComponent(txtNombreCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtCantServTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtCantServDisp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel14))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel2)
-                                .addComponent(txtDocIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel7)
-                                .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(txtNombreCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtCantServTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCantServDisp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel14))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtDocIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)
+                        .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -494,7 +510,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -597,21 +613,11 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         Utilidad.validarCampoTextoSoloNumero(evt);
     }//GEN-LAST:event_txtIDServMedicoKeyTyped
 
-    private void btnBuscarServicioDisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarServicioDisponibleActionPerformed
-        // TODO add your handling code here:
-        buscarServicioDisponible();
-    }//GEN-LAST:event_btnBuscarServicioDisponibleActionPerformed
-
     private void tblServiciosDisponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblServiciosDisponiblesMouseClicked
         // TODO add your handling code here:
         txtIDServDisponible.setText(String.valueOf(tblServiciosDisponibles.getValueAt(tblServiciosDisponibles.getSelectedRow(), 0)));
         btnBuscarServicioDisponibleActionPerformed(null); 
     }//GEN-LAST:event_tblServiciosDisponiblesMouseClicked
-
-    private void btnBuscarServicioMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarServicioMedicoActionPerformed
-        // TODO add your handling code here:
-        buscarServicioMedico();
-    }//GEN-LAST:event_btnBuscarServicioMedicoActionPerformed
 
     private void chkDisponibilidadServicioMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkDisponibilidadServicioMedicoActionPerformed
         // TODO add your handling code here:
@@ -621,11 +627,15 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
 
     private void btnDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisponibilidadActionPerformed
         // TODO add your handling code here:
-        String id = txtIDServMedico.getText();
-        cambiarDisponibilidad();
-        txtIDServMedico.setText(id);
-        btnBuscarServicioMedicoActionPerformed(null);
-        mostrarCantidadesServicios();
+        if (!txtIDServMedico.getText().isBlank()) {
+            String id = txtIDServMedico.getText();
+            cambiarDisponibilidad();
+            txtIDServMedico.setText(id);
+            btnBuscarServicioMedicoActionPerformed(null);
+            mostrarCantidadesServicios();
+        } else {
+            Utilidad.mensajeErrorFaltaID(this);
+        }
     }//GEN-LAST:event_btnDisponibilidadActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -634,6 +644,16 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         listarServiciosDisponibles();
         listarServiciosMedico();
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnBuscarServicioDisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarServicioDisponibleActionPerformed
+        // TODO add your handling code here:
+        buscarServicioDisponible();
+    }//GEN-LAST:event_btnBuscarServicioDisponibleActionPerformed
+
+    private void btnBuscarServicioMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarServicioMedicoActionPerformed
+        // TODO add your handling code here:
+        buscarServicioMedico();
+    }//GEN-LAST:event_btnBuscarServicioMedicoActionPerformed
 
     private void listarServiciosDisponibles(){
         ResultSet rsPro = null;
@@ -700,11 +720,13 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         try {
             if (fila <= -1) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un codigo a eliminar!");
-            } else if (Utilidad.validarEliminacionForanea(clsEspecialidad.TABLA, fila )){
-                JOptionPane.showMessageDialog(this, 
-                        "Hay datos externos asociados al " + "servicio asigando" + " \"" + txtNombreServmedico.getText()+ "\".\n"
-                        + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. "
-                );
+            } else if (Utilidad.validarEliminacionForaneaCompuesta(
+                    clsDetalle_Servicio.TABLA, 
+                    Integer.parseInt(txtIDServMedico.getText()),
+                    Integer.parseInt(jdMantMedico.id_medico_asignacion)
+
+            )){
+                Utilidad.mensajeErrorNoEliminarForanea(clsServicio.TABLA+" asignado", txtNombreServmedico.getText());
             } else {
                 objTabla.eliminarAsignacion(
                         Integer.parseInt(String.valueOf(tblServiciosMedico.getValueAt(fila, 0))),
@@ -828,10 +850,14 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         try {
             ResultSet rsCateg = null;
             if (txtID.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo");
+                Utilidad.mensajeErrorFaltaID(this);
             } else {
-                int valor = JOptionPane.showConfirmDialog(null, "¿Deseas cambiar la Disponibilidad de la asignación del servicio "+txtNombreServmedico.getText()+" con el medico "+txtNombreCompleto.getText()+"?", "Confirmacion",JOptionPane.YES_NO_OPTION);
-                if (valor == JOptionPane.YES_OPTION) {
+                int valor = Utilidad.mensajeConfirmarDisponibilidad(
+                        "la asignacion del servicio", 
+                        Integer.parseInt(txtIDServMedico.getText()), 
+                        txtNombreServmedico.getText()
+                );
+                if (valor == 0) {
                     objTabla.cambiarDisponibilidad(Integer.parseInt(txtID.getText()),Integer.parseInt(txtIDServMedico.getText()));
                     limpiarControles();
                     listarServiciosMedico();
