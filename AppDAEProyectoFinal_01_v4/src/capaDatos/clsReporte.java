@@ -4,9 +4,12 @@
  */
 package capaDatos;
 
+import capaDatos.clsJDBC;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.swing.JRViewer;
 
 /**
@@ -14,7 +17,7 @@ import net.sf.jasperreports.swing.JRViewer;
  * @author franc
  */
 public class clsReporte {
-
+    
     public static final String RUTA_REPORTES = "src\\reportes\\";
 
     public JRViewer reporteInterno(String archivoReporte, Map<String, Object> parametros) throws Exception {

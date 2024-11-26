@@ -5,14 +5,17 @@
 package capaNegocio;
 
 import capaDatos.clsJDBC;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JTable;
 
 /**
  *
- * @author Junior
+ * @author franc
  */
 public class clsCita {
+    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
