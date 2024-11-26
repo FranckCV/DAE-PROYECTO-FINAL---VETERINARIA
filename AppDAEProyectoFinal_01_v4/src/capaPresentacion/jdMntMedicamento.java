@@ -492,7 +492,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addGap(315, 315, 315))
+                .addGap(279, 279, 279))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -533,7 +533,6 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-        Utilidad.validarCampoTextoSoloLetras(evt);
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -593,7 +592,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         try {
             if (txtId.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un medicamento para modificar");
-                return; // Early return si no hay un ID seleccionado
+                return;
             }
 
             if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
@@ -603,9 +602,19 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                 editableControlesMedicamento(false, true, true, true, true, false, true);
                 usarBotonesMedicamento(false, false, true, true, true, false);
                 chkVigencia.setEnabled(false);
-                return; 
+                return;
             }
 
+            if (txtNombre.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe llenar todos los campos antes de modificar.", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (objTipoMedicamento.existeNombreTipoMedicamento(txtNombre.getText())) {
+                JOptionPane.showMessageDialog(this, "El nombre del tipo de medicamento ya está registrado. Elija un nombre diferente.");
+                return;
+            }
+            
             int confirmacion = JOptionPane.showConfirmDialog(
                     this,
                     "¿Está seguro de que desea guardar los cambios realizados?",
@@ -615,7 +624,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
             if (confirmacion != JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(this, "No se realizo ningún cambio");
-                return; 
+                return;
             }
 
             objMedicamento.modificarMedicamento(

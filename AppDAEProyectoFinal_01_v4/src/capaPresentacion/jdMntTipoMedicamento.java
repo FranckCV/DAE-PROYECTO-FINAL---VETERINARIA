@@ -30,6 +30,8 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         btnRegistrar.setText(Utilidad.BTN_NUEVO);
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+        AccionesRapidas();
+        configurarAccionConEnter();
 
     }
 
@@ -80,7 +82,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         txtId.setText("");
         txtId.setEditable(true);
         txtNombre.setText("");
-        txtNombre.requestFocus();
+        txtId.requestFocus();
     }
 
     private void eliminarTipoMedicamento() {
@@ -422,7 +424,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         try {
             if (txtId.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo de medicamento para modificar.");
-                return; 
+                return;
             }
 
             if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
@@ -436,12 +438,12 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
 
             if (txtNombre.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe llenar todos los campos antes de modificar.", "Error", JOptionPane.WARNING_MESSAGE);
-                return; // Early return si el campo está vacío
+                return;
             }
 
             if (objTipoMedicamento.existeNombreTipoMedicamento(txtNombre.getText())) {
                 JOptionPane.showMessageDialog(this, "El nombre del tipo de medicamento ya está registrado. Elija un nombre diferente.");
-                return; 
+                return;
             }
 
             int confirmacion = JOptionPane.showConfirmDialog(
@@ -453,7 +455,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
 
             if (confirmacion != JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(this, "No se realizo ningún cambio");
-                return; 
+                return;
             }
 
             objTipoMedicamento.modificarTipoMedicamento(
@@ -520,6 +522,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
+        usarBotonesTipoMedicamento(true, true, true, true, true);
         ResultSet rsTipo = null;
         try {
             if (txtId.getText().equals("")) {
@@ -533,7 +536,6 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
                         break;
                     }
                 }
-
                 rsTipo = objTipoMedicamento.buscarTipoMedicamento(Integer.parseInt(txtId.getText()));
                 if (rsTipo.next()) {
                     txtNombre.setText(rsTipo.getString("nomtipo"));
@@ -580,9 +582,11 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
 
                 if (rs.next()) {
                     txtNombre.setText(rs.getString("nomtipo"));
+                    usarBotonesTipoMedicamento(false, true, true, true, true); // Habilitar los botones, incluido Limpiar
                 } else {
                     JOptionPane.showMessageDialog(null, "No se encontró información para el ID ingresado.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                     txtNombre.setText("");
+                    usarBotonesTipoMedicamento(true, true, false, false, true); // Habilitar solo Limpiar
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error al buscar información: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -594,6 +598,96 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
     private void txtIdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdKeyReleased
+
+    private void AccionesRapidas() {
+
+        // Para "Registrar" con Ctrl + R
+        jPanel1.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK), "registrar");
+
+        jPanel1.getActionMap().put("registrar", new javax.swing.AbstractAction() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                btnRegistrar.doClick(); // Simula clic en el botón "Registrar"
+            }
+        });
+
+        // Para "Modificar" con Ctrl + M
+        jPanel1.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_DOWN_MASK), "modificar");
+
+        jPanel1.getActionMap().put("modificar", new javax.swing.AbstractAction() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                btnModificar.doClick(); // Simula clic en el botón "Modificar"
+            }
+        });
+
+        // Para "Eliminar" con Ctrl + E
+        jPanel1.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK), "eliminar");
+
+        jPanel1.getActionMap().put("eliminar", new javax.swing.AbstractAction() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                btnEliminar.doClick(); // Simula clic en el botón "Eliminar"
+            }
+        });
+
+        //Para Limpiar
+        jPanel1.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK), "limpiar");
+
+        jPanel1.getActionMap().put("limpiar", new javax.swing.AbstractAction() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                btnLimpiar.doClick(); // Simula clic en el botón "Limpiar"
+            }
+        });
+
+    }
+
+    private void configurarAccionConEnter() {
+        jPanel1.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, 0), "guardar");
+
+        jPanel1.getActionMap().put("guardar", new javax.swing.AbstractAction() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                // Si el botón Registrar está en modo "Guardar", ejecutar su acción
+                if (btnRegistrar.getText().equals(Utilidad.BTN_GUARDAR)) {
+                    btnRegistrar.doClick(); // Ejecuta el evento del botón Registrar
+                } else if (btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
+                    btnModificar.doClick(); // Ejecuta el evento del botón Modificar
+                }
+            }
+        });
+
+        txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                    try {
+                        boolean encontrado = Utilidad.buscarYConfigurar(
+                                "tipo_medicamento", // Tabla
+                                "id", // Columna
+                                Integer.parseInt(txtId.getText()), // ID
+                                txtNombre, // Campo de texto para nombre
+                                btnModificar, // Botón Modificar
+                                btnEliminar // Botón Eliminar
+                        );
+
+                        if (!encontrado) {
+                            JOptionPane.showMessageDialog(null, "No se encontró un tipo de medicamento con ese ID.");
+                        }
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Error al buscar: " + e.getMessage());
+                    }
+                }
+            }
+        });
+
+    }
 
     /**
      * @param args the command line arguments

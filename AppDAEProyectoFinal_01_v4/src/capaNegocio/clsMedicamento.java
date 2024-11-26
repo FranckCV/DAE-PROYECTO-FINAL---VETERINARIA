@@ -14,9 +14,9 @@ public class clsMedicamento {
     ResultSet rs = null;
 
     public ResultSet listarMedicamentos() throws Exception {
-        String strSQL = "SELECT m.id, m.nombre, m.costo, m.stock, m.presentacion, m.vigencia, t.nomtipo AS tipo_medicamento "
-                + "FROM medicamento m "
-                + "JOIN tipo_medicamento t ON m.tipo_medicamento_id = t.id order by id";
+            String strSQL = "SELECT m.id, m.nombre, m.costo, m.stock, m.presentacion, m.vigencia, t.nomtipo AS tipo_medicamento "
+                    + "FROM medicamento m "
+                    + "JOIN tipo_medicamento t ON m.tipo_medicamento_id = t.id order by id";
         try {
             return objConectar.consultarBD(strSQL);
         } catch (Exception e) {
@@ -76,7 +76,8 @@ public class clsMedicamento {
     }
 
     public void modificarMedicamento(Integer id, String nombre, double costo, int stock, String presentacion, int tipoMedicamentoId) throws Exception {
-        strSQL = "Update medicamento set nombre='" + nombre + "', costo=" + costo + ", stock=" + stock + ", presentacion='" + presentacion + "', tipo_medicamento_id=" + tipoMedicamentoId + " where id=" + id;
+        strSQL = "Update medicamento set nombre='" + nombre + "', costo=" + costo + ", stock=" + stock + ", presentacion='" + presentacion + "', tipo_medicamento_id=" + tipoMedicamentoId
+                + " where id=" + id;
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
@@ -93,7 +94,6 @@ public class clsMedicamento {
         }
     }
 
-    // PARA LA TRANSACCION
     public ResultSet filtrar(String nom) throws Exception {
         strSQL = "SELECT M.*, T.nomTipo FROM (SELECT * FROM medicamento "
                 + "WHERE UPPER(nombre) LIKE UPPER('%" + nom + "%') AND vigencia = true) M "
@@ -107,14 +107,19 @@ public class clsMedicamento {
     }
 
     public Integer getStock(int cod) throws Exception {
-        strSQL = "SELECT stock FROM medicamento WHERE id = " + cod + ";";
+        ResultSet rs = null;
         try {
+            strSQL = "SELECT stock FROM medicamento WHERE id = " + cod + ";";
             rs = objConectar.consultarBD(strSQL);
             if (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (Exception e) {
             throw new Exception("Error al obtener stock --> " + e.getMessage());
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
         }
         return 0;
     }

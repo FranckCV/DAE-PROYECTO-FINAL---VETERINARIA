@@ -124,6 +124,7 @@ public class jdMntVacuna extends javax.swing.JDialog {
         cmbEspecie.setSelectedIndex(-1);
         chkDisponibilidad.setSelected(false);
         listarVacunas();
+        txtId.requestFocus();
     }
 
     @SuppressWarnings("unchecked")
