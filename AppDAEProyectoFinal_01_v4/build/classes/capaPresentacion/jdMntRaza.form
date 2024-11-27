@@ -145,11 +145,8 @@
                               <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                               <Component id="jLabel1" min="-2" pref="258" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-<<<<<<< HEAD
                               <Component id="btnLimpiar" min="-2" max="-2" attributes="0"/>
-=======
                               <Component id="jButton5" min="-2" max="-2" attributes="0"/>
->>>>>>> 1e08c282a5e19da6921fad72546c3f1fa3c914ca
                           </Group>
                           <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
                       </Group>

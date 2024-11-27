@@ -582,7 +582,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código para buscar");
             } else {
                 rsUsuario = objUsuario.buscarUsuario(Integer.parseInt(txtId.getText()));
-                Utilidad.desactivarFields(txtId, txtId,txtNombre, txtApeMat, txtApePat, txtClave, txtUsuario);
+                Utilidad.desactivarFields(txtId, txtId, txtNombre, txtApeMat, txtApePat, txtClave, txtUsuario);
                 radMasculino.setEnabled(false);
                 radFemenino.setEnabled(false);
                 chkVigencia.setEnabled(false);
@@ -641,7 +641,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
                     btnContraseña.setText(Utilidad.BTN_GUARDAR);
                     btnEliminar.setText(Utilidad.BTN_CANCELAR);
                     Utilidad.desactivarBotones(btnContraseña, btnBuscar, btnLimpiar, btnModificar, btnNuevo, btnVigencia);
-                    Utilidad.desactivarFields(txtClave,txtClave, txtApeMat, txtApePat, txtId, txtNombre, txtUsuario);
+                    Utilidad.desactivarFields(txtClave, txtClave, txtApeMat, txtApePat, txtId, txtNombre, txtUsuario);
                     radFemenino.setEnabled(false);
                     radMasculino.setEnabled(false);
                     chkVigencia.setEnabled(false);
@@ -658,6 +658,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
                         chkVigencia.setEnabled(true);
                         cmbCargo.setEnabled(true);
                         btnContraseña.setText("Modificar contraseña");
+                        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                         limpiarControles();
                         listarUsuarios();
                     }
@@ -904,28 +905,35 @@ public class jdMantUsuario extends javax.swing.JDialog {
                 } else if (Utilidad.validarElementoTextoRepetido("usuario", "nomusuario", txtUsuario.getText())) {
                     JOptionPane.showMessageDialog(this, "Ya existe este nombre de usuario");
                 } else {
-                    btnNuevo.setText(Utilidad.BTN_NUEVO);
-                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+                    int valor = Utilidad.mensajeConfirmarRegistro("especie", Integer.parseInt(txtId.getText()), txtNombre.getText());
+                    if (valor == JOptionPane.YES_OPTION) {
+                        btnNuevo.setText(Utilidad.BTN_NUEVO);
+                        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
 
-                    if (radMasculino.isSelected()) {
-                        sexo = true;
+                        if (radMasculino.isSelected()) {
+                            sexo = true;
+                        } else {
+                            sexo = false;
+                        }
+
+                        objUsuario.registrarUsuario(Integer.parseInt(txtId.getText()),
+                                txtUsuario.getText(), chkVigencia.isSelected(), sexo,
+                                txtClave.getText(), txtNombre.getText(), txtApePat.getText(),
+                                txtApeMat.getText(), Utilidad.obtenerCargoxCadena(cmbCargo.getSelectedItem().toString()));
+
+                        tblUsuario.setEnabled(true);
+
+                        limpiarControles();
+                        listarUsuarios();
+
+                        Utilidad.activarBotones(btnBuscar, btnEliminar, btnLimpiar, btnModificar, btnVigencia, btnContraseña);
+
+                        JOptionPane.showMessageDialog(this, "Se registró con éxito");
                     } else {
-                        sexo = false;
+                        JOptionPane.showMessageDialog(this, "Se canceló operación con éxito");
+
                     }
 
-                    objUsuario.registrarUsuario(Integer.parseInt(txtId.getText()),
-                            txtUsuario.getText(), chkVigencia.isSelected(), sexo,
-                            txtClave.getText(), txtNombre.getText(), txtApePat.getText(),
-                            txtApeMat.getText(), Utilidad.obtenerCargoxCadena(cmbCargo.getSelectedItem().toString()));
-
-                    tblUsuario.setEnabled(true);
-
-                    limpiarControles();
-                    listarUsuarios();
-
-                    Utilidad.activarBotones(btnBuscar, btnEliminar, btnLimpiar, btnModificar, btnVigencia, btnContraseña);
-
-                    JOptionPane.showMessageDialog(this, "Se registró con éxito");
                 }
             }
         } catch (Exception e) {
