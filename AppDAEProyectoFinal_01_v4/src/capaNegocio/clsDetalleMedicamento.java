@@ -12,7 +12,7 @@ import javax.swing.JTable;
 
 /**
  *
- * @author Junior
+ * @author franc
  */
 public class clsDetalleMedicamento {
 
@@ -122,5 +122,6 @@ public class clsDetalleMedicamento {
             throw new Exception("Error: "+e.getMessage());
         }
     }
+    
     
 }

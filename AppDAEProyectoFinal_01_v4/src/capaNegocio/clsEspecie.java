@@ -9,9 +9,10 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author Grupo_Veterinaria
+ * @author franc
  */
 public class clsEspecie {
+    
 
     String verificar;
     boolean dependencia;
@@ -64,7 +65,7 @@ public class clsEspecie {
     }
 
     public ResultSet buscarEspecie(Integer id) throws Exception {
-        strSQL = "select * from " + TABLA + " where " + ID + " = " + id;
+        strSQL = " select * from " + TABLA + " where " + ID + " = " + id;
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -84,7 +85,7 @@ public class clsEspecie {
 
     public void modificarEspecie(int id, String nom) throws Exception {
         strSQL = "update " + TABLA + " set " + NOMBRE + " = '" + nom + "' "
-                + "where " + ID + " = " + id + "";
+                + " where " + ID + " = " + id + "";
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
