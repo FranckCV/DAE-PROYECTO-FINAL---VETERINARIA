@@ -493,14 +493,14 @@ public class Utilidad {
     //DESACTIVAR CAMPOS
     public static void desactivarFields(JTextField textFieldActivo, JTextField... textFields) {
         for (JTextField textField : textFields) {
-            textField.setEditable(textField.equals(textFieldActivo));
+            textField.setEnabled(textField.equals(textFieldActivo));
         }
     }
 
     //ACTIVAR CAMPOS
     public static void activarFields(JTextField... textFields) {
         for (JTextField textField : textFields) {
-            textField.setEditable(true);
+            textField.setEnabled(true);
         }
     }
 

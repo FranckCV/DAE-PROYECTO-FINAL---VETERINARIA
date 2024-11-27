@@ -823,6 +823,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         btnContraseña.setText("Modificar contraseña");
+        txtId.setEnabled(true);
         limpiarControles();
         listarUsuarios();
     }
@@ -864,6 +865,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
                         listarUsuarios();
                         JOptionPane.showMessageDialog(this, "Se modificó con exito");
                         tblUsuario.setEnabled(true);
+                        txtId.setEnabled(true);
                         txtClave.setEnabled(true);
                     }
 
@@ -927,7 +929,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
                         listarUsuarios();
 
                         Utilidad.activarBotones(btnBuscar, btnEliminar, btnLimpiar, btnModificar, btnVigencia, btnContraseña);
-
+                        txtId.setEnabled(true);
                         JOptionPane.showMessageDialog(this, "Se registró con éxito");
                     } else {
                         JOptionPane.showMessageDialog(this, "Se canceló operación con éxito");
