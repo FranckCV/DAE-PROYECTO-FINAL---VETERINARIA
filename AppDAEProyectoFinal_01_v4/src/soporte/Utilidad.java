@@ -4,21 +4,17 @@
  */
 package soporte;
 
-import java.sql.*;
-import capaNegocio.*;
-import javax.swing.JFormattedTextField;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.text.NumberFormatter;
 import capaDatos.clsJDBC;
 import java.sql.ResultSet;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JTable;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -129,7 +125,7 @@ public class Utilidad {
     };
 
     public static final String[] opcionesDisponibilidad = {
-        "Cmabiar Disponibilidad",
+        "Cambiar Disponibilidad",
         "Cancelar"
     };
 
@@ -139,12 +135,17 @@ public class Utilidad {
     };
 
     public static final String[] opcionesRegistrar = {
-        "Guardar información",
+        "Registrar datos",
         "Cancelar"
     };
 
     public static final String[] opcionesDarAlta = {
         "Dar alta",
+        "Cancelar"
+    };
+
+    public static final String[] opcionesModificarContraseña = {
+        "Modificar contraseña",
         "Cancelar"
     };
 
@@ -244,6 +245,20 @@ public class Utilidad {
         );
     }
 
+    public static int mensajeConfirmarRegistro(String entidad, int id, String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null,
+                "¿Está seguro que desea registrar " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: " + id + ")? ",
+                "Confirmar registro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesRegistrar,
+                opcionesRegistrar[0]
+        );
+        return valor;
+    }
+
     public static int mensajeConfirmarEliminar(String entidad, int id, String nombre) {
         int valor = JOptionPane.showOptionDialog(
                 null,
@@ -262,7 +277,7 @@ public class Utilidad {
         int valor = JOptionPane.showOptionDialog(
                 null,
                 "¿Está seguro que desea dar alta " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: " + id + ")? ",
-                "Confirmar alta",
+                "Confirmar Dar de Alta",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
@@ -314,11 +329,36 @@ public class Utilidad {
         return valor;
     }
 
-    public static void mensajeErrorNoEliminarForanea(String entidad, String nombre) {
+    
+    public static int mensajeConfirmarModificarContraseña(String entidad , int id ,String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null,
+                "¿Está seguro de modificar contraseña " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: " + id + ")? ",
+                "Confirmar modificación de contraseña",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesModificarContraseña,
+                opcionesModificarContraseña[0]
+        );
+        return valor;
+    }
+
+
+    
+    public static void mensajeErrorNoEliminarForanea(String entidad , String nombre) {
+
         JOptionPane.showMessageDialog(
                 null,
                 "Hay datos externos asociados a " + entidad.toLowerCase() + " \"" + nombre + "\".\n"
                 + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. "
+        );
+    }
+
+    public static void mensajeElementoNoVigente(String entidad, String nombre) {
+        JOptionPane.showMessageDialog(
+                null,
+                "La informacion del " + entidad.toLowerCase() + " \"" + nombre + "\" no se encuentra vigente para esta operación. "
         );
     }
 
@@ -338,7 +378,27 @@ public class Utilidad {
                 }
             }
         } catch (Exception e) {
-            throw new Exception("Error al validar si elemento ID: " + valor_id + " en la tabla " + tabla + " / " + e.getMessage());
+            throw new Exception("Error al validar si elemento ID: " + valor_id + " en la tabla " + tabla.toLowerCase() + " / " + e.getMessage());
+        }
+        return false;
+    }
+
+    public static boolean validarEliminacionForaneaCompuesta(String tabla, int valor_id1, int valor_id2) throws Exception {
+        clsJDBC objConectar = new clsJDBC();
+        String strSQL;
+        ResultSet rs = null;
+
+        strSQL = " select sum(cantidad) as total from contar_relaciones_compuestas('" + tabla + "'," + valor_id1 + " , " + valor_id2 + ") ";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                int total = rs.getInt("total");
+                if (total > 0) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al validar si elemento ID: " + valor_id1 + " con ID: " + valor_id2 + " en la tabla " + tabla.toLowerCase() + " / " + e.getMessage());
         }
         return false;
     }
@@ -349,12 +409,13 @@ public class Utilidad {
         ResultSet rs = null;
 
         strSQL = " select * from " + tabla
-                + " where " + columna + " = '" + campo + "' ";
+                + " where LOWER(" + columna + ") = LOWER('" + campo + "') ";
+
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs.next();
         } catch (Exception e) {
-            throw new Exception("Error al buscar Elemento " + campo + " en la tabla " + tabla + " / " + e.getMessage());
+            throw new Exception("Error al buscar Elemento " + campo.toLowerCase() + " en la tabla " + tabla.toLowerCase() + " / " + e.getMessage());
         }
     }
 
@@ -364,10 +425,10 @@ public class Utilidad {
         try {
             rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where id = " + id + " ");
             while (rs.next()) {
-                return rs.getBoolean(columna);
+                return !rs.getBoolean(columna);
             }
         } catch (Exception e) {
-            throw new Exception("Error al verificar " + columna + " de ID:" + id + " en tabla " + tabla + ": " + e.getMessage());
+            throw new Exception("Error al verificar " + columna.toLowerCase() + " de ID:" + id + " en tabla " + tabla.toLowerCase() + ": " + e.getMessage());
         }
         return false;
     }
@@ -432,14 +493,14 @@ public class Utilidad {
     //DESACTIVAR CAMPOS
     public static void desactivarFields(JTextField textFieldActivo, JTextField... textFields) {
         for (JTextField textField : textFields) {
-            textField.setEditable(textField.equals(textFieldActivo));
+            textField.setEnabled(textField.equals(textFieldActivo));
         }
     }
 
     //ACTIVAR CAMPOS
     public static void activarFields(JTextField... textFields) {
         for (JTextField textField : textFields) {
-            textField.setEditable(true);
+            textField.setEnabled(true);
         }
     }
 
@@ -461,6 +522,31 @@ public class Utilidad {
         }
     }
 
+//    REPORTES 
+//    public static void reporte(JDesktopPane vistareporte){
+//        try {
+//            Container contenedor = vistareporte;
+//            contenedor.setLayout(new BorderLayout());
+//            contenedor.removeAll();
+//            Map parametros = new HashMap();
+//            parametros.put(par,Integer.parseInt(txtCodCat.getText()));
+//            
+//            JRViewer objReporte = new clsReporte().reporteInterno(docReporte+".jasper", parametros);
+//            contenedor.add(objReporte);
+//            
+//            contenedor.revalidate();
+//            contenedor.repaint();
+//            
+//            this.vistareporte.setVisible(true);
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(
+//                    this,
+//                    e.getMessage()+" Error en Reporte ",
+//                    "Error",
+//                    JOptionPane.ERROR_MESSAGE
+//            );
+//        }
+//    }
     public static boolean buscarYConfigurar(String tabla, String columna, int id, JTextField txtNombre, JButton btnModificar, JButton btnEliminar) throws Exception {
         clsJDBC objConectar = new clsJDBC();
         String strSQL = "SELECT nomtipo FROM " + tabla + " WHERE " + columna + " = " + id;

@@ -1,19 +1,21 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package capaNegocio;
 
 import capaDatos.clsJDBC;
-import static capaNegocio.clsMedico.DISPONIBILIDAD;
-import static capaNegocio.clsMedico.ID;
-import static capaNegocio.clsMedico.TABLA;
-import static capaNegocio.clsMedico.VIGENCIA;
+//import static capaNegocio.clsMedico.ID;
 import com.sun.jdi.connect.spi.Connection;
 import java.beans.Statement;
 import java.sql.ResultSet;
 
 /**
  *
- * @author Grupo_Veterinaria
+ * @author franc
  */
 public class clsDuenio {
+    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
@@ -48,7 +50,7 @@ public class clsDuenio {
     }
 
     public void darBaja(Integer id) throws Exception {
-        strSQL = "update " + TABLA + " set " + VIGENCIA + " = false, " + DISPONIBILIDAD + " = false where " + ID + " = '" + id + "'";
+        strSQL = "update " + TABLA + " set " + VIGENCIA + " = false, " + DISPONIBILIDAD + " = false where id = '" + id + "'";
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {

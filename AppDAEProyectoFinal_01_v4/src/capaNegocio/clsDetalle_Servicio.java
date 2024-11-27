@@ -9,10 +9,9 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author Grupo_Veterinaria
+ * @author franc
  */
-public class clsDetalle_Servicio {
-
+public class clsDetalle_Servicio {    
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;

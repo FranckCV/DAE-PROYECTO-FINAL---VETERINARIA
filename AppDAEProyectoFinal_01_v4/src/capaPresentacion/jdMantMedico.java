@@ -5,7 +5,6 @@
 package capaPresentacion;
 
 import soporte.*;
-import soporte.Utilidad;
 import capaNegocio.*;
 import java.awt.Color;
 import java.awt.Component;
@@ -299,7 +298,7 @@ public class jdMantMedico extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
                             .addComponent(txtID))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnLimpiar)))
@@ -309,17 +308,19 @@ public class jdMantMedico extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11))
-                        .addGap(18, 18, 18))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel11))
+                            .addGap(18, 18, 18))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(btnLimpiar)
-                            .addComponent(btnBuscar))
-                        .addGap(12, 12, 12)))
+                            .addGap(12, 12, 12)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnBuscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -591,8 +592,12 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void tblMedicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMedicoMouseClicked
         // TODO add your handling code here:
-        txtID.setText(String.valueOf(tblMedico.getValueAt(tblMedico.getSelectedRow(), 0)));
-        btnBuscarActionPerformed(null);        
+        try {
+            txtID.setText(String.valueOf(tblMedico.getValueAt(tblMedico.getSelectedRow(), 0)));
+            btnBuscarActionPerformed(null);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,"Debe finalizar la operacion actual primero");
+        }        
     }//GEN-LAST:event_tblMedicoMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -646,13 +651,18 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void btnAbrirGestionServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirGestionServiciosActionPerformed
         // TODO add your handling code here:
-        if (txtID.getText().isBlank()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un codigo para asignar servicios");
-        } else {
-            id_medico_asignacion = txtID.getText();
-            jdDetalle_Servicio obj = new jdDetalle_Servicio((Frame) SwingUtilities.getWindowAncestor(this), true);
-            obj.setLocationRelativeTo(this);
-            obj.setVisible(true);
+        try {
+            if (txtID.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo para asignar servicios");
+            } else if (Utilidad.verificarElementoParaUso(clsMedico.TABLA, clsMedico.VIGENCIA, Integer.parseInt(txtID.getText()))) {
+                Utilidad.mensajeElementoNoVigente(clsMedico.TABLA, txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText());
+            } else {
+                id_medico_asignacion = txtID.getText();
+                jdDetalle_Servicio obj = new jdDetalle_Servicio((Frame) SwingUtilities.getWindowAncestor(this), true);
+                obj.setLocationRelativeTo(this);
+                obj.setVisible(true);
+            }
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_btnAbrirGestionServiciosActionPerformed
 
@@ -834,16 +844,15 @@ public class jdMantMedico extends javax.swing.JDialog {
           
     private void eliminarMedico() {
         try {
-            if (txtID.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo a eliminar!");
+            if (txtID.getText().isBlank()) {
+                Utilidad.mensajeErrorFaltaID(this);
+            } else if (Utilidad.verificarElementoParaUso(clsMedico.TABLA, clsMedico.VIGENCIA, Integer.parseInt(txtID.getText()))) {
+                Utilidad.mensajeElementoNoVigente(clsMedico.TABLA, txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText());
             } else if (Utilidad.validarEliminacionForanea(clsMedico.TABLA, Integer.parseInt(txtID.getText()))){
-                JOptionPane.showMessageDialog(this, 
-                        "Hay datos externos asociados a " + clsMedico.TABLA + " \"" + txtNombre.getText() +" "+ txtApePat.getText() +" "+ txtApeMat.getText() + "\".\n"
-                        + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. "
-                );
+                Utilidad.mensajeErrorNoEliminarForanea(clsMedico.TABLA,txtNombre.getText() +" "+ txtApePat.getText() +" "+ txtApeMat.getText());
             } else {
-                int valor = JOptionPane.showConfirmDialog(null, "Deseas continuar?", "Confirmacion",JOptionPane.YES_NO_OPTION);
-                if (valor == JOptionPane.YES_OPTION) {
+                int valor = Utilidad.mensajeConfirmarEliminar(clsMedico.TABLA, Integer.parseInt(txtID.getText()), txtNombre.getText() +" "+ txtApePat.getText() +" "+ txtApeMat.getText());
+                if (valor == 0) {
                     objTabla.eliminarMedico(Integer.parseInt(txtID.getText()));
                     limpiarControles();
                     listarMedicos();
@@ -868,32 +877,38 @@ public class jdMantMedico extends javax.swing.JDialog {
     private void modificarMedico() {
         try {
             if (txtID.getText().isBlank()) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
+                Utilidad.mensajeErrorFaltaID(this);
             } else {
-                if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
-                    btnModificar.setText(Utilidad.BTN_GUARDAR);
-                    btnEliminar.setText(Utilidad.BTN_CANCELAR);
-                    editableControles(false, true,true, true, true, true, true, true, true);
-                    usarBotones(false, false, true, true, false, false, false,false);
+                if (Utilidad.verificarElementoParaUso(clsMedico.TABLA, clsMedico.VIGENCIA, Integer.parseInt(txtID.getText()))) {
+                    Utilidad.mensajeElementoNoVigente(clsMedico.TABLA, txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText());
                 } else {
-                    objTabla.modificarMedico(
-                        Integer.parseInt(txtID.getText()),
-                        txtNombre.getText(),
-                        txtApePat.getText(),
-                        txtApeMat.getText(),
-                        txtDocIdentidad.getText(),
-                        radMasculino.isSelected(),
-//                        cldNacimiento.getDateFormatString(),
-                        objEs.obteneIdEspecialidad(cmbEspecialidad.getSelectedItem().toString())
-                    );
-                    btnModificar.setText(Utilidad.BTN_MODIFICAR);
-                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-                    editableControles(true, false,false, false, false, false, false, false, false);
-                    usarBotones(true, true, true, true, true, true, true,true);
-                    limpiarControles();
-                    listarMedicos();
-                    JOptionPane.showMessageDialog(this, "Se modificó con exito");
-                }
+                    if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                        btnModificar.setText(Utilidad.BTN_GUARDAR);
+                        btnEliminar.setText(Utilidad.BTN_CANCELAR);
+                        editableControles(false, true,true, true, true, true, true, true, true);
+                        usarBotones(false, false, true, true, false, false, false,false);
+                        tblMedico.setEnabled(false);
+                    } else {
+                        objTabla.modificarMedico(
+                            Integer.parseInt(txtID.getText()),
+                            txtNombre.getText(),
+                            txtApePat.getText(),
+                            txtApeMat.getText(),
+                            txtDocIdentidad.getText(),
+                            radMasculino.isSelected(),
+    //                        cldNacimiento.getDateFormatString(),
+                            objEs.obteneIdEspecialidad(cmbEspecialidad.getSelectedItem().toString())
+                        );
+                        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+                        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+                        editableControles(true, false,false, false, false, false, false, false, false);
+                        usarBotones(true, true, true, true, true, true, true,true);
+                        tblMedico.setEnabled(true);
+                        limpiarControles();
+                        listarMedicos();
+                        JOptionPane.showMessageDialog(this, "Se modificó con exito");
+                    }
+                }                
             }            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error:" + e.getMessage());
@@ -949,18 +964,19 @@ public class jdMantMedico extends javax.swing.JDialog {
     private void cambiarDisponibilidad() {
         String campoID = txtID.getText();
         int valorID ;
-
         try {
             ResultSet rsCateg = null;
             if (campoID.isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
             } else {
-                valorID = Integer.parseInt(campoID);
-                rsCateg = objTabla.buscarMedico(valorID);
-                int valor = JOptionPane.showConfirmDialog(null, "¿Deseas cambiar la Disponibilidad del medico "+txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText()+"?", "Confirmacion",JOptionPane.YES_NO_OPTION);
-                if (rsCateg.next()) {
-                    if (rsCateg.getBoolean(clsMedico.VIGENCIA)) {
-                        if (valor == JOptionPane.YES_OPTION) {
+                if (Utilidad.verificarElementoParaUso(clsMedico.TABLA, clsMedico.VIGENCIA, Integer.parseInt(txtID.getText()))) {
+                    Utilidad.mensajeElementoNoVigente(clsMedico.TABLA, txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText());
+                } else {
+                    valorID = Integer.parseInt(campoID);
+                    rsCateg = objTabla.buscarMedico(valorID);
+                    int valor = Utilidad.mensajeConfirmarDisponibilidad(clsMedico.TABLA, Integer.parseInt(txtID.getText()),txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText());
+                    if (rsCateg.next()) {
+                        if (valor == 0) {
                             objTabla.cambiarDisponibilidad(valorID);
                             limpiarControles();
                             listarMedicos();
@@ -968,10 +984,8 @@ public class jdMantMedico extends javax.swing.JDialog {
                             btnBuscarActionPerformed(null);
                             JOptionPane.showMessageDialog(this, "Se modificó la Disponibilidad de este médico con exito");
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Este medico no se encuentra vigente");
-                    }
-                }                
+                    }     
+                }                           
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
@@ -985,20 +999,20 @@ public class jdMantMedico extends javax.swing.JDialog {
             if (txtID.getText().isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
             } else {
-                id_med = Integer.parseInt(txtID.getText());
-                int valor = JOptionPane.showConfirmDialog(null, "Esta acción no podrá deshacerse.\n ¿Deseas dar de baja este elemento?", "Confirmacion",JOptionPane.YES_NO_OPTION);
-                if (valor == JOptionPane.YES_OPTION) {
-                    rsCateg = objTabla.buscarMedico(Integer.parseInt(txtID.getText()));
-                    if (rsCateg.next()) {
-                        if (rsCateg.getBoolean(clsMedico.VIGENCIA)) {
+                if (Utilidad.verificarElementoParaUso(clsMedico.TABLA, clsMedico.VIGENCIA, Integer.parseInt(txtID.getText()))) {
+                    Utilidad.mensajeElementoNoVigente(clsMedico.TABLA, txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText());
+                } else {
+                    id_med = Integer.parseInt(txtID.getText());
+                    int valor = Utilidad.mensajeConfirmarVigencia(clsMedico.TABLA, Integer.parseInt(txtID.getText()), txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText());
+                    if (valor == 0) {
+                        rsCateg = objTabla.buscarMedico(Integer.parseInt(txtID.getText()));
+                        if (rsCateg.next()) {
                             objTabla.darBaja(id_med);
                             limpiarControles();
                             listarMedicos();
-                        } else {
-                            JOptionPane.showMessageDialog(this, "Este elemento ya fue dado de baja");
-                        }
-                    } 
-                }                               
+                        } 
+                    }  
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());

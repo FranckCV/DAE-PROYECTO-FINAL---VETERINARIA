@@ -389,8 +389,12 @@ public class jdMantServicio extends javax.swing.JDialog {
 
     private void tblServicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblServicioMouseClicked
         // TODO add your handling code here:
-        txtID.setText(String.valueOf(tblServicio.getValueAt(tblServicio.getSelectedRow(), 0)));
-        btnBuscarActionPerformed(null);        
+        try {
+            txtID.setText(String.valueOf(tblServicio.getValueAt(tblServicio.getSelectedRow(), 0)));
+            btnBuscarActionPerformed(null);            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,"Debe finalizar la operacion actual primero");
+        }
     }//GEN-LAST:event_tblServicioMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -409,10 +413,14 @@ public class jdMantServicio extends javax.swing.JDialog {
 
     private void btnDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisponibilidadActionPerformed
         // TODO add your handling code here:
-        String id = txtID.getText();
-        cambiarDisponibilidad();
-        txtID.setText(id);
-        btnBuscarActionPerformed(null);
+        if (!txtID.getText().isBlank()) {
+            String id = txtID.getText();
+            cambiarDisponibilidad();
+            txtID.setText(id);
+            btnBuscarActionPerformed(null);
+        } else {
+            Utilidad.mensajeErrorFaltaID(this);
+        }
     }//GEN-LAST:event_btnDisponibilidadActionPerformed
 
     private void txtIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyTyped
@@ -464,8 +472,8 @@ public class jdMantServicio extends javax.swing.JDialog {
     private void buscarServicio() {
         ResultSet rsData = null;
         try {
-            if (txtID.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar una ID para buscar");
+            if (txtID.getText().isBlank()) {
+                Utilidad.mensajeErrorFaltaID(this);
             } else {
                 
                 for (int i = 0; i < tblServicio.getRowCount(); i++) {
@@ -523,7 +531,7 @@ public class jdMantServicio extends javax.swing.JDialog {
           
     private void eliminarServicio() {
         try {
-            if (txtID.getText().equals("")) {
+            if (txtID.getText().isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
             } else if (Utilidad.validarEliminacionForanea(clsServicio.TABLA, Integer.parseInt(txtID.getText()))){
                 JOptionPane.showMessageDialog(this, 
@@ -557,7 +565,7 @@ public class jdMantServicio extends javax.swing.JDialog {
     private void modificarServicio() {
         try {
             if (txtID.getText().isBlank()) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
+                Utilidad.mensajeErrorFaltaID(this);
             } else {
                 if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
                     btnModificar.setText(Utilidad.BTN_GUARDAR);
@@ -623,11 +631,11 @@ public class jdMantServicio extends javax.swing.JDialog {
     
     private void cambiarDisponibilidad() {
         try {
-            if (txtID.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo");
+            if (txtID.getText().isBlank()) {
+                Utilidad.mensajeErrorFaltaID(this);
             } else {
-                int valor = JOptionPane.showConfirmDialog(null, "¿Deseas cambiar la Disponibilidad del servicio "+txtNombre.getText()+"?", "Confirmacion",JOptionPane.YES_NO_OPTION);
-                if (valor == JOptionPane.YES_OPTION) {
+                int valor = Utilidad.mensajeConfirmarDisponibilidad(clsServicio.TABLA, Integer.parseInt(txtID.getText()),txtNombre.getText());
+                if (valor == 0) {
                     objTabla.cambiarDisponibilidad(Integer.parseInt(txtID.getText()));
                     limpiarControles();
                     listarServicio();

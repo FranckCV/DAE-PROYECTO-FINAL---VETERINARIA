@@ -5,7 +5,9 @@
 package capaNegocio;
 
 import capaDatos.clsJDBC;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -217,7 +219,7 @@ public class clsUsuario {
     }
 
     public void modificarContraseña(Integer cod, String usu, String clave) throws Exception {
-        strSQL = "update usuario set clave= md5(? || ? || 'CODE146') where codusuario="+cod;
+        strSQL = "update usuario set clave= md5(? || ? || 'CODE146') where codusuario= ?";
         try {
             Connection micon = null;
             objConectar.conectar();
@@ -235,5 +237,5 @@ public class clsUsuario {
             throw new Exception("Error al modificar contraseña");
         }
     }
-
+    
 }

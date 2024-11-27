@@ -5,12 +5,12 @@
 package capaNegocio;
 
 import capaDatos.clsJDBC;
-import java.sql.ResultSet;
 import java.sql.Date;
+import java.sql.ResultSet;
 
 /**
  *
- * @author Junior
+ * @author franc
  */
 public class clsComprobante {
 
@@ -39,17 +39,20 @@ public class clsComprobante {
     }
 
     public String generarNumeroSerieComprobante() throws Exception {
-        strSQL = "SELECT COALESCE(MAX(serie_numero::int), 0) + 1 AS nuevo_numero "
-                + "FROM COMPROBANTE";
+        strSQL = "SELECT serie_numero "
+                + "FROM COMPROBANTE "
+                + "ORDER BY serie_numero DESC "
+                + "LIMIT 1"; 
         try {
             rs = objConectar.consultarBD(strSQL);
             if (rs.next()) {
-                return String.format("%06d", rs.getInt("nuevo_numero"));
+                return String.format("%06d", rs.getInt("serie_numero") + 1);
+            } else {
+                return "000001";
             }
         } catch (Exception e) {
             throw new Exception("Error al generar número de serie para comprobante: " + e.getMessage());
         }
-        return "000001";
     }
 
     public ResultSet buscarComprobante(String tipo, String serieNumero) throws Exception {
@@ -80,4 +83,5 @@ public class clsComprobante {
 //        }
 //        return "000001";
 //    }
+    
 }

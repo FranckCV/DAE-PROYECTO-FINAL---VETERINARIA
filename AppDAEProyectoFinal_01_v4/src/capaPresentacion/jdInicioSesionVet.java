@@ -321,9 +321,10 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
                     txtRespuesta.setText(""); 
                     return;
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "No pueden haber campos vacíos");
+            } else{
+                JOptionPane.showMessageDialog(null, "No puedes haber campos vacíos");
             }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }

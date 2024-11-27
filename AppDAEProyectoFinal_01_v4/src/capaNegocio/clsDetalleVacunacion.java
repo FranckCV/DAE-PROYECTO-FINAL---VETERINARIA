@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package capaNegocio;
 
 import capaDatos.clsJDBC;
@@ -9,9 +13,10 @@ import java.util.Date;
 
 /**
  *
- * @author Windows10
+ * @author franc
  */
 public class clsDetalleVacunacion {
+    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL;

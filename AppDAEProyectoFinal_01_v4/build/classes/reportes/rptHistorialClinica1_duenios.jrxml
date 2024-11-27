@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptHistorialClinica1_duenios" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="43e17f47-9ac0-489d-a7ab-9400eeacfac6">
+	<property name="ireport.zoom" value="3.138428376721004"/>
+	<property name="ireport.x" value="247"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_masc" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     Du."nombres",
+     Du.apePaterno,
+     Du.apeMaterno,
+     Du."doc_identidad",
+     Du."telefono",
+     Du."correo",
+     Du."direccion",
+     Du."vigencia",
+     Du."telefonoalt" AS Du_telefonoalt,
+     Du."sexo" AS Du_sexo,
+     Du."id" AS Du_id,
+     CU."fecha_adopción" AS CU_fecha_adopción,
+     CU."mascotaid" AS CU_mascotaid
+FROM
+     "custodia" CU INNER JOIN "duenio" Du ON CU.DUEniOid = Du."id"
+WHERE
+     CU.MASCOTAid = $P{id_masc};]]>
+	</queryString>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="apepaterno" class="java.lang.String"/>
+	<field name="apematerno" class="java.lang.String"/>
+	<field name="doc_identidad" class="java.lang.String"/>
+	<field name="telefono" class="java.lang.String"/>
+	<field name="correo" class="java.lang.String"/>
+	<field name="direccion" class="java.lang.String"/>
+	<field name="vigencia" class="java.lang.Boolean"/>
+	<field name="du_telefonoalt" class="java.lang.String"/>
+	<field name="du_sexo" class="java.lang.Boolean"/>
+	<field name="du_id" class="java.lang.Integer"/>
+	<field name="cu_fecha_adopción" class="java.sql.Date"/>
+	<field name="cu_mascotaid" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="5" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="6" width="159" height="20" uuid="d8f3665c-d137-4383-92c4-5e050cf5c889"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dueños de la mascota:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="15" y="0" width="251" height="20" uuid="dee6eee1-b3b9-409b-bbf8-4f3934b1c0e2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Nombres y Apellidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="0" width="85" height="20" uuid="64310ceb-dce7-4701-815c-d5de4ec9f0ee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Sexo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="0" width="112" height="20" uuid="82ef0ba0-e047-43e3-ac47-1144a76e2880"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Adopcion]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="15" y="0" width="251" height="20" uuid="b38dd563-0f9f-45c8-9f6b-d1c9c90f8c51"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombres}+" "+$F{apepaterno}+" "+$F{apematerno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="289" y="0" width="85" height="20" uuid="e0aafba5-da55-44d1-9f6c-125705ef2ff0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{du_sexo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="415" y="0" width="112" height="20" uuid="10b31caf-cbc6-4e79-99fe-a62b1da76efe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cu_fecha_adopción}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="2" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="2" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="2" splitType="Stretch"/>
+	</summary>
+</jasperReport>
