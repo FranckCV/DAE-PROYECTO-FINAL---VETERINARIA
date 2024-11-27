@@ -695,11 +695,10 @@ INSERT INTO CUSTODIA (MASCOTAid, DUEniOid, fecha_adopción) VALUES
 
 INSERT INTO ESTADO_CITA (id, nombre_estado) VALUES
 (1, 'Pendiente'),
-(2, 'Por confirmar'),
-(3, 'Cancelada'),
-(4, 'Reprogramada'),
-(6, 'Finalizada'),
-(7, 'No asistió');
+(2, 'Cancelada'),
+(3, 'Reprogramada'),
+(4, 'Asistió'),
+(5, 'No asistió');
 
 
 

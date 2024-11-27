@@ -5,7 +5,9 @@
 package capaNegocio;
 
 import capaDatos.clsJDBC;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -235,5 +237,5 @@ public class clsUsuario {
             throw new Exception("Error al modificar contraseña");
         }
     }
-
+    
 }

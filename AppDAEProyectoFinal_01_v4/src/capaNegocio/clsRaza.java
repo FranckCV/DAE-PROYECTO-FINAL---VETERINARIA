@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author Grupo_Veterinaria
+ * @author franc
  */
 public class clsRaza {
 
@@ -146,4 +146,5 @@ public class clsRaza {
         return false;
     }
    
+    
 }

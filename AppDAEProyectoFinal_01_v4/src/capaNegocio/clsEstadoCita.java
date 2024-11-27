@@ -3,13 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package capaNegocio;
+
 import capaDatos.clsJDBC;
 import java.sql.ResultSet;
+
 /**
  *
- * @author Grupo_Veterinaria
+ * @author franc
  */
 public class clsEstadoCita {
+    
     //Empezamos creando una variable para mascota
     clsJDBC objConectar = new clsJDBC(); //
     String strSQL; //Variable para guardar la consulta

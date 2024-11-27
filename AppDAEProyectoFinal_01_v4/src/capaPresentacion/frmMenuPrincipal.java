@@ -606,6 +606,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         jdMntRaza objForm = new jdMntRaza(this, true);
         objForm.setLocationRelativeTo(this);
+        objForm.setVisible(true);
+
     }//GEN-LAST:event_mnuRazasActionPerformed
 
     private void mnuDueñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDueñoActionPerformed
@@ -691,8 +693,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         txtUsuario.setText("");
         txtCargo.setText("");
         login();
-    }                                          
-
+    }
+    
     private void mnuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuUsuariosActionPerformed
         // TODO add your handling code here:
         jdMantUsuario objForm = new jdMantUsuario(this, true);
