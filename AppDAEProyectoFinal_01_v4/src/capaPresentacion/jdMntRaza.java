@@ -526,7 +526,7 @@ public class jdMntRaza extends javax.swing.JDialog {
                     txtNombre.setText(rsRaza.getString("nombre"));
                     cmbEspecie.setSelectedItem(objRaza.obtenerNombreEspecie(rsRaza.getInt("especie_id")));
                     chkVigente.setSelected(rsRaza.getBoolean("disponibilidad"));
-
+                    
                     rsRaza.close();
                 } else {
                     JOptionPane.showMessageDialog(this, "Codigo de raza no existente");

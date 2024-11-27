@@ -125,7 +125,7 @@ public class Utilidad {
     };
 
     public static final String[] opcionesDisponibilidad = {
-        "Cambiar Disponibilidad", 
+        "Cambiar Disponibilidad",
         "Cancelar"
     };
 
@@ -135,12 +135,17 @@ public class Utilidad {
     };
 
     public static final String[] opcionesRegistrar = {
-        "Guardar información",
+        "Registrar datos",
         "Cancelar"
     };
 
     public static final String[] opcionesDarAlta = {
         "Dar alta",
+        "Cancelar"
+    };
+
+    public static final String[] opcionesModificarContraseña = {
+        "Modificar contraseña",
         "Cancelar"
     };
 
@@ -240,6 +245,20 @@ public class Utilidad {
         );
     }
 
+    public static int mensajeConfirmarRegistro(String entidad, int id, String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null,
+                "¿Está seguro que desea registrar " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: " + id + ")? ",
+                "Confirmar registro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesRegistrar,
+                opcionesRegistrar[0]
+        );
+        return valor;
+    }
+
     public static int mensajeConfirmarEliminar(String entidad, int id, String nombre) {
         int valor = JOptionPane.showOptionDialog(
                 null,
@@ -256,8 +275,8 @@ public class Utilidad {
 
     public static int mensajeConfirmarDarAlta(String entidad, int id, String nombre) {
         int valor = JOptionPane.showOptionDialog(
-                null, 
-                "¿Está seguro que desea dar alta " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: "+id+")? ",
+                null,
+                "¿Está seguro que desea dar alta " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: " + id + ")? ",
                 "Confirmar Dar de Alta",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
@@ -310,17 +329,35 @@ public class Utilidad {
         return valor;
     }
 
-    public static void mensajeErrorNoEliminarForanea(String entidad, String nombre) {
+    
+    public static int mensajeConfirmarModificarContraseña(String entidad , int id ,String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null,
+                "¿Está seguro de modificar contraseña " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: " + id + ")? ",
+                "Confirmar modificación de contraseña",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesModificarContraseña,
+                opcionesModificarContraseña[0]
+        );
+        return valor;
+    }
+
+
+    
+    public static void mensajeErrorNoEliminarForanea(String entidad , String nombre) {
+
         JOptionPane.showMessageDialog(
                 null,
                 "Hay datos externos asociados a " + entidad.toLowerCase() + " \"" + nombre + "\".\n"
                 + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. "
         );
     }
-    
-    public static void mensajeElementoNoVigente(String entidad , String nombre) {
+
+    public static void mensajeElementoNoVigente(String entidad, String nombre) {
         JOptionPane.showMessageDialog(
-                null, 
+                null,
                 "La informacion del " + entidad.toLowerCase() + " \"" + nombre + "\" no se encuentra vigente para esta operación. "
         );
     }
@@ -345,13 +382,13 @@ public class Utilidad {
         }
         return false;
     }
-    
+
     public static boolean validarEliminacionForaneaCompuesta(String tabla, int valor_id1, int valor_id2) throws Exception {
         clsJDBC objConectar = new clsJDBC();
         String strSQL;
         ResultSet rs = null;
 
-        strSQL = " select sum(cantidad) as total from contar_relaciones_compuestas('" + tabla + "'," + valor_id1 + " , "+valor_id2+") ";
+        strSQL = " select sum(cantidad) as total from contar_relaciones_compuestas('" + tabla + "'," + valor_id1 + " , " + valor_id2 + ") ";
         try {
             rs = objConectar.consultarBD(strSQL);
             if (rs.next()) {
@@ -361,7 +398,7 @@ public class Utilidad {
                 }
             }
         } catch (Exception e) {
-            throw new Exception("Error al validar si elemento ID: " + valor_id1 +" con ID: "+ valor_id2+" en la tabla " + tabla.toLowerCase() + " / " + e.getMessage());
+            throw new Exception("Error al validar si elemento ID: " + valor_id1 + " con ID: " + valor_id2 + " en la tabla " + tabla.toLowerCase() + " / " + e.getMessage());
         }
         return false;
     }
@@ -372,7 +409,8 @@ public class Utilidad {
         ResultSet rs = null;
 
         strSQL = " select * from " + tabla
-                + " where " + columna + " = '" + campo + "' ";
+                + " where LOWER(" + columna + ") = LOWER('" + campo + "') ";
+
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs.next();
@@ -390,7 +428,7 @@ public class Utilidad {
                 return !rs.getBoolean(columna);
             }
         } catch (Exception e) {
-            throw new Exception("Error al verificar "+columna.toLowerCase()+" de ID:" + id + " en tabla " + tabla.toLowerCase() + ": " + e.getMessage());
+            throw new Exception("Error al verificar " + columna.toLowerCase() + " de ID:" + id + " en tabla " + tabla.toLowerCase() + ": " + e.getMessage());
         }
         return false;
     }
@@ -483,9 +521,8 @@ public class Utilidad {
             btn.doClick();
         }
     }
-    
+
 //    REPORTES 
-    
 //    public static void reporte(JDesktopPane vistareporte){
 //        try {
 //            Container contenedor = vistareporte;
@@ -510,12 +547,6 @@ public class Utilidad {
 //            );
 //        }
 //    }
-    
-    
-    
-    
-    
-
     public static boolean buscarYConfigurar(String tabla, String columna, int id, JTextField txtNombre, JButton btnModificar, JButton btnEliminar) throws Exception {
         clsJDBC objConectar = new clsJDBC();
         String strSQL = "SELECT nomtipo FROM " + tabla + " WHERE " + columna + " = " + id;

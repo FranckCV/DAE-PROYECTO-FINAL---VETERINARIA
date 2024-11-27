@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import soporte.Utilidad;
 
 /**
  *
@@ -21,7 +22,6 @@ public class jdMntEspecie extends javax.swing.JDialog {
     public jdMntEspecie(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        btnNuevo.setText("Nuevo");
         listarEspecies();
         chkVigencia.setEnabled(false);
     }
@@ -45,7 +45,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
                 } else {
                     vigencia = "No vigente";
                 }
-
+                registro.add(2, vigencia);
                 modelo.addRow(registro);
             }
             tblEspecies.setModel(modelo);
@@ -192,8 +192,13 @@ public class jdMntEspecie extends javax.swing.JDialog {
         });
 
         chkVigencia.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        chkVigencia.setText("(Vigente)");
+        chkVigencia.setText("Disponible");
         chkVigencia.setContentAreaFilled(false);
+        chkVigencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkVigenciaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -347,36 +352,51 @@ public class jdMntEspecie extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         try {
-            boolean ningun_campo = txtId.getText().equals("") && txtNombre.getText().equals("");
-            if ((txtId.getText().equals("") || txtNombre.getText().equals("")) && !ningun_campo) {
-                JOptionPane.showMessageDialog(this, "Llenar todos los campos");
+            Utilidad.activarFields(txtNombre);
+
+            txtId.setEnabled(false);
+
+            if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
+                btnNuevo.setText(Utilidad.BTN_GUARDAR);
+                btnEliminar.setText(Utilidad.BTN_CANCELAR);
+
+                Utilidad.desactivarBotones(btnNuevo, btnModificar, btnLimpiar);
+
+                tblEspecies.setEnabled(false);
+                limpiarControles();
+                txtNombre.requestFocus();
+
+                txtId.setText(String.valueOf(objEspecie.generarIDEspecie()));
+
             } else {
-                if (btnNuevo.getText().equals("Nuevo")) {
+                if (Utilidad.verificarCamposLlenos(txtId, txtNombre)) {
+                    JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
+                } else if (Utilidad.validarElementoTextoRepetido("especie", "nombre", txtNombre.getText())) {
+                    JOptionPane.showMessageDialog(this, "Ya existe este nombre de especie");
+                } else {
+                    int valor = Utilidad.mensajeConfirmarRegistro("especie", Integer.parseInt(txtId.getText()), txtNombre.getText());
+                    if (valor == JOptionPane.YES_OPTION) {
+                        btnNuevo.setText(Utilidad.BTN_NUEVO);
+                        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
 
-                    btnNuevo.setText("Guardar");
-                    bloquearBotones();
-                    btnEliminar.setText("Cancelar");
-                    limpiarControles();
-                    txtId.setText(objEspecie.generarIDEspecie().toString());
-                    txtNombre.requestFocus();
-                    tblEspecies.setEnabled(false);
+                        objEspecie.registrarEspecie(Integer.parseInt(txtId.getText()),
+                                txtNombre.getText());
 
-                } else { //Guardar
-                    if (!objEspecie.validarNombre(txtNombre.getText())) {
-                        btnNuevo.setText("Nuevo");
-                        activarBotones();
                         tblEspecies.setEnabled(true);
-                        objEspecie.registrarEspecie(Integer.valueOf(txtId.getText()), txtNombre.getText());
 
                         limpiarControles();
                         listarEspecies();
+
+                        Utilidad.activarBotones(btnBuscar, btnEliminar, btnLimpiar, btnModificar);
+
+                        JOptionPane.showMessageDialog(this, "Se registró con éxito");
                     } else {
-                        JOptionPane.showMessageDialog(null, "Ya se registró esa especie");
+                        JOptionPane.showMessageDialog(this, "Se canceló operación con éxito");
                     }
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al registrar un producto" + e.getLocalizedMessage());
+            JOptionPane.showMessageDialog(this, "Error:" + e.getMessage());
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -385,11 +405,13 @@ public class jdMntEspecie extends javax.swing.JDialog {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void tblEspeciesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEspeciesMouseClicked
-        String codigo;
-        codigo = String.valueOf(tblEspecies.getValueAt(tblEspecies.getSelectedRow(), 0));
+        if (tblEspecies.isEnabled()) {
+            Utilidad.buscarPorTabla(tblEspecies, btnBuscar, txtId);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se puede buscar por tabla mientras nos se cancele la operación");
+        }
 
-        txtId.setText(codigo);
-        btnBuscarActionPerformed(null);
+
     }//GEN-LAST:event_tblEspeciesMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -399,11 +421,13 @@ public class jdMntEspecie extends javax.swing.JDialog {
             if (txtId.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código para buscar");
             } else {
-                rsEspecie = objEspecie.buscarEspecie(Integer.valueOf(txtId.getText()));
-
+                rsEspecie = objEspecie.buscarEspecie(Integer.parseInt(txtId.getText()));
+                Utilidad.desactivarFields(txtId, txtId, txtNombre);
                 if (rsEspecie.next()) {
                     txtNombre.setText(rsEspecie.getString("nombre"));
+
                     chkVigencia.setSelected(rsEspecie.getBoolean("disponibilidad"));
+
                     rsEspecie.close();
                 } else {
                     JOptionPane.showMessageDialog(this, "Codigo de especie no existente");
@@ -417,39 +441,41 @@ public class jdMntEspecie extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
-            if (txtId.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un código a modificar");
+            if (txtId.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
             } else {
+                if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                    txtId.setEnabled(false);
+                    Utilidad.activarFields(txtNombre);
+                    btnModificar.setText(Utilidad.BTN_GUARDAR);
+                    btnEliminar.setText(Utilidad.BTN_CANCELAR);
+                    Utilidad.desactivarBotones(btnModificar, btnLimpiar, btnBuscar, btnNuevo);
+                    tblEspecies.setEnabled(true);
+                } else if (Utilidad.validarElementoTextoRepetido("especie", "nombre", txtNombre.getText())) {
+                    JOptionPane.showMessageDialog(this, "Este nombre ya fue registrado");
+                    limpiarControles();
+                    btnModificar.setText(Utilidad.BTN_MODIFICAR);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+                    Utilidad.activarBotones(btnNuevo, btnBuscar, btnLimpiar, btnModificar);
+                } else {
+                    int valor = Utilidad.mensajeConfirmarModificar("Usuario", Integer.parseInt(txtId.getText()), txtNombre.getText());
+                    if (valor == JOptionPane.YES_OPTION) {
 
-                Object[] opciones = {"Sí", "No"};
-
-                int confirmacion = JOptionPane.showOptionDialog(this,
-                        "¿Estás seguro de que quieres modificar?",
-                        "Confirmación",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        null, opciones, opciones[1]);
-
-                if (confirmacion == JOptionPane.YES_OPTION) {
-                    if (!objEspecie.validarNombre(txtNombre.getText())) {
-
-                        Integer id = Integer.valueOf(txtId.getText());
-                        String nom = txtNombre.getText();
-
-                        objEspecie.modificarEspecie(id, nom);
-
+                        objEspecie.modificarEspecie(Integer.parseInt(txtId.getText()), txtNombre.getText());
+                        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+                        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+                        Utilidad.activarBotones(btnNuevo, btnBuscar, btnLimpiar, btnModificar);
                         limpiarControles();
                         listarEspecies();
-
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Ya se ha guardado esta especie");
+                        JOptionPane.showMessageDialog(this, "Se modificó con exito");
+                        tblEspecies.setEnabled(true);
                     }
+
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+            JOptionPane.showMessageDialog(this, "Error:" + e.getMessage());
         }
-
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void activarBotones() {
@@ -459,49 +485,47 @@ public class jdMntEspecie extends javax.swing.JDialog {
     }
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
+            cancelarAccion();
+            tblEspecies.setEnabled(true);
+            Utilidad.activarBotones(btnNuevo, btnBuscar, btnLimpiar, btnModificar);
+
+        } else {
+            eliminar();
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void eliminar() {
         try {
             if (txtId.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un código a eliminar");
+                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo a eliminar!");
+            } else if (Utilidad.validarEliminacionForanea("especie", Integer.parseInt(txtId.getText()))) {
+                Utilidad.mensajeErrorNoEliminarForanea("especie", txtNombre.getText());
             } else {
-                if (btnEliminar.getText().equals("Cancelar")) {
-                    activarBotones();
+                int valor = Utilidad.mensajeConfirmarEliminar("especie", Integer.parseInt(txtId.getText()), txtNombre.getText());
+                if (valor == JOptionPane.YES_OPTION) {
+                    objEspecie.eliminarEspecie(Integer.parseInt(txtId.getText()));
                     limpiarControles();
-                    btnNuevo.setText("Nuevo");
-                    btnEliminar.setText("Eliminar");
-                } else {
-                    Object[] opciones = {"Sí", "No"};
-                    int confirmacion = JOptionPane.showOptionDialog(this,
-                            "¿Estás seguro de que quieres modificar?",
-                            "Confirmación",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE,
-                            null, opciones, opciones[1]);
-                    if (confirmacion == JOptionPane.YES_OPTION) {
-
-                        int num = objEspecie.eliminarEspecie(Integer.valueOf(txtId.getText()));
-
-                        if (num == 0) {
-                            JOptionPane.showMessageDialog(this, "Se eliminó");
-                        } else {
-                            JOptionPane.showMessageDialog(this, "No se eliminó porque está referenciado");
-                        }
-
-                        limpiarControles();
-                        listarEspecies();
-
-                    }
+                    listarEspecies();
+                    JOptionPane.showMessageDialog(this, "Se ha eliminado con éxito");
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    }
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
 
     }//GEN-LAST:event_txtNombreActionPerformed
-
+    private void cancelarAccion() {
+        btnNuevo.setText(Utilidad.BTN_NUEVO);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+        limpiarControles();
+        listarEspecies();
+    }
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
         char key = evt.getKeyChar();
@@ -511,6 +535,10 @@ public class jdMntEspecie extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void chkVigenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkVigenciaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chkVigenciaActionPerformed
 
     public void limpiarControles() {
         txtId.setText("");

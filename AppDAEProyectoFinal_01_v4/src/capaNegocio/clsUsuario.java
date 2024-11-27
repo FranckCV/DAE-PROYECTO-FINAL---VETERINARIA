@@ -219,7 +219,7 @@ public class clsUsuario {
     }
 
     public void modificarContraseña(Integer cod, String usu, String clave) throws Exception {
-        strSQL = "update usuario set clave= md5(? || ? || 'CODE146') where codusuario="+cod;
+        strSQL = "update usuario set clave= md5(? || ? || 'CODE146') where codusuario= ?";
         try {
             Connection micon = null;
             objConectar.conectar();

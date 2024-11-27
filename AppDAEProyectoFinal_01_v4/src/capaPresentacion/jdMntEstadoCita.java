@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
+import soporte.Utilidad;
 
 /**
  *
@@ -17,7 +17,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class jdMntEstadoCita extends javax.swing.JDialog {
 
-    clsEstadoCita objEstadoCita= new clsEstadoCita();
+    clsEstadoCita objEstadoCita = new clsEstadoCita();
+
     /**
      * Creates new form jdMntEstadoCita
      */
@@ -41,7 +42,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        btnRegistrar = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -87,12 +88,12 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
 
         jPanel5.setBackground(new java.awt.Color(204, 255, 255));
 
-        btnRegistrar.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/veterinario.png"))); // NOI18N
-        btnRegistrar.setText("Registrar");
-        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+        btnNuevo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/veterinario.png"))); // NOI18N
+        btnNuevo.setText("Registrar");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarActionPerformed(evt);
+                btnNuevoActionPerformed(evt);
             }
         });
 
@@ -222,7 +223,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(btnRegistrar)
+                                .addComponent(btnNuevo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnModificar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -248,7 +249,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRegistrar))
+                    .addComponent(btnNuevo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
                 .addContainerGap())
@@ -298,25 +299,61 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         try {
-            if (btnRegistrar.getText().equals("Registrar")) {
-                btnRegistrar.setText("Guardar");
+            Utilidad.activarFields(txtNombre);
+
+            txtId.setEnabled(false);
+
+            if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
+                btnNuevo.setText(Utilidad.BTN_GUARDAR);
+                btnEliminar.setText(Utilidad.BTN_CANCELAR);
+
+                Utilidad.desactivarBotones(btnNuevo, btnModificar, btnLimpiar);
+
+                tblEstadoCita.setEnabled(false);
                 limpiarControles();
-                txtId.setText(objEstadoCita.generarCodigo().toString());
                 txtNombre.requestFocus();
+
+                txtId.setText(String.valueOf(objEstadoCita.generarCodigo()));
+
             } else {
-                btnRegistrar.setText("Registrar");
-                objEstadoCita.registrar(Integer.parseInt(txtId.getText()), txtNombre.getText());
-                limpiarControles();
-                listar();
+                if (Utilidad.verificarCamposLlenos(txtId, txtNombre)) {
+                    JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
+                } else if (Utilidad.validarElementoTextoRepetido("estado_cita", "nombre_estado", txtNombre.getText())) {
+                    JOptionPane.showMessageDialog(this, "Ya existe este nombre de estado de cita");
+                } else {
+                    int valor = Utilidad.mensajeConfirmarRegistro("estado_cita", Integer.parseInt(txtId.getText()), txtNombre.getText());
+                    if (valor == JOptionPane.YES_OPTION) {
+                        btnNuevo.setText(Utilidad.BTN_NUEVO);
+                        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+
+                        objEstadoCita.registrar(Integer.parseInt(txtId.getText()),
+                                txtNombre.getText());
+
+                        tblEstadoCita.setEnabled(true);
+
+                        limpiarControles();
+                        listar();
+
+                        Utilidad.activarBotones(btnBuscar, btnEliminar, btnLimpiar, btnModificar);
+
+                        JOptionPane.showMessageDialog(this, "Se registró con éxito");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Se canceló operación");
+                        Utilidad.activarBotones(btnBuscar, btnEliminar, btnLimpiar, btnModificar);
+                        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+                        btnNuevo.setText(Utilidad.BTN_NUEVO);
+
+                    }
+                }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error:" + e.getMessage());
         }
 
-    }//GEN-LAST:event_btnRegistrarActionPerformed
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void tblEstadoCitaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEstadoCitaMouseClicked
         // TODO add your handling code here:
@@ -363,19 +400,25 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        ResultSet rs = null;
+        ResultSet rsEstado = null;
+
         try {
             if (txtId.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código para buscar");
             } else {
-                rs = objEstadoCita.buscar(Integer.parseInt(txtId.getText()));
-                if (rs.next()) {
-                    txtNombre.setText(rs.getString("nombre_estado"));
-                    rs.close();
+                rsEstado = objEstadoCita.buscar(Integer.parseInt(txtId.getText()));
+                Utilidad.desactivarFields(txtId, txtId, txtNombre);
+                if (rsEstado.next()) {
+                    txtNombre.setText(rsEstado.getString("nombre_estado"));
+
+                    rsEstado.close();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Codigo de estado de cita no existente");
+                    limpiarControles();
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error " + e.getLocalizedMessage());
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -386,48 +429,81 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-         try {
+        if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
+            cancelarAccion();
+            tblEstadoCita.setEnabled(true);
+            Utilidad.activarBotones(btnNuevo, btnBuscar, btnLimpiar, btnModificar);
+
+        } else {
+            eliminar();
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void cancelarAccion() {
+        btnNuevo.setText(Utilidad.BTN_NUEVO);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+        limpiarControles();
+        listar();
+    }
+
+    private void eliminar() {
+        try {
             if (txtId.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Ingrese un código para eliminar");
+                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo a eliminar!");
+            } else if (Utilidad.validarEliminacionForanea("estado_cita", Integer.parseInt(txtId.getText()))) {
+                Utilidad.mensajeErrorNoEliminarForanea("estado_cita", txtNombre.getText());
             } else {
-                int result = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que quieres eliminar el tipo de examen"
-                        + " con codigo " + txtId.getText(),
-                        "Confirmacion", JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) {
-                    objEstadoCita.eliminar(Integer.valueOf(txtId.getText()));
+                int valor = Utilidad.mensajeConfirmarEliminar("estado_cita", Integer.parseInt(txtId.getText()), txtNombre.getText());
+                if (valor == JOptionPane.YES_OPTION) {
+                    objEstadoCita.eliminar(Integer.parseInt(txtId.getText()));
                     limpiarControles();
                     listar();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Se canceló eliminación");
+                    JOptionPane.showMessageDialog(this, "Se ha eliminado con éxito");
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    }
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         try {
-            if (txtId.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un código a modificar");
+            if (txtId.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
             } else {
-                int result = JOptionPane.showConfirmDialog(this, "Estás seguro de que quieres modificar "
-                        + "el tipo de examen de codigo " + txtId.getText(),
-                        "Confirmacion", JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) {
-                    Integer id = Integer.valueOf(txtId.getText());
-                    String nom = txtNombre.getText();                    
-                    objEstadoCita.modificar(id, nom);
-
+                if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                    txtId.setEnabled(false);
+                    Utilidad.activarFields(txtNombre);
+                    btnModificar.setText(Utilidad.BTN_GUARDAR);
+                    btnEliminar.setText(Utilidad.BTN_CANCELAR);
+                    Utilidad.desactivarBotones(btnModificar, btnLimpiar, btnBuscar, btnNuevo);
+                    tblEstadoCita.setEnabled(true);
+                } else if (Utilidad.validarElementoTextoRepetido("estado_cita", "nombre_estado", txtNombre.getText())) {
+                    JOptionPane.showMessageDialog(this, "Este nombre ya fue registrado");
                     limpiarControles();
-                    listar();
-                    
-//                    JOptionPane.showMessageDialog(this, "Se modificó");
+                    btnModificar.setText(Utilidad.BTN_MODIFICAR);
+                    btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+                    Utilidad.activarBotones(btnNuevo, btnBuscar, btnLimpiar, btnModificar);
+                } else {
+                    int valor = Utilidad.mensajeConfirmarModificar("estado_cita", Integer.parseInt(txtId.getText()), txtNombre.getText());
+                    if (valor == JOptionPane.YES_OPTION) {
+
+                        objEstadoCita.modificar(Integer.parseInt(txtId.getText()), txtNombre.getText());
+                        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+                        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+                        Utilidad.activarBotones(btnNuevo, btnBuscar, btnLimpiar, btnModificar);
+                        limpiarControles();
+                        listar();
+                        JOptionPane.showMessageDialog(this, "Se modificó con exito");
+                        tblEstadoCita.setEnabled(true);
+                    }
+
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage());
+            JOptionPane.showMessageDialog(this, "Error:" + e.getMessage());
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -458,18 +534,17 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
         }
 
     }
-    
+
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
