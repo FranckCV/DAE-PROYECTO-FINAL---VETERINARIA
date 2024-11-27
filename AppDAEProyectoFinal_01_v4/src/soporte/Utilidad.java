@@ -143,7 +143,11 @@ public class Utilidad {
         "Dar alta",
         "Cancelar"
     };
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 1c19eac6e08f8ce153c78633d18f2c17a385c9d5
     public static final String[] opcionesModificarContraseña = {
         "Modificar contraseña",
         "Cancelar"
@@ -328,8 +332,13 @@ public class Utilidad {
         );
         return valor;
     }
+<<<<<<< HEAD
 
     public static int mensajeConfirmarModificarContraseña(String entidad, int id, String nombre) {
+=======
+    
+    public static int mensajeConfirmarModificarContraseña(String entidad , int id ,String nombre) {
+>>>>>>> 1c19eac6e08f8ce153c78633d18f2c17a385c9d5
         int valor = JOptionPane.showOptionDialog(
                 null,
                 "¿Está seguro de modificar contraseña " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: " + id + ")? ",
@@ -342,8 +351,13 @@ public class Utilidad {
         );
         return valor;
     }
+<<<<<<< HEAD
 
     public static void mensajeErrorNoEliminarForanea(String entidad, String nombre) {
+=======
+    
+    public static void mensajeErrorNoEliminarForanea(String entidad , String nombre) {
+>>>>>>> 1c19eac6e08f8ce153c78633d18f2c17a385c9d5
         JOptionPane.showMessageDialog(
                 null,
                 "Hay datos externos asociados a " + entidad.toLowerCase() + " \"" + nombre + "\".\n"
