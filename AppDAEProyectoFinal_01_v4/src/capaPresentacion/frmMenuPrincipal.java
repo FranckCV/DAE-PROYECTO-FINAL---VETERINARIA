@@ -98,8 +98,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem24 = new javax.swing.JMenuItem();
         mnuIngresoPorServicio = new javax.swing.JMenuItem();
         jMenuItem30 = new javax.swing.JMenuItem();
-        jMenuItem31 = new javax.swing.JMenuItem();
-        jMenuItem33 = new javax.swing.JMenuItem();
+        rptMedicamentosXRangoPrecio = new javax.swing.JMenuItem();
+        rptVacunasXEspecie = new javax.swing.JMenuItem();
         jMenuItem34 = new javax.swing.JMenuItem();
         jMenuItem35 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -123,6 +123,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
 
         panel.setBackground(new java.awt.Color(255, 255, 255));
+        panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -486,11 +487,21 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem30.setText("Rp5");
         jMenu11.add(jMenuItem30);
 
-        jMenuItem31.setText("Rp6");
-        jMenu11.add(jMenuItem31);
+        rptMedicamentosXRangoPrecio.setText("Reporte de Medicamentos por Rango de Precio");
+        rptMedicamentosXRangoPrecio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rptMedicamentosXRangoPrecioActionPerformed(evt);
+            }
+        });
+        jMenu11.add(rptMedicamentosXRangoPrecio);
 
-        jMenuItem33.setText("Rp7");
-        jMenu11.add(jMenuItem33);
+        rptVacunasXEspecie.setText("Reporte de Vacunas por Especie");
+        rptVacunasXEspecie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rptVacunasXEspecieActionPerformed(evt);
+            }
+        });
+        jMenu11.add(rptVacunasXEspecie);
 
         jMenuItem34.setText("Rp8");
         jMenu11.add(jMenuItem34);
@@ -742,6 +753,17 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jdRepServiciosMasSolicitados objFrm = new jdRepServiciosMasSolicitados(this, true);
         objFrm.setVisible(true);
     }//GEN-LAST:event_mnuIngresoPorServicioActionPerformed
+
+    private void rptMedicamentosXRangoPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rptMedicamentosXRangoPrecioActionPerformed
+        // TODO add your handling code here:
+        RptMedicamentosXRangoPrecio objForm = new RptMedicamentosXRangoPrecio(this,true);
+        objForm.setVisible(true);
+    }//GEN-LAST:event_rptMedicamentosXRangoPrecioActionPerformed
+
+    private void rptVacunasXEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rptVacunasXEspecieActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_rptVacunasXEspecieActionPerformed
                                                                         
 
     private void login(){ 
@@ -801,8 +823,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem30;
-    private javax.swing.JMenuItem jMenuItem31;
-    private javax.swing.JMenuItem jMenuItem33;
     private javax.swing.JMenuItem jMenuItem34;
     private javax.swing.JMenuItem jMenuItem35;
     private javax.swing.JMenuItem jMenuItem4;
@@ -834,6 +854,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuUsuarios;
     private javax.swing.JMenuItem mnuVacuna;
     private javax.swing.JPanel panel;
+    private javax.swing.JMenuItem rptMedicamentosXRangoPrecio;
+    private javax.swing.JMenuItem rptVacunasXEspecie;
     private javax.swing.JTextField txtCargo;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
