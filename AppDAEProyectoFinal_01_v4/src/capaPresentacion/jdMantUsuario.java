@@ -703,7 +703,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
                 }
 //                System.out.println(rsDato.getString("nomusuario").equals(jdInicioSesionVet.usuario));
 //                System.out.println(jdInicioSesionVet.usuario);
-
+            
                 if (cargo.equals("ADMINISTRADOR") && rsDato.getString("nomusuario").equals(jdInicioSesionVet.usuario)) {
                     agregarFila(modelo, rsDato, cargo);
                 } else if (!cargo.equals("ADMINISTRADOR")) {
