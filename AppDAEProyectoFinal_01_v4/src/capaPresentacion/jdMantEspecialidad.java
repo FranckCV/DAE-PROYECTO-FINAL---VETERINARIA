@@ -27,6 +27,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
         btnDisponibilidad.setText(Utilidad.BTN_DISPONIBILIDAD);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+        Utilidad.fijarColumnasTabla(tblEspecialidad);
     }
 
     /**
@@ -416,6 +417,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 
     private void txtIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyTyped
         // TODO add your handling code here:
+        Utilidad.validarCampoTextoSoloNumero(evt);
     }//GEN-LAST:event_txtIDKeyTyped
     
     private void listarEspecialidades(){

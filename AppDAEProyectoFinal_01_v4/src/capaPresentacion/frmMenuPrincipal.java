@@ -627,7 +627,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jdMntRaza objForm = new jdMntRaza(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
-
     }//GEN-LAST:event_mnuRazasActionPerformed
 
     private void mnuDueñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDueñoActionPerformed
