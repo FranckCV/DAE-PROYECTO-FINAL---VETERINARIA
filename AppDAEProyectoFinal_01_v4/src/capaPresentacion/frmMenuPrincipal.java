@@ -124,7 +124,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
 
         panel.setBackground(new java.awt.Color(255, 255, 255));
-        panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -517,10 +516,20 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu11.add(rptVacunasXEspecie);
 
-        jMenuItem34.setText("Rp8");
+        jMenuItem34.setText("Ingresos Mensuales");
+        jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem34ActionPerformed(evt);
+            }
+        });
         jMenu11.add(jMenuItem34);
 
-        jMenuItem35.setText("Rp9");
+        jMenuItem35.setText("Mejores médicos");
+        jMenuItem35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem35ActionPerformed(evt);
+            }
+        });
         jMenu11.add(jMenuItem35);
 
         jMenuBar1.add(jMenu11);
@@ -705,7 +714,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         txtCargo.setText("");
         login();
     }
-    
+
     private void mnuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuUsuariosActionPerformed
         // TODO add your handling code here:
         jdMantUsuario objForm = new jdMantUsuario(this, true);
@@ -761,23 +770,23 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         jdMantMedico objForm = new jdMantMedico(this, true);
         objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true); 
+        objForm.setVisible(true);
     }//GEN-LAST:event_mnuMedicoActionPerformed
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
         // TODO add your handling code here:
         jdRepCitasPendientes objForm = new jdRepCitasPendientes(this, true);
         objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true); 
+        objForm.setVisible(true);
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         jdRepCitasPendientesxMesxAnio objForm = new jdRepCitasPendientesxMesxAnio(this, true);
         objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true); 
+        objForm.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-    
+
     private void mnuIngresoPorServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuIngresoPorServicioActionPerformed
         // TODO add your handling code here:
         jdRepServiciosMasSolicitados objFrm = new jdRepServiciosMasSolicitados(this, true);
@@ -786,21 +795,32 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void rptMedicamentosXRangoPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rptMedicamentosXRangoPrecioActionPerformed
         // TODO add your handling code here:
-        RptMedicamentosXRangoPrecio objForm = new RptMedicamentosXRangoPrecio(this,true);
+        RptMedicamentosXRangoPrecio objForm = new RptMedicamentosXRangoPrecio(this, true);
         objForm.setVisible(true);
     }//GEN-LAST:event_rptMedicamentosXRangoPrecioActionPerformed
 
     private void rptVacunasXEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rptVacunasXEspecieActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_rptVacunasXEspecieActionPerformed
-                                                                        
 
-    private void login(){ 
+    }//GEN-LAST:event_rptVacunasXEspecieActionPerformed
+
+    private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
+        jdRepIngresosMensuales objIngresosMensuales = new jdRepIngresosMensuales(this, true);
+        objIngresosMensuales.setLocationRelativeTo(this);
+        objIngresosMensuales.setVisible(true);
+    }//GEN-LAST:event_jMenuItem34ActionPerformed
+
+    private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
+        jdRptMejoresMedicos objMejoresMedicos = new jdRptMejoresMedicos(this, true);
+        objMejoresMedicos.setLocationRelativeTo(this);
+        objMejoresMedicos.setVisible(true);
+    }//GEN-LAST:event_jMenuItem35ActionPerformed
+
+    private void login() {
         jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
-        
+
         txtUsuario.setText(objForm.nombreUsuario);
         switch (objForm.cargo) {
             case "V":
@@ -826,9 +846,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 break;
         }
     }
-    
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCita;
     private javax.swing.JButton btnDueño;

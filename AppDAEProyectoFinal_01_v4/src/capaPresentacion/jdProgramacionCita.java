@@ -212,6 +212,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -521,6 +522,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
             }
         });
 
+        buttonGroup1.add(rdbBoleta);
         rdbBoleta.setText("Boleta");
         rdbBoleta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -528,6 +530,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
             }
         });
 
+        buttonGroup1.add(rdbFactura);
         rdbFactura.setText("Factura");
         rdbFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1078,6 +1081,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     private javax.swing.JButton btnEliminarServicio;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cboServicios;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
