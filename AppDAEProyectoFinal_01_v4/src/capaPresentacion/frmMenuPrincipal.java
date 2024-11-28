@@ -794,27 +794,16 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void rptMedicamentosXRangoPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rptMedicamentosXRangoPrecioActionPerformed
         // TODO add your handling code here:
-<<<<<<< HEAD
         RptMedicamentosXRangoPrecio objForm = new RptMedicamentosXRangoPrecio(this,true);
         objForm.setLocationRelativeTo(this);
-=======
-        RptMedicamentosXRangoPrecio objForm = new RptMedicamentosXRangoPrecio(this, true);
->>>>>>> e684dba3a0ade9febdcc4e8f2d9c562ef1139ad4
         objForm.setVisible(true);
     }//GEN-LAST:event_rptMedicamentosXRangoPrecioActionPerformed
 
     private void rptVacunasXEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rptVacunasXEspecieActionPerformed
         // TODO add your handling code here:
-<<<<<<< HEAD
         RptVacunasXEspecie objForm = new RptVacunasXEspecie(this, true);
         objForm.setLocationRelativeTo(this);
-        objForm.setVisible(true);
-        
-    }//GEN-LAST:event_rptVacunasXEspecieActionPerformed
-                                                                        
-=======
->>>>>>> e684dba3a0ade9febdcc4e8f2d9c562ef1139ad4
-
+        objForm.setVisible(true);        
     }//GEN-LAST:event_rptVacunasXEspecieActionPerformed
 
     private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
