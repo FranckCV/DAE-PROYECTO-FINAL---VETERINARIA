@@ -178,6 +178,7 @@ public class jdRptMejoresMedicos extends javax.swing.JDialog {
                 parametros.put("parAnio", Integer.parseInt(txtAnio.getText()));
                 parametros.put("parCantMedicos", Integer.parseInt(spnCantidad.getValue().toString()));
                 parametros.put("parMes", cboMes.getSelectedIndex() + 1);
+                parametros.put("SUBREPORT_DIR", "./reportes/");
 
                 JRViewer objReporte = new clsReporte().reporteInterno("reporteMedicosEficientes.jasper", parametros);
 
