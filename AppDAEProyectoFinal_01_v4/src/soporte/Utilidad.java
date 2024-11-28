@@ -522,31 +522,7 @@ public class Utilidad {
         }
     }
 
-//    REPORTES 
-//    public static void reporte(JDesktopPane vistareporte){
-//        try {
-//            Container contenedor = vistareporte;
-//            contenedor.setLayout(new BorderLayout());
-//            contenedor.removeAll();
-//            Map parametros = new HashMap();
-//            parametros.put(par,Integer.parseInt(txtCodCat.getText()));
-//            
-//            JRViewer objReporte = new clsReporte().reporteInterno(docReporte+".jasper", parametros);
-//            contenedor.add(objReporte);
-//            
-//            contenedor.revalidate();
-//            contenedor.repaint();
-//            
-//            this.vistareporte.setVisible(true);
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(
-//                    this,
-//                    e.getMessage()+" Error en Reporte ",
-//                    "Error",
-//                    JOptionPane.ERROR_MESSAGE
-//            );
-//        }
-//    }
+    
     public static boolean buscarYConfigurar(String tabla, String columna, int id, JTextField txtNombre, JButton btnModificar, JButton btnEliminar) throws Exception {
         clsJDBC objConectar = new clsJDBC();
         String strSQL = "SELECT nomtipo FROM " + tabla + " WHERE " + columna + " = " + id;
@@ -570,5 +546,13 @@ public class Utilidad {
         }
         return false;
     }
-
+    
+    
+    public static void fijarColumnasTabla(JTable table) {
+        table.getTableHeader().setReorderingAllowed(false);
+    }
+    
+    
+    
+    
 }
