@@ -792,6 +792,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void rptVacunasXEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rptVacunasXEspecieActionPerformed
         // TODO add your handling code here:
+        RptVacunasXEspecie objForm = new RptVacunasXEspecie(this, true);
+        objForm.setVisible(true);
         
     }//GEN-LAST:event_rptVacunasXEspecieActionPerformed
                                                                         
