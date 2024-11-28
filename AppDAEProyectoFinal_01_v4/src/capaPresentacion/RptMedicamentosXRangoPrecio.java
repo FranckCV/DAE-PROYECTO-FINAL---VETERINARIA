@@ -54,7 +54,7 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
         );
         vistaReporteLayout.setVerticalGroup(
             vistaReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 468, Short.MAX_VALUE)
+            .addGap(0, 535, Short.MAX_VALUE)
         );
 
         jLabel1.setText("Precio Mínimo:");
@@ -86,7 +86,7 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtPrecioMax, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 362, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 655, Short.MAX_VALUE)
                         .addComponent(btnReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -101,7 +101,7 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
                     .addComponent(txtPrecioMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReporte))
                 .addGap(18, 18, 18)
-                .addComponent(vistaReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(vistaReporte)
                 .addContainerGap())
         );
 
@@ -121,8 +121,12 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
             // se puede agregar mas parametros de envio
 
             JRViewer objReporte = new clsReporte().reporteInterno("rptMedicamentosXRangoPrecio.jasper", parametros);
+
+            contenedor.removeAll();
             contenedor.add(objReporte);
-            // Mostrar el reporte
+            contenedor.revalidate();
+            contenedor.repaint();
+            
             this.vistaReporte.setVisible(true);
             // JOptionPane.showMessageDialog(this, "Reporte Mostrado");
             /*

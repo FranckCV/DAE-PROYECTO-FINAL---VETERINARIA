@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.swing.JRViewer;
+
 /**
  *
  * @author Leona
@@ -109,10 +110,12 @@ public class RptVacunasXEspecie extends javax.swing.JDialog {
             parametros.put("NombreEspecie", txtEspecie.getText());
 
             JRViewer objReporte = new clsReporte().reporteInterno("rptVacunasXEspecie.jasper", parametros);
+
+            contenedor.removeAll();
             contenedor.add(objReporte);
             contenedor.revalidate();
             contenedor.repaint();
-            
+
             vistaReporte.setPreferredSize(dimension);
 
             this.vistaReporte.setVisible(true);

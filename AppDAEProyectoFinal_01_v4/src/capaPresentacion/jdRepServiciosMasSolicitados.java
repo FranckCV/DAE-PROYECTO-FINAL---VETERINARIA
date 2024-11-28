@@ -40,7 +40,7 @@ public class jdRepServiciosMasSolicitados extends javax.swing.JDialog {
         vista_contenido = new javax.swing.JDesktopPane();
         btnVerReporte = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        txtId = new javax.swing.JTextField();
+        cbxEspecie = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -52,7 +52,7 @@ public class jdRepServiciosMasSolicitados extends javax.swing.JDialog {
         );
         vista_contenidoLayout.setVerticalGroup(
             vista_contenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 516, Short.MAX_VALUE)
+            .addGap(0, 514, Short.MAX_VALUE)
         );
 
         btnVerReporte.setText("Ver reporte");
@@ -64,9 +64,10 @@ public class jdRepServiciosMasSolicitados extends javax.swing.JDialog {
 
         jLabel1.setText("Código del servicio:");
 
-        txtId.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtIdKeyTyped(evt);
+        cbxEspecie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxEspecie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxEspecieActionPerformed(evt);
             }
         });
 
@@ -79,10 +80,10 @@ public class jdRepServiciosMasSolicitados extends javax.swing.JDialog {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(cbxEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 216, Short.MAX_VALUE)
                 .addComponent(btnVerReporte)
-                .addContainerGap(248, Short.MAX_VALUE))
+                .addGap(132, 132, 132))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,7 +92,7 @@ public class jdRepServiciosMasSolicitados extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVerReporte)
                     .addComponent(jLabel1)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(vista_contenido)
                 .addContainerGap())
@@ -107,7 +108,8 @@ public class jdRepServiciosMasSolicitados extends javax.swing.JDialog {
             contenedor.setLayout(new BorderLayout());
             
             Map parametros = new HashMap();
-            parametros.put("servicio_id", Integer.parseInt(txtId.getText()));
+            String servicioId = cbxEspecie.getSelectedItem().toString();
+            parametros.put("servicio_id", Integer.parseInt(servicioId));
             
 
             JRViewer reporte = new clsReporte().reporteInterno("repServicios.jasper", parametros);
@@ -120,10 +122,9 @@ public class jdRepServiciosMasSolicitados extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnVerReporteActionPerformed
 
-    private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
+    private void cbxEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxEspecieActionPerformed
         // TODO add your handling code here:
-        Utilidad.validarCampoTextoSoloNumero(evt);
-    }//GEN-LAST:event_txtIdKeyTyped
+    }//GEN-LAST:event_cbxEspecieActionPerformed
 
     /**
      * @param args the command line arguments
@@ -131,8 +132,8 @@ public class jdRepServiciosMasSolicitados extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVerReporte;
+    private javax.swing.JComboBox<String> cbxEspecie;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField txtId;
     private javax.swing.JDesktopPane vista_contenido;
     // End of variables declaration//GEN-END:variables
 }
