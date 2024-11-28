@@ -317,9 +317,6 @@ VALUES (8, 'Admin_Fab', TRUE, TRUE, md5('123' || 'Admin_Fab' || 'CODE146'), 'Fab
 
 
 
-
-
-
 -- MEDICOS Y SERVICIOS
 
 INSERT INTO ESPECIALIDAD (id, nom_especialidad, disponibilidad) VALUES 
@@ -696,9 +693,8 @@ INSERT INTO CUSTODIA (MASCOTAid, DUEniOid, fecha_adopción) VALUES
 INSERT INTO ESTADO_CITA (id, nombre_estado) VALUES
 (1, 'Pendiente'),
 (2, 'Cancelada'),
-(3, 'Reprogramada'),
-(4, 'Asistió'),
-(5, 'No asistió');
+(3, 'Asistió'),
+(4, 'No asistió');
 
 
 
