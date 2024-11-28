@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptGananciasMensuales" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="03c6db41-a61d-47a9-8156-5cf8253961a8">
+	<property name="ireport.zoom" value="1.1000000000000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parAnioReporte" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Junior\\OneDrive - Catholic University Santo Toribio de Mogrovejo\\Escritorio\\PROYECTOS_IREPORT\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    (DATE_TRUNC('month', c.fecha) + INTERVAL '1 month' - INTERVAL '1 day')::DATE AS fin_mes,
+    TO_CHAR(DATE_TRUNC('month', c.fecha), 'TMMonth') AS nombre_mes,
+    TO_CHAR(DATE_TRUNC('month', c.fecha), 'TMMon') AS abreviacion_mes,
+    ROUND(SUM(CASE WHEN dm.medicamento_id IS NOT NULL THEN dm.cantidad * m.costo ELSE 0 END), 2) AS ingresos_medicamentos,
+    ROUND(SUM(CASE WHEN dc.detalle_servicio_serv_id IS NOT NULL THEN s.costo ELSE 0 END), 2) AS ingresos_servicios,
+    ROUND(SUM(c.monto_total), 2) AS ingresos_totales,
+    ROUND(SUM(c.monto_total) / 1.18 * 0.18, 2) AS igv_calculado
+FROM
+    COMPROBANTE c
+LEFT JOIN CITA ci ON c.CITAid = ci.id
+LEFT JOIN DETALLE_CITA dc ON ci.id = dc.cita_id
+LEFT JOIN DETALLE_SERVICIO ds ON dc.detalle_servicio_serv_id = ds.servicio_id AND dc.detalle_servicio_med_id = ds.medico_id
+LEFT JOIN SERVICIO s ON ds.servicio_id = s.id
+LEFT JOIN DETALLE_MEDICAMENTO dm ON dm.detalle_cita_id = dc.cita_id AND dm.detalle_servicio_servicio_id = dc.detalle_servicio_serv_id AND dm.detalle_servicio_medico_id = dc.detalle_servicio_med_id
+LEFT JOIN MEDICAMENTO m ON dm.medicamento_id = m.id
+WHERE
+    EXTRACT(YEAR FROM c.fecha) = $P{parAnioReporte}
+GROUP BY
+    DATE_TRUNC('month', c.fecha)
+ORDER BY
+    fin_mes;]]>
+	</queryString>
+	<field name="fin_mes" class="java.sql.Date"/>
+	<field name="nombre_mes" class="java.lang.String"/>
+	<field name="abreviacion_mes" class="java.lang.String"/>
+	<field name="ingresos_medicamentos" class="java.math.BigDecimal"/>
+	<field name="ingresos_servicios" class="java.math.BigDecimal"/>
+	<field name="ingresos_totales" class="java.math.BigDecimal"/>
+	<field name="igv_calculado" class="java.math.BigDecimal"/>
+	<group name="grupo_mes">
+		<groupExpression><![CDATA[$F{fin_mes}]]></groupExpression>
+		<groupHeader>
+			<band height="5"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="42" uuid="6ba918f0-54bc-4418-8bea-41f03a330535"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de ventas mensuales del año]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="42" width="555" height="37" uuid="be1756e8-25d0-4f91-841b-e4f3cab2da67"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{parAnioReporte}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="14" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="27" y="0" width="92" height="27" uuid="21dd84b9-d2dc-4eb5-a61b-3fa6336dd811"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mes]]></text>
+			</staticText>
+			<line>
+				<reportElement x="17" y="27" width="522" height="1" forecolor="#006666" uuid="5a11a973-e92e-4246-87d3-910b0efdbbb3"/>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="108" y="0" width="111" height="20" uuid="c335bf19-67eb-47f5-94b6-5de005f88ae7"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Medicamentos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="243" y="0" width="100" height="20" uuid="ba03ec96-cd17-473b-9e69-32062258b6c7"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Servicios]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="0" width="135" height="27" uuid="ea31e753-1a47-4f07-b943-5784f566409f"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ingresos Totales]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="359" y="0" width="100" height="20" uuid="b52e2e97-cb9b-4d2f-af0c-317bcf170d04"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IGV]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="39" splitType="Stretch">
+			<textField>
+				<reportElement x="27" y="0" width="92" height="20" uuid="a0306395-b621-4319-9020-259f94e70f14"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_mes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="411" y="0" width="144" height="20" uuid="0b3c104e-d903-47f9-b443-7203dcad54e3"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ingresos_totales}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="17" y="30" width="522" height="1" forecolor="#006666" uuid="6dfb3ed6-70be-4399-a7a2-51135411271f"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="108" y="0" width="100" height="20" uuid="82103136-9354-493d-8676-6c8373e8657b"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ingresos_medicamentos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="219" y="0" width="100" height="20" uuid="a13bcf6b-b5cf-4e75-802e-8e926c0f4955"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ingresos_servicios}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="338" y="0" width="73" height="20" uuid="0c617a95-68f1-477f-a7c6-93075e57bc85"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{igv_calculado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="3" width="208" height="20" uuid="e5ac2def-1ce6-43d9-8e2e-b8b162d1f4e5"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Elaborado por: Junior Perez Davila]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="432" y="3" width="80" height="20" uuid="84617507-4c72-4c16-8a34-c82b89bd4ab1"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="512" y="3" width="40" height="20" uuid="c801dd61-a289-4cb2-824d-a867ecb1459f"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="571" splitType="Stretch">
+			<pie3DChart>
+				<chart>
+					<reportElement x="17" y="59" width="522" height="205" uuid="e395b8c9-5103-4b68-a28f-cb089573aee0"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{abreviacion_mes}]]></keyExpression>
+					<valueExpression><![CDATA[$F{ingresos_totales}]]></valueExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
+			<subreport>
+				<reportElement x="17" y="338" width="473" height="225" uuid="2ab90457-2f2d-46e1-b610-3bccc0f9140a"/>
+				<subreportParameter name="parAnioSub">
+					<subreportParameterExpression><![CDATA[$P{parAnioReporte}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rptGananciasMensuales_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="27" uuid="856f8df7-86c2-497f-a464-ab73c9e09fba"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Gráfico Ingresos totales por mes]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="27" width="555" height="32" uuid="530f3447-7764-4262-b7e1-6145db7cd782"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{parAnioReporte}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="282" width="555" height="27" uuid="2a6c54df-61d5-498b-aec4-d18048919946"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Gráfico ingresos por servicios y medicamentos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="309" width="555" height="32" uuid="34cec1f3-ddf4-4552-b930-87456b01a363"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{parAnioReporte}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
