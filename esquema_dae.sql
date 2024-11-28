@@ -317,9 +317,6 @@ VALUES (8, 'Admin_Fab', TRUE, TRUE, md5('123' || 'Admin_Fab' || 'CODE146'), 'Fab
 
 
 
-
-
-
 -- MEDICOS Y SERVICIOS
 
 INSERT INTO ESPECIALIDAD (id, nom_especialidad, disponibilidad) VALUES 
