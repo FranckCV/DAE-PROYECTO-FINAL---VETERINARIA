@@ -811,13 +811,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_rptVacunasXEspecieActionPerformed
 
     private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
-        jdRepIngresosMensuales objIngresosMensuales = new jdRepIngresosMensuales(this, true);
+        jdReporteIngresosMensuales objIngresosMensuales = new jdReporteIngresosMensuales(this, true);
         objIngresosMensuales.setLocationRelativeTo(this);
         objIngresosMensuales.setVisible(true);
     }//GEN-LAST:event_jMenuItem34ActionPerformed
 
     private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
-        jdRptMejoresMedicos objMejoresMedicos = new jdRptMejoresMedicos(this, true);
+        jdReporteMejoresMedicos objMejoresMedicos = new jdReporteMejoresMedicos(this, true);
         objMejoresMedicos.setLocationRelativeTo(this);
         objMejoresMedicos.setVisible(true);
     }//GEN-LAST:event_jMenuItem35ActionPerformed

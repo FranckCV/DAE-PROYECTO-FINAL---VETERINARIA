@@ -4,6 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <file>file:/D:/Descargas/veterinaria_dae/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMantMedico.java</file>
             <file>file:/D:/Descargas/veterinaria_dae/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaNegocio/clsRaza.java</file>
             <file>file:/D:/Descargas/veterinaria_dae/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMntEspecie.java</file>
@@ -25,6 +26,12 @@
             <file>file:/C:/Users/franc/Downloads/2024%20-%20II/VI%20-%20Desarrollo%20de%20Aplicaciones%20de%20Escritorio/projectos_DAE/DAE%20PROYECTO%20FINAL%20-%20VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMantUsuario.java</file>
 >>>>>>> e684dba3a0ade9febdcc4e8f2d9c562ef1139ad4
 >>>>>>> 5684344996f23a63f94742fe500a327e8911d988
+=======
+            <file>file:/C:/Users/Junior/OneDrive%20-%20Catholic%20University%20Santo%20Toribio%20de%20Mogrovejo/Escritorio/VI_CICLO_USB/DAE/AA_GITHUB_VETERINARIA/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdReporteIngresosMensuales.java</file>
+            <file>file:/C:/Users/Junior/OneDrive%20-%20Catholic%20University%20Santo%20Toribio%20de%20Mogrovejo/Escritorio/VI_CICLO_USB/DAE/AA_GITHUB_VETERINARIA/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdReporteMejoresMedicos.java</file>
+            <file>file:/C:/Users/Junior/OneDrive%20-%20Catholic%20University%20Santo%20Toribio%20de%20Mogrovejo/Escritorio/VI_CICLO_USB/DAE/AA_GITHUB_VETERINARIA/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/frmMenuPrincipal.java</file>
+            <file>file:/C:/Users/Junior/OneDrive%20-%20Catholic%20University%20Santo%20Toribio%20de%20Mogrovejo/Escritorio/VI_CICLO_USB/DAE/AA_GITHUB_VETERINARIA/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdRepIngresosMensuales.java</file>
+>>>>>>> 80b6afed4a54e865cf706551fed3ac66dd1ec63b
         </group>
     </open-files>
 </project-private>
