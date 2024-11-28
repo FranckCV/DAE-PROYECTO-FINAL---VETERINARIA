@@ -159,7 +159,7 @@ public class clsCita {
     }
 
     public ResultSet mesesRegistrado() throws Exception {
-        strSQL = "SELECT * FROM vista_meses_distintos ORDER BY mes;";
+        strSQL = "SELECT DISTINCT EXTRACT(MONTH FROM c.fecha_cita) AS mes FROM cita c;";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
