@@ -345,7 +345,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
                         Utilidad.activarBotones(btnBuscar, btnEliminar, btnLimpiar, btnModificar);
                         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                         btnNuevo.setText(Utilidad.BTN_NUEVO);
-
+                        txtId.setEnabled(true);
                     }
                 }
             }
@@ -443,6 +443,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
         btnNuevo.setText(Utilidad.BTN_NUEVO);
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+        txtId.setEnabled(true);
         limpiarControles();
         listar();
     }
@@ -498,6 +499,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
                         listar();
                         JOptionPane.showMessageDialog(this, "Se modificó con exito");
                         tblEstadoCita.setEnabled(true);
+                        txtId.setEnabled(true);
                     }
 
                 }

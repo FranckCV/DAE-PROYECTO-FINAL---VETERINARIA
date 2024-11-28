@@ -846,7 +846,11 @@ public class jdMantUsuario extends javax.swing.JDialog {
                     btnEliminar.setText(Utilidad.BTN_CANCELAR);
                     Utilidad.desactivarBotones(btnModificar, btnLimpiar, btnBuscar, btnNuevo, btnVigencia, btnContraseña);
                     tblUsuario.setEnabled(true);
-                } else {
+                }
+                else if(Utilidad.verificarElementoParaUso("usuario", "estado", Integer.parseInt(txtId.getText()))) {
+                    Utilidad.mensajeElementoNoVigente("usuario",txtNombre.getText());
+                }
+                else {
                     int valor = Utilidad.mensajeConfirmarModificar("Usuario", Integer.parseInt(txtId.getText()), txtNombre.getText());
                     if (valor == JOptionPane.YES_OPTION) {
                         boolean sexo;
@@ -957,9 +961,11 @@ public class jdMantUsuario extends javax.swing.JDialog {
         try {
             Integer id = Integer.parseInt(txtId.getText());
             ResultSet rsUsuario = null;
-            if (id.equals("")) {
+            if (txtId.getText().equals("")) {
                 JOptionPane.showConfirmDialog(this, "Debe ingresar un codigo");
-            } else {
+            }  
+            
+            else {
                 int valor = Utilidad.mensajeConfirmarVigencia("Usuario", Integer.parseInt(txtId.getText()), txtNombre.getText());
                 if (valor == JOptionPane.YES_OPTION) {
                     rsUsuario = objUsuario.buscarUsuario(id);
