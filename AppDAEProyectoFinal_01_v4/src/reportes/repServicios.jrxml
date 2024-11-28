@@ -57,6 +57,17 @@ group by s.nom_servicio,s.costo]]>
 	</columnHeader>
 	<detail>
 		<band height="181" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="39" width="293" height="142" uuid="637648a9-d40a-42c4-8149-ad0b90686f46"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="servicio_id">
+					<subreportParameterExpression><![CDATA[$P{servicio_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "repServicios_subreport.jasper"]]></subreportExpression>
+			</subreport>
 			<textField>
 				<reportElement x="58" y="0" width="100" height="20" uuid="b35a3ab4-a1bf-45ee-b022-c2190c72411a"/>
 				<textFieldExpression><![CDATA[$F{nom_servicio}]]></textFieldExpression>

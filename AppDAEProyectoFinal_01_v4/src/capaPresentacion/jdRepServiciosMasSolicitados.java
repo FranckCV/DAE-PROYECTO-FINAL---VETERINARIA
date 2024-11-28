@@ -110,7 +110,7 @@ public class jdRepServiciosMasSolicitados extends javax.swing.JDialog {
             parametros.put("servicio_id", Integer.parseInt(txtId.getText()));
             
 
-            JRViewer reporte = new clsReporte().reporteInterno(" ", parametros);
+            JRViewer reporte = new clsReporte().reporteInterno("repServicios.jasper", parametros);
             contenedor.add(reporte);
             reporte.setVisible(true);
             this.vista_contenido.setVisible(true);
