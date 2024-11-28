@@ -124,7 +124,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
 
         panel.setBackground(new java.awt.Color(255, 255, 255));
-        panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -787,12 +786,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void rptMedicamentosXRangoPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rptMedicamentosXRangoPrecioActionPerformed
         // TODO add your handling code here:
         RptMedicamentosXRangoPrecio objForm = new RptMedicamentosXRangoPrecio(this,true);
+        objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
     }//GEN-LAST:event_rptMedicamentosXRangoPrecioActionPerformed
 
     private void rptVacunasXEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rptVacunasXEspecieActionPerformed
         // TODO add your handling code here:
         RptVacunasXEspecie objForm = new RptVacunasXEspecie(this, true);
+        objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
         
     }//GEN-LAST:event_rptVacunasXEspecieActionPerformed

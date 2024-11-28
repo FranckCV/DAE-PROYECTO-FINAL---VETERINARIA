@@ -4,6 +4,14 @@
  */
 package capaPresentacion;
 
+import capaDatos.clsReporte;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.swing.JRViewer;
+
 /**
  *
  * @author Leona
@@ -27,7 +35,7 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        vistaReporte = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
         txtPrecioMin = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -36,16 +44,16 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jDesktopPane1.setBackground(new java.awt.Color(255, 255, 255));
+        vistaReporte.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout vistaReporteLayout = new javax.swing.GroupLayout(vistaReporte);
+        vistaReporte.setLayout(vistaReporteLayout);
+        vistaReporteLayout.setHorizontalGroup(
+            vistaReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        vistaReporteLayout.setVerticalGroup(
+            vistaReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 468, Short.MAX_VALUE)
         );
 
@@ -54,6 +62,11 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
         jLabel2.setText("Precio Máximo:");
 
         btnReporte.setText("Ver Reporte");
+        btnReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -63,7 +76,7 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jDesktopPane1))
+                        .addComponent(vistaReporte))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(jLabel1)
@@ -88,21 +101,49 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
                     .addComponent(txtPrecioMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReporte))
                 .addGap(18, 18, 18)
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(vistaReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
+        // TODO add your handling code here:
+        try {
+            Container contenedor = this.vistaReporte;
+            contenedor.setLayout(new BorderLayout());
+            // JOptionPane.showMessageDialog(this, "Procesando Reporte");
+            // creación de los parámetros para el reporte
+            Map parametros = new HashMap<>();
+            parametros.put("minPrecio", Double.parseDouble(txtPrecioMin.getText()));
+            parametros.put("maxPrecio", Double.parseDouble(txtPrecioMax.getText()));
+            // se puede agregar mas parametros de envio
+
+            JRViewer objReporte = new clsReporte().reporteInterno("rptMedicamentosXRangoPrecio.jasper", parametros);
+            contenedor.add(objReporte);
+            // Mostrar el reporte
+            this.vistaReporte.setVisible(true);
+            // JOptionPane.showMessageDialog(this, "Reporte Mostrado");
+            /*
+        Viewer visor = new JasperViewer(new clsReporte().reporteExterno("reporteProductosxCategoriaEspecifica.jasper", parametros));
+        visor.setVisible(true);
+        this.dispose();
+             */
+        } catch (Exception e) {
+            e.printStackTrace();  // Imprime la traza del error
+            JOptionPane.showMessageDialog(this, e.getMessage() + " ERROR en Reporte", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnReporteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReporte;
-    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField txtPrecioMax;
     private javax.swing.JTextField txtPrecioMin;
+    private javax.swing.JDesktopPane vistaReporte;
     // End of variables declaration//GEN-END:variables
 }
