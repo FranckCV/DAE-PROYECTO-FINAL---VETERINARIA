@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteMedicosEficientes" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bd28cb11-1e06-4f65-9018-46029867080e">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="218"/>
+	<property name="ireport.y" value="144"/>
 	<parameter name="parCantMedicos" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -151,7 +151,7 @@ LIMIT $P{parCantMedicos};]]>
 		<band height="485" splitType="Stretch">
 			<bar3DChart>
 				<chart>
-					<reportElement x="16" y="8" width="519" height="134" uuid="b44499e5-9dfc-4a76-b265-61b211d78c56"/>
+					<reportElement x="16" y="42" width="519" height="134" uuid="b44499e5-9dfc-4a76-b265-61b211d78c56"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -176,7 +176,7 @@ LIMIT $P{parCantMedicos};]]>
 			</bar3DChart>
 			<bar3DChart>
 				<chart>
-					<reportElement x="16" y="142" width="519" height="156" uuid="42644618-cff3-424a-99d0-7f11e9b7d35b"/>
+					<reportElement x="16" y="222" width="519" height="156" uuid="42644618-cff3-424a-99d0-7f11e9b7d35b"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -210,6 +210,20 @@ LIMIT $P{parCantMedicos};]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "reporteMedicosEficientes_subreport1.jasper"]]></subreportExpression>
 			</subreport>
+			<staticText>
+				<reportElement x="18" y="0" width="517" height="42" uuid="b2f8bac5-3b3d-4f55-8195-b605757bf5a2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gráfico de ingresos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="180" width="517" height="42" uuid="d4fc9303-759c-41a7-bdd3-72dfb6b2a2cf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gráfico de citas]]></text>
+			</staticText>
 		</band>
 	</summary>
 </jasperReport>
