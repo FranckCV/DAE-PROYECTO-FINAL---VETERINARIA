@@ -246,25 +246,37 @@
                 <Property name="text" type="java.lang.String" value="Rp5"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem31">
+            <MenuItem class="javax.swing.JMenuItem" name="rptMedicamentosXRangoPrecio">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Rp6"/>
+                <Property name="text" type="java.lang.String" value="Reporte de Medicamentos por Rango de Precio"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rptMedicamentosXRangoPrecioActionPerformed"/>
+              </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem33">
+            <MenuItem class="javax.swing.JMenuItem" name="rptVacunasXEspecie">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Rp7"/>
+                <Property name="text" type="java.lang.String" value="Reporte de Vacunas por Especie"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rptVacunasXEspecieActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem34">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Rp8"/>
+                <Property name="text" type="java.lang.String" value="Ingresos Mensuales"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem34ActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem35">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Rp9"/>
+                <Property name="text" type="java.lang.String" value="Mejores m&#xe9;dicos"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem35ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
