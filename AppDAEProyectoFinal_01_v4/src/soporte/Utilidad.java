@@ -423,12 +423,25 @@ public class Utilidad {
         clsJDBC objConectar = new clsJDBC();
         ResultSet rs;
         try {
-            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where id = " + id + " ");
+            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where id = " + id );
             while (rs.next()) {
                 return !rs.getBoolean(columna);
             }
         } catch (Exception e) {
-            throw new Exception("Error al verificar " + columna.toLowerCase() + " de ID:" + id + " en tabla " + tabla.toLowerCase() + ": " + e.getMessage());
+            throw new Exception("Error al verificar " + columna.toLowerCase() + " de ID: " + id + " en tabla " + tabla.toLowerCase() + ": " + e.getMessage());
+        }
+        return false;
+    }
+     public static boolean verificarElementoParaUsoCodigo(String tabla, String columna, String columna_codigo, Integer id) throws Exception {
+        clsJDBC objConectar = new clsJDBC();
+        ResultSet rs;
+        try {
+            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where "+ columna_codigo +" = " + id );
+            while (rs.next()) {
+                return !rs.getBoolean(columna);
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al verificar " + columna.toLowerCase() + " de ID: " + id + " en tabla " + tabla.toLowerCase() + ": " + e.getMessage());
         }
         return false;
     }

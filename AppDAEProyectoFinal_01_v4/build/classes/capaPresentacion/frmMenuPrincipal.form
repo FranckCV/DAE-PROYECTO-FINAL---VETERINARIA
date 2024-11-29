@@ -228,7 +228,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
               </Events>
             </MenuItem>
-<<<<<<< HEAD
             <MenuItem class="javax.swing.JMenuItem" name="menuRepServicioMasSolicitado">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Servicios m&#xe1;s solicitados por mes"/>
@@ -236,12 +235,6 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuRepServicioMasSolicitadoActionPerformed"/>
               </Events>
-=======
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem24">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Rp3"/>
-              </Properties>
->>>>>>> 80b6afed4a54e865cf706551fed3ac66dd1ec63b
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnuIngresoPorServicio">
               <Properties>
