@@ -35,9 +35,9 @@ public class clsDetalleMedicamento {
                 int detalleCitaId = idCita; // ID de la cita
                 int detalleServicioServId = Integer.parseInt(tblMedicamentos.getValueAt(i, 1).toString());
                 int detalleServicioMedId = Integer.parseInt(tblMedicamentos.getValueAt(i, 2).toString());
-                double dosis = Double.parseDouble(tblMedicamentos.getValueAt(i, 3).toString());
-                String indicacion = tblMedicamentos.getValueAt(i, 4).toString();
-                int cantidad = Integer.parseInt(tblMedicamentos.getValueAt(i, 5).toString());
+                double dosis = Double.parseDouble(tblMedicamentos.getValueAt(i, 4).toString());
+                String indicacion = tblMedicamentos.getValueAt(i, 5).toString();
+                int cantidad = Integer.parseInt(tblMedicamentos.getValueAt(i, 6).toString());
 
                 String strSQL = "INSERT INTO DETALLE_MEDICAMENTO (medicamento_id, detalle_cita_id, detalle_servicio_servicio_id, "
                         + "detalle_servicio_medico_id, dosis, indicacion, cantidad) "

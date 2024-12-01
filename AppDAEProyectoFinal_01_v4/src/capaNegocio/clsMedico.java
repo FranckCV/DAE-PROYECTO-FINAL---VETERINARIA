@@ -1,13 +1,16 @@
 package capaNegocio;
 
 import capaDatos.clsJDBC;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  *
  * @author Grupo_Veterinaria
  */
 public class clsMedico {
+
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;
@@ -57,12 +60,12 @@ public class clsMedico {
     public ResultSet listarMedicoUsuario() throws Exception {
         strSQL = "select "
                 + " M.*, "
-                + " U.nomusuario ," 
+                + " U.nomusuario ,"
                 + " E." + clsEspecialidad.NOMBRE + " "
                 + " from " + TABLA + " M "
                 + " inner join usuario U on U.codusuario = M.usuariocodusuario "
                 + " inner join " + clsEspecialidad.TABLA + " E on M." + ESPECIALIDAD_ID + " = E." + clsEspecialidad.ID
-                + " order by M."+ID
+                + " order by M." + ID
                 + " ";
         try {
             rs = objConectar.consultarBD(strSQL);
@@ -71,7 +74,7 @@ public class clsMedico {
             throw new Exception("Error en listar la tabla " + TABLA + " / " + e.getMessage());
         }
     }
-    
+
     public ResultSet listarMedicosconServicios() throws Exception {
         strSQL = """
                 SELECT 
@@ -96,13 +99,58 @@ public class clsMedico {
         }
     }
 
+//    public boolean verificarDisponibilidad(int medicoId, String horaEntrada, String horaSalida) throws SQLException {
+//        // Formato de la hora: solo horas y minutos (sin fecha)
+//        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");  // Asumiendo que la hora viene en formato "HH:mm"
+//
+//        try {
+//            // Convertir las horas de entrada y salida a java.sql.Time
+//            Time entradaTime = null;
+//            Time salidaTime = null;
+//
+//            // Manejar posibles ParseExceptions
+//            try {
+//                entradaTime = new Time(sdf.parse(horaEntrada).getTime());
+//                salidaTime = new Time(sdf.parse(horaSalida).getTime());
+//            } catch (ParseException e) {
+//                e.printStackTrace();  // O puedes mostrar un mensaje de error si es necesario
+//                return false;  // Si el parseo falla, puedes retornar false o manejarlo de otra manera
+//            }
+//
+//            // Formateamos las horas como cadena para incluirlas directamente en la consulta SQL
+//            String horaEntradaStr = entradaTime.toString();
+//            String horaSalidaStr = salidaTime.toString();
+//
+//            // Consulta SQL para verificar si hay algún cruce de horarios
+//            String query = "SELECT COUNT(*) FROM detalle_cita WHERE detalle_servicio_med_id = " + medicoId + " "
+//                + "AND ((horaEntrada BETWEEN '" + horaEntradaStr + "' AND '" + horaSalidaStr + "') "
+//                + "OR (horaSalida BETWEEN '" + horaEntradaStr + "' AND '" + horaSalidaStr + "') "
+//                + "OR ('" + horaEntradaStr + "' BETWEEN horaEntrada AND horaSalida) "
+//                + "OR ('" + horaSalidaStr + "' BETWEEN horaEntrada AND horaSalida))";
+//
+//
+//            // Ejecutar la consulta (usando Statement)
+//            try (Statement stmt = objConectar.getCon().createStatement()) {
+//                ResultSet rs = stmt.executeQuery(query);
+//                if (rs.next()) {
+//                    return rs.getInt(1) == 0;  // Si el resultado es 0, significa que no hay cruces de horarios
+//                }
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();  // Maneja los errores de SQL
+//        }
+//
+//        return false;  // Si ocurre algún error, asumimos que no está disponible
+//    }
+
     public ResultSet buscarMedico(int id) throws Exception {
         strSQL = " select "
                 + "     med.*,"
-                + "     U.nomusuario, "                
+                + "     U.nomusuario, "
                 + "     esp.nom_especialidad, "
                 + "     esp.disponibilidad as disp_esp, "
-                + "     count(det.servicio_id) as "+CANT_SERVICIOS
+                + "     count(det.servicio_id) as " + CANT_SERVICIOS
                 + " from medico med "
                 + " LEFT JOIN especialidad esp ON esp.id = med.especialidad_id "
                 + " LEFT JOIN  detalle_servicio det ON det.medico_id = med.id AND det.disponibilidad = true "
@@ -116,6 +164,45 @@ public class clsMedico {
             return rs;
         } catch (Exception e) {
             throw new Exception("Error al buscar id: '" + id + "' en la tabla " + TABLA + ": " + e.getMessage());
+        }
+    }
+
+    public ResultSet buscarDniMedicoPorNombreCompleto(String nombreCompleto) throws Exception {
+        // Formulamos la consulta SQL para buscar el DNI del médico por nombre completo
+        String strSQL = "SELECT med.doc_identidad " // Solo seleccionamos el DNI
+                + " FROM medico med "
+                + " WHERE (med.nombres || ' ' || med.apePaterno || ' ' || med.apeMaterno) ILIKE '%"
+                + nombreCompleto + "%'"; // Concatenamos el nombre completo con los comodines
+
+        try {
+            rs = objConectar.consultarBD(strSQL);  // Suponiendo que 'objConectar.consultarBD' ejecuta la consulta SQL
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar el DNI del médico por nombre completo: " + e.getMessage());
+        }
+    }
+
+    public ResultSet buscarMedicosPorServicio(int servicioId) throws Exception {
+        String strSQL = "SELECT "
+                + "    med.*, "
+                + "    U.nomusuario, "
+                + "    esp.nom_especialidad, "
+                + "    esp.disponibilidad AS disp_esp, "
+                + "    COUNT(det.servicio_id) AS " + CANT_SERVICIOS
+                + " FROM medico med "
+                + " LEFT JOIN especialidad esp ON esp.id = med.especialidad_id "
+                + " LEFT JOIN detalle_servicio det ON det.medico_id = med.id AND det.disponibilidad = true "
+                + " LEFT JOIN servicio ser ON ser.id = det.servicio_id AND ser.disponibilidad = true "
+                + " LEFT JOIN usuario U ON U.codusuario = med.usuariocodusuario "
+                + " WHERE det.servicio_id = " + servicioId + " "
+                + " GROUP BY med.id, esp.id, U.nomusuario "
+                + " ORDER BY med.vigencia DESC, med.id";
+
+        try {
+            rs = objConectar.consultarBD(strSQL);  // Suponiendo que 'objConectar.consultarBD' ejecuta la consulta SQL y devuelve el ResultSet.
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar médicos para el servicio con id: '" + servicioId + "': " + e.getMessage());
         }
     }
 
@@ -153,7 +240,7 @@ public class clsMedico {
                 + "true,"
                 + "true,"
                 + esp + ","
-                + usu 
+                + usu
                 + ")";
         try {
             objConectar.ejecutarBD(strSQL);
@@ -250,9 +337,9 @@ public class clsMedico {
         }
         return 0;
     }
-    
+
     public Integer obtenerIDUser(Integer id_med) throws Exception {
-        strSQL = "SELECT "+CODIGO_USUARIO+" as user_id FROM " + TABLA + " WHERE "+ID+" = " + id_med + " ";
+        strSQL = "SELECT " + CODIGO_USUARIO + " as user_id FROM " + TABLA + " WHERE " + ID + " = " + id_med + " ";
         try {
             rs = objConectar.consultarBD(strSQL);
             if (rs.next()) {

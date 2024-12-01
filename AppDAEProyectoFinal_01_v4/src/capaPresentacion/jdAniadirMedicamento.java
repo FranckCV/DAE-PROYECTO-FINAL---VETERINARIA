@@ -7,6 +7,7 @@ package capaPresentacion;
 import capaNegocio.clsMedicamento;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -42,12 +43,20 @@ public class jdAniadirMedicamento extends javax.swing.JDialog {
         try {
             rsMedicamentos = objMedicamento.filtrar(txtNombreMedicamento.getText());
             while (rsMedicamentos.next()) {
+                String vigencia;
+                
+                if (rsMedicamentos.getBoolean("vigencia")) {
+                    vigencia = "VIGENTE";
+                } else {
+                    vigencia = "NO VIGENTE";
+                }
+                
                 modelo.addRow(new Object[]{rsMedicamentos.getInt("ID"),
                     rsMedicamentos.getString("nombre"),
                     rsMedicamentos.getString("costo"),
                     rsMedicamentos.getString("stock"),
                     rsMedicamentos.getString("presentacion"),
-                    rsMedicamentos.getBoolean("vigencia"),
+                    vigencia,
                     rsMedicamentos.getString("nomtipo")
                 });
             }
@@ -55,6 +64,21 @@ public class jdAniadirMedicamento extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, e.getMessage() + " uuu");
         }
         tblMedicamentos.setModel(modelo);
+        
+        ocultarColumna(tblMedicamentos, 0);
+        ocultarColumna(tblMedicamentos, 4);
+        ocultarColumna(tblMedicamentos, 6);
+        tblMedicamentos.getColumnModel().getColumn(1).setPreferredWidth(250);
+        
+    }
+    
+     private void ocultarColumna(JTable tabla, int indiceColumna) {
+        tabla.getColumnModel().getColumn(indiceColumna).setMaxWidth(0);
+        tabla.getColumnModel().getColumn(indiceColumna).setMinWidth(0);
+        tabla.getColumnModel().getColumn(indiceColumna).setWidth(0);
+        tabla.getTableHeader().getColumnModel().getColumn(indiceColumna).setMaxWidth(0);
+        tabla.getTableHeader().getColumnModel().getColumn(indiceColumna).setMinWidth(0);
+        tabla.getTableHeader().getColumnModel().getColumn(indiceColumna).setWidth(0);
     }
 
     private void pasarDatos(int cod, int ctd) {

@@ -23,7 +23,6 @@ import javax.swing.text.NumberFormatter;
  * @author franc
  */
 public class Utilidad {
-    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL = "";
@@ -142,8 +141,8 @@ public class Utilidad {
         "Registrar datos",
         "Cancelar"
     };
-    
-     public static final String[] opcionesAgregarMedicamentos = {
+
+    public static final String[] opcionesAgregarMedicamentos = {
         "Agregar",
         "Cancelar"
     };
@@ -220,6 +219,20 @@ public class Utilidad {
         }
     }
 
+    public static int mensajeConfirmarEliminarDetalleServicio(String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null,
+                "¿Está seguro que desea eliminar el servicio \"" + nombre + "?",
+                "Confirmar Eliminacion",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesEliminar,
+                opcionesEliminar[0]
+        );
+        return valor;
+    }
+
 //    public static void validarCampoTextoSoloLetras(java.awt.event.KeyEvent evt) {
 //        int key = evt.getKeyChar();
 //
@@ -286,7 +299,7 @@ public class Utilidad {
         );
         return valor;
     }
-    
+
     public static int mensajeConfirmarAgregarMedicamento(String entidad) {
         int valor = JOptionPane.showOptionDialog(
                 null,
@@ -461,7 +474,7 @@ public class Utilidad {
         clsJDBC objConectar = new clsJDBC();
         ResultSet rs;
         try {
-            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where id = " + id );
+            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where id = " + id);
             while (rs.next()) {
                 return !rs.getBoolean(columna);
             }
@@ -470,11 +483,12 @@ public class Utilidad {
         }
         return false;
     }
-     public static boolean verificarElementoParaUsoCodigo(String tabla, String columna, String columna_codigo, Integer id) throws Exception {
+
+    public static boolean verificarElementoParaUsoCodigo(String tabla, String columna, String columna_codigo, Integer id) throws Exception {
         clsJDBC objConectar = new clsJDBC();
         ResultSet rs;
         try {
-            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where "+ columna_codigo +" = " + id );
+            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where " + columna_codigo + " = " + id);
             while (rs.next()) {
                 return !rs.getBoolean(columna);
             }
@@ -600,7 +614,6 @@ public class Utilidad {
     public static void fijarColumnasTabla(JTable table) {
         table.getTableHeader().setReorderingAllowed(false);
     }
-
 
     public static void atajoTecladoBoton(JDialog dialog, JButton boton, char tecla, String nombreAccion) {
         // Para ejecutar el botón con CTRL + tecla
