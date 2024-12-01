@@ -99,15 +99,10 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(txtPrecioMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReporte))
-<<<<<<< HEAD
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(vistaReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-=======
+
                 .addGap(18, 18, 18)
                 .addComponent(vistaReporte)
                 .addContainerGap())
->>>>>>> 02bb607f29fbed8bdeb31f3acce4c6bad047751e
         );
 
         pack();

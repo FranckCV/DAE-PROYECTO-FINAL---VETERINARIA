@@ -14,7 +14,7 @@ import java.sql.ResultSet;
  * @author franc
  */
 public class clsUsuario {
-
+    
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;
@@ -286,5 +286,4 @@ public class clsUsuario {
 //        }
 //    }
 
-    
 }

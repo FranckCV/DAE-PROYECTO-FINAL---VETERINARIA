@@ -96,10 +96,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
-<<<<<<< HEAD
-=======
+
         menuRepServicioMasSolicitado = new javax.swing.JMenuItem();
->>>>>>> 02bb607f29fbed8bdeb31f3acce4c6bad047751e
         mnuIngresoPorServicio = new javax.swing.JMenuItem();
         jMenuItem24 = new javax.swing.JMenuItem();
         jMenuItem30 = new javax.swing.JMenuItem();
@@ -490,8 +488,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu11.add(jMenuItem1);
 
-<<<<<<< HEAD
-=======
+
         menuRepServicioMasSolicitado.setText("Servicios más solicitados por mes");
         menuRepServicioMasSolicitado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -500,7 +497,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu11.add(menuRepServicioMasSolicitado);
 
->>>>>>> 02bb607f29fbed8bdeb31f3acce4c6bad047751e
         mnuIngresoPorServicio.setText("Reporte de ingresos por servicio");
         mnuIngresoPorServicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -842,7 +838,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objMejoresMedicos.setVisible(true);
     }//GEN-LAST:event_jMenuItem35ActionPerformed
 
-<<<<<<< HEAD
     private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
         // TODO add your handling code here:
         jdRptMedCitas obj = new jdRptMedCitas(this, true);
@@ -856,13 +851,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         obj.setLocationRelativeTo(this);
         obj.setVisible(true);
     }//GEN-LAST:event_jMenuItem24ActionPerformed
-=======
     private void menuRepServicioMasSolicitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRepServicioMasSolicitadoActionPerformed
         // TODO add your handling code here:
 //        jdRepServiciosMasSolicitados objFrm = new jdRepServiciosMasSolicitados(this, true);
 //        objFrm.setVisible(true);
     }//GEN-LAST:event_menuRepServicioMasSolicitadoActionPerformed
->>>>>>> 02bb607f29fbed8bdeb31f3acce4c6bad047751e
 
     private void login() {
         jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
@@ -915,6 +908,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
+    private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem23;

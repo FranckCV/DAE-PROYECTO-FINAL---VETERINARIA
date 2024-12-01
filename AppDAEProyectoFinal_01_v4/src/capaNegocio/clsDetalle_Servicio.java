@@ -11,7 +11,8 @@ import java.sql.ResultSet;
  *
  * @author franc
  */
-public class clsDetalle_Servicio {    
+public class clsDetalle_Servicio {
+     
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;
@@ -186,5 +187,4 @@ public class clsDetalle_Servicio {
         }
         return false;
     }
-
 }

@@ -5,7 +5,6 @@
 package soporte;
 
 import capaDatos.clsJDBC;
-import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -25,6 +23,7 @@ import javax.swing.text.NumberFormatter;
  * @author franc
  */
 public class Utilidad {
+    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL = "";
@@ -387,10 +386,6 @@ public class Utilidad {
     }
 
     public static void mensajeErrorNoEliminarForanea(String entidad, String nombre) {
-<<<<<<< HEAD
-=======
-
->>>>>>> 02bb607f29fbed8bdeb31f3acce4c6bad047751e
         JOptionPane.showMessageDialog(
                 null,
                 "Hay datos externos asociados a " + entidad.toLowerCase() + " \"" + nombre + "\".\n"
@@ -619,5 +614,4 @@ public class Utilidad {
             }
         });
     }
-
 }
