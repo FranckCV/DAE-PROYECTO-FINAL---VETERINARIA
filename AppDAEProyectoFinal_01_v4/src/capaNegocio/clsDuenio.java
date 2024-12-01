@@ -5,7 +5,6 @@
 package capaNegocio;
 
 import capaDatos.clsJDBC;
-//import static capaNegocio.clsMedico.ID;
 import com.sun.jdi.connect.spi.Connection;
 import java.beans.Statement;
 import java.sql.ResultSet;
@@ -15,6 +14,7 @@ import java.sql.ResultSet;
  * @author franc
  */
 public class clsDuenio {
+    
     
 
     clsJDBC objConectar = new clsJDBC();

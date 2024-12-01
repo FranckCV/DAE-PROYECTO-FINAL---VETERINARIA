@@ -102,20 +102,20 @@ public class clsCustodia {
 }
 
 
-    public ResultSet listarCustodia() throws Exception {
-        strSQL = "SELECT m.*,c.MASCOTAid as id_mas,c.DUEniOid as id_due, m.nombre as nom_mas, d.nombres as due_mas, c.fecha_adopción as fa "
-                + "FROM MASCOTA m "
-                + "INNER JOIN CUSTODIA c ON m.id = c.MASCOTAid "
-                + "INNER JOIN DUEniO d ON c.DUEniOid = d.id "
-                + "ORDER BY nom_mas";
-
-        try {
-            rs = objConectar.consultarBD(strSQL);
-            return rs;
-        } catch (Exception e) {
-            throw new Exception("Error al listar las custodias");
-        }
-    }
+//    public ResultSet listarCustodia() throws Exception {
+//        strSQL = "SELECT m.*,c.MASCOTAid as id_mas,c.DUEniOid as id_due, m.nombre as nom_mas, d.nombres as due_mas, c.fecha_adopción as fa "
+//                + "FROM MASCOTA m "
+//                + "INNER JOIN CUSTODIA c ON m.id = c.MASCOTAid "
+//                + "INNER JOIN DUEniO d ON c.DUEniOid = d.id "
+//                + "ORDER BY nom_mas";
+//
+//        try {
+//            rs = objConectar.consultarBD(strSQL);
+//            return rs;
+//        } catch (Exception e) {
+//            throw new Exception("Error al listar las custodias");
+//        }
+//    }
 
     
     public void registrarCustodia(int mas_id, int due_id, Date F_A) throws Exception {
@@ -222,8 +222,118 @@ public class clsCustodia {
         }
     }
     
+    public ResultSet filtrarCustodiaD(String nom_D) throws Exception {
+        strSQL = "SELECT m.*, c.duenioid as id_d, c.mascotaid as id_m, m.nombre as nom_mas, d.nombres as due_mas, c.fecha_adopción as fa "
+                + "FROM MASCOTA m "
+                + "INNER JOIN CUSTODIA c ON m.id = c.MASCOTAid "
+                + "INNER JOIN DUEniO d ON c.DUEniOid = d.id "
+                + "WHERE d.doc_identidad = '" + nom_D + "' ";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al filtrar Custodia por Código de Dueño" + e.getMessage());
+        }
+    }
     
+    public ResultSet filtrarMascotaa(int id) throws Exception {
+        strSQL = "SELECT ma.*,ra.nombre AS raza_nombre, ma.id as ma_id ,ma.nombre as nom_mas "
+                + "FROM MASCOTA ma "
+                + "INNER JOIN raza ra ON ra.id = ma.raza_id "
+                + "where vigencia= true and ma.id =" + id + " ";
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al filtrar mascotas por código" + e.getMessage());
+        }
+    }
     
+    public void eliminarMascota(Integer id) throws Exception {
+        strSQL = "delete from MASCOTA where id = " + id;
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al eliminar la mascota: " + e.getMessage());
+        }
+    }
     
+     public ResultSet filtrarMascotaVig(String nom) throws Exception {
+        strSQL = "SELECT m.*, ra.nombre AS raza_nombre, m.id as ma_id, m.nombre as nom_mas "
+                + "FROM MASCOTA m "
+                + "INNER JOIN raza ra ON m.raza_id = ra.id " // Asegurando que la relación se haga por el campo correcto
+                + "WHERE UPPER(m.nombre) LIKE UPPER ('%" + nom + "%') and vigencia= true";  // Concatenación con cuidado (pero no recomendado)
+
+        try {
+            rs = objConectar.consultarBD(strSQL);  // Ejecutar la consulta
+            return rs;  // Retornar el ResultSet con los resultados
+        } catch (Exception e) {
+            throw new Exception("Error al filtrar mascotas por nombre: " + e.getMessage());
+        }
+    }
+	
+	    public ResultSet listarMascotasVig() throws Exception {
+        strSQL = "SELECT ma.*, ra.nombre AS raza_nombre FROM MASCOTA ma INNER JOIN raza ra ON ra.id = ma.raza_id "
+                + " where ma.vigencia= true order by 1";
+        try {
+            return objConectar.consultarBD(strSQL);
+
+        } catch (Exception e) {
+            throw new Exception("Error al listar Mascotas: " + e.getMessage());
+        }
+    }
+	    //listarDueños
+    public ResultSet listarDueniosV(String cod) throws Exception {
+        strSQL = "SELECT * FROM DUEniO where vigencia= true order by 1";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar Dueño");
+        }
+    }
+ public ResultSet listarDueniosVIg() throws Exception {
+        strSQL = "SELECT * FROM DUEniO where vigencia= true order by 1";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar Dueño");
+        }
+    }
+  public ResultSet listarMascVIg() throws Exception {
+        strSQL = "SELECT * FROM MASCOTA where vigencia= true order by 1";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar Dueño");
+        }
+    }
+  
+    public ResultSet listarCustodia() throws Exception {
+        strSQL = "SELECT m.*,c.MASCOTAid as id_mas,c.DUEniOid as id_due, m.nombre as nom_mas, d.nombres as due_mas, c.fecha_adopción as fa "
+                + "FROM MASCOTA m "
+                + "INNER JOIN CUSTODIA c ON m.id = c.MASCOTAid "
+                + "INNER JOIN DUEniO d ON c.DUEniOid = d.id "
+                + "ORDER BY id_due";
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar las custodias");
+        }
+    }
+    
+    public void eliminarCustodia(int ser_id, int med_id) throws Exception {
+        strSQL = "delete from CUSTODIA where MASCOTAid= " + ser_id + " and DUEniOid = " + med_id + " ";
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al eliminar en la tabla " + TABLA + " -->" + e.getMessage());
+        }
+    }
     
 }

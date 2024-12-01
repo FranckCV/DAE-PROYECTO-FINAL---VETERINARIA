@@ -18,6 +18,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import soporte.CustomTableCellRenderer;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
 /**
@@ -28,12 +33,14 @@ public class jdMantMedico extends javax.swing.JDialog {
     clsDetalle_Servicio objDetalleServicio = new clsDetalle_Servicio();
     clsMedico objTabla = new clsMedico();    
     clsEspecialidad objEs = new clsEspecialidad();
+    clsUsuario objUsuario = new clsUsuario();
     
     private final String columnName_IDMedico = "ID";
     private final String columnName_Nombres = "Nombres";
     private final String columnName_ApePaterno = "A. Paterno";
     private final String columnName_ApeMaterno = "A. Materno";
     private final String columnName_DocIdentidad = "DNI";
+    private final String columnName_NombreUsuario = "Nombre Usuario";
     private final String columnName_Sexo = "Sexo";
     private final String columnName_Disponibilidad = "Disponibilidad";
     private final String columnName_Vigencia = "Vigencia";
@@ -57,7 +64,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         btnVigencia.setText(Utilidad.BTN_VIGENCIA);
         btnDisponibilidad.setText(Utilidad.BTN_DISPONIBILIDAD);
-        Utilidad.validacionTabla(tblMedico, modal, rootPaneCheckingEnabled, modal);
+        btnContraseña.setText(Utilidad.BTN_CONTRASENIA);
     }
 
     /**
@@ -93,6 +100,11 @@ public class jdMantMedico extends javax.swing.JDialog {
         btnLimpiar = new javax.swing.JButton();
         txtID = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        txtClave = new javax.swing.JPasswordField();
+        txtUsuario = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -105,6 +117,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         tblServiciosxMedico = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         btnAbrirGestionServicios = new javax.swing.JButton();
+        btnContraseña = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -152,7 +165,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         jLabel2.setText("Nombres:");
 
         btnBuscar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar.png"))); // NOI18N
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar-pequeño.png"))); // NOI18N
         btnBuscar.setBorder(null);
         btnBuscar.setBorderPainted(false);
         btnBuscar.setContentAreaFilled(false);
@@ -191,7 +204,6 @@ public class jdMantMedico extends javax.swing.JDialog {
 
         cmbEspecialidad.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cmbEspecialidad.setBorder(null);
-        cmbEspecialidad.setEnabled(false);
 
         jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel7.setText("Especialidad:");
@@ -262,12 +274,56 @@ public class jdMantMedico extends javax.swing.JDialog {
         jLabel11.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel11.setText("ID:");
 
+        jPanel3.setBackground(new java.awt.Color(51, 255, 153));
+
+        txtClave.setEditable(false);
+        txtClave.setBorder(null);
+
+        txtUsuario.setEditable(false);
+        txtUsuario.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtUsuario.setBorder(null);
+
+        jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jLabel13.setText("Nombre de usuario:");
+
+        jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jLabel14.setText("Contraseña");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                    .addComponent(txtClave))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -281,8 +337,8 @@ public class jdMantMedico extends javax.swing.JDialog {
                             .addComponent(radMasculino)
                             .addComponent(radFemenino)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtDocIdentidad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                                .addComponent(txtApePat, javax.swing.GroupLayout.Alignment.LEADING)))
+                                .addComponent(txtDocIdentidad, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtApePat, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -294,38 +350,37 @@ public class jdMantMedico extends javax.swing.JDialog {
                             .addComponent(chkDisponibilidad)
                             .addComponent(chkVigencia)
                             .addComponent(cmbEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtApeMat, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtApeMat, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                            .addComponent(txtID))
+                            .addComponent(txtNombre)
+                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(btnBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLimpiar)))
-                .addGap(22, 22, 22))
+                        .addComponent(btnLimpiar)
+                        .addGap(34, 34, 34))))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnBuscar)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel11))
-                            .addGap(18, 18, 18))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnLimpiar)
-                            .addGap(12, 12, 12)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addComponent(jLabel11)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
@@ -350,7 +405,8 @@ public class jdMantMedico extends javax.swing.JDialog {
                     .addComponent(radFemenino)
                     .addComponent(chkVigencia)
                     .addComponent(jLabel8))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnNuevo.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -366,6 +422,9 @@ public class jdMantMedico extends javax.swing.JDialog {
         btnModificar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/editar.png"))); // NOI18N
         btnModificar.setText("Modificar");
+        btnModificar.setMaximumSize(new java.awt.Dimension(118, 39));
+        btnModificar.setMinimumSize(new java.awt.Dimension(118, 39));
+        btnModificar.setPreferredSize(new java.awt.Dimension(118, 39));
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
@@ -375,6 +434,9 @@ public class jdMantMedico extends javax.swing.JDialog {
         btnEliminar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/eliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
+        btnEliminar.setMaximumSize(new java.awt.Dimension(118, 39));
+        btnEliminar.setMinimumSize(new java.awt.Dimension(118, 39));
+        btnEliminar.setPreferredSize(new java.awt.Dimension(118, 39));
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -384,6 +446,9 @@ public class jdMantMedico extends javax.swing.JDialog {
         btnVigencia.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnVigencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/darBaja.png"))); // NOI18N
         btnVigencia.setText("Dar de baja");
+        btnVigencia.setMaximumSize(new java.awt.Dimension(118, 39));
+        btnVigencia.setMinimumSize(new java.awt.Dimension(118, 39));
+        btnVigencia.setPreferredSize(new java.awt.Dimension(118, 39));
         btnVigencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVigenciaActionPerformed(evt);
@@ -393,6 +458,9 @@ public class jdMantMedico extends javax.swing.JDialog {
         btnDisponibilidad.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnDisponibilidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/disponible.png"))); // NOI18N
         btnDisponibilidad.setText("Disponible");
+        btnDisponibilidad.setMaximumSize(new java.awt.Dimension(118, 39));
+        btnDisponibilidad.setMinimumSize(new java.awt.Dimension(118, 39));
+        btnDisponibilidad.setPreferredSize(new java.awt.Dimension(118, 39));
         btnDisponibilidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDisponibilidadActionPerformed(evt);
@@ -450,63 +518,74 @@ public class jdMantMedico extends javax.swing.JDialog {
             }
         });
 
+        btnContraseña.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        btnContraseña.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/bloquear.png"))); // NOI18N
+        btnContraseña.setText("Modificar contraseña");
+        btnContraseña.setMaximumSize(new java.awt.Dimension(118, 39));
+        btnContraseña.setMinimumSize(new java.awt.Dimension(118, 39));
+        btnContraseña.setPreferredSize(new java.awt.Dimension(118, 39));
+        btnContraseña.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContraseñaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnVigencia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDisponibilidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)))
+                    .addComponent(btnVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnAbrirGestionServicios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnAbrirGestionServicios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel12)
-                                .addGap(102, 102, 102)))))
-                .addGap(29, 29, 29))
+                                .addGap(96, 96, 96))))
+                    .addComponent(jScrollPane1))
+                .addGap(20, 20, 20))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(963, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGap(9, 9, 9)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAbrirGestionServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(16, 16, 16)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAbrirGestionServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -514,14 +593,14 @@ public class jdMantMedico extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         jPanel4.setBackground(new java.awt.Color(0, 0, 102));
 
         jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 36)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Medicos");
+        jLabel9.setText("Veterinarios");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -531,7 +610,7 @@ public class jdMantMedico extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel9)
-                .addGap(476, 476, 476))
+                .addGap(446, 446, 446))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -583,7 +662,11 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        nuevaMedico();
+        try {
+            nuevaMedico();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: "+e.getMessage());
+        }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -603,7 +686,7 @@ public class jdMantMedico extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
+        if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR) || btnContraseña.getText().equals(Utilidad.BTN_GUARDAR) ) {
             cancelarAccion();
         } else {
             eliminarMedico();
@@ -656,8 +739,10 @@ public class jdMantMedico extends javax.swing.JDialog {
             if (txtID.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un codigo para asignar servicios");
             } else if (Utilidad.verificarElementoParaUso(clsMedico.TABLA, clsMedico.VIGENCIA, Integer.parseInt(txtID.getText()))) {
+                buscarMedico();
                 Utilidad.mensajeElementoNoVigente(clsMedico.TABLA, txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText());
             } else {
+                buscarMedico();
                 id_medico_asignacion = txtID.getText();
                 jdDetalle_Servicio obj = new jdDetalle_Servicio((Frame) SwingUtilities.getWindowAncestor(this), true);
                 obj.setLocationRelativeTo(this);
@@ -704,7 +789,75 @@ public class jdMantMedico extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error en el campo "+evt.getSource().getClass().getName()+": " + e.getMessage());
         }
     }//GEN-LAST:event_txtApeMatKeyTyped
-       
+
+    private void btnContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContraseñaActionPerformed
+        // TODO add your handling code here:
+        modificarContraseña();
+    }//GEN-LAST:event_btnContraseñaActionPerformed
+    
+    private void modificarContraseña() {
+        try {
+            if (txtID.getText().isBlank()) {
+                Utilidad.mensajeErrorFaltaID(this);
+            } else {
+                buscarMedico();
+                if (btnContraseña.getText().equals(Utilidad.BTN_CONTRASENIA)) {
+                    btnContraseña.setText(Utilidad.BTN_GUARDAR);
+                    btnEliminar.setText(Utilidad.BTN_CANCELAR);
+                    editableControles(
+                            false, 
+                            false, 
+                            false, 
+                            false, 
+                            false, 
+                            false, 
+                            false, 
+                            false, 
+                            true, 
+                            false, 
+                            false
+                    );
+                    usarBotones(false, false, false, true, false, false, true, false, false);
+                    tblMedico.setEnabled(false);
+                } else {
+                    int id_user = objTabla.obtenerIDUser(Integer.parseInt(txtID.getText()));
+                    int valor = Utilidad.mensajeConfirmarModificarContraseña("usuario", id_user, txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText());
+                    if (valor == JOptionPane.YES_OPTION) {
+                        objUsuario.modificarContraseña(id_user, txtUsuario.getText(), txtClave.getText());
+                        JOptionPane.showMessageDialog(this, "La contraseña se modificó exitosamente");
+                        
+                        usarBotones(true, true, true, true, true, true, true, true, true);
+                        editableControles(
+                            true, 
+                            false, 
+                            false, 
+                            false, 
+                            false, 
+                            false, 
+                            false, 
+                            false, 
+                            false, 
+                            false, 
+                            false
+                        );
+                        radFemenino.setEnabled(true);
+                        radMasculino.setEnabled(true);
+                        chkVigencia.setEnabled(true);
+                        btnContraseña.setText(Utilidad.BTN_CONTRASENIA);
+                        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+                        limpiarControles();
+                        listarMedicos();
+                        tblMedico.setEnabled(true);
+
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al modificar -->" + e.getMessage());
+        }
+    }
+    
     private void listarMedicos(){
         ResultSet rsDato = null;
         DefaultTableModel modelo = new DefaultTableModel();
@@ -712,6 +865,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         modelo.addColumn(columnName_Nombres);
         modelo.addColumn(columnName_ApePaterno);
         modelo.addColumn(columnName_ApeMaterno);
+        modelo.addColumn(columnName_NombreUsuario);
         modelo.addColumn(columnName_DocIdentidad);
         modelo.addColumn(columnName_Sexo);
         modelo.addColumn(columnName_Disponibilidad);
@@ -727,6 +881,7 @@ public class jdMantMedico extends javax.swing.JDialog {
                     rsDato.getString(clsMedico.NOMBRES),
                     rsDato.getString(clsMedico.APE_PATERNO),
                     rsDato.getString(clsMedico.APE_MATERNO),
+                    rsDato.getString("nomusuario"),
                     rsDato.getString(clsMedico.DOC_IDENTIDAD),
                     Utilidad.textoBool(rsDato.getBoolean(clsMedico.SEXO), Utilidad.SEXO_MAS, Utilidad.SEXO_FEM),
                     Utilidad.textoBool(rsDato.getBoolean(clsMedico.DISPONIBILIDAD), Utilidad.DISPONIBILIDAD_SI, Utilidad.DISPONIBILIDAD_NO),
@@ -771,10 +926,18 @@ public class jdMantMedico extends javax.swing.JDialog {
                     txtApeMat.setText(rsPro.getString(clsMedico.APE_MATERNO));
                     radMasculino.setSelected(rsPro.getBoolean(clsMedico.SEXO));
                     radFemenino.setSelected(!rsPro.getBoolean(clsMedico.SEXO));
+                    txtUsuario.setText(rsPro.getString("nomusuario"));
                     txtDocIdentidad.setText(rsPro.getString(clsMedico.DOC_IDENTIDAD));
                     chkDisponibilidad.setSelected(rsPro.getBoolean(clsMedico.DISPONIBILIDAD));
                     chkVigencia.setSelected(rsPro.getBoolean(clsMedico.VIGENCIA));
-                    cmbEspecialidad.setSelectedItem(rsPro.getString(clsEspecialidad.NOMBRE));
+                    
+//                    if (e.getSource() == btnModificar) { 
+//                        listarNombreEspecialidades();
+                        cmbEspecialidad.setSelectedItem(rsPro.getString(clsEspecialidad.NOMBRE));
+//                    } else {
+//                        cmbEspecialidad.setModel(new DefaultComboBoxModel());
+//                        cmbEspecialidad.addItem(rsPro.getString(clsEspecialidad.NOMBRE));
+//                    }
                     listarServiciosxMedico();
                     rsPro.close();
                 } else {
@@ -804,7 +967,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         }
     }
     
-    private void usarBotones(boolean bus, boolean nue, boolean mod, boolean eli, boolean vig, boolean disp, boolean lim , boolean asig) {
+    private void usarBotones(boolean bus, boolean nue, boolean mod, boolean eli, boolean vig, boolean disp, boolean cont, boolean lim , boolean asig) {
         btnBuscar.setEnabled(bus);
         btnNuevo.setEnabled(nue);
         btnEliminar.setEnabled(eli);
@@ -812,6 +975,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         btnDisponibilidad.setEnabled(disp);
         btnVigencia.setEnabled(vig);
         btnModificar.setEnabled(mod);
+        btnContraseña.setEnabled(cont);
         btnAbrirGestionServicios.setEnabled(asig);
     }
     
@@ -821,18 +985,25 @@ public class jdMantMedico extends javax.swing.JDialog {
         txtNombre.setText("");
         txtApePat.setText("");
         txtApeMat.setText("");
+        txtUsuario.setText("");
+        txtClave.setText("");
         radMasculino.setSelected(false);
         radFemenino.setSelected(false);
         chkDisponibilidad.setSelected(false);
         chkVigencia.setSelected(false);
-        cmbEspecialidad.setSelectedIndex(-1);
         tblMedico.setEnabled(true);
-        txtID.requestFocus();        
+        txtID.requestFocus();
+        
+        listarNombreEspecialidades();
+        cmbEspecialidad.setSelectedIndex(-1);
+
     }
    
-    private void editableControles(boolean id , boolean dni, boolean nom, boolean apeP, boolean apeM, boolean sexo, boolean disp, boolean vig, boolean esp) {
+    private void editableControles(boolean id , boolean dni, boolean nom, boolean apeP, boolean apeM, boolean sexo, boolean disp, boolean usu, boolean cont, boolean vig, boolean esp) {
         txtID.setEditable(id);
         txtDocIdentidad.setEditable(dni);
+        txtUsuario.setEditable(usu);
+        txtClave.setEditable(cont);
         txtNombre.setEditable(nom);
         txtApePat.setEditable(apeP);
         txtApeMat.setEditable(apeM);
@@ -848,13 +1019,19 @@ public class jdMantMedico extends javax.swing.JDialog {
             if (txtID.getText().isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
             } else if (Utilidad.verificarElementoParaUso(clsMedico.TABLA, clsMedico.VIGENCIA, Integer.parseInt(txtID.getText()))) {
+                buscarMedico();
                 Utilidad.mensajeElementoNoVigente(clsMedico.TABLA, txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText());
             } else if (Utilidad.validarEliminacionForanea(clsMedico.TABLA, Integer.parseInt(txtID.getText()))){
+                buscarMedico();
                 Utilidad.mensajeErrorNoEliminarForanea(clsMedico.TABLA,txtNombre.getText() +" "+ txtApePat.getText() +" "+ txtApeMat.getText());
             } else {
+                buscarMedico();
                 int valor = Utilidad.mensajeConfirmarEliminar(clsMedico.TABLA, Integer.parseInt(txtID.getText()), txtNombre.getText() +" "+ txtApePat.getText() +" "+ txtApeMat.getText());
                 if (valor == 0) {
-                    objTabla.eliminarMedico(Integer.parseInt(txtID.getText()));
+                    int med_id = Integer.parseInt(txtID.getText());
+                    int user_id = objTabla.obtenerIDUser(med_id);
+                    objTabla.eliminarMedico(med_id);
+                    objUsuario.eliminarUsuario(user_id);
                     limpiarControles();
                     listarMedicos();
                 }
@@ -867,9 +1044,10 @@ public class jdMantMedico extends javax.swing.JDialog {
     private void cancelarAccion() {
         btnNuevo.setText(Utilidad.BTN_NUEVO);
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
-        btnEliminar.setText(Utilidad.BTN_ELIMINAR);        
-        editableControles(true, false ,false, false, false,false, false, false, false);
-        usarBotones(true, true, true, true, true, true, true,true);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);   
+        btnContraseña.setText(Utilidad.BTN_CONTRASENIA);        
+        editableControles(true, false ,false, false, false,false, false, false, false, false, false);
+        usarBotones(true, true, true, true, true, true, true,true,true);
         tblMedico.setEnabled(true);
         limpiarControles();
         listarMedicos();
@@ -884,26 +1062,38 @@ public class jdMantMedico extends javax.swing.JDialog {
                     Utilidad.mensajeElementoNoVigente(clsMedico.TABLA, txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText());
                 } else {
                     if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                        buscarMedico();
                         btnModificar.setText(Utilidad.BTN_GUARDAR);
                         btnEliminar.setText(Utilidad.BTN_CANCELAR);
-                        editableControles(false, true,true, true, true, true, true, true, true);
-                        usarBotones(false, false, true, true, false, false, false,false);
+                        editableControles(false, true,true, true, true, true,false,true,false, true, true);
+                        usarBotones(false, false, true, true, false, false, false, false,false);
                         tblMedico.setEnabled(false);
                     } else {
+                        int med_id = Integer.parseInt(txtID.getText());
+                        int user_id = objTabla.obtenerIDUser(med_id);
+                        
+                        objUsuario.modificarInfoUsuarioVet(
+                                user_id,
+                                txtUsuario.getText(),
+                                radMasculino.isSelected(), 
+                                txtNombre.getText(),
+                                txtApePat.getText(),
+                                txtApeMat.getText()
+                        );
+                        
                         objTabla.modificarMedico(
-                            Integer.parseInt(txtID.getText()),
+                            med_id,
                             txtNombre.getText(),
                             txtApePat.getText(),
                             txtApeMat.getText(),
                             txtDocIdentidad.getText(),
                             radMasculino.isSelected(),
-    //                        cldNacimiento.getDateFormatString(),
                             objEs.obteneIdEspecialidad(cmbEspecialidad.getSelectedItem().toString())
                         );
                         btnModificar.setText(Utilidad.BTN_MODIFICAR);
                         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-                        editableControles(true, false,false, false, false, false, false, false, false);
-                        usarBotones(true, true, true, true, true, true, true,true);
+                        editableControles(true, false,false, false, false, false, false, false, false, false , false);
+                        usarBotones(true, true, true, true, true, true, true, true,true);
                         tblMedico.setEnabled(true);
                         limpiarControles();
                         listarMedicos();
@@ -916,30 +1106,54 @@ public class jdMantMedico extends javax.swing.JDialog {
         }
     }    
 
-    private void nuevaMedico() {
+    private void nuevaMedico() throws Exception {
         try {
             if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
                 btnNuevo.setText(Utilidad.BTN_GUARDAR);
                 btnEliminar.setText(Utilidad.BTN_CANCELAR);
                 listarMedicos();
                 limpiarControles();
-                editableControles(false,true, true, true, true, true, false, false, true);
+                editableControles(false,true, true, true, true, true, false, true, true ,false, true);
                 txtID.setText(objTabla.generarIDMedico().toString());
                 chkDisponibilidad.setSelected(true);
                 chkVigencia.setSelected(true);
                 tblMedico.setEnabled(false);
-                usarBotones(false, true, false, true, false, false, false,false);
+                usarBotones(false, true, false, true, false, false, false,false,false);
                 txtNombre.requestFocus();
             } else {
-                if (txtNombre.getText().trim().isBlank() || txtDocIdentidad.getText().trim().isBlank()) {
-                    JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
-                } else if (
-                        Utilidad.validarElementoTextoRepetido(clsMedico.TABLA, clsMedico.DOC_IDENTIDAD, txtDocIdentidad.getText())
+                if (
+                        txtNombre.getText().trim().isBlank() || 
+                        txtDocIdentidad.getText().trim().isBlank() || 
+                        txtApeMat.getText().trim().isBlank() || 
+                        txtApePat.getText().trim().isBlank() || 
+                        txtClave.getText().trim().isBlank() || 
+                        txtUsuario.getText().trim().isBlank() || 
+                        txtID.getText().trim().isBlank() ||
+                        cmbEspecialidad.getSelectedItem().toString().isBlank() ||
+                        buttonGroup1.getSelection() == null
                         ) {
+                    JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
+                } else if (Utilidad.validarElementoTextoRepetido(clsMedico.TABLA, clsMedico.DOC_IDENTIDAD, txtDocIdentidad.getText()) ) {
                     JOptionPane.showMessageDialog(this, "Ya existe un medico con este numero de documento de identificacion");
+                } else if (Utilidad.validarElementoTextoRepetido("usuario", "nomusuario", txtUsuario.getText())) {
+                    JOptionPane.showMessageDialog(this, "Ya existe un medico con este nombre de usuario");
                 } else {
+                    int idUsu = objUsuario.generarCodigoUsuario();
                     btnNuevo.setText(Utilidad.BTN_NUEVO);
                     btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+                    
+                    objUsuario.registrarUsuario(
+                            idUsu,
+                            txtUsuario.getText(), 
+                            true, 
+                            radMasculino.isSelected(),
+                            txtClave.getText(), 
+                            txtNombre.getText(), 
+                            txtApePat.getText(),
+                            txtApeMat.getText(), 
+                            "V"
+                    );
+                    
                     objTabla.registrarMedico(
                         Integer.parseInt(txtID.getText()),
                         txtNombre.getText(),
@@ -947,10 +1161,12 @@ public class jdMantMedico extends javax.swing.JDialog {
                         txtApeMat.getText(),
                         txtDocIdentidad.getText(),
                         radMasculino.isSelected(),
-                        objEs.obteneIdEspecialidad(cmbEspecialidad.getSelectedItem().toString())
+                        objEs.obteneIdEspecialidad(cmbEspecialidad.getSelectedItem().toString()),
+                        idUsu
                     );
-                    editableControles(true, false ,false, false, false, false, false, false, false);
-                    usarBotones(true, true, true, true, true, true, true,true);
+                    
+                    editableControles(true, false ,false, false, false, false, false, false, false , false ,false);
+                    usarBotones(true, true, true, true, true, true, true, true,true);
                     limpiarControles();
                     listarMedicos();
                     tblMedico.setEnabled(true);
@@ -964,12 +1180,13 @@ public class jdMantMedico extends javax.swing.JDialog {
     
     private void cambiarDisponibilidad() {
         String campoID = txtID.getText();
-        int valorID ;
+        int valorID;
         try {
             ResultSet rsCateg = null;
             if (campoID.isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
             } else {
+                buscarMedico();
                 if (Utilidad.verificarElementoParaUso(clsMedico.TABLA, clsMedico.VIGENCIA, Integer.parseInt(txtID.getText()))) {
                     Utilidad.mensajeElementoNoVigente(clsMedico.TABLA, txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText());
                 } else {
@@ -996,19 +1213,23 @@ public class jdMantMedico extends javax.swing.JDialog {
     private void darBaja() {
         try {
             ResultSet rsCateg = null;                
-            int id_med;           
+            int id_med;
+            int id_usu;
             if (txtID.getText().isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
             } else {
+                buscarMedico();
                 if (Utilidad.verificarElementoParaUso(clsMedico.TABLA, clsMedico.VIGENCIA, Integer.parseInt(txtID.getText()))) {
                     Utilidad.mensajeElementoNoVigente(clsMedico.TABLA, txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText());
                 } else {
                     id_med = Integer.parseInt(txtID.getText());
+                    id_usu = objTabla.obtenerIDUser(id_med);
                     int valor = Utilidad.mensajeConfirmarVigencia(clsMedico.TABLA, Integer.parseInt(txtID.getText()), txtNombre.getText()+" "+txtApePat.getText()+" "+txtApeMat.getText());
                     if (valor == 0) {
                         rsCateg = objTabla.buscarMedico(Integer.parseInt(txtID.getText()));
                         if (rsCateg.next()) {
                             objTabla.darBaja(id_med);
+                            objUsuario.darBaja(id_usu);
                             limpiarControles();
                             listarMedicos();
                         } 
@@ -1052,6 +1273,7 @@ public class jdMantMedico extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbrirGestionServicios;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnContraseña;
     private javax.swing.JButton btnDisponibilidad;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
@@ -1066,6 +1288,8 @@ public class jdMantMedico extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1076,6 +1300,7 @@ public class jdMantMedico extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1086,9 +1311,11 @@ public class jdMantMedico extends javax.swing.JDialog {
     private javax.swing.JTable tblServiciosxMedico;
     private javax.swing.JTextField txtApeMat;
     private javax.swing.JTextField txtApePat;
+    private javax.swing.JPasswordField txtClave;
     private javax.swing.JTextField txtDocIdentidad;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 
 }

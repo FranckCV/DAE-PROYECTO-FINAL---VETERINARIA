@@ -1,16 +1,19 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package capaNegocio;
 
 import capaDatos.clsJDBC;
 import java.sql.ResultSet;
-import java.util.Calendar;
 import java.util.Date;
-import java.sql.PreparedStatement;
 
 /**
  *
- * @author Grupo_Veterinaria
+ * @author franc
  */
 public class clsMascota {
+    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
@@ -82,12 +85,12 @@ public class clsMascota {
 
     // Método para buscar una mascota por su ID
     public ResultSet buscarMascota(int id) throws Exception {
- strSQL = "SELECT ma.*, ra.nombre AS raza_nombre, es.nombre AS especie_nombre "
+        strSQL = "SELECT ma.*, ra.nombre AS raza_nombre, es.nombre AS especie_nombre "
                 + "FROM MASCOTA ma "
                 + "INNER JOIN raza ra ON ra.id = ma.raza_id "
                 + "INNER JOIN especie es ON es.id = ra.especie_id "
-                + "WHERE ma.id ="+ id;
- try {
+                + "WHERE ma.id =" + id;
+        try {
             return objConectar.consultarBD(strSQL);
 
         } catch (Exception e) {
@@ -135,12 +138,12 @@ public class clsMascota {
         }
     }
 
-     public ResultSet filtrarID(int id) throws Exception {
+    public ResultSet filtrarID(int id) throws Exception {
         strSQL = "SELECT ma.*, ra.nombre AS raza_nombre, es.nombre AS especie_nombre "
                 + "FROM MASCOTA ma "
                 + "INNER JOIN raza ra ON ra.id = ma.raza_id "
                 + "INNER JOIN especie es ON es.id = ra.especie_id "
-                + "WHERE ma.id ="+ id;
+                + "WHERE ma.id =" + id;
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -148,6 +151,7 @@ public class clsMascota {
             throw new Exception("Error al filtrar mascotas por Código" + e.getMessage());
         }
     }
+
     // Método para obtener el código de una raza a partir de su nombre
     public Integer obtenerCodigoRaza(String nombreRaza) throws Exception {
         strSQL = "SELECT id FROM raza WHERE nombre = ?";
@@ -224,4 +228,49 @@ public class clsMascota {
 
     }
 
+    public ResultSet listarMascotasxDuenio(String doc_ident) throws Exception {
+        strSQL = " select "
+                + " ma.*, ra.nombre AS raza_nombre, es.nombre AS especie_nombre "
+                + " from custodia cu "
+                + " inner join duenio du on du.id = cu.duenioid "
+                + " inner join mascota ma on ma.id = cu.mascotaid "
+                + " inner join raza ra on ra.id = ma.raza_id "
+                + " inner join especie es on es.id = ra.especie_id "
+                + " where du.doc_identidad = '" + doc_ident + "'";
+        try {
+            return objConectar.consultarBD(strSQL);
+
+        } catch (Exception e) {
+            throw new Exception("Error al listar Mascotas: " + e.getMessage());
+        }
+    }
+
+    public void darBaja(Integer id) throws Exception {
+        strSQL = "UPDATE MASCOTA  SET vigencia = false WHERE id = " + id;
+
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al modificar la tabla mascota: " + e.getMessage());
+        }
+    }
+
+    public void darAlta(int codmascota) throws Exception {
+        strSQL = "UPDATE MASCOTA SET vigencia = true WHERE id= " + codmascota;
+
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al modificar la tabla duenio: " + e.getMessage());
+        }
+    }
+
+    public void eliminarMascota(Integer id) throws Exception {
+        strSQL = "delete from MASCOTA where id = " + id;
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al eliminar la mascota: " + e.getMessage());
+        }
+    }
 }

@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package capaNegocio;
 
 import capaDatos.clsJDBC;
@@ -5,9 +9,10 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author Grupo_Veterinaria
+ * @author franc
  */
 public class clsMedico {
+    
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;
@@ -22,6 +27,7 @@ public class clsMedico {
     public static final String DISPONIBILIDAD = "disponibilidad";
     public static final String VIGENCIA = "vigencia";
     public static final String ESPECIALIDAD_ID = "especialidad_id";
+    public static final String CODIGO_USUARIO = "usuariocodusuario";
     public static final String CANT_SERVICIOS = "cant_servicios";
 
     public Integer generarIDMedico() throws Exception {
@@ -53,18 +59,38 @@ public class clsMedico {
         }
     }
 
+    public ResultSet listarMedicoUsuario() throws Exception {
+        strSQL = "select "
+                + " M.*, "
+                + " U.nomusuario ," 
+                + " E." + clsEspecialidad.NOMBRE + " "
+                + " from " + TABLA + " M "
+                + " inner join usuario U on U.codusuario = M.usuariocodusuario "
+                + " inner join " + clsEspecialidad.TABLA + " E on M." + ESPECIALIDAD_ID + " = E." + clsEspecialidad.ID
+                + " order by M."+ID
+                + " ";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error en listar la tabla " + TABLA + " / " + e.getMessage());
+        }
+    }
+    
     public ResultSet listarMedicosconServicios() throws Exception {
         strSQL = """
                 SELECT 
-                    med.*, 
+                    med.*,
+                    U.nomusuario ,
                     esp.nom_especialidad,
                     esp.disponibilidad AS disp_esp,
                     COALESCE(COUNT(det.servicio_id), 0) AS cant_servicios
                 FROM medico med
                 LEFT JOIN especialidad esp ON esp.id = med.especialidad_id
-                LEFT JOIN  detalle_servicio det ON det.medico_id = med.id AND det.disponibilidad = true
+                LEFT JOIN detalle_servicio det ON det.medico_id = med.id AND det.disponibilidad = true
                 LEFT JOIN servicio ser ON ser.id = det.servicio_id AND ser.disponibilidad = true
-                GROUP BY   med.id, esp.id
+                LEFT join usuario U on U.codusuario = Med.usuariocodusuario 
+                GROUP BY  med.id, esp.id , U.nomusuario
                 ORDER BY  med.vigencia DESC, med.id;
                 """;
         try {
@@ -78,6 +104,7 @@ public class clsMedico {
     public ResultSet buscarMedico(int id) throws Exception {
         strSQL = " select "
                 + "     med.*,"
+                + "     U.nomusuario, "                
                 + "     esp.nom_especialidad, "
                 + "     esp.disponibilidad as disp_esp, "
                 + "     count(det.servicio_id) as "+CANT_SERVICIOS
@@ -85,9 +112,10 @@ public class clsMedico {
                 + " LEFT JOIN especialidad esp ON esp.id = med.especialidad_id "
                 + " LEFT JOIN  detalle_servicio det ON det.medico_id = med.id AND det.disponibilidad = true "
                 + " LEFT JOIN servicio ser ON ser.id = det.servicio_id AND ser.disponibilidad = true "
+                + " LEFT join usuario U on U.codusuario = Med.usuariocodusuario "
                 + " where med.id = " + id + " "
-                + " group by med.id, esp.id "
-                + " order by med.vigencia desc, med.id ;";
+                + " group by med.id, esp.id , U.nomusuario "
+                + " order by med.vigencia desc, med.id ";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -117,7 +145,8 @@ public class clsMedico {
             String apeM,
             String dni,
             Boolean sexo,
-            Integer esp
+            Integer esp,
+            Integer usu
     ) throws Exception {
         strSQL = "insert into " + TABLA + " values ("
                 + id + ","
@@ -128,7 +157,8 @@ public class clsMedico {
                 + sexo + ","
                 + "true,"
                 + "true,"
-                + esp
+                + esp + ","
+                + usu 
                 + ")";
         try {
             objConectar.ejecutarBD(strSQL);
@@ -222,6 +252,19 @@ public class clsMedico {
             }
         } catch (Exception e) {
             throw new Exception("Error al buscar código de " + TABLA + " con el documento de identidad " + docIdentidad + " --> " + e.getMessage());
+        }
+        return 0;
+    }
+    
+    public Integer obtenerIDUser(Integer id_med) throws Exception {
+        strSQL = "SELECT "+CODIGO_USUARIO+" as user_id FROM " + TABLA + " WHERE "+ID+" = " + id_med + " ";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                return rs.getInt("user_id");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al buscar código de " + TABLA + " con el ID " + id_med + " --> " + e.getMessage());
         }
         return 0;
     }
