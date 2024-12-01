@@ -140,6 +140,11 @@ public class Utilidad {
         "Registrar datos",
         "Cancelar"
     };
+    
+     public static final String[] opcionesAgregarMedicamentos = {
+        "Agregar",
+        "Cancelar"
+    };
 
     public static final String[] opcionesDarAlta = {
         "Dar alta",
@@ -257,6 +262,20 @@ public class Utilidad {
                 null,
                 opcionesRegistrar,
                 opcionesRegistrar[0]
+        );
+        return valor;
+    }
+    
+    public static int mensajeConfirmarAgregarMedicamento(String entidad) {
+        int valor = JOptionPane.showOptionDialog(
+                null,
+                "¿Desea agregar algún " + entidad.toLowerCase() + " ?",
+                "Confirmación ",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesAgregarMedicamentos,
+                opcionesAgregarMedicamentos[0]
         );
         return valor;
     }
@@ -422,12 +441,25 @@ public class Utilidad {
         clsJDBC objConectar = new clsJDBC();
         ResultSet rs;
         try {
-            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where id = " + id + " ");
+            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where id = " + id );
             while (rs.next()) {
                 return !rs.getBoolean(columna);
             }
         } catch (Exception e) {
-            throw new Exception("Error al verificar " + columna.toLowerCase() + " de ID:" + id + " en tabla " + tabla.toLowerCase() + ": " + e.getMessage());
+            throw new Exception("Error al verificar " + columna.toLowerCase() + " de ID: " + id + " en tabla " + tabla.toLowerCase() + ": " + e.getMessage());
+        }
+        return false;
+    }
+     public static boolean verificarElementoParaUsoCodigo(String tabla, String columna, String columna_codigo, Integer id) throws Exception {
+        clsJDBC objConectar = new clsJDBC();
+        ResultSet rs;
+        try {
+            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where "+ columna_codigo +" = " + id );
+            while (rs.next()) {
+                return !rs.getBoolean(columna);
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al verificar " + columna.toLowerCase() + " de ID: " + id + " en tabla " + tabla.toLowerCase() + ": " + e.getMessage());
         }
         return false;
     }

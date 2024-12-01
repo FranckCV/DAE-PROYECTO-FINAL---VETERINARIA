@@ -5,9 +5,7 @@
 package capaNegocio;
 
 import capaDatos.clsJDBC;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import javax.swing.JTable;
 
 /**
@@ -66,18 +64,23 @@ public class clsCita {
 //            throw new Exception("Error al insertar cita --> " + e.getLocalizedMessage());
 //        }
 //    }
-    public void registrarCita(int estadoCitaId, int custodiamascotaId, int custodiaDuenioId, JTable tblServicios) throws Exception {
+    public void registrarCita(int estadoCitaId, int custodiamascotaId, int custodiaDuenioId, JTable tblServicios, Date fechaCita, String observacion) throws Exception {
         try {
             objConectar.conectar();
             con = objConectar.getCon();
             con.setAutoCommit(false);
             sent = con.createStatement();
 
+            // Generar el código de cita
             int idCita = generarCodigoCita();
+
+            // Insertar la cita con la fecha y la observación proporcionadas
             String strSQL = "INSERT INTO CITA (id, estado_cita_id, fecha_cita, observacion, CUSTODIAMASCOTAid, CUSTODIADUEniOid) "
-                    + "VALUES (" + idCita + ", " + estadoCitaId + ", CURRENT_DATE, '', " + custodiamascotaId + ", " + custodiaDuenioId + ")";
+                    + "VALUES (" + idCita + ", " + estadoCitaId + ", '" + new java.sql.Date(fechaCita.getTime()) + "', '" + observacion + "', "
+                    + custodiamascotaId + ", " + custodiaDuenioId + ")";
             sent.executeUpdate(strSQL);
 
+            // Insertar los detalles de la cita
             int rowCount = tblServicios.getRowCount();
             for (int i = 0; i < rowCount; i++) {
                 String cadena = String.valueOf(tblServicios.getValueAt(i, 0));
@@ -88,19 +91,22 @@ public class clsCita {
                 String horaSalida = tblServicios.getValueAt(i, 4).toString();
                 String notaAdicional = tblServicios.getValueAt(i, 5).toString();
 
+                // Insertar el detalle de la cita
                 strSQL = "INSERT INTO DETALLE_CITA (cita_id, detalle_servicio_serv_id, detalle_servicio_med_id, horaEntrada, "
                         + "horaSalida, nota_adicional) "
                         + "VALUES (" + idCita + ", " + codSer + ", "
                         + codMed + ", '" + horaEntrada + "', '" + horaSalida + "', '" + notaAdicional + "')";
                 sent.executeUpdate(strSQL);
 
-                // Actualiza disponibilidad en DETALLE_SERVICIO
+                // Actualizar la disponibilidad en DETALLE_SERVICIO
                 strSQL = "UPDATE DETALLE_SERVICIO SET disponibilidad = false WHERE servicio_id = " + codSer + " AND medico_id = " + codMed;
                 sent.executeUpdate(strSQL);
             }
 
+            // Confirmar la transacción
             con.commit();
         } catch (Exception e) {
+            // Deshacer cambios en caso de error
             con.rollback();
             throw new Exception("Error al registrar cita --> " + e.getLocalizedMessage());
         } finally {
@@ -159,12 +165,62 @@ public class clsCita {
     }
 
     public ResultSet mesesRegistrado() throws Exception {
-        strSQL = "SELECT * FROM vista_meses_distintos ORDER BY mes;";
+        strSQL = "SELECT DISTINCT EXTRACT(MONTH FROM c.fecha_cita) AS mes FROM cita c;";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
         } catch (Exception e) {
             throw new Exception("Error al obtenener meses");
+        }
+    }
+
+    public ResultSet listarCitasPendientesPorDNI(String dni) throws Exception {
+        strSQL = "SELECT "
+                + " C.id AS id_cita, "
+                + " C.fecha_cita, "
+                + " DUEniO.nombres AS duenio_nombres, "
+                + " DUEniO.apePaterno AS duenio_apPaterno, "
+                + " DUEniO.apeMaterno AS duenio_apMaterno, "
+                + " DUEniO.doc_identidad "
+                + "FROM "
+                + " CITA C "
+                + " LEFT JOIN CUSTODIA CU ON C.CUSTODIAMASCOTAid = CU.MASCOTAid AND C.CUSTODIADUEniOid = CU.DUEniOid "
+                + " LEFT JOIN DUEniO ON C.CUSTODIADUEniOid = DUEniO.id "
+                + "WHERE "
+                + " C.estado_cita_id = 1 "
+                + " AND DUEniO.doc_identidad = '" + dni
+                + "' ORDER BY "
+                + " C.fecha_cita ASC";
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar las citas pendientes por DNI: " + e.getMessage());
+        }
+    }
+
+    public ResultSet listarCitasPendientesOrdenadas() throws Exception {
+        strSQL = "SELECT "
+                + " C.id AS id_cita, "
+                + " C.fecha_cita, "
+                + " DUEniO.nombres AS duenio_nombres, "
+                + " DUEniO.apePaterno AS duenio_apPaterno, "
+                + " DUEniO.apeMaterno AS duenio_apMaterno, "
+                + " DUEniO.doc_identidad "
+                + "FROM "
+                + " CITA C "
+                + " LEFT JOIN CUSTODIA CU ON C.CUSTODIAMASCOTAid = CU.MASCOTAid AND C.CUSTODIADUEniOid = CU.DUEniOid "
+                + " LEFT JOIN DUEniO ON C.CUSTODIADUEniOid = DUEniO.id "
+                + "WHERE "
+                + " C.estado_cita_id = 1 "
+                + "ORDER BY "
+                + " C.fecha_cita ASC";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar las citas pendientes: " + e.getMessage());
         }
     }
 
