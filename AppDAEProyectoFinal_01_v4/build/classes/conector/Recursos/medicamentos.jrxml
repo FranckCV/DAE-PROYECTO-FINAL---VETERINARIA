@@ -3,12 +3,9 @@
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="detalle_cita_id" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-
+	distinct
     m.nombre AS medicamento_nombre,
     dm.cantidad,
     m.costo * dm.cantidad AS total,
@@ -16,15 +13,14 @@
 FROM
     detalle_medicamento dm
 INNER JOIN
-    detalle_cita dc ON dc.cita_id = dm.detalle_cita_id
-INNER JOIN
-    detalle_servicio ds ON ds.servicio_id = dc.detalle_servicio_serv_id
+    detalle_servicio ds ON ds.servicio_id = dm.detalle_servicio_servicio_id
 INNER JOIN
     servicio s ON s.id = ds.servicio_id
 INNER JOIN
     medicamento m ON m.id = dm.medicamento_id
 WHERE
-    dc.cita_id = $P{detalle_cita_id}]]>
+    dm.detalle_cita_id = 8;
+]]>
 	</queryString>
 	<field name="medicamento_nombre" class="java.lang.String"/>
 	<field name="cantidad" class="java.lang.Integer"/>
@@ -73,7 +69,7 @@ WHERE
 				<text><![CDATA[Nombre del medicamento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="368" y="2" width="56" height="20" uuid="a7907b2f-061e-4bd6-b84b-68901980ca89"/>
+				<reportElement x="372" y="1" width="56" height="20" uuid="a7907b2f-061e-4bd6-b84b-68901980ca89"/>
 				<textElement textAlignment="Center">
 					<font fontName="Century Gothic" size="12"/>
 				</textElement>
@@ -91,28 +87,28 @@ WHERE
 	<detail>
 		<band height="32" splitType="Stretch">
 			<textField>
-				<reportElement x="20" y="0" width="122" height="20" uuid="e25bff5d-5494-4dfe-a6c8-8aedbd13f260"/>
+				<reportElement x="20" y="0" width="120" height="20" uuid="b9dde6ba-d2a0-459b-a9ae-24a6b58ee00e"/>
 				<textElement>
 					<font fontName="Century Gothic" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{servicio_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="164" y="0" width="171" height="20" uuid="957735ef-d4d2-425f-9d60-93831ab42c5e"/>
+				<reportElement x="164" y="0" width="171" height="20" uuid="f06b3468-07fe-4e9d-81ab-53df3d4ac545"/>
 				<textElement>
 					<font fontName="Century Gothic" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{medicamento_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="355" y="0" width="84" height="20" uuid="51e55ed3-d3ce-47a2-91d2-d21355eafa05"/>
+				<reportElement x="372" y="0" width="76" height="20" uuid="3aa66412-3b3f-4b61-b99c-a591cde63f9d"/>
 				<textElement textAlignment="Center">
 					<font fontName="Century Gothic" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="466" y="0" width="65" height="20" uuid="c890ca5a-9205-4977-a654-19fdf1646ceb"/>
+				<reportElement x="466" y="0" width="65" height="20" uuid="c5941328-259d-4b37-a913-6eebae91f16e"/>
 				<textElement textAlignment="Center">
 					<font fontName="Century Gothic" size="12"/>
 				</textElement>
