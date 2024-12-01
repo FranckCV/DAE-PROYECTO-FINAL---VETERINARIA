@@ -74,10 +74,10 @@ ORDER BY
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="192" splitType="Stretch">
-			<stackedBarChart>
+		<band height="225" splitType="Stretch">
+			<barChart>
 				<chart>
-					<reportElement x="39" y="0" width="473" height="185" uuid="bfb40cc3-576d-4a0a-bd4f-7b4c488e1ff2"/>
+					<reportElement x="0" y="0" width="555" height="210" uuid="4b8c4933-3baa-406e-aa89-a62b37e5c7cd"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -99,7 +99,7 @@ ORDER BY
 						<axisFormat/>
 					</valueAxisFormat>
 				</barPlot>
-			</stackedBarChart>
+			</barChart>
 		</band>
 	</summary>
 </jasperReport>
