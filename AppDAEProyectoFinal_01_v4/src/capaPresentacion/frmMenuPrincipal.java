@@ -96,8 +96,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+
         menuRepServicioMasSolicitado = new javax.swing.JMenuItem();
         mnuIngresoPorServicio = new javax.swing.JMenuItem();
+        jMenuItem24 = new javax.swing.JMenuItem();
         jMenuItem30 = new javax.swing.JMenuItem();
         rptMedicamentosXRangoPrecio = new javax.swing.JMenuItem();
         rptVacunasXEspecie = new javax.swing.JMenuItem();
@@ -486,6 +488,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu11.add(jMenuItem1);
 
+
         menuRepServicioMasSolicitado.setText("Servicios más solicitados por mes");
         menuRepServicioMasSolicitado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -502,7 +505,20 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu11.add(mnuIngresoPorServicio);
 
-        jMenuItem30.setText("Rp5");
+        jMenuItem24.setText("Nuevas mascotas segun mes y año");
+        jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem24ActionPerformed(evt);
+            }
+        });
+        jMenu11.add(jMenuItem24);
+
+        jMenuItem30.setText("Citas atendidas por cada medico en un periodo de tiempo");
+        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem30ActionPerformed(evt);
+            }
+        });
         jMenu11.add(jMenuItem30);
 
         rptMedicamentosXRangoPrecio.setText("Reporte de Medicamentos por Rango de Precio");
@@ -822,10 +838,23 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objMejoresMedicos.setVisible(true);
     }//GEN-LAST:event_jMenuItem35ActionPerformed
 
+    private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
+        // TODO add your handling code here:
+        jdRptMedCitas obj = new jdRptMedCitas(this, true);
+        obj.setLocationRelativeTo(this);
+        obj.setVisible(true);
+    }//GEN-LAST:event_jMenuItem30ActionPerformed
+
+    private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
+        // TODO add your handling code here:
+        jdRepMasctXduenio obj = new jdRepMasctXduenio(this, true);
+        obj.setLocationRelativeTo(this);
+        obj.setVisible(true);
+    }//GEN-LAST:event_jMenuItem24ActionPerformed
     private void menuRepServicioMasSolicitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRepServicioMasSolicitadoActionPerformed
         // TODO add your handling code here:
-        jdRepServiciosMasSolicitados objFrm = new jdRepServiciosMasSolicitados(this, true);
-        objFrm.setVisible(true);
+//        jdRepServiciosMasSolicitados objFrm = new jdRepServiciosMasSolicitados(this, true);
+//        objFrm.setVisible(true);
     }//GEN-LAST:event_menuRepServicioMasSolicitadoActionPerformed
 
     private void login() {
@@ -879,6 +908,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
+    private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem23;

@@ -8,6 +8,7 @@ import capaNegocio.clsMedicamento;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import soporte.Utilidad;
 
 /**
  *
@@ -26,6 +27,7 @@ public class jdAniadirMedicamento extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         listarMedicamentos();
+        Utilidad.validacionTabla(tblMedicamentos, modal, rootPaneCheckingEnabled, modal);
     }
 
     private void listarMedicamentos() {

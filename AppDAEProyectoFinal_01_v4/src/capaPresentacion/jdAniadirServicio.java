@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import soporte.Utilidad;
 
 /**
  *
@@ -32,6 +33,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
         llenarMedico();
         llenarServicio();
         listarDetalleServicios();
+        Utilidad.validacionTabla(tblServicios, modal, rootPaneCheckingEnabled, modal);
     }
 
     

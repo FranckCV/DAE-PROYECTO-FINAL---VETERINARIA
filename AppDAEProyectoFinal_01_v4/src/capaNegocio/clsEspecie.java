@@ -29,7 +29,7 @@ public class clsEspecie {
     public static final String NOMBRE = "nombre";
 
     public ResultSet listarEspecies() throws Exception {
-        strSQL = "select * from " + TABLA +" where disponibilidad = true";
+        strSQL = "select * from " + TABLA +" where disponibilidad = true order by id";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;

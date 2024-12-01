@@ -12,6 +12,7 @@ import java.sql.ResultSet;
  * @author franc
  */
 public class clsMedicamento {
+    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL;

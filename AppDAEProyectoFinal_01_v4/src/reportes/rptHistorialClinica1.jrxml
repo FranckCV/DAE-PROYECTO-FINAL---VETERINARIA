@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptHistorialClinica" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ef29633f-5905-465d-a5f0-674f2255ea08">
+<<<<<<< HEAD
+	<property name="ireport.zoom" value="1.331000000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+=======
 	<property name="ireport.zoom" value="1.9487171000000014"/>
-	<property name="ireport.x" value="384"/>
-	<property name="ireport.y" value="1193"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
+>>>>>>> 02bb607f29fbed8bdeb31f3acce4c6bad047751e
 	<parameter name="id_masc" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\franc\\Downloads\\2024 - II\\VI - Desarrollo de Aplicaciones de Escritorio\\projectos_DAE\\DAE PROYECTO FINAL - VETERINARIA\\AppDAEProyectoFinal_01_v4\\src\\reportes\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["src\\reportes\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -80,21 +86,9 @@ WHERE
 		<band height="3" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="633" splitType="Stretch">
+		<band height="653" splitType="Stretch">
 			<line>
-				<reportElement x="1" y="473" width="555" height="1" uuid="e9ef99ff-88b7-45b0-97e1-a6d61bc73a4a"/>
-				<graphicElement>
-					<pen lineWidth="3.0" lineColor="#0033CC"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement x="2" y="326" width="555" height="1" uuid="cd9047f1-ab19-4cf7-ad0b-d6db5e834267"/>
-				<graphicElement>
-					<pen lineWidth="3.0" lineColor="#0033CC"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement x="1" y="190" width="555" height="1" uuid="bf8ddde2-520d-4c26-8d88-572ffe1c92d1"/>
+				<reportElement x="2" y="198" width="553" height="1" uuid="bf8ddde2-520d-4c26-8d88-572ffe1c92d1"/>
 				<graphicElement>
 					<pen lineWidth="3.0" lineColor="#0033CC"/>
 				</graphicElement>
@@ -118,7 +112,7 @@ WHERE
 				<textElement verticalAlignment="Middle">
 					<font fontName="Century Gothic" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Fecha Nacimiento: "+$F{ma_fecha_nacimiento}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Fecha Nacimiento: "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{ma_fecha_nacimiento})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="215" y="110" width="119" height="23" uuid="a31803ad-9d73-4fe9-a667-13e604cc50f3"/>
@@ -142,21 +136,21 @@ WHERE
 				<textFieldExpression><![CDATA[$F{ma_notaadicional}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="451" y="87" width="77" height="23" uuid="53b0607b-6f70-443c-b5c9-5510d7289a09"/>
+				<reportElement x="461" y="87" width="67" height="23" uuid="53b0607b-6f70-443c-b5c9-5510d7289a09"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Century Gothic" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ma_esterilizado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="451" y="110" width="77" height="23" uuid="ff23183a-5421-4c58-89ba-b586ba9fe1d1"/>
+				<reportElement x="461" y="110" width="67" height="23" uuid="ff23183a-5421-4c58-89ba-b586ba9fe1d1"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Century Gothic" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ma_desparasitado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="451" y="41" width="77" height="23" uuid="d4076c76-e278-4da9-8d2b-5dc5b995985f"/>
+				<reportElement x="461" y="41" width="67" height="23" uuid="d4076c76-e278-4da9-8d2b-5dc5b995985f"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Century Gothic" size="10"/>
 				</textElement>
@@ -170,7 +164,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{ma_sexo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="451" y="64" width="77" height="23" uuid="88481d42-7330-44c2-b5de-5ee8b1cf2859"/>
+				<reportElement x="461" y="64" width="67" height="23" uuid="88481d42-7330-44c2-b5de-5ee8b1cf2859"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Century Gothic" size="10"/>
 				</textElement>
@@ -240,28 +234,28 @@ WHERE
 				<text><![CDATA[Sexo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="364" y="41" width="87" height="23" uuid="7ad46a5f-3c53-4d7c-bd1a-155062d4c844"/>
+				<reportElement x="364" y="41" width="97" height="23" uuid="7ad46a5f-3c53-4d7c-bd1a-155062d4c844"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Century Gothic" size="10" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Codición: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="364" y="64" width="87" height="23" uuid="3e5d5437-d59a-44fc-91c1-adc1bd56df58"/>
+				<reportElement x="364" y="64" width="97" height="23" uuid="3e5d5437-d59a-44fc-91c1-adc1bd56df58"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Century Gothic" size="10" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Vigencia: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="364" y="87" width="87" height="23" uuid="c0393319-eca5-47a5-a299-8a73dde5527c"/>
+				<reportElement x="364" y="87" width="97" height="23" uuid="c0393319-eca5-47a5-a299-8a73dde5527c"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Century Gothic" size="10" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Esterilización: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="364" y="110" width="87" height="23" uuid="1c2505a6-679b-49fc-9f28-3be3b271bfa2"/>
+				<reportElement x="364" y="110" width="97" height="23" uuid="1c2505a6-679b-49fc-9f28-3be3b271bfa2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Century Gothic" size="10" isBold="true" isItalic="true"/>
 				</textElement>
@@ -275,7 +269,7 @@ WHERE
 				<text><![CDATA[Datos principales:]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="2" y="213" width="553" height="113" uuid="3f8fd9ac-61e4-41d1-b881-e8e85d519c90"/>
+				<reportElement x="0" y="211" width="555" height="138" uuid="3f8fd9ac-61e4-41d1-b881-e8e85d519c90"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -286,7 +280,7 @@ WHERE
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rptHistorialClinica1_duenios.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="2" y="491" width="553" height="129" uuid="e80c697f-3016-46ae-98e6-681f941db3a6"/>
+				<reportElement x="0" y="487" width="555" height="138" uuid="e80c697f-3016-46ae-98e6-681f941db3a6"/>
 				<subreportParameter name="id_masc">
 					<subreportParameterExpression><![CDATA[$P{id_masc}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -294,7 +288,7 @@ WHERE
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rptHistorialClinica1_citas1.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="0" y="343" width="555" height="112" uuid="46a70552-c5eb-470e-bb57-ff23eb87dacc"/>
+				<reportElement x="0" y="349" width="555" height="138" uuid="46a70552-c5eb-470e-bb57-ff23eb87dacc"/>
 				<subreportParameter name="id_masc">
 					<subreportParameterExpression><![CDATA[$P{id_masc}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -304,7 +298,7 @@ WHERE
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="6" splitType="Stretch"/>
+		<band height="4" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="20" splitType="Stretch">
@@ -339,6 +333,6 @@ WHERE
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="5" splitType="Stretch"/>
+		<band height="3" splitType="Stretch"/>
 	</summary>
 </jasperReport>
