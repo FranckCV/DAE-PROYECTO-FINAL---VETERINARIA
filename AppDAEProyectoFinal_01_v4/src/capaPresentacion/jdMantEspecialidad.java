@@ -27,7 +27,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
         btnDisponibilidad.setText(Utilidad.BTN_DISPONIBILIDAD);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-        Utilidad.fijarColumnasTabla(tblEspecialidad);
+        Utilidad.validacionTabla(tblEspecialidad, modal, rootPaneCheckingEnabled, modal);
     }
 
     /**

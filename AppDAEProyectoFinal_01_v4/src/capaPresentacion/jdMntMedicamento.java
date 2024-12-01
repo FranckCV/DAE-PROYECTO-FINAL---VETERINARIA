@@ -10,9 +10,9 @@ import capaNegocio.clsTipoMedicamento;
 import java.sql.ResultSet;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
@@ -33,6 +33,9 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         Utilidad.validarSpinnerNumerosPositivos(spnStock);
+        Utilidad.validacionTabla(tblMedicamento, modal, rootPaneCheckingEnabled, modal);
+        tblMedicamento.revalidate();
+        tblMedicamento.repaint();
         listarMedicamentos();
         listarTipoMedicamento();
         btnRegistrar.setText(Utilidad.BTN_NUEVO);
@@ -127,7 +130,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -165,7 +168,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        panel.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel5.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -250,6 +253,9 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
         txtCosto.setBorder(null);
         txtCosto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCostoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCostoKeyTyped(evt);
             }
@@ -461,18 +467,18 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -511,7 +517,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -520,7 +526,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -662,65 +668,28 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
     private void txtPresentacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPresentacionKeyTyped
         // TODO add your handling code here:
-        int key = evt.getKeyChar();
-
-        boolean mayusculas = key >= 65 && key <= 90;
-        boolean minusculas = key >= 97 && key <= 122;
-        boolean espacio = key == 32;
-
-        if (!(minusculas || mayusculas || espacio)) {
-            evt.consume();
-        }
+        Utilidad.validarCampoTextoSoloLetras(evt);
     }//GEN-LAST:event_txtPresentacionKeyTyped
 
     private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
         // TODO add your handling code here:
-        if (txtId.getText().length() >= 10) {
-            evt.consume();
-        }
-
-        int key = evt.getKeyChar();
-
-        boolean numeros = key >= 48 && key <= 57;
-
-        if (!numeros) {
-            evt.consume();
-        }
-
-        if (txtId.getText().trim().length() == 10) {
-            evt.consume();
-        }
+        Utilidad.validarCampoTextoSoloNumero(evt);
     }//GEN-LAST:event_txtIdKeyTyped
 
     private void txtCostoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCostoKeyTyped
         // TODO add your handling code here:
-        if (txtId.getText().length() >= 10) {
-            evt.consume();
-        }
-
-        int key = evt.getKeyChar();
-
-        boolean numeros = key >= 48 && key <= 57;
-
-        if (!numeros) {
-            evt.consume();
-        }
-
-        if (txtId.getText().trim().length() == 10) {
-            evt.consume();
-        }
+        Utilidad.validarCampoTextoSoloNumeroDecimal(evt);
     }//GEN-LAST:event_txtCostoKeyTyped
 
     private void tblMedicamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMedicamentoMouseClicked
         // TODO add your handling code here:
         if (btnModificar.getText().equals(Utilidad.BTN_GUARDAR) || btnRegistrar.getText().equals(Utilidad.BTN_GUARDAR)) {
-            JOptionPane.showMessageDialog(this, "Porfavor, antes de realizar otra operación "
-                    + "complete el proceso actual");
+            JOptionPane.showMessageDialog(this, "Por favor, antes de realizar otra operación complete el proceso actual.");
             return;
         }
         txtId.setText(String.valueOf(tblMedicamento.getValueAt(tblMedicamento.getSelectedRow(), 0)));
         btnBuscarActionPerformed(null);
-        usarBotonesMedicamento(true, true, true, true, true, true);
+        usarBotonesMedicamento(true, true, true, true, true, true); // Habilita todos los botones
     }//GEN-LAST:event_tblMedicamentoMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -741,7 +710,6 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        Utilidad.atajoTecladoBoton(this, btnBuscar, 'B', "buscar");     // CTRL + B
         Utilidad.atajoTecladoBoton(this, btnRegistrar, 'R', "registrar");   // CTRL + R
         Utilidad.atajoTecladoBoton(this, btnModificar, 'M', "modificar");   // CTRL + M
         Utilidad.atajoTecladoBoton(this, btnEliminar, 'E', "eliminar");    // CTRL + E
@@ -796,7 +764,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
     private void txtIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) { // Detectar Enter
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) { 
             try {
                 if (txtId.getText().trim().isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Ingrese un ID válido.", "Error", JOptionPane.WARNING_MESSAGE);
@@ -824,6 +792,10 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_txtIdKeyPressed
+
+    private void txtCostoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCostoKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCostoKeyReleased
 
     public void limpiarControles() {
         txtId.setText("");
@@ -917,13 +889,13 @@ public class jdMntMedicamento extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPanel panel;
     private javax.swing.JSpinner spnStock;
     private javax.swing.JTable tblMedicamento;
     private javax.swing.JTextField txtCosto;

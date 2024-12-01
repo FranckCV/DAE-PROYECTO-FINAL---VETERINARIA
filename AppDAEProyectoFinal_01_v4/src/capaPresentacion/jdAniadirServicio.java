@@ -11,6 +11,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import soporte.Utilidad;
 
 /**
  *
@@ -36,6 +37,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
         llenarServicio();
         llenarComboHorasMinutosYAMPM();
         listarDetalleServicios();
+        Utilidad.validacionTabla(tblServicios, modal, rootPaneCheckingEnabled, modal);
     }
 
     private void ocultarColumna(JTable tabla, int indiceColumna) {

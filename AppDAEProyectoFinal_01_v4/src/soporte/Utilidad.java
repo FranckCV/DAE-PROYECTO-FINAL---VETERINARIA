@@ -9,12 +9,16 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.text.NumberFormatter;
 
@@ -587,32 +591,22 @@ public class Utilidad {
         }
     }
 
-    public static boolean buscarYConfigurar(String tabla, String columna, int id, JTextField txtNombre, JButton btnModificar, JButton btnEliminar) throws Exception {
-        clsJDBC objConectar = new clsJDBC();
-        String strSQL = "SELECT nomtipo FROM " + tabla + " WHERE " + columna + " = " + id;
-        ResultSet rs = null;
-
-        try {
-            rs = objConectar.consultarBD(strSQL);
-            if (rs.next()) {
-                txtNombre.setText(rs.getString("nomtipo"));
-                txtNombre.setEditable(false);
-                btnModificar.setEnabled(true);
-                btnEliminar.setEnabled(true);
-                return true;
-            }
-        } catch (Exception e) {
-            throw new Exception("Error al buscar en la tabla: " + e.getMessage());
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
+    public static void validacionTabla(JTable table, boolean desactivarReordenacion, boolean desactivarModificacionCabecera, boolean desactivarEdicion) {
+        // Desactivar la reordenación de columnas si es necesario
+        if (desactivarReordenacion) {
+            table.getTableHeader().setReorderingAllowed(false);
         }
-        return false;
-    }
 
-    public static void fijarColumnasTabla(JTable table) {
-        table.getTableHeader().setReorderingAllowed(false);
+        // Desactivar la reordenación y modificación de la cabecera de columnas si es necesario
+        if (desactivarModificacionCabecera) {
+            table.getTableHeader().setReorderingAllowed(false);
+            table.getTableHeader().setResizingAllowed(false);
+        }
+
+        // Desactivar la edición de celdas si es necesario
+        if (desactivarEdicion) {
+            table.setDefaultEditor(Object.class, null);
+        }
     }
 
     public static void atajoTecladoBoton(JDialog dialog, JButton boton, char tecla, String nombreAccion) {
