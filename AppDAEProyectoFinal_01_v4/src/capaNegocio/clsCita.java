@@ -64,11 +64,7 @@ public class clsCita {
 //            throw new Exception("Error al insertar cita --> " + e.getLocalizedMessage());
 //        }
 //    }
-<<<<<<< HEAD
     public void registrarCita(int estadoCitaId, int custodiamascotaId, int custodiaDuenioId, JTable tblServicios, Date fechaCita, String observacion) throws Exception {
-=======
-    public void registrarCita(int estadoCitaId, int custodiamascotaId, int custodiaDuenioId, JTable tblServicios) throws Exception {
->>>>>>> 6cb219fee89ae7e32a3b73a08eb080c2ee3a3f60
         try {
             objConectar.conectar();
             con = objConectar.getCon();
@@ -168,34 +164,13 @@ public class clsCita {
         }
     }
 
-<<<<<<< HEAD
-    public ResultSet listarCitasPendientesOrdenadas() throws Exception {
-        strSQL = "SELECT "
-                + " C.id AS id_cita, "
-                + " C.fecha_cita, "
-                + " DUEniO.nombres AS duenio_nombres, "
-                + " DUEniO.apePaterno AS duenio_apPaterno, "
-                + " DUEniO.apeMaterno AS duenio_apMaterno, "
-                + " DUEniO.doc_identidad "
-                + "FROM "
-                + " CITA C "
-                + " LEFT JOIN CUSTODIA CU ON C.CUSTODIAMASCOTAid = CU.MASCOTAid AND C.CUSTODIADUEniOid = CU.DUEniOid "
-                + " LEFT JOIN DUEniO ON C.CUSTODIADUEniOid = DUEniO.id "
-                + "WHERE "
-                + " C.estado_cita_id = 1 "
-                + "ORDER BY "
-                + " C.fecha_cita ASC";
-
-=======
     public ResultSet mesesRegistrado() throws Exception {
         strSQL = "SELECT DISTINCT EXTRACT(MONTH FROM c.fecha_cita) AS mes FROM cita c;";
->>>>>>> 6cb219fee89ae7e32a3b73a08eb080c2ee3a3f60
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
         } catch (Exception e) {
-<<<<<<< HEAD
-            throw new Exception("Error al listar las citas pendientes: " + e.getMessage());
+            throw new Exception("Error al obtenener meses");
         }
     }
 
@@ -222,8 +197,30 @@ public class clsCita {
             return rs;
         } catch (Exception e) {
             throw new Exception("Error al listar las citas pendientes por DNI: " + e.getMessage());
-=======
-            throw new Exception("Error al obtenener meses");
+        }
+    }
+
+    public ResultSet listarCitasPendientesOrdenadas() throws Exception {
+        strSQL = "SELECT "
+                + " C.id AS id_cita, "
+                + " C.fecha_cita, "
+                + " DUEniO.nombres AS duenio_nombres, "
+                + " DUEniO.apePaterno AS duenio_apPaterno, "
+                + " DUEniO.apeMaterno AS duenio_apMaterno, "
+                + " DUEniO.doc_identidad "
+                + "FROM "
+                + " CITA C "
+                + " LEFT JOIN CUSTODIA CU ON C.CUSTODIAMASCOTAid = CU.MASCOTAid AND C.CUSTODIADUEniOid = CU.DUEniOid "
+                + " LEFT JOIN DUEniO ON C.CUSTODIADUEniOid = DUEniO.id "
+                + "WHERE "
+                + " C.estado_cita_id = 1 "
+                + "ORDER BY "
+                + " C.fecha_cita ASC";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar las citas pendientes: " + e.getMessage());
         }
     }
 
@@ -256,7 +253,6 @@ public class clsCita {
             return 0;
         } catch (Exception e) {
             throw new Exception("Error al contar las filas", e); // Lanzamos la excepción correctamente
->>>>>>> 6cb219fee89ae7e32a3b73a08eb080c2ee3a3f60
         }
     }
 
