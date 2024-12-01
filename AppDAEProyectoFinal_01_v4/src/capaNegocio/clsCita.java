@@ -116,7 +116,7 @@ public class clsCita {
 
     public void terminarCita(int idCita) throws Exception {
         // Suponiendo que el estado "finalizado" tiene el ID 3
-        int estadoFinalizadoId = 6;
+        int estadoFinalizadoId = 3;
         strSQL = "UPDATE CITA SET estado_cita_id = " + estadoFinalizadoId + " WHERE id = " + idCita;
 
         try {

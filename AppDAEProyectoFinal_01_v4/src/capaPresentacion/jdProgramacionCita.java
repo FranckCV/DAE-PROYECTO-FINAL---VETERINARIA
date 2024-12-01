@@ -26,6 +26,7 @@ import java.time.LocalTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import soporte.*;
 
 /**
  *
@@ -50,38 +51,10 @@ public class jdProgramacionCita extends javax.swing.JDialog {
 
         txtNumero.setEditable(false);
         generarCodigo();
-        formatoSpinner();
         llenarCboServicios();
         llenarTablaInicial();
     }
 
-    private void formatoSpinner() {
-        SpinnerDateModel model = new SpinnerDateModel(new Date(), null, null, Calendar.HOUR_OF_DAY);
-        spnHoraEntrada.setModel(model);
-
-        JSpinner.DateEditor editor = new JSpinner.DateEditor(spnHoraEntrada, "HH:mm:ss");
-        spnHoraEntrada.setEditor(editor);
-//    spnHoraEntrada.updateUI();
-
-        SpinnerDateModel model2 = new SpinnerDateModel(new Date(), null, null, Calendar.HOUR_OF_DAY);
-        spnHoraSalida.setModel(model2);
-
-        JSpinner.DateEditor editor2 = new JSpinner.DateEditor(spnHoraSalida, "HH:mm:ss");
-        spnHoraSalida.setEditor(editor2);
-//    spnHoraSalida.updateUI();
-    }
-
-    public String obtenerHoraEntrada() {
-        Date horaEntrada = (Date) spnHoraEntrada.getValue();
-        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
-        return formatoHora.format(horaEntrada); // Devuelve solo la hora, minuto y segundo
-    }
-
-    public String obtenerHoraSalida() {
-        Date horaSalida = (Date) spnHoraSalida.getValue();
-        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
-        return formatoHora.format(horaSalida); // Devuelve solo la hora, minuto y segundo
-    }
 
     private void generarCodigo() {
         try {
@@ -102,6 +75,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         modelo.addColumn("HORA ENTRADA");
         modelo.addColumn("HORA SALIDA");
         modelo.addColumn("NOTA ADICIONAL");
+        modelo.addColumn("COSTO");
 
         tblDetalleServicio.setModel(modelo);
 
@@ -115,10 +89,12 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         tblDetalleServicio.getTableHeader().setReorderingAllowed(false); //no mover los headers
     }
 
-    private void agregarServicio(int codServ, int codMed) {
-        if (codServ != -1 && codMed != -1) {
-            ResultSet rs = null;
+    private void agregarServicio(int codServ, int codMed, String horaEntrada, String horaSalida) {
 
+        ResultSet rsSer = null;
+        ResultSet rsMed = null;
+
+        if (codServ != -1 && codMed != -1) {
             try {
                 DefaultTableModel modelo = (DefaultTableModel) tblDetalleServicio.getModel();
                 boolean repetido = false;
@@ -135,45 +111,178 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                         break;
                     }
                 }
-
                 // Mostrar mensaje si el servicio ya está en la tabla
                 if (repetido) {
-                    JOptionPane.showMessageDialog(rootPane, "Este servicio ya se encuentra agregado");
-                } else {
-                    // Obtener datos del servicio y agregarlos a la tabla si no está repetido
-                    rs = objServicio.obtenerDatosDetalleServicio(codServ, codMed);
-
-//                    medicoCod = codMed;
-//                    servicioCod = codServ;
-                    if (rs == null) {
-                        JOptionPane.showMessageDialog(this, "Error: El ResultSet está vacío.");
-                        return;
-                    }
-
-                    boolean hasData = false; // Para verificar si hay datos en el ResultSet
-                    while (rs.next()) {
-                        hasData = true;
-                        modelo.addRow(new Object[]{
-                            rs.getInt("ID") + " - " + rs.getInt("medico_id"),
-                            rs.getString("nom_servicio"),
-                            rs.getString("nombres") + " " + rs.getString("apepaterno"),
-                            obtenerHoraEntrada(), obtenerHoraSalida(), txtNotaDetalleCita.getText()
-                        });
-                    }
-
-                    if (!hasData) {
-                        JOptionPane.showMessageDialog(this, "No se encontraron datos para el servicio y médico especificados.");
-                    }
-
-                    tblDetalleServicio.setModel(modelo); // Asegurar que el modelo actualizado esté en la tabla
+                    JOptionPane.showMessageDialog(rootPane, "Este servicio ya se encuentra agregado.");
+                    return;
                 }
+//
+//                System.out.println(codServ + " --- " + codMed);
+                rsSer = objServicio.buscarServicio(codServ);
+                rsMed = objMedico.buscarMedico(codMed);
+                rsSer.next();
+                rsMed.next();
+
+                Date entradaDate = convertirHoraAFecha(horaEntrada);
+                Date salidaDate = convertirHoraAFecha(horaSalida);
+
+                // Formatear las horas
+                String horaEntradaFormateada = formatearHora(entradaDate);
+                String horaSalidaFormateada = formatearHora(salidaDate);
+                
+//                if (!objMedico.verificarDisponibilidad(codMed, horaEntrada, horaSalida)) {
+//                    JOptionPane.showMessageDialog(rootPane, "Este médico ya tiene un servicio en el horario indicado.");
+//                    return;  // No agregar el servicio si el médico no está disponible
+//                }
+//                
+
+                Object[] fila = new Object[7];
+                fila[0] = codServ + " - " + codMed;
+                fila[1] = rsSer.getString("nom_servicio"); // Aquí va el nombre del servicio (ajustar según tu lógica)
+                fila[2] = rsMed.getString("nombres") + " " + rsMed.getString("apepaterno") + " " + rsMed.getString("apematerno");
+                fila[3] = horaEntradaFormateada;
+                fila[4] = horaSalidaFormateada;
+                fila[5] = JOptionPane.showInputDialog("Ingrese alguna nota adiconal: ");
+                fila[6] = rsSer.getDouble("costo");
+
+                modelo.addRow(fila);
+                tblDetalleServicio.setModel(modelo);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Error al llenar tabla detalle servicio: " + e.getMessage());
+                JOptionPane.showMessageDialog(rootPane, "Error al agregar el servicio: " + e.getMessage());
             }
         }
     }
 
+//    public void agregarServicio2(int codServ, int codMed, String horaEntrada, String horaSalida) {
+//        try {
+//            // Verificar disponibilidad del médico
+//            if (!objMedico.verificarDisponibilidad(codMed, horaEntrada, horaSalida)) {
+//                JOptionPane.showMessageDialog(rootPane, "Este médico ya tiene un servicio en el horario indicado.");
+//                return;  // No agregar el servicio si el médico no está disponible
+//            }
+//
+//            // Si el médico está disponible, continuar con la inserción del servicio
+//            DefaultTableModel modelo = (DefaultTableModel) tblDetalleServicio.getModel();
+//            boolean repetido = false;
+//
+//            // Verificar si el servicio ya está en la tabla
+//            for (int i = 0; i < tblDetalleServicio.getRowCount(); i++) {
+//                String cadena = String.valueOf(tblDetalleServicio.getValueAt(i, 0));
+//                String[] codigos = cadena.split(" - ");
+//                int codigoTablaSer = Integer.parseInt(codigos[0].trim());
+//                int codTablaMed = Integer.parseInt(codigos[1].trim());
+//
+//                if (codigoTablaSer == codServ && codTablaMed == codMed) {
+//                    repetido = true;
+//                    break;
+//                }
+//            }
+//
+//            if (repetido) {
+//                JOptionPane.showMessageDialog(rootPane, "Este servicio ya se encuentra agregado.");
+//            } else {
+//                // Realizar la inserción en la tabla
+//                ResultSet rsSer = objServicio.buscarServicio(codServ);
+//                ResultSet rsMed = objMedico.buscarMedico(codMed);
+//
+//                // Asegúrate de que rsSer y rsMed no sean null antes de continuar
+//                if (rsSer != null && rsMed != null) {
+//                    // Aquí agregas el servicio a la tabla
+//                    modelo.addRow(new Object[]{codServ + " - " + codMed, rsSer.getString("nom_servicio"), rsMed.getString("nombres"), horaEntrada, horaSalida});
+//                } else {
+//                    JOptionPane.showMessageDialog(rootPane, "Error al obtener los datos del servicio o médico.");
+//                }
+//            }
+//
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(rootPane, "Error al agregar servicio: " + e.getMessage());
+//        }
+//    }
+
+    private Date convertirHoraAFecha(String hora) throws Exception {
+        // Detectamos si es AM o PM
+        String amPm = hora.substring(hora.length() - 2).trim();
+        int horas = Integer.parseInt(hora.substring(0, 2).trim());
+        int minutos = Integer.parseInt(hora.substring(3, 5).trim());
+
+        if (amPm.equalsIgnoreCase("PM") && horas != 12) {
+            horas += 12;
+        } else if (amPm.equalsIgnoreCase("AM") && horas == 12) {
+            horas = 0;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, horas);
+        calendar.set(Calendar.MINUTE, minutos);
+        calendar.set(Calendar.SECOND, 0);
+
+        return calendar.getTime();
+    }
+
+    private String formatearHora(Date fecha) {
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+        return formatoHora.format(fecha);
+    }
+
+//    private void agregarServicio(int codServ, int codMed, String horaEntrada, String horaSalida) {
+//        if (codServ != -1 && codMed != -1) {
+//            ResultSet rs = null;
+//
+//            try {
+//                DefaultTableModel modelo = (DefaultTableModel) tblDetalleServicio.getModel();
+//                boolean repetido = false;
+//
+//                // Verificar si el servicio ya está en la tabla
+//                for (int i = 0; i < tblDetalleServicio.getRowCount(); i++) {
+//                    String cadena = String.valueOf(tblDetalleServicio.getValueAt(i, 0));
+//                    String[] codigos = cadena.split(" - ");
+//                    int codigoTablaSer = Integer.parseInt(codigos[0].trim());
+//                    int codTablaMed = Integer.parseInt(codigos[1].trim());
+//
+//                    if (codigoTablaSer == codServ && codTablaMed == codMed) {
+//                        repetido = true;
+//                        break;
+//                    }
+//                }
+//
+//                // Mostrar mensaje si el servicio ya está en la tabla
+//                if (repetido) {
+//                    JOptionPane.showMessageDialog(rootPane, "Este servicio ya se encuentra agregado");
+//                } else {
+//                    // Obtener datos del servicio y agregarlos a la tabla si no está repetido
+//                    rs = objServicio.obtenerDatosDetalleServicio(codServ, codMed);
+//
+////                    medicoCod = codMed;
+////                    servicioCod = codServ;
+//                    if (rs == null) {
+//                        JOptionPane.showMessageDialog(this, "Error: El ResultSet está vacío.");
+//                        return;
+//                    }
+//
+//                    boolean hasData = false; // Para verificar si hay datos en el ResultSet
+//                    while (rs.next()) {
+//                        hasData = true;
+//                        modelo.addRow(new Object[]{
+//                            rs.getInt("ID") + " - " + rs.getInt("medico_id"),
+//                            rs.getString("nom_servicio"),
+//                            rs.getString("nombres") + " " + rs.getString("apepaterno"),
+//                            obtenerHoraEntrada(), obtenerHoraSalida(), txtNotaDetalleCita.getText()
+//                        });
+//                    }
+//
+//                    if (!hasData) {
+//                        JOptionPane.showMessageDialog(this, "No se encontraron datos para el servicio y médico especificados.");
+//                    }
+//
+//                    tblDetalleServicio.setModel(modelo); // Asegurar que el modelo actualizado esté en la tabla
+//                }
+//
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(this, "Error al llenar tabla detalle servicio: " + e.getMessage());
+//            }
+//        }
+//    }
     private void limpiarControles() {
         txtAObservacion.setText("");
         txtCodDuenio.setText("");
@@ -186,21 +295,19 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         txtNombreCliente.setText("");
         txtNombreMascota.setText("");
         txtNombreMedico.setText("");
-        txtNotaDetalleCita.setText("");
+//        txtNotaDetalleCita.setText("");
         txtNotaMascota.setText("");
         txtNumero.setText("");
         txtSubtotal.setText("");
         txtTelefono.setText("");
         txtTotal.setText("");
 
-        rdbBoleta.setSelected(false);
-        rdbFactura.setSelected(false);
         cboServicios.setSelectedIndex(0);
     }
 
     private void limpiarControlesDespuesDeAgregarServicio() {
 
-        txtNotaDetalleCita.setText("");
+//        txtNotaDetalleCita.setText("");
 
         Calendar calendario = Calendar.getInstance();
         calendario.set(Calendar.HOUR_OF_DAY, 12);
@@ -209,8 +316,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         calendario.set(Calendar.MILLISECOND, 0);
 
         Date horaCero = calendario.getTime();
-        spnHoraEntrada.setValue(horaCero);
-        spnHoraSalida.setValue(horaCero);
 
         cboServicios.setSelectedIndex(0);
         txtDocMedico.setText("");
@@ -321,8 +426,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         btnBuscarDuenio = new javax.swing.JButton();
         txtCodDuenio = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
-        rdbBoleta = new javax.swing.JRadioButton();
-        rdbFactura = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDetalleServicio = new javax.swing.JTable();
@@ -340,12 +443,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         txtNotaMascota = new javax.swing.JTextField();
         btnBuscarMascota = new javax.swing.JButton();
         txtCodMascota = new javax.swing.JTextField();
-        jPanel11 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        txtNotaDetalleCita = new javax.swing.JTextField();
-        spnHoraEntrada = new javax.swing.JSpinner();
-        spnHoraSalida = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -563,79 +660,51 @@ public class jdProgramacionCita extends javax.swing.JDialog {
             }
         });
 
-        buttonGroup1.add(rdbBoleta);
-        rdbBoleta.setText("Boleta");
-        rdbBoleta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbBoletaActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(rdbFactura);
-        rdbFactura.setText("Factura");
-        rdbFactura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbFacturaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtDocDuenio, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
                         .addGap(18, 18, 18)
-                        .addComponent(btnBuscarDuenio))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtDocDuenio)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnBuscarDuenio))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtCodDuenio, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNombreCliente))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtCodDuenio, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombreCliente)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(rdbBoleta)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(rdbFactura)
-                        .addGap(32, 32, 32))))
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtTelefono)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBuscarDuenio)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtDocDuenio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtCodDuenio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8)
-                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(rdbBoleta)
-                            .addComponent(rdbFactura))))
+                    .addComponent(btnBuscarDuenio)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtDocDuenio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtCodDuenio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -763,7 +832,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtEdadMascota))
                     .addComponent(txtNotaMascota))
-                .addGap(0, 20, Short.MAX_VALUE))
+                .addGap(0, 32, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -786,49 +855,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel11.setBackground(new java.awt.Color(204, 255, 204));
-
-        jLabel13.setText("Hora de entrada - Hora de salida");
-
-        jLabel23.setText("Nota:");
-
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel23)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtNotaDetalleCita, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(jLabel13))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(spnHoraEntrada)
-                        .addGap(18, 18, 18)
-                        .addComponent(spnHoraSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(41, Short.MAX_VALUE))
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(spnHoraEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spnHoraSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNotaDetalleCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23))
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -836,7 +862,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -844,10 +869,10 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -856,11 +881,9 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -886,23 +909,10 @@ public class jdProgramacionCita extends javax.swing.JDialog {
             // Obtener otros datos necesarios
             int numero = Integer.parseInt(txtNumero.getText());
             String observacion = txtAObservacion.getText();
-            String notaDetalle = txtNotaDetalleCita.getText();
 
             if (observacion.isEmpty()) {
                 observacion = "Sin observación";
             }
-
-            if (notaDetalle.isEmpty()) {
-                notaDetalle = "Sin nota adicional";
-            }
-
-            Date horaDate = (Date) spnHoraEntrada.getValue();
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            String horaEntrada = sdf.format(horaDate);
-
-            Date horaDate2 = (Date) spnHoraSalida.getValue();
-            SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
-            String horaSalida = sdf2.format(horaDate2);
 
 //            System.out.println("Datos de Cita:");
 //            System.out.println("Número: " + numero);
@@ -970,9 +980,12 @@ public class jdProgramacionCita extends javax.swing.JDialog {
 
         int codServicio = objAniadirServicio.getCodServicio();
         int codMedico = objAniadirServicio.getCodMedico();
+        String horaEntrada = objAniadirServicio.getHoraEntrada();
+        String horaSalida = objAniadirServicio.getHoraSalida();
+
         try {
             System.out.println(codServicio + " - " + codMedico);
-            agregarServicio(codServicio, codMedico);
+            agregarServicio(codServicio, codMedico, horaEntrada, horaSalida);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -982,7 +995,18 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAgregarServicioActionPerformed
 
     private void btnEliminarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarServicioActionPerformed
-        // TODO add your handling code here:
+//        String cadena = String.valueOf(tblDetalleServicio.getValueAt(tblDetalleServicio.getSelectedRow(), 0));
+//        String[] codigos = cadena.split(" - ");
+//        int codigoSer = Integer.parseInt(txtCodServicio.getText());
+//        int codTablaMed = Integer.parseInt(codigos[1].trim());
+
+        int valor = Utilidad.mensajeConfirmarEliminarDetalleServicio(cboServicios.getSelectedItem().toString() + "\"");
+
+        if (valor == 0) {
+            DefaultTableModel modelito = (DefaultTableModel) tblDetalleServicio.getModel();
+            modelito.removeRow(tblDetalleServicio.getSelectedRow());
+        }
+
     }//GEN-LAST:event_btnEliminarServicioActionPerformed
 
     private void txtDocMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDocMedicoActionPerformed
@@ -1031,11 +1055,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
 
                 txtTelefono.setText(rsCliente.getString("telefono"));
 
-                if (rsCliente.getString("doc_identidad").length() != 11) {
-                    rdbBoleta.setSelected(true);
-                } else {
-                    rdbFactura.setSelected(true);
-                }
             } else {
                 if (JOptionPane.showConfirmDialog(this, "Dueño no existe ¿Desea registrarlo?", "Alerta!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     jdMantDuenio objMantDuenio = new jdMantDuenio(null, true);
@@ -1094,14 +1113,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnBuscarMascotaActionPerformed
 
-    private void rdbBoletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbBoletaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rdbBoletaActionPerformed
-
-    private void rdbFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbFacturaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rdbFacturaActionPerformed
-
     private void tblDetalleServicioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblDetalleServicioKeyPressed
 
 //        ResultSet rsMed;
@@ -1142,7 +1153,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -1150,13 +1160,11 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1164,10 +1172,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JRadioButton rdbBoleta;
-    private javax.swing.JRadioButton rdbFactura;
-    private javax.swing.JSpinner spnHoraEntrada;
-    private javax.swing.JSpinner spnHoraSalida;
     private javax.swing.JTable tblDetalleServicio;
     private javax.swing.JTextArea txtAObservacion;
     private javax.swing.JTextField txtCodDuenio;
@@ -1180,7 +1184,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     private javax.swing.JTextField txtNombreCliente;
     private javax.swing.JTextField txtNombreMascota;
     private javax.swing.JTextField txtNombreMedico;
-    private javax.swing.JTextField txtNotaDetalleCita;
     private javax.swing.JTextField txtNotaMascota;
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtSubtotal;

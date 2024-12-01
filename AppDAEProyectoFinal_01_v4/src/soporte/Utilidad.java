@@ -27,7 +27,6 @@ import javax.swing.text.NumberFormatter;
  * @author franc
  */
 public class Utilidad {
-    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL = "";
@@ -222,6 +221,20 @@ public class Utilidad {
         if (!(numeros || punto)) {
             evt.consume();
         }
+    }
+
+    public static int mensajeConfirmarEliminarDetalleServicio(String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null,
+                "¿Está seguro que desea eliminar el servicio \"" + nombre + "?",
+                "Confirmar Eliminacion",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesEliminar,
+                opcionesEliminar[0]
+        );
+        return valor;
     }
 
 //    public static void validarCampoTextoSoloLetras(java.awt.event.KeyEvent evt) {
@@ -595,7 +608,6 @@ public class Utilidad {
             table.setDefaultEditor(Object.class, null);
         }
     }
-
 
     public static void atajoTecladoBoton(JDialog dialog, JButton boton, char tecla, String nombreAccion) {
         // Para ejecutar el botón con CTRL + tecla
