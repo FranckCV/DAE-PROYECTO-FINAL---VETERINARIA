@@ -171,6 +171,28 @@ public class clsUsuario {
             throw new Exception("Error al modificar el usuario --> " + e.getMessage());
         }
     }
+    
+    public void modificarInfoUsuarioVet(
+            Integer codUsuario, 
+            String nomUsuario, 
+            boolean sexo,
+            String nombres, 
+            String apPaterno, 
+            String apMaterno
+    ) throws Exception {
+        strSQL = " Update usuario set "
+                + " nomUsuario = '" + nomUsuario + "', "
+                + " sexo = " + sexo+ ", "
+                + " nombres = '" + nombres + "', "
+                + " apPaterno = '" + apPaterno + "', "
+                + " apMaterno = '" + apMaterno+ "' "
+                + " where codUsuario = " + codUsuario;
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al modificar el usuario --> " + e.getMessage());
+        }
+    }
 
     public void darBaja(int codUsuario) throws Exception {
         strSQL = "UPDATE usuario SET estado = false WHERE codUsuario = " + codUsuario;
@@ -237,5 +259,32 @@ public class clsUsuario {
             throw new Exception("Error al modificar contraseña");
         }
     }
+    
+//    public void registrarUsuarioVeterinario(int codUsuario, String nomUsuario, boolean estado, boolean sexo, String clave,
+//            String nombres, String apPaterno, String apMaterno) throws Exception {
+//        String strSQL = "INSERT INTO usuario (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) "
+//                + "VALUES (?, ?, ?, ?, md5(? || ? || 'CODE146'), ?, ?, ?, 'M')";
+//        try {
+//            Connection micon = null;
+//            objConectar.conectar();
+//            micon = objConectar.getCon();
+//            PreparedStatement sp = micon.prepareStatement(strSQL);
+//
+//            sp.setInt(1, codUsuario);
+//            sp.setString(2, nomUsuario);
+//            sp.setBoolean(3, estado);
+//            sp.setBoolean(4, sexo);
+//            sp.setString(5, clave);
+//            sp.setString(6, nomUsuario);
+//            sp.setString(7, nombres);
+//            sp.setString(8, apPaterno);
+//            sp.setString(9, apMaterno);
+//
+//            sp.executeUpdate();
+//        } catch (Exception e) {
+//            throw new Exception("Error al registrar el usuario --> " + e.getMessage());
+//        }
+//    }
+
     
 }

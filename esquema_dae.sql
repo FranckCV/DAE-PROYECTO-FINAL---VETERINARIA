@@ -3,7 +3,7 @@ create table USUARIO (
   nomusuario varchar(30) not null unique, 
   estado     bool not null, 
   sexo       bool not null, 
-  clave      varchar(100) not null, 
+  clave      varchar(150) not null, 
   nombres    varchar(50) not null, 
   apPaterno  varchar(40) not null, 
   apMaterno  varchar(40) not null, 
@@ -27,17 +27,18 @@ create table ESPECIALIDAD (
   disponibilidad   bool not null, 
   primary key (id));
 
-create table MEDICO (
-  id              int4 not null, 
-  nombres         varchar(150) not null, 
-  apePaterno      varchar(200) not null, 
-  apeMaterno      varchar(200) not null, 
-  doc_identidad   varchar(20) not null, 
-  sexo            bool not null, 
-  disponibilidad  bool not null, 
-  vigencia        bool not null, 
-  especialidad_id int4 not null, 
-  primary key (id));
+CREATE TABLE MEDICO (
+  id                int4 NOT NULL, 
+  nombres           varchar(150) NOT NULL, 
+  apePaterno        varchar(200) NOT NULL, 
+  apeMaterno        varchar(200) NOT NULL, 
+  doc_identidad     varchar(20) NOT NULL, 
+  sexo              bool NOT NULL, 
+  disponibilidad    bool NOT NULL, 
+  vigencia          bool NOT NULL, 
+  especialidad_id   int4 NOT NULL, 
+  USUARIOcodUsuario int4 NOT NULL, 
+  PRIMARY KEY (id));
 
 create table DETALLE_SERVICIO (
   servicio_id     int4 not null,
@@ -148,7 +149,7 @@ create table DETALLE_CITA (
   detalle_servicio_med_id  int4 not null, 
   horaEntrada              time not null, 
   horaSalida               time not null, 
-  nota_adicional           text not null, 
+  nota_adicional           text null, 
   primary key (cita_id, 
   detalle_servicio_serv_id, 
   detalle_servicio_med_id));
@@ -187,6 +188,7 @@ create table DETALLE_MEDICAMENTO (
   detalle_servicio_medico_id));
 
 
+ALTER TABLE MEDICO ADD CONSTRAINT FKMEDICO619165 FOREIGN KEY (USUARIOcodUsuario) REFERENCES USUARIO (codUsuario);
 alter table RAZA add constraint FKRAZA702100 foreign key (especie_id) references ESPECIE (id);
 alter table MASCOTA add constraint FKMASCOTA643044 foreign key (raza_id) references RAZA (id);
 alter table MEDICO add constraint FKMEDICO608762 foreign key (especialidad_id) references ESPECIALIDAD (id);
@@ -291,28 +293,46 @@ END $$ LANGUAGE plpgsql;
 
 --USUARIOS
 INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (1, 'jdoe', TRUE, TRUE, md5('1234' || 'jdoe' || 'CODE146'), 'John', 'Doe', 'Smith', 'V');
-
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (2, 'mgarcia', TRUE, FALSE, md5('4567' || 'mgarcia' || 'CODE146'), 'Maria', 'Garcia', 'Lopez', 'E');
-
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (3, 'arivera', TRUE, TRUE, md5('7890' || 'arivera' || 'CODE146'), 'Alex', 'Rivera', 'Martinez', 'A');
-
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (4, 'lfernandez', FALSE, FALSE, md5('1011' || 'lfernandez' || 'CODE146'), 'Laura', 'Fernandez', 'Soto', 'V');
-
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (5, 'cperez', TRUE, TRUE, md5('1021' || 'cperez' || 'CODE146'), 'Carlos', 'Perez', 'Gutierrez', 'E');
-
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (6, 'asanchez', FALSE, TRUE, md5('1031' || 'asanchez' || 'CODE146'), 'Andres', 'Sanchez', 'Lopez', 'V');
-
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (7, 'fabi', FALSE, TRUE, md5('123' || 'fabi' || 'CODE146'), 'Fabiana', 'Paucar', 'Mejia', 'V');
-
-INSERT INTO USUARIO (codUsuario, nomusuario, estado, sexo, clave, nombres, apPaterno, apMaterno, cargo) 
-VALUES (8, 'Admin_Fab', TRUE, TRUE, md5('123' || 'Admin_Fab' || 'CODE146'), 'Fabiana', 'Paucar', 'Mejia', 'V');
+VALUES 
+(1, 'jdoe', TRUE, TRUE, md5('1234' || 'jdoe' || 'CODE146'), 'John', 'Doe', 'Smith', 'A'),
+(2, 'mgarcia', TRUE, FALSE, md5('4567' || 'mgarcia' || 'CODE146'), 'Maria', 'Garcia', 'Lopez', 'E'),
+(3, 'arivera', TRUE, TRUE,  md5('7890' || 'arivera' || 'CODE146'), 'Alex', 'Rivera', 'Martinez', 'A'),
+(4, 'lfernandez', FALSE, FALSE, md5('1011' || 'lfernandez' || 'CODE146'), 'Laura', 'Fernandez', 'Soto', 'V'),
+(5, 'cperez', TRUE, TRUE, md5('1021' || 'cperez' || 'CODE146'), 'Carlos', 'Perez', 'Gutierrez', 'E'),
+(6, 'asanchez', FALSE, TRUE, md5('1031' || 'asanchez' || 'CODE146'), 'Andres', 'Sanchez', 'Lopez', 'V'),
+(7, 'fabi', FALSE, TRUE, md5('123' || 'fabi' || 'CODE146'), 'Fabiana', 'Paucar', 'Mejia', 'V'),
+(8, 'Admin_Fab', TRUE, TRUE, md5('123' || 'Admin_Fab' || 'CODE146'), 'Fabiana', 'Paucar', 'Mejia', 'V'),
+(9, 'dtorres', TRUE, TRUE, md5('2024' || 'dtorres' || 'CODE146'), 'David', 'Torres', 'Guzman', 'V'),
+(10, 'slopez', TRUE, FALSE, md5('3035' || 'slopez' || 'CODE146'), 'Sofia', 'Lopez', 'Mendoza', 'V'),
+(11, 'emolina', TRUE, TRUE, md5('4046' || 'emolina' || 'CODE146'), 'Erick', 'Molina', 'Campos', 'V'),
+(12, 'fluna', FALSE, TRUE, md5('5057' || 'fluna' || 'CODE146'), 'Fernando', 'Luna', 'Rivera', 'V'),
+(13, 'gprieto', TRUE, FALSE, md5('6068' || 'gprieto' || 'CODE146'), 'Gabriela', 'Prieto', 'Cruz', 'V'),
+(14, 'vmartinez', TRUE, TRUE, md5('7079' || 'vmartinez' || 'CODE146'), 'Victor', 'Martinez', 'Reyes', 'V'),
+(15, 'rrios', FALSE, TRUE, md5('8080' || 'rrios' || 'CODE146'), 'Rafael', 'Rios', 'Gonzalez', 'V'),
+(16, 'mcarrillo', TRUE, TRUE, md5('9091' || 'mcarrillo' || 'CODE146'), 'María', 'Carrillo', 'Soto', 'V'),
+(17, 'acastro', TRUE, FALSE, md5('1011' || 'acastro' || 'CODE146'), 'Andrea', 'Castro', 'Velasco', 'V'),
+(18, 'fjimenez', TRUE, TRUE, md5('1213' || 'fjimenez' || 'CODE146'), 'Francisco', 'Jimenez', 'Rojas', 'V'),
+(19, 'cluna', TRUE, TRUE, md5('1314' || 'cluna' || 'CODE146'), 'Carlos', 'Luna', 'Gutierrez', 'V'),
+(20, 'mfernandez', TRUE, FALSE, md5('1415' || 'mfernandez' || 'CODE146'), 'Mariana', 'Fernandez', 'Perez', 'V'),
+(21, 'jmartinez', FALSE, TRUE, md5('1516' || 'jmartinez' || 'CODE146'), 'Javier', 'Martinez', 'Sanchez', 'V'),
+(22, 'lorozco', TRUE, FALSE, md5('1617' || 'lorozco' || 'CODE146'), 'Lucia', 'Orozco', 'Mora', 'V'),
+(23, 'ggarcia', TRUE, TRUE, md5('1718' || 'ggarcia' || 'CODE146'), 'Gustavo', 'Garcia', 'Vargas', 'V'),
+(24, 'nsolano', FALSE, TRUE, md5('1819' || 'nsolano' || 'CODE146'), 'Nicolas', 'Solano', 'Vega', 'V'),
+(25, 'rmendez', TRUE, TRUE, md5('1920' || 'rmendez' || 'CODE146'), 'Rosa', 'Mendez', 'Ortiz', 'V'),
+(26, 'dvera', TRUE, TRUE, md5('2021' || 'dvera' || 'CODE146'), 'Diego', 'Vera', 'Lopez', 'V'),
+(27, 'kcastillo', TRUE, FALSE, md5('2122' || 'kcastillo' || 'CODE146'), 'Karen', 'Castillo', 'Guzman', 'V'),
+(28, 'pfigueroa', TRUE, TRUE, md5('2223' || 'pfigueroa' || 'CODE146'), 'Pedro', 'Figueroa', 'Chavez', 'V'),
+(29, 'amendoza', TRUE, FALSE, md5('2324' || 'amendoza' || 'CODE146'), 'Ana', 'Mendoza', 'Salazar', 'V'),
+(30, 'cmontero', TRUE, TRUE, md5('2425' || 'cmontero' || 'CODE146'), 'Carlos', 'Montero', 'Reyes', 'V'),
+(31, 'vmorales', FALSE, TRUE, md5('2526' || 'vmorales' || 'CODE146'), 'Victor', 'Morales', 'Lopez', 'V'),
+(32, 'lleon', TRUE, TRUE, md5('2627' || 'lleon' || 'CODE146'), 'Luis', 'León', 'Gonzalez', 'V'),
+(33, 'aflores', TRUE, FALSE, md5('2728' || 'aflores' || 'CODE146'), 'Adriana', 'Flores', 'Mejia', 'V'),
+(34, 'jbustamante', TRUE, TRUE, md5('2829' || 'jbustamante' || 'CODE146'), 'Jose', 'Bustamante', 'Campos', 'V'),
+(35, 'mmiranda', TRUE, FALSE, md5('2930' || 'mmiranda' || 'CODE146'), 'Maria', 'Miranda', 'Ortiz', 'V'),
+(36, 'gvelasquez', TRUE, TRUE, md5('3031' || 'gvelasquez' || 'CODE146'), 'Gabriel', 'Velasquez', 'Mendoza', 'V'),
+(37, 'krojas', FALSE, FALSE, md5('3132' || 'krojas' || 'CODE146'), 'Karla', 'Rojas', 'Fernandez', 'V'),
+(38, 'ffuentes', TRUE, TRUE, md5('3233' || 'ffuentes' || 'CODE146'), 'Fernando', 'Fuentes', 'Diaz', 'V'),
+(39, 'hcardenas', TRUE, TRUE, md5('3334' || 'hcardenas' || 'CODE146'), 'Hugo', 'Cárdenas', 'Ramirez', 'V');
 
 
 
@@ -390,39 +410,43 @@ INSERT INTO SERVICIO (id, nom_servicio, descripcion, costo, disponibilidad) VALU
 (30, 'Consulta Exótica', 'Atención a animales no convencionales', 200.00, FALSE);
 
 
-
-INSERT INTO MEDICO (id, doc_identidad, nombres, apePaterno, apeMaterno, sexo, disponibilidad, vigencia, especialidad_id) 
+INSERT INTO MEDICO (id, nombres, apePaterno, apeMaterno, doc_identidad, sexo, disponibilidad, vigencia, especialidad_id, USUARIOcodUsuario) 
 VALUES 
-(1, '12345678', 'Juan', 'Pérez', 'García', TRUE, TRUE, TRUE, 1),
-(2, '23456789', 'Carlos', 'Gómez', 'Sánchez', TRUE, FALSE, FALSE, 5),
-(3, '34567890', 'Pedro', 'Hernández', 'Ramírez', TRUE, FALSE, TRUE, 5),
-(4, '87654321', 'Ana', 'López', 'Martínez', FALSE, FALSE, TRUE, 2), 
-(5, '98765432', 'Lucía', 'Rodríguez', 'Morales', FALSE, TRUE, TRUE, 4),
-(6, '45678901', 'Sofía', 'Mendoza', 'Villanueva', FALSE, TRUE, TRUE, 6),
-(7, '56789012', 'María', 'Torres', 'Pérez', FALSE, TRUE, FALSE, 7),
-(8, '67890123', 'Diego', 'Vargas', 'Fernández', TRUE, FALSE, TRUE, 8),
-(9, '78901234', 'Carmen', 'Ortega', 'Rivera', FALSE, TRUE, TRUE, 9),
-(10, '89012345', 'Luis', 'Jiménez', 'Soto', TRUE, TRUE, TRUE, 10),
-(11, '90123456', 'Gabriel', 'Silva', 'Chávez', TRUE, FALSE, TRUE, 11),
-(12, '01234567', 'Pablo', 'Martínez', 'Campos', TRUE, TRUE, TRUE, 12),
-(13, '09876543', 'Alejandro', 'Luna', 'Quispe', TRUE, TRUE, TRUE, 13),
-(14, '87654320', 'Elena', 'Castro', 'Muñoz', FALSE, TRUE, TRUE, 14),
-(15, '76543210', 'Laura', 'Reyes', 'Ríos', FALSE, TRUE, TRUE, 15),
-(16, '65432109', 'Hugo', 'Figueroa', 'Cruz', TRUE, FALSE, TRUE, 16),
-(17, '54321098', 'Valeria', 'Espinoza', 'Vega', FALSE, TRUE, TRUE, 17),
-(18, '43210987', 'Fernando', 'Arce', 'Valdés', TRUE, FALSE, TRUE, 18),
-(19, '32109876', 'Cristina', 'Palacios', 'Montalvo', FALSE, TRUE, TRUE, 19),
-(20, '21098765', 'Enrique', 'Rosas', 'Zeballos', TRUE, TRUE, TRUE, 20),
-(21, '19876543', 'Martín', 'Carrasco', 'Beltrán', TRUE, TRUE, TRUE, 21),
-(22, '12345670', 'Andrés', 'Romero', 'Campos', TRUE, TRUE, TRUE, 22),
-(23, '67890543', 'Gloria', 'Vidal', 'Peña', FALSE, TRUE, TRUE, 23),
-(24, '09876541', 'Adriana', 'Quinteros', 'Núñez', FALSE, TRUE, TRUE, 24),
-(25, '34567890', 'Felipe', 'Díaz', 'Muñoz', TRUE, FALSE, TRUE, 25),
-(26, '45678901', 'Raúl', 'Pérez', 'Fernández', TRUE, TRUE, TRUE, 26),
-(27, '56789012', 'Patricia', 'Ríos', 'Castillo', FALSE, TRUE, FALSE, 27),
-(28, '23456789', 'Ricardo', 'Torres', 'Molina', TRUE, FALSE, TRUE, 28),
-(29, '89012345', 'Angela', 'Villanueva', 'Campos', FALSE, TRUE, TRUE, 29),
-(30, '90123456', 'Esteban', 'Jiménez', 'Soto', TRUE, TRUE, TRUE, 30);
+(1, 'Laura', 'Fernandez', 'Soto', '10000001', FALSE, TRUE, TRUE, 1, 4),
+(2, 'Andres', 'Sanchez', 'Lopez', '10000002', TRUE, TRUE, TRUE, 1, 6),
+(3, 'Fabiana', 'Paucar', 'Mejia', '10000003', TRUE, TRUE, TRUE, 2, 7),
+(4, 'Fabiana', 'Paucar', 'Mejia', '10000004', TRUE, TRUE, TRUE, 2, 8),
+(5, 'David', 'Torres', 'Guzman', '10000005', TRUE, TRUE, TRUE, 3, 9),
+(6, 'Sofia', 'Lopez', 'Mendoza', '10000006', FALSE, TRUE, TRUE, 3, 10),
+(7, 'Erick', 'Molina', 'Campos', '10000007', TRUE, TRUE, TRUE, 4, 11),
+(8, 'Fernando', 'Luna', 'Rivera', '10000008', TRUE, TRUE, TRUE, 4, 12),
+(9, 'Gabriela', 'Prieto', 'Cruz', '10000009', FALSE, TRUE, TRUE, 5, 13),
+(10, 'Victor', 'Martinez', 'Reyes', '10000010', TRUE, TRUE, TRUE, 5, 14),
+(11, 'Rafael', 'Rios', 'Gonzalez', '10000011', TRUE, TRUE, TRUE, 6, 15),
+(12, 'María', 'Carrillo', 'Soto', '10000012', TRUE, TRUE, TRUE, 6, 16),
+(13, 'Andrea', 'Castro', 'Velasco', '10000013', FALSE, TRUE, TRUE, 7, 17),
+(14, 'Francisco', 'Jimenez', 'Rojas', '10000014', TRUE, TRUE, TRUE, 7, 18),
+(15, 'Carlos', 'Luna', 'Gutierrez', '10000015', TRUE, TRUE, TRUE, 8, 19),
+(16, 'Mariana', 'Fernandez', 'Perez', '10000016', FALSE, TRUE, TRUE, 8, 20),
+(17, 'Javier', 'Martinez', 'Sanchez', '10000017', TRUE, TRUE, TRUE, 9, 21),
+(18, 'Lucia', 'Orozco', 'Mora', '10000018', FALSE, TRUE, TRUE, 9, 22),
+(19, 'Gustavo', 'Garcia', 'Vargas', '10000019', TRUE, TRUE, TRUE, 10, 23),
+(20, 'Nicolas', 'Solano', 'Vega', '10000020', TRUE, TRUE, TRUE, 10, 24),
+(21, 'Rosa', 'Mendez', 'Ortiz', '10000021', TRUE, TRUE, TRUE, 11, 25),
+(22, 'Diego', 'Vera', 'Lopez', '10000022', TRUE, TRUE, TRUE, 11, 26),
+(23, 'Karen', 'Castillo', 'Guzman', '10000023', FALSE, TRUE, TRUE, 12, 27),
+(24, 'Pedro', 'Figueroa', 'Chavez', '10000024', TRUE, TRUE, TRUE, 12, 28),
+(25, 'Ana', 'Mendoza', 'Salazar', '10000025', FALSE, TRUE, TRUE, 13, 29),
+(26, 'Carlos', 'Montero', 'Reyes', '10000026', TRUE, TRUE, TRUE, 13, 30),
+(27, 'Victor', 'Morales', 'Lopez', '10000027', TRUE, TRUE, TRUE, 14, 31),
+(28, 'Luis', 'León', 'Gonzalez', '10000028', TRUE, TRUE, TRUE, 14, 32),
+(29, 'Adriana', 'Flores', 'Mejia', '10000029', FALSE, TRUE, TRUE, 15, 33),
+(30, 'Jose', 'Bustamante', 'Campos', '10000030', TRUE, TRUE, TRUE, 15, 34),
+(31, 'Maria', 'Miranda', 'Ortiz', '10000031', FALSE, TRUE, TRUE, 16, 35),
+(32, 'Gabriel', 'Velasquez', 'Mendoza', '10000032', TRUE, TRUE, TRUE, 16, 36),
+(33, 'Karla', 'Rojas', 'Fernandez', '10000033', FALSE, TRUE, TRUE, 17, 37),
+(34, 'Fernando', 'Fuentes', 'Diaz', '10000034', TRUE, TRUE, TRUE, 17, 38),
+(35, 'Hugo', 'Cárdenas', 'Ramirez', '10000035', TRUE, TRUE, TRUE, 18, 39);
 
 
 
