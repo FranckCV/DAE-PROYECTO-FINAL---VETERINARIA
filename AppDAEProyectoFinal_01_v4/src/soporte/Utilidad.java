@@ -6,6 +6,8 @@ package soporte;
 
 import capaDatos.clsJDBC;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
@@ -21,6 +23,7 @@ import javax.swing.text.NumberFormatter;
  * @author franc
  */
 public class Utilidad {
+    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL = "";
@@ -37,6 +40,7 @@ public class Utilidad {
     public static final String BTN_VIGENCIA = "Dar de Baja";
     public static final String BTN_AGREGAR = "Agregar";
     public static final String BTN_QUITAR = "Quitar";
+    public static final String BTN_CONTRASENIA = "Cambiar Contraseña";
 
 //    Texto en Listados
     public static final String SEXO_MAS = "Masculino";
@@ -163,6 +167,14 @@ public class Utilidad {
         }
     }
 
+//    Texto a Fechas
+    public static String textoFormatoFecha(String fechaOriginal) {
+        LocalDate fecha = LocalDate.parse(fechaOriginal);
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String fechaFormateada = fecha.format(formato);
+        return fechaFormateada;
+    }
+
 //    Validaciones de Elementos de Interfaz
     public static void validarLimiteCampoTexto(java.awt.event.KeyEvent evt, String columna, String tabla) throws Exception {
         JTextField source = (JTextField) evt.getSource();
@@ -208,15 +220,31 @@ public class Utilidad {
         }
     }
 
+//    public static void validarCampoTextoSoloLetras(java.awt.event.KeyEvent evt) {
+//        int key = evt.getKeyChar();
+//
+//        boolean mayusculas = key >= 65 && key <= 90;
+//        boolean minusculas = key >= 97 && key <= 122;
+//        boolean tildes = 
+//                (key >= 160 && key <= 163) || // á í ó ú 
+//                key == 130 || key == 144 || // é É
+//                key == 181 || // Á
+//                key == 224 || // Ó
+//                key == 233 || // Ú
+//                key == 239; // ´
+//        boolean enie = key == 164 || key == 165;
+//        boolean espacio = key == 32;
+//
+//        if (!( minusculas || mayusculas || espacio || tildes || enie )) {
+//            evt.consume();
+//        }
+//    }
     public static void validarCampoTextoSoloLetras(java.awt.event.KeyEvent evt) {
-        int key = evt.getKeyChar();
+        char key = evt.getKeyChar();
 
-        boolean mayusculas = key >= 65 && key <= 90;
-        boolean minusculas = key >= 97 && key <= 122;
-        boolean espacio = key == 32;
-
-        if (!(minusculas || mayusculas || espacio)) {
-            evt.consume();
+        // Verificar si el carácter es una letra o un espacio
+        if (!(Character.isLetter(key) || Character.isSpaceChar(key))) {
+            evt.consume(); // Consumir evento si no es válido
         }
     }
 
@@ -228,14 +256,9 @@ public class Utilidad {
     }
 
     public static void validarCampoTextoDocIdentidad(java.awt.event.KeyEvent evt) {
-//        if(evt.getComponent()getText().length() >= 8) {
-//            evt.consume();
-//        }
-
         int key = evt.getKeyChar();
 
         boolean numeros = key >= 48 && key <= 57;
-//        boolean guion = key == 45;
 
         if (!(numeros)) {
             evt.consume();
@@ -348,8 +371,7 @@ public class Utilidad {
         return valor;
     }
 
-    
-    public static int mensajeConfirmarModificarContraseña(String entidad , int id ,String nombre) {
+    public static int mensajeConfirmarModificarContraseña(String entidad, int id, String nombre) {
         int valor = JOptionPane.showOptionDialog(
                 null,
                 "¿Está seguro de modificar contraseña " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: " + id + ")? ",
@@ -363,10 +385,7 @@ public class Utilidad {
         return valor;
     }
 
-
-    
-    public static void mensajeErrorNoEliminarForanea(String entidad , String nombre) {
-
+    public static void mensajeErrorNoEliminarForanea(String entidad, String nombre) {
         JOptionPane.showMessageDialog(
                 null,
                 "Hay datos externos asociados a " + entidad.toLowerCase() + " \"" + nombre + "\".\n"
@@ -525,14 +544,14 @@ public class Utilidad {
     //DESACTIVAR CAMPOS
     public static void desactivarFields(JTextField textFieldActivo, JTextField... textFields) {
         for (JTextField textField : textFields) {
-            textField.setEnabled(textField.equals(textFieldActivo));
+            textField.setEditable(textField.equals(textFieldActivo));
         }
     }
 
     //ACTIVAR CAMPOS
     public static void activarFields(JTextField... textFields) {
         for (JTextField textField : textFields) {
-            textField.setEnabled(true);
+            textField.setEditable(true);
         }
     }
 
@@ -554,7 +573,6 @@ public class Utilidad {
         }
     }
 
-    
     public static boolean buscarYConfigurar(String tabla, String columna, int id, JTextField txtNombre, JButton btnModificar, JButton btnEliminar) throws Exception {
         clsJDBC objConectar = new clsJDBC();
         String strSQL = "SELECT nomtipo FROM " + tabla + " WHERE " + columna + " = " + id;
@@ -578,13 +596,22 @@ public class Utilidad {
         }
         return false;
     }
-    
-    
+
     public static void fijarColumnasTabla(JTable table) {
         table.getTableHeader().setReorderingAllowed(false);
     }
-    
-    
-    
-    
+
+
+    public static void atajoTecladoBoton(JDialog dialog, JButton boton, char tecla, String nombreAccion) {
+        // Para ejecutar el botón con CTRL + tecla
+        dialog.getRootPane().getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(javax.swing.KeyStroke.getKeyStroke(tecla, java.awt.event.InputEvent.CTRL_DOWN_MASK), nombreAccion);
+
+        dialog.getRootPane().getActionMap().put(nombreAccion, new javax.swing.AbstractAction() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                boton.doClick(); // Simula clic en el botón
+            }
+        });
+    }
 }

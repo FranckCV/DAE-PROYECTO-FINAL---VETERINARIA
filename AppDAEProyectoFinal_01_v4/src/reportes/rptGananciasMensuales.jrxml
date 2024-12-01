@@ -2,12 +2,20 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptGananciasMensuales" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="03c6db41-a61d-47a9-8156-5cf8253961a8">
 	<property name="ireport.zoom" value="1.1000000000000016"/>
 	<property name="ireport.x" value="0"/>
+<<<<<<< HEAD
+	<property name="ireport.y" value="201"/>
+=======
 	<property name="ireport.y" value="420"/>
+>>>>>>> 02bb607f29fbed8bdeb31f3acce4c6bad047751e
 	<parameter name="parAnioReporte" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+<<<<<<< HEAD
+		<defaultValueExpression><![CDATA["src\\reportes\\"]]></defaultValueExpression>
+=======
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+>>>>>>> 02bb607f29fbed8bdeb31f3acce4c6bad047751e
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -205,7 +213,7 @@ ORDER BY
 				</pie3DPlot>
 			</pie3DChart>
 			<subreport>
-				<reportElement x="17" y="338" width="473" height="225" uuid="2ab90457-2f2d-46e1-b610-3bccc0f9140a"/>
+				<reportElement x="39" y="341" width="473" height="225" uuid="2ab90457-2f2d-46e1-b610-3bccc0f9140a"/>
 				<subreportParameter name="parAnioSub">
 					<subreportParameterExpression><![CDATA[$P{parAnioReporte}]]></subreportParameterExpression>
 				</subreportParameter>

@@ -112,7 +112,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         btnRegistrar.setText(Utilidad.BTN_NUEVO);
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-        usarBotonesMedicamento(true, true, false, false, true, false);
+        usarBotonesMedicamento(true, true, true, true, true, true);
         limpiarControles();
         editableControlesMedicamento(true, false, false, false, false, false, false);
         listarMedicamentos();
@@ -573,7 +573,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                     );
 
                     editableControlesMedicamento(true, true, false, false, false, false, false);
-                    usarBotonesMedicamento(true, true, false, false, true, false);
+                    usarBotonesMedicamento(true, true, true, true, true, true);
                     limpiarControles();
                     listarMedicamentos();
 
@@ -597,6 +597,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
             if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
                 // Preparar los controles para la modificación
+                buscarMedicamento();
                 btnModificar.setText(Utilidad.BTN_GUARDAR);
                 btnEliminar.setText(Utilidad.BTN_CANCELAR);
                 editableControlesMedicamento(false, true, true, true, true, false, true);
@@ -614,7 +615,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "El nombre del tipo de medicamento ya está registrado. Elija un nombre diferente.");
                 return;
             }
-            
+
             int confirmacion = JOptionPane.showConfirmDialog(
                     this,
                     "¿Está seguro de que desea guardar los cambios realizados?",
@@ -730,8 +731,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
         limpiarControles();
-        usarBotonesMedicamento(true, true, false, false, true, false); // Habilita todos los botones
-
+        usarBotonesMedicamento(true, true, true, true, true, true); // Habilita todos los botones
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void spnStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spnStockKeyTyped
@@ -741,11 +741,17 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
+        Utilidad.atajoTecladoBoton(this, btnBuscar, 'B', "buscar");     // CTRL + B
+        Utilidad.atajoTecladoBoton(this, btnRegistrar, 'R', "registrar");   // CTRL + R
+        Utilidad.atajoTecladoBoton(this, btnModificar, 'M', "modificar");   // CTRL + M
+        Utilidad.atajoTecladoBoton(this, btnEliminar, 'E', "eliminar");    // CTRL + E
+        Utilidad.atajoTecladoBoton(this, btnLimpiar, 'L', "limpiar");    // CTRL + L
         listarMedicamentos();
         listarTipoMedicamento();
         limpiarControles();
         editableControlesMedicamento(true, false, false, false, false, false, false);
-        usarBotonesMedicamento(true, true, false, false, true, false); // Habilita "Buscar" y "Registrar"
+        usarBotonesMedicamento(true, true, true, true, true, true); // Habilita "Buscar" y "Registrar"
+
     }//GEN-LAST:event_formWindowOpened
 
     private void chkVigenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkVigenciaActionPerformed
