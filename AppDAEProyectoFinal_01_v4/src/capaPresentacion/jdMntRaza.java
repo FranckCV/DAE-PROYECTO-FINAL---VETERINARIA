@@ -8,6 +8,8 @@ import capaNegocio.clsEspecie;
 import capaNegocio.clsRaza;
 import java.sql.ResultSet;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -465,6 +467,12 @@ public class jdMntRaza extends javax.swing.JDialog {
 
         if (!Character.isDigit(c) && c != '\b') {
             evt.consume();
+        }
+        
+        try {
+            Utilidad.validarLimiteCampoTexto(evt, "id", "usuario");
+        } catch (Exception ex) {
+            Logger.getLogger(jdMntRaza.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_txtIdKeyTyped
 
