@@ -70,7 +70,7 @@
                   <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" pref="144" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="15" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -156,35 +156,21 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel22" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel21" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel27" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="txtCodServicio" pref="81" max="32767" attributes="0"/>
+                      <Component id="txtDocMedico" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtCodServicio" pref="81" max="32767" attributes="0"/>
-                              <Component id="txtDocMedico" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtNombreMedico" max="32767" attributes="0"/>
-                              <Component id="cboServicios" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtDescripcionServicio" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="txtNombreMedico" max="32767" attributes="0"/>
+                      <Component id="cboServicios" pref="318" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="btnEliminarServicio" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnAgregarServicio" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="btnBuscarDetalleServicio" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="btnEliminarServicio" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="btnAgregarServicio" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -194,15 +180,9 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="btnBuscarDetalleServicio" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="btnAgregarServicio" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnEliminarServicio" alignment="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Component id="btnAgregarServicio" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnEliminarServicio" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtCodServicio" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -214,14 +194,9 @@
                               <Component id="txtDocMedico" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtNombreMedico" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel27" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtDescripcionServicio" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -286,26 +261,6 @@
         <Component class="javax.swing.JTextField" name="txtNombreMedico">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreMedicoActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnBuscarDetalleServicio">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/conector/Recursos/buscar-peque&#xf1;o.png"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarDetalleServicioActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel27">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Descrip:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtDescripcionServicio">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDescripcionServicioActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="cboServicios">
@@ -631,6 +586,10 @@
                   </Table>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblDetalleServicioMouseClicked"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tblDetalleServicioKeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
