@@ -383,12 +383,12 @@ public class jdMntEspecie extends javax.swing.JDialog {
                                 txtNombre.getText());
 
                         tblEspecies.setEnabled(true);
-
+                         
                         limpiarControles();
                         listarEspecies();
 
                         Utilidad.activarBotones(btnBuscar, btnEliminar, btnLimpiar, btnModificar);
-
+                        txtId.setEnabled(true);
                         JOptionPane.showMessageDialog(this, "Se registró con éxito");
                     } else {
                         JOptionPane.showMessageDialog(this, "Se canceló operación con éxito");
@@ -469,6 +469,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
                         listarEspecies();
                         JOptionPane.showMessageDialog(this, "Se modificó con exito");
                         tblEspecies.setEnabled(true);
+                        txtId.setEnabled(true);
                     }
 
                 }

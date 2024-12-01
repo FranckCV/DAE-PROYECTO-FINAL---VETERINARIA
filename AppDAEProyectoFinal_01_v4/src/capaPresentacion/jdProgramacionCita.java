@@ -100,6 +100,14 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         modelo.addColumn("NOTA ADICIONAL");
 
         tblDetalleServicio.setModel(modelo);
+
+        tblDetalleServicio.getColumnModel().getColumn(0).setMaxWidth(0);
+        tblDetalleServicio.getColumnModel().getColumn(0).setMinWidth(0);
+        tblDetalleServicio.getColumnModel().getColumn(0).setWidth(0);
+        tblDetalleServicio.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+        tblDetalleServicio.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
+        tblDetalleServicio.getTableHeader().getColumnModel().getColumn(0).setWidth(0);
+
         tblDetalleServicio.getTableHeader().setReorderingAllowed(false); //no mover los headers
     }
 
@@ -298,11 +306,11 @@ public class jdProgramacionCita extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDarBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -655,7 +663,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
                 .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(27, 27, 27))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -760,7 +768,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                         .addComponent(spnHoraEntrada)
                         .addGap(18, 18, 18)
                         .addComponent(spnHoraSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -792,8 +800,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -882,7 +889,16 @@ public class jdProgramacionCita extends javax.swing.JDialog {
 //                            horaEntrada, horaSalida, notaDetalle);
 //                }
 
-                objCita.registrarCita(1, Integer.parseInt(txtCodMascota.getText()), Integer.parseInt(txtCodDuenio.getText()), tblDetalleServicio);
+                if (fechaSeleccionada != null) {
+                    try {
+                        // Llamar al método registrarCita pasándole la fecha
+                        objCita.registrarCita(1, Integer.parseInt(txtCodMascota.getText()), Integer.parseInt(txtCodDuenio.getText()), tblDetalleServicio, fechaCita, observacion);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(this, "Error al registrar cita: " + ex.getMessage());
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Por favor, seleccione una fecha.");
+                }
 
                 JOptionPane.showMessageDialog(this, "Registrado exitosamente");
             } catch (Exception e) {

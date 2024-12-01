@@ -54,7 +54,8 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
         );
         vistaReporteLayout.setVerticalGroup(
             vistaReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 417, Short.MAX_VALUE)
+
+            .addGap(0, 535, Short.MAX_VALUE)
         );
 
         jLabel1.setText("Precio Mínimo:");
@@ -84,7 +85,7 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtPrecioMax, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 655, Short.MAX_VALUE)
                         .addComponent(btnReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
@@ -98,9 +99,15 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(txtPrecioMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReporte))
+<<<<<<< HEAD
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(vistaReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
+=======
+                .addGap(18, 18, 18)
+                .addComponent(vistaReporte)
+                .addContainerGap())
+>>>>>>> 02bb607f29fbed8bdeb31f3acce4c6bad047751e
         );
 
         pack();
@@ -119,8 +126,12 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
             // se puede agregar mas parametros de envio
 
             JRViewer objReporte = new clsReporte().reporteInterno("rptMedicamentosXRangoPrecio.jasper", parametros);
+
+            contenedor.removeAll();
             contenedor.add(objReporte);
-            // Mostrar el reporte
+            contenedor.revalidate();
+            contenedor.repaint();
+            
             this.vistaReporte.setVisible(true);
             // JOptionPane.showMessageDialog(this, "Reporte Mostrado");
             /*

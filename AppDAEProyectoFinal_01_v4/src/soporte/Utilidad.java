@@ -5,6 +5,7 @@
 package soporte;
 
 import capaDatos.clsJDBC;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -139,6 +141,11 @@ public class Utilidad {
 
     public static final String[] opcionesRegistrar = {
         "Registrar datos",
+        "Cancelar"
+    };
+    
+     public static final String[] opcionesAgregarMedicamentos = {
+        "Agregar",
         "Cancelar"
     };
 
@@ -280,6 +287,20 @@ public class Utilidad {
         );
         return valor;
     }
+    
+    public static int mensajeConfirmarAgregarMedicamento(String entidad) {
+        int valor = JOptionPane.showOptionDialog(
+                null,
+                "¿Desea agregar algún " + entidad.toLowerCase() + " ?",
+                "Confirmación ",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesAgregarMedicamentos,
+                opcionesAgregarMedicamentos[0]
+        );
+        return valor;
+    }
 
     public static int mensajeConfirmarEliminar(String entidad, int id, String nombre) {
         int valor = JOptionPane.showOptionDialog(
@@ -366,6 +387,10 @@ public class Utilidad {
     }
 
     public static void mensajeErrorNoEliminarForanea(String entidad, String nombre) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 02bb607f29fbed8bdeb31f3acce4c6bad047751e
         JOptionPane.showMessageDialog(
                 null,
                 "Hay datos externos asociados a " + entidad.toLowerCase() + " \"" + nombre + "\".\n"
@@ -441,12 +466,25 @@ public class Utilidad {
         clsJDBC objConectar = new clsJDBC();
         ResultSet rs;
         try {
-            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where id = " + id + " ");
+            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where id = " + id );
             while (rs.next()) {
                 return !rs.getBoolean(columna);
             }
         } catch (Exception e) {
-            throw new Exception("Error al verificar " + columna.toLowerCase() + " de ID:" + id + " en tabla " + tabla.toLowerCase() + ": " + e.getMessage());
+            throw new Exception("Error al verificar " + columna.toLowerCase() + " de ID: " + id + " en tabla " + tabla.toLowerCase() + ": " + e.getMessage());
+        }
+        return false;
+    }
+     public static boolean verificarElementoParaUsoCodigo(String tabla, String columna, String columna_codigo, Integer id) throws Exception {
+        clsJDBC objConectar = new clsJDBC();
+        ResultSet rs;
+        try {
+            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where "+ columna_codigo +" = " + id );
+            while (rs.next()) {
+                return !rs.getBoolean(columna);
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al verificar " + columna.toLowerCase() + " de ID: " + id + " en tabla " + tabla.toLowerCase() + ": " + e.getMessage());
         }
         return false;
     }
@@ -566,6 +604,20 @@ public class Utilidad {
 
     public static void fijarColumnasTabla(JTable table) {
         table.getTableHeader().setReorderingAllowed(false);
+    }
+
+
+    public static void atajoTecladoBoton(JDialog dialog, JButton boton, char tecla, String nombreAccion) {
+        // Para ejecutar el botón con CTRL + tecla
+        dialog.getRootPane().getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(javax.swing.KeyStroke.getKeyStroke(tecla, java.awt.event.InputEvent.CTRL_DOWN_MASK), nombreAccion);
+
+        dialog.getRootPane().getActionMap().put(nombreAccion, new javax.swing.AbstractAction() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                boton.doClick(); // Simula clic en el botón
+            }
+        });
     }
 
 }
