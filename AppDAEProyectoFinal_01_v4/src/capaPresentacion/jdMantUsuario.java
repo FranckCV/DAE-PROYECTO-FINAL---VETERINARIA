@@ -41,6 +41,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         btnVigencia.setText(Utilidad.BTN_VIGENCIA);
+        Utilidad.validacionTabla(tblUsuario, modal, rootPaneCheckingEnabled, sexo);
         listarCargos();
         listarUsuarios();
     }

@@ -5,9 +5,14 @@
 package soporte;
 
 import capaDatos.clsJDBC;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
@@ -15,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.text.NumberFormatter;
 
@@ -140,8 +146,8 @@ public class Utilidad {
         "Registrar datos",
         "Cancelar"
     };
-    
-     public static final String[] opcionesAgregarMedicamentos = {
+
+    public static final String[] opcionesAgregarMedicamentos = {
         "Agregar",
         "Cancelar"
     };
@@ -265,7 +271,7 @@ public class Utilidad {
         );
         return valor;
     }
-    
+
     public static int mensajeConfirmarAgregarMedicamento(String entidad) {
         int valor = JOptionPane.showOptionDialog(
                 null,
@@ -441,7 +447,7 @@ public class Utilidad {
         clsJDBC objConectar = new clsJDBC();
         ResultSet rs;
         try {
-            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where id = " + id );
+            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where id = " + id);
             while (rs.next()) {
                 return !rs.getBoolean(columna);
             }
@@ -450,11 +456,12 @@ public class Utilidad {
         }
         return false;
     }
-     public static boolean verificarElementoParaUsoCodigo(String tabla, String columna, String columna_codigo, Integer id) throws Exception {
+
+    public static boolean verificarElementoParaUsoCodigo(String tabla, String columna, String columna_codigo, Integer id) throws Exception {
         clsJDBC objConectar = new clsJDBC();
         ResultSet rs;
         try {
-            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where "+ columna_codigo +" = " + id );
+            rs = objConectar.consultarBD("select " + columna + " from " + tabla + " where " + columna_codigo + " = " + id);
             while (rs.next()) {
                 return !rs.getBoolean(columna);
             }
@@ -553,32 +560,22 @@ public class Utilidad {
         }
     }
 
-    public static boolean buscarYConfigurar(String tabla, String columna, int id, JTextField txtNombre, JButton btnModificar, JButton btnEliminar) throws Exception {
-        clsJDBC objConectar = new clsJDBC();
-        String strSQL = "SELECT nomtipo FROM " + tabla + " WHERE " + columna + " = " + id;
-        ResultSet rs = null;
-
-        try {
-            rs = objConectar.consultarBD(strSQL);
-            if (rs.next()) {
-                txtNombre.setText(rs.getString("nomtipo"));
-                txtNombre.setEditable(false);
-                btnModificar.setEnabled(true);
-                btnEliminar.setEnabled(true);
-                return true;
-            }
-        } catch (Exception e) {
-            throw new Exception("Error al buscar en la tabla: " + e.getMessage());
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
+    public static void validacionTabla(JTable table, boolean desactivarReordenacion, boolean desactivarModificacionCabecera, boolean desactivarEdicion) {
+        // Desactivar la reordenación de columnas si es necesario
+        if (desactivarReordenacion) {
+            table.getTableHeader().setReorderingAllowed(false);
         }
-        return false;
-    }
 
-    public static void fijarColumnasTabla(JTable table) {
-        table.getTableHeader().setReorderingAllowed(false);
+        // Desactivar la reordenación y modificación de la cabecera de columnas si es necesario
+        if (desactivarModificacionCabecera) {
+            table.getTableHeader().setReorderingAllowed(false);
+            table.getTableHeader().setResizingAllowed(false);
+        }
+
+        // Desactivar la edición de celdas si es necesario
+        if (desactivarEdicion) {
+            table.setDefaultEditor(Object.class, null);
+        }
     }
 
     public static void atajoTecladoBoton(JDialog dialog, JButton boton, char tecla, String nombreAccion) {
@@ -593,5 +590,7 @@ public class Utilidad {
             }
         });
     }
+
+
 
 }

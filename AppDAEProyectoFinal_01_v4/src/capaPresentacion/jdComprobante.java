@@ -4,6 +4,8 @@
  */
 package capaPresentacion;
 
+import soporte.Utilidad;
+
 /**
  *
  * @author Junior
@@ -16,6 +18,7 @@ public class jdComprobante extends javax.swing.JDialog {
     public jdComprobante(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        Utilidad.validacionTabla(tblDetalle, modal, rootPaneCheckingEnabled, modal);
     }
 
     @SuppressWarnings("unchecked")

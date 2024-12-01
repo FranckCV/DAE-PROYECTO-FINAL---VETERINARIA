@@ -30,8 +30,8 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
         btnRegistrar.setText(Utilidad.BTN_NUEVO);
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+        Utilidad.validacionTabla(tblTipoMedicamento, modal, rootPaneCheckingEnabled, modal);
         AccionesRapidas();
-        configurarAccionConEnter();
 
     }
 
@@ -647,47 +647,7 @@ public class jdMntTipoMedicamento extends javax.swing.JDialog {
 
     }
 
-    private void configurarAccionConEnter() {
-        jPanel1.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW)
-                .put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, 0), "guardar");
 
-        jPanel1.getActionMap().put("guardar", new javax.swing.AbstractAction() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                // Si el botón Registrar está en modo "Guardar", ejecutar su acción
-                if (btnRegistrar.getText().equals(Utilidad.BTN_GUARDAR)) {
-                    btnRegistrar.doClick(); // Ejecuta el evento del botón Registrar
-                } else if (btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
-                    btnModificar.doClick(); // Ejecuta el evento del botón Modificar
-                }
-            }
-        });
-
-        txtId.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                    try {
-                        boolean encontrado = Utilidad.buscarYConfigurar(
-                                "tipo_medicamento", // Tabla
-                                "id", // Columna
-                                Integer.parseInt(txtId.getText()), // ID
-                                txtNombre, // Campo de texto para nombre
-                                btnModificar, // Botón Modificar
-                                btnEliminar // Botón Eliminar
-                        );
-
-                        if (!encontrado) {
-                            JOptionPane.showMessageDialog(null, "No se encontró un tipo de medicamento con ese ID.");
-                        }
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "Error al buscar: " + e.getMessage());
-                    }
-                }
-            }
-        });
-
-    }
 
     /**
      * @param args the command line arguments

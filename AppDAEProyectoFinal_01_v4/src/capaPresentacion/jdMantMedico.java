@@ -57,6 +57,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         btnVigencia.setText(Utilidad.BTN_VIGENCIA);
         btnDisponibilidad.setText(Utilidad.BTN_DISPONIBILIDAD);
+        Utilidad.validacionTabla(tblMedico, modal, rootPaneCheckingEnabled, modal);
     }
 
     /**

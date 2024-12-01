@@ -21,6 +21,7 @@ public class jdMantDuenio extends javax.swing.JDialog {
         initComponents();
         sinEditarP();
         txtId.requestFocus();
+        Utilidad.validacionTabla(tblDuenio, modal, rootPaneCheckingEnabled, modal);
 
     }
 

@@ -31,6 +31,9 @@ public class jdMntRaza extends javax.swing.JDialog {
         initComponents();
         listarEspecies();
         listarRazas();
+        txtId.requestFocus();
+        Utilidad.validacionTabla(tblRaza, modal, rootPaneCheckingEnabled, modal);
+
     }
 
     /**

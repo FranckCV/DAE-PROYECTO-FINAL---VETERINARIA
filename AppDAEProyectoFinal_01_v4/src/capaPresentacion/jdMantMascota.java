@@ -31,6 +31,7 @@ public class jdMantMascota extends javax.swing.JDialog {
         sinEditarP();
         txtId.requestFocus();
         listarMascotas();
+        Utilidad.validacionTabla(tblMascota, modal, rootPaneCheckingEnabled, modal);
 
     }
 
