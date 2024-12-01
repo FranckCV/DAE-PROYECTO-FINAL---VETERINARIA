@@ -769,6 +769,17 @@ private void eliminarAsignacion() {
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage());
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
