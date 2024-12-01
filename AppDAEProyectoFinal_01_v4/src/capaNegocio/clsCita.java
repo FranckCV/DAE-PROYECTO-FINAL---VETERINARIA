@@ -64,7 +64,11 @@ public class clsCita {
 //            throw new Exception("Error al insertar cita --> " + e.getLocalizedMessage());
 //        }
 //    }
+<<<<<<< HEAD
     public void registrarCita(int estadoCitaId, int custodiamascotaId, int custodiaDuenioId, JTable tblServicios, Date fechaCita, String observacion) throws Exception {
+=======
+    public void registrarCita(int estadoCitaId, int custodiamascotaId, int custodiaDuenioId, JTable tblServicios) throws Exception {
+>>>>>>> 6cb219fee89ae7e32a3b73a08eb080c2ee3a3f60
         try {
             objConectar.conectar();
             con = objConectar.getCon();
@@ -164,6 +168,7 @@ public class clsCita {
         }
     }
 
+<<<<<<< HEAD
     public ResultSet listarCitasPendientesOrdenadas() throws Exception {
         strSQL = "SELECT "
                 + " C.id AS id_cita, "
@@ -181,10 +186,15 @@ public class clsCita {
                 + "ORDER BY "
                 + " C.fecha_cita ASC";
 
+=======
+    public ResultSet mesesRegistrado() throws Exception {
+        strSQL = "SELECT DISTINCT EXTRACT(MONTH FROM c.fecha_cita) AS mes FROM cita c;";
+>>>>>>> 6cb219fee89ae7e32a3b73a08eb080c2ee3a3f60
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
         } catch (Exception e) {
+<<<<<<< HEAD
             throw new Exception("Error al listar las citas pendientes: " + e.getMessage());
         }
     }
@@ -212,6 +222,41 @@ public class clsCita {
             return rs;
         } catch (Exception e) {
             throw new Exception("Error al listar las citas pendientes por DNI: " + e.getMessage());
+=======
+            throw new Exception("Error al obtenener meses");
+        }
+    }
+
+    public int contarFilas(int mes) throws Exception {
+        String strSQL = "SELECT COUNT(*) "
+                + "FROM ( "
+                + "    SELECT "
+                + "        s.nom_servicio, "
+                + "        COUNT(dc.detalle_servicio_serv_id) AS total_servicios "
+                + "    FROM "
+                + "        detalle_cita dc "
+                + "    INNER JOIN "
+                + "        detalle_servicio ds ON ds.servicio_id = dc.detalle_servicio_serv_id "
+                + "    INNER JOIN "
+                + "        servicio s ON s.id = ds.servicio_id "
+                + "    INNER JOIN "
+                + "        cita c ON c.id = dc.cita_id "
+                + "    WHERE "
+                + "        EXTRACT(MONTH FROM c.fecha_cita) = " + mes
+                + "    GROUP BY "
+                + "        s.nom_servicio "
+                + ") as cantidad_filas;";
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            return 0;
+        } catch (Exception e) {
+            throw new Exception("Error al contar las filas", e); // Lanzamos la excepción correctamente
+>>>>>>> 6cb219fee89ae7e32a3b73a08eb080c2ee3a3f60
         }
     }
 
