@@ -38,11 +38,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
-              <Group type="102" alignment="0" attributes="0">
-=======
               <Group type="102" attributes="0">
->>>>>>> ac208ededbeeada253031c63f63e8306f5bbaef7
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
@@ -60,14 +56,8 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-<<<<<<< HEAD
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jScrollPane1" min="-2" pref="354" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-=======
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
->>>>>>> ac208ededbeeada253031c63f63e8306f5bbaef7
                                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="txtTotalProductos" min="-2" max="-2" attributes="0"/>
@@ -76,8 +66,6 @@
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="btnSalir" min="-2" max="-2" attributes="0"/>
                               </Group>
-<<<<<<< HEAD
-=======
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Group type="102" attributes="0">
@@ -108,7 +96,6 @@
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
->>>>>>> ac208ededbeeada253031c63f63e8306f5bbaef7
                           </Group>
                       </Group>
                   </Group>
@@ -136,9 +123,6 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="268" max="-2" attributes="0"/>
-<<<<<<< HEAD
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-=======
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
@@ -161,18 +145,13 @@
                       </Group>
                   </Group>
                   <EmptySpace pref="51" max="32767" attributes="0"/>
->>>>>>> ac208ededbeeada253031c63f63e8306f5bbaef7
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtTotalProductos" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnSalir" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnLimpiar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-<<<<<<< HEAD
-                  <EmptySpace pref="24" max="32767" attributes="0"/>
-=======
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
->>>>>>> ac208ededbeeada253031c63f63e8306f5bbaef7
               </Group>
           </Group>
         </DimensionLayout>
@@ -255,11 +234,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnLimpiar">
           <Properties>
-<<<<<<< HEAD
-            <Property name="text" type="java.lang.String" value="Limpiar"/>
-=======
             <Property name="text" type="java.lang.String" value="Guardar"/>
->>>>>>> ac208ededbeeada253031c63f63e8306f5bbaef7
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLimpiarActionPerformed"/>
@@ -288,8 +263,6 @@
             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNombreKeyReleased"/>
           </Events>
         </Component>
-<<<<<<< HEAD
-=======
         <Component class="javax.swing.JComboBox" name="cboHoraEntrada">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -390,7 +363,6 @@
             <Property name="text" type="java.lang.String" value="Hora Salida:"/>
           </Properties>
         </Component>
->>>>>>> ac208ededbeeada253031c63f63e8306f5bbaef7
       </SubComponents>
     </Container>
   </SubComponents>
