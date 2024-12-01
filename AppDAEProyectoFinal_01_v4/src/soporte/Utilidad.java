@@ -5,11 +5,13 @@
 package soporte;
 
 import capaDatos.clsJDBC;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -329,8 +331,7 @@ public class Utilidad {
         return valor;
     }
 
-    
-    public static int mensajeConfirmarModificarContraseña(String entidad , int id ,String nombre) {
+    public static int mensajeConfirmarModificarContraseña(String entidad, int id, String nombre) {
         int valor = JOptionPane.showOptionDialog(
                 null,
                 "¿Está seguro de modificar contraseña " + entidad.toLowerCase() + " \"" + nombre + "\" (ID: " + id + ")? ",
@@ -344,9 +345,7 @@ public class Utilidad {
         return valor;
     }
 
-
-    
-    public static void mensajeErrorNoEliminarForanea(String entidad , String nombre) {
+    public static void mensajeErrorNoEliminarForanea(String entidad, String nombre) {
 
         JOptionPane.showMessageDialog(
                 null,
@@ -522,7 +521,6 @@ public class Utilidad {
         }
     }
 
-    
     public static boolean buscarYConfigurar(String tabla, String columna, int id, JTextField txtNombre, JButton btnModificar, JButton btnEliminar) throws Exception {
         clsJDBC objConectar = new clsJDBC();
         String strSQL = "SELECT nomtipo FROM " + tabla + " WHERE " + columna + " = " + id;
@@ -546,13 +544,22 @@ public class Utilidad {
         }
         return false;
     }
-    
-    
+
     public static void fijarColumnasTabla(JTable table) {
         table.getTableHeader().setReorderingAllowed(false);
     }
-    
-    
-    
-    
+
+    public static void atajoTecladoBoton(JDialog dialog, JButton boton, char tecla, String nombreAccion) {
+        // Para ejecutar el botón con CTRL + tecla
+        dialog.getRootPane().getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(javax.swing.KeyStroke.getKeyStroke(tecla, java.awt.event.InputEvent.CTRL_DOWN_MASK), nombreAccion);
+
+        dialog.getRootPane().getActionMap().put(nombreAccion, new javax.swing.AbstractAction() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                boton.doClick(); // Simula clic en el botón
+            }
+        });
+    }
+
 }

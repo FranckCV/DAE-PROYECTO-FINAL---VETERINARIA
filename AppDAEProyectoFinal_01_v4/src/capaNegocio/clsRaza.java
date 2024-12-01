@@ -23,7 +23,7 @@ public class clsRaza {
     public static final String ESPECIE_ID = "especie_id";
 
     public ResultSet listarRazas() throws Exception {
-        strSQL = "select * from " + TABLA;
+        strSQL = "select r.id,r.nombre,r.disponibilidad from " + TABLA +" r ";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;

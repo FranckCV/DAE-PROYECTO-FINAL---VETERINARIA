@@ -96,7 +96,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem24 = new javax.swing.JMenuItem();
+        menuRepServicioMasSolicitado = new javax.swing.JMenuItem();
         mnuIngresoPorServicio = new javax.swing.JMenuItem();
         jMenuItem30 = new javax.swing.JMenuItem();
         rptMedicamentosXRangoPrecio = new javax.swing.JMenuItem();
@@ -486,8 +486,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu11.add(jMenuItem1);
 
-        jMenuItem24.setText("Rp3");
-        jMenu11.add(jMenuItem24);
+        menuRepServicioMasSolicitado.setText("Servicios más solicitados por mes");
+        menuRepServicioMasSolicitado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRepServicioMasSolicitadoActionPerformed(evt);
+            }
+        });
+        jMenu11.add(menuRepServicioMasSolicitado);
 
         mnuIngresoPorServicio.setText("Reporte de ingresos por servicio");
         mnuIngresoPorServicio.addActionListener(new java.awt.event.ActionListener() {
@@ -788,8 +793,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void mnuIngresoPorServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuIngresoPorServicioActionPerformed
         // TODO add your handling code here:
-        jdRepServiciosMasSolicitados objFrm = new jdRepServiciosMasSolicitados(this, true);
-        objFrm.setVisible(true);
+        
     }//GEN-LAST:event_mnuIngresoPorServicioActionPerformed
 
     private void rptMedicamentosXRangoPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rptMedicamentosXRangoPrecioActionPerformed
@@ -807,16 +811,22 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_rptVacunasXEspecieActionPerformed
 
     private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
-        jdRepIngresosMensuales objIngresosMensuales = new jdRepIngresosMensuales(this, true);
+        jdReporteIngresosMensuales objIngresosMensuales = new jdReporteIngresosMensuales(this, true);
         objIngresosMensuales.setLocationRelativeTo(this);
         objIngresosMensuales.setVisible(true);
     }//GEN-LAST:event_jMenuItem34ActionPerformed
 
     private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
-        jdRptMejoresMedicos objMejoresMedicos = new jdRptMejoresMedicos(this, true);
+        jdReporteMejoresMedicos objMejoresMedicos = new jdReporteMejoresMedicos(this, true);
         objMejoresMedicos.setLocationRelativeTo(this);
         objMejoresMedicos.setVisible(true);
     }//GEN-LAST:event_jMenuItem35ActionPerformed
+
+    private void menuRepServicioMasSolicitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRepServicioMasSolicitadoActionPerformed
+        // TODO add your handling code here:
+//        jdRepServiciosMasSolicitados objFrm = new jdRepServiciosMasSolicitados(this, true);
+//        objFrm.setVisible(true);
+    }//GEN-LAST:event_menuRepServicioMasSolicitadoActionPerformed
 
     private void login() {
         jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
@@ -872,7 +882,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem23;
-    private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem30;
     private javax.swing.JMenuItem jMenuItem34;
@@ -887,6 +896,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JMenuItem menuRepServicioMasSolicitado;
     private javax.swing.JMenuItem mnuCambiarUsuario;
     private javax.swing.JMenuItem mnuCita;
     private javax.swing.JMenuItem mnuCustodia;

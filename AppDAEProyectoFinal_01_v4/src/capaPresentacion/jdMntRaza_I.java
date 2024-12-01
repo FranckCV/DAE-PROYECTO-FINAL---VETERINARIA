@@ -182,8 +182,6 @@ public class jdMntRaza_I extends javax.swing.JDialog {
             }
         });
 
-        cboEspecie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel7.setText("Especie:");
 

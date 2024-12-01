@@ -281,6 +281,9 @@ BEGIN
 END $$ LANGUAGE plpgsql;
 
 
+CREATE VIEW vista_meses_distintos AS
+SELECT DISTINCT EXTRACT(MONTH FROM c.fecha_cita) AS mes
+FROM cita c;
 
 
 

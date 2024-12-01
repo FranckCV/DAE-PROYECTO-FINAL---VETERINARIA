@@ -15,7 +15,6 @@ import javax.swing.JTable;
  * @author franc
  */
 public class clsCita {
-    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
@@ -67,7 +66,6 @@ public class clsCita {
 //            throw new Exception("Error al insertar cita --> " + e.getLocalizedMessage());
 //        }
 //    }
-    
     public void registrarCita(int estadoCitaId, int custodiamascotaId, int custodiaDuenioId, JTable tblServicios) throws Exception {
         try {
             objConectar.conectar();
@@ -126,7 +124,6 @@ public class clsCita {
         }
     }
 
-    
     public void modificarEstado(int idCita, int nuevoEstadoId) throws Exception {
         strSQL = "UPDATE CITA SET estado_cita_id = " + nuevoEstadoId + " WHERE id = " + idCita;
 
@@ -141,28 +138,66 @@ public class clsCita {
         }
     }
 
-    
     public ResultSet listarCitasxMascota(int mas_id) throws Exception {
-        strSQL =  " SELECT "
-                    + " C.id AS id_cita, "
-                    + " C.fecha_cita, "
-                    + " C.observacion, "
-                    + " EC.nombre_estado AS estado_cita "
+        strSQL = " SELECT "
+                + " C.id AS id_cita, "
+                + " C.fecha_cita, "
+                + " C.observacion, "
+                + " EC.nombre_estado AS estado_cita "
                 + " FROM CITA C "
                 + " LEFT JOIN CUSTODIA CU ON C.CUSTODIAMASCOTAid = CU.MASCOTAid AND C.CUSTODIADUEniOid = CU.DUEniOid "
                 + " LEFT JOIN MASCOTA M ON CU.MASCOTAid = M.id "
                 + " LEFT JOIN ESTADO_CITA EC ON C.estado_cita_id = EC.id "
-                + " WHERE M.id = "+mas_id
-                + " order by C.fecha_cita desc"
-                ;
+                + " WHERE M.id = " + mas_id
+                + " order by C.fecha_cita desc";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
         } catch (Exception e) {
-            throw new Exception("Error: "+e.getMessage());
+            throw new Exception("Error: " + e.getMessage());
         }
     }
-    
-    
-    
+
+    public ResultSet mesesRegistrado() throws Exception {
+        strSQL = "SELECT * FROM vista_meses_distintos ORDER BY mes;";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al obtenener meses");
+        }
+    }
+
+    public int contarFilas(int mes) throws Exception {
+        String strSQL = "SELECT COUNT(*) "
+                + "FROM ( "
+                + "    SELECT "
+                + "        s.nom_servicio, "
+                + "        COUNT(dc.detalle_servicio_serv_id) AS total_servicios "
+                + "    FROM "
+                + "        detalle_cita dc "
+                + "    INNER JOIN "
+                + "        detalle_servicio ds ON ds.servicio_id = dc.detalle_servicio_serv_id "
+                + "    INNER JOIN "
+                + "        servicio s ON s.id = ds.servicio_id "
+                + "    INNER JOIN "
+                + "        cita c ON c.id = dc.cita_id "
+                + "    WHERE "
+                + "        EXTRACT(MONTH FROM c.fecha_cita) = " + mes
+                + "    GROUP BY "
+                + "        s.nom_servicio "
+                + ") as cantidad_filas;";
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            return 0;
+        } catch (Exception e) {
+            throw new Exception("Error al contar las filas", e); // Lanzamos la excepción correctamente
+        }
+    }
+
 }

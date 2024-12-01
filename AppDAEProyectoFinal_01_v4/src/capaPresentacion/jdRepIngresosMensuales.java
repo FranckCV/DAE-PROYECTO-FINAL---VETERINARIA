@@ -7,6 +7,7 @@ package capaPresentacion;
 import capaDatos.clsReporte;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -117,23 +118,27 @@ public class jdRepIngresosMensuales extends javax.swing.JDialog {
         try {
             Container contenedor = this.vistaReporte;
             contenedor.setLayout(new BorderLayout());
-            
+
             Map parametros = new HashMap();
-            
+
             parametros.put("parAnioReporte", Integer.parseInt(txtAnio.getText()));
-            
+
             JRViewer objReporte = new clsReporte().reporteInterno("rptGananciasMensuales.jasper", parametros);
-            
             contenedor.add(objReporte);
-//            objReporte.setVisible(true);
-            
+
+            contenedor.revalidate();
+            contenedor.repaint();
+
+            vistaReporte.setPreferredSize(new Dimension(884, 437));
+            this.vistaReporte.setVisible(true);
+
             this.vistaReporte.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage() + "Error en reporte", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

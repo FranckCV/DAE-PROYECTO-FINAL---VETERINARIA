@@ -3,28 +3,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package capaPresentacion;
+import java.sql.ResultSet;
 
 import capaDatos.clsReporte;
+import capaNegocio.clsEspecie;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.swing.JRViewer;
+import soporte.Utilidad;
 
 /**
  *
  * @author Leona
  */
 public class RptVacunasXEspecie extends javax.swing.JDialog {
-
+    clsEspecie objEsp = new clsEspecie();
     /**
      * Creates new form RptVacunaXEspecie
      */
     public RptVacunasXEspecie(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        listarEspecies();
     }
     private Dimension dimension;
 
@@ -38,9 +43,9 @@ public class RptVacunasXEspecie extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        txtEspecie = new javax.swing.JTextField();
         vistaReporte = new javax.swing.JDesktopPane();
         btnReporte = new javax.swing.JButton();
+        cbxEspecie = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -56,13 +61,25 @@ public class RptVacunasXEspecie extends javax.swing.JDialog {
         );
         vistaReporteLayout.setVerticalGroup(
             vistaReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 491, Short.MAX_VALUE)
+            .addGap(0, 490, Short.MAX_VALUE)
         );
 
         btnReporte.setText("Ver Reporte");
         btnReporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReporteActionPerformed(evt);
+            }
+        });
+
+        cbxEspecie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxEspecie.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxEspecieItemStateChanged(evt);
+            }
+        });
+        cbxEspecie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxEspecieActionPerformed(evt);
             }
         });
 
@@ -79,19 +96,19 @@ public class RptVacunasXEspecie extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(txtEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 423, Short.MAX_VALUE)
+                        .addComponent(cbxEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 372, Short.MAX_VALUE)
                         .addComponent(btnReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(42, 42, 42))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(11, 11, 11)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReporte))
+                    .addComponent(btnReporte)
+                    .addComponent(cbxEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(vistaReporte)
                 .addContainerGap())
@@ -102,12 +119,26 @@ public class RptVacunasXEspecie extends javax.swing.JDialog {
 
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
         // TODO add your handling code here:
+        mostrar();
+    }//GEN-LAST:event_btnReporteActionPerformed
+
+    private void cbxEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxEspecieActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxEspecieActionPerformed
+
+    private void cbxEspecieItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxEspecieItemStateChanged
+        // TODO add your handling code here:
+        mostrar();
+
+    }//GEN-LAST:event_cbxEspecieItemStateChanged
+
+    private void mostrar() {
         try {
             Container contenedor = this.vistaReporte;
             contenedor.setLayout(new BorderLayout());
 
             Map parametros = new HashMap<>();
-            parametros.put("NombreEspecie", txtEspecie.getText());
+            parametros.put("NombreEspecie", cbxEspecie.getSelectedItem().toString());
 
             JRViewer objReporte = new clsReporte().reporteInterno("rptVacunasXEspecie.jasper", parametros);
 
@@ -123,13 +154,29 @@ public class RptVacunasXEspecie extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage() + " ERROR en Reporte", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnReporteActionPerformed
+    }
+    
+    private void listarEspecies() {
+        ResultSet rss = null;
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        modelo.addElement("-Seleccionar-");
+        try {
 
+            rss = objEsp.listarEspecies();
+            while (rss.next()) {
+                modelo.addElement(rss.getString("nombre"));
+                cbxEspecie.setModel(modelo);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al llenar las especie--->" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReporte;
+    private javax.swing.JComboBox<String> cbxEspecie;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField txtEspecie;
     private javax.swing.JDesktopPane vistaReporte;
     // End of variables declaration//GEN-END:variables
 }

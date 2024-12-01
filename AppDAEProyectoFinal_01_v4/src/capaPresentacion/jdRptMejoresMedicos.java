@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.swing.JRViewer;
+import java.awt.Dimension;
 
 /**
  *
@@ -167,7 +168,7 @@ public class jdRptMejoresMedicos extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             if (txtAnio.getText().isEmpty() || Integer.parseInt(spnCantidad.getValue().toString()) == 0) {
-                
+
                 JOptionPane.showMessageDialog(this, "Por favor rellenar todos los campos", "Ups", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 Container contenedor = this.vistaReporte;
@@ -178,12 +179,20 @@ public class jdRptMejoresMedicos extends javax.swing.JDialog {
                 parametros.put("parAnio", Integer.parseInt(txtAnio.getText()));
                 parametros.put("parCantMedicos", Integer.parseInt(spnCantidad.getValue().toString()));
                 parametros.put("parMes", cboMes.getSelectedIndex() + 1);
-                parametros.put("SUBREPORT_DIR", "./reportes/");
+                parametros.put("SUBREPORT_DIR", "./");
 
-                JRViewer objReporte = new clsReporte().reporteInterno("reporteMedicosEficientes.jasper", parametros);
-
-                contenedor.add(objReporte);
+//                JRViewer objReporte = new clsReporte().reporteInterno("reporteMedicosEficientes.jasper", parametros);
+//
+//                contenedor.add(objReporte);
                 //            objReporte.setVisible(true);
+                JRViewer objReporte = new clsReporte().reporteInterno("reporteMedicosEficientes.jasper", parametros);
+                contenedor.add(objReporte);
+
+                contenedor.revalidate();
+                contenedor.repaint();
+
+                vistaReporte.setPreferredSize(new Dimension(884, 437));
+                this.vistaReporte.setVisible(true);
 
                 this.vistaReporte.setVisible(true);
             }
