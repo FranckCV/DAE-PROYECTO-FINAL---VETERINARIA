@@ -124,6 +124,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
 
         panel.setBackground(new java.awt.Color(255, 255, 255));
+        panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -486,7 +487,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu11.add(jMenuItem1);
 
-        menuRepServicioMasSolicitado.setText("Servicios más solicitados por mes");
+        menuRepServicioMasSolicitado.setText("Servicios más solicitados por mes y año");
         menuRepServicioMasSolicitado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuRepServicioMasSolicitadoActionPerformed(evt);
@@ -837,6 +838,9 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem24ActionPerformed
     private void menuRepServicioMasSolicitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRepServicioMasSolicitadoActionPerformed
         // TODO add your handling code here:
+        jdServiciosMasSolicitados obj = new jdServiciosMasSolicitados(this, true);
+        obj.setLocationRelativeTo(this);
+        obj.setVisible(true);
         
     }//GEN-LAST:event_menuRepServicioMasSolicitadoActionPerformed
 

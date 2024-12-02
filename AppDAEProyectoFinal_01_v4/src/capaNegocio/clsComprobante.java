@@ -34,7 +34,7 @@ public class clsComprobante {
     try {
         objConectar.ejecutarBD(strSQL);
         
-        strSQL = "SELECT COUNT(*) as cantidad FROM COMPROBANTE WHERE Tipo = '" + tipo + "' AND serie_numero = '" + serieNumero + "' AND CITAid = " + citaId;
+        strSQL = "SELECT citaid, COUNT(*) as cantidad FROM COMPROBANTE WHERE Tipo = '" + tipo + "' AND serie_numero = '" + serieNumero + "' AND CITAid = " + citaId;
         rs=objConectar.consultarBD(strSQL); 
         int count=rs.getInt("cantidad");
         if (count > 0) {
