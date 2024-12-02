@@ -491,24 +491,25 @@ public class jdCita_v2 extends javax.swing.JDialog {
                     if (JOptionPane.showConfirmDialog(this, "¿Los datos son correctos?", "Confirmar",
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
+                        int stock = objMedicamento.getStock(medicamento);
                         DefaultTableModel modelito = (DefaultTableModel) tblDetalleMedicamento.getModel();
                         int idMed = objMedico.obtenerIDconDoc(txtDocMedico.getText());
                         System.out.println("funka antes validar");
 
-//                        if (modelito.getRowCount() != 0) {
-//                            for (int i = modelito.getRowCount() - 1; i >= 0; i--) {
-//                                int medicamento_id = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 0).toString());
-//                                int servicio_id = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 1).toString());
-//                                int medico_id = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 2).toString());
-//
-//                                if (medicamento_id == medicamento
-//                                        && servicio_id == Integer.parseInt(txtCodServicio.getText())
-//                                        && medico_id == idMed) {
-//                                    modelito.removeRow(i); // Elimina la fila duplicada
-//                                    break;
-//                                }
-//                            }
-//                        }
+                        if (modelito.getRowCount() != 0) {
+                            for (int i = modelito.getRowCount() - 1; i >= 0; i--) {
+                                int medicamento_id = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 0).toString());
+                                int servicio_id = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 1).toString());
+                                int medico_id = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 2).toString());
+
+                                if (medicamento_id == medicamento
+                                        && servicio_id == objServicio.obtenerID(cboServicios_PANEL_MEDIC.getSelectedItem().toString())
+                                        && medico_id == idMed) {
+                                    modelito.removeRow(i);
+                                    break;
+                                }
+                            }
+                        }
                         System.out.println("funka");
                         // Busca el medicamento en la base de datos para obtener su costo
                         rs = objMedicamento.buscarMedicamento(medicamento);
