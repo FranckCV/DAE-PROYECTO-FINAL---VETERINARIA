@@ -318,6 +318,20 @@ public class Utilidad {
         return valor;
     }
 
+    public static int mensajeConfirmarAgregarServicio(String entidad) {
+        int valor = JOptionPane.showOptionDialog(
+                null,
+                "¿Desea agregar el " + entidad.toLowerCase() + " ?",
+                "Confirmación ",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesAgregarMedicamentos,
+                opcionesAgregarMedicamentos[0]
+        );
+        return valor;
+    }
+
     public static int mensajeConfirmarEliminar(String entidad, int id, String nombre) {
         int valor = JOptionPane.showOptionDialog(
                 null,

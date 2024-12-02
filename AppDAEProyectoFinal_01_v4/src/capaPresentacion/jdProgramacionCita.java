@@ -88,7 +88,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         tblDetalleServicio.getTableHeader().setReorderingAllowed(false); //no mover los headers
     }
 
-    private void agregarServicio(int codServ, int codMed, String horaEntrada, String horaSalida) {
+    private void agregarServicio(int codServ, int codMed, String horaEntrada, String horaSalida, String notita) {
 
         ResultSet rsSer = null;
         ResultSet rsMed = null;
@@ -150,7 +150,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                 fila[2] = rsMed.getString("nombres") + " " + rsMed.getString("apepaterno") + " " + rsMed.getString("apematerno");
                 fila[3] = horaEntradaFormateada;
                 fila[4] = horaSalidaFormateada;
-                fila[5] = JOptionPane.showInputDialog("Ingrese alguna nota adiconal: ");
+                fila[5] = notita;
                 fila[6] = rsSer.getDouble("costo");
 
                 modelo.addRow(fila);
@@ -988,10 +988,11 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         int codMedico = objAniadirServicio.getCodMedico();
         String horaEntrada = objAniadirServicio.getHoraEntrada();
         String horaSalida = objAniadirServicio.getHoraSalida();
+        String nota = objAniadirServicio.getNota();
 
         try {
             System.out.println(codServicio + " - " + codMedico);
-            agregarServicio(codServicio, codMedico, horaEntrada, horaSalida);
+            agregarServicio(codServicio, codMedico, horaEntrada, horaSalida, nota);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
