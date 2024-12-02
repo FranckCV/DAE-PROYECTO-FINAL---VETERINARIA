@@ -71,7 +71,6 @@ public class clsCita {
             con.setAutoCommit(false);
             sent = con.createStatement();
 
-            // Generar el código de cita
             int idCita = generarCodigoCita();
 
             // Insertar la cita con la fecha y la observación proporcionadas
@@ -80,7 +79,6 @@ public class clsCita {
                     + custodiamascotaId + ", " + custodiaDuenioId + ")";
             sent.executeUpdate(strSQL);
 
-            // Insertar los detalles de la cita
             int rowCount = tblServicios.getRowCount();
             for (int i = 0; i < rowCount; i++) {
                 String cadena = String.valueOf(tblServicios.getValueAt(i, 0));
@@ -91,22 +89,18 @@ public class clsCita {
                 String horaSalida = tblServicios.getValueAt(i, 4).toString();
                 String notaAdicional = tblServicios.getValueAt(i, 5).toString();
 
-                // Insertar el detalle de la cita
                 strSQL = "INSERT INTO DETALLE_CITA (cita_id, detalle_servicio_serv_id, detalle_servicio_med_id, horaEntrada, "
                         + "horaSalida, nota_adicional) "
                         + "VALUES (" + idCita + ", " + codSer + ", "
                         + codMed + ", '" + horaEntrada + "', '" + horaSalida + "', '" + notaAdicional + "')";
                 sent.executeUpdate(strSQL);
 
-                // Actualizar la disponibilidad en DETALLE_SERVICIO
                 strSQL = "UPDATE DETALLE_SERVICIO SET disponibilidad = false WHERE servicio_id = " + codSer + " AND medico_id = " + codMed;
                 sent.executeUpdate(strSQL);
             }
 
-            // Confirmar la transacción
             con.commit();
         } catch (Exception e) {
-            // Deshacer cambios en caso de error
             con.rollback();
             throw new Exception("Error al registrar cita --> " + e.getLocalizedMessage());
         } finally {
@@ -115,8 +109,22 @@ public class clsCita {
     }
 
     public void terminarCita(int idCita) throws Exception {
-        // Suponiendo que el estado "finalizado" tiene el ID 3
         int estadoFinalizadoId = 3;
+        strSQL = "UPDATE CITA SET estado_cita_id = " + estadoFinalizadoId + " WHERE id = " + idCita;
+
+        try {
+            objConectar.conectar();
+            sent = objConectar.getCon().createStatement();
+            sent.executeUpdate(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al finalizar la cita --> " + e.getLocalizedMessage());
+        } finally {
+            objConectar.desconectar();
+        }
+    }
+
+    public void cancelarCita(int idCita) throws Exception {
+        int estadoFinalizadoId = 2;
         strSQL = "UPDATE CITA SET estado_cita_id = " + estadoFinalizadoId + " WHERE id = " + idCita;
 
         try {
@@ -253,6 +261,40 @@ public class clsCita {
             return 0;
         } catch (Exception e) {
             throw new Exception("Error al contar las filas", e); // Lanzamos la excepción correctamente
+        }
+    }
+
+    public void manejoDeTodaLaTransaccion(int idCita, JTable tblMedicamentos) throws Exception {
+        int estadoFinalizadoId = 3;
+        String strSQL_TerminarCita = "UPDATE CITA SET estado_cita_id = " + estadoFinalizadoId + " WHERE id = " + idCita;
+        Connection con = null;
+        Statement sent = null;
+
+        try {
+            objConectar.conectar();
+            con = objConectar.getCon();
+            con.setAutoCommit(false);
+            sent = con.createStatement();
+            sent.executeUpdate(strSQL_TerminarCita);
+
+            con.commit();
+        } catch (Exception e) {
+            if (con != null) {
+                con.rollback();
+            }
+            throw new Exception("Error al finalizar la cita --> " + e.getLocalizedMessage());
+        } finally {
+            try {
+                if (sent != null) {
+                    sent.close();
+                }
+                if (con != null) {
+                    con.setAutoCommit(true);
+                    objConectar.desconectar();
+                }
+            } catch (SQLException e) {
+                throw new Exception("Error al cerrar la conexión o el statement: " + e.getMessage());
+            }
         }
     }
 

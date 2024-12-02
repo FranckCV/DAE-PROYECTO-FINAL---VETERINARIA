@@ -5,6 +5,7 @@
 package capaPresentacion;
 
 import javax.swing.JOptionPane;
+import soporte.Utilidad;
 
 /**
  *
@@ -12,24 +13,19 @@ import javax.swing.JOptionPane;
  */
 public class jdColocarHora extends javax.swing.JDialog {
 
-    private Integer codServicioPasar = -1;
-    private Integer codMedicoPasar = -1;
     private String horaEntradaPasar = "";
     private String horaSalidaPasar = "";
     private String notaAdicionalPasar = "";
-    
+
     public jdColocarHora(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         llenarComboHorasMinutosYAMPM();
     }
 
-    
-    private void pasarDatos(int codSer, int codMed, String horaE, String horaS, String notita) {
+    private void pasarDatos(String horaE, String horaS, String notita) {
         try {
-            codServicioPasar = codSer;
-            codMedicoPasar = codMed;
 
             horaSalidaPasar = horaS;
             horaEntradaPasar = horaE;
@@ -40,7 +36,7 @@ public class jdColocarHora extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
     }
-    
+
     private void llenarComboHorasMinutosYAMPM() {
 
         cboHoraEntrada.removeAllItems();
@@ -52,15 +48,15 @@ public class jdColocarHora extends javax.swing.JDialog {
         cboMinutosSalida.removeAllItems();
 
         for (int i = 0; i <= 12; i++) {
-            cboHoraEntrada.addItem(String.format("%02d", i));
             cboHoraSalida.addItem(String.format("%02d", i)); // Formato para mostrar siempre dos dígitos (ej. "00", "01", ..., "12")
+            cboHoraEntrada.addItem(String.format("%02d", i));
         }
 
         // Llenar el JComboBox para minutos (00, 15, 30, 45)
         int[] minutos = {0, 15, 30, 45};
         for (int minuto : minutos) {
-            cboMinutosEntrada.addItem(String.format("%02d", minuto));
             cboMinutosSalida.addItem(String.format("%02d", minuto)); // Formato para mostrar siempre dos dígitos (ej. "00", "15", "30", "45")
+            cboMinutosEntrada.addItem(String.format("%02d", minuto));
         }
 
         // Llenar el JComboBox para AM/PM
@@ -79,18 +75,10 @@ public class jdColocarHora extends javax.swing.JDialog {
         return horaSalidaPasar;
     }
 
-    public int getCodServicio() {
-        return codServicioPasar;
-    }
-
-    public int getCodMedico() {
-        return codMedicoPasar;
-    }
-
     public String getNota() {
         return notaAdicionalPasar;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -105,6 +93,7 @@ public class jdColocarHora extends javax.swing.JDialog {
         cboAMPMEntrada = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         txtNota = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -117,14 +106,31 @@ public class jdColocarHora extends javax.swing.JDialog {
         jLabel8.setText("Hora Salida:");
 
         cboHoraEntrada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboHoraEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboHoraEntradaActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Hora Entrada:");
 
         cboMinutosEntrada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboMinutosEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboMinutosEntradaActionPerformed(evt);
+            }
+        });
 
         cboAMPMEntrada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel1.setText("Nota Adicional:");
+
+        jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,6 +138,9 @@ public class jdColocarHora extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -152,7 +161,7 @@ public class jdColocarHora extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cboAMPMSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNota, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -181,53 +190,50 @@ public class jdColocarHora extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(19, 19, 19))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+    private void cboHoraEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboHoraEntradaActionPerformed
+        if (cboHoraEntrada.getSelectedIndex() != -1) {
+            cboHoraSalida.setSelectedIndex(cboHoraEntrada.getSelectedIndex());
+        }
+    }//GEN-LAST:event_cboHoraEntradaActionPerformed
+
+    private void cboMinutosEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMinutosEntradaActionPerformed
+        if (cboHoraEntrada.getSelectedIndex() != -1 && cboMinutosEntrada.getSelectedIndex() != -1) {
+            if (cboMinutosEntrada.getSelectedIndex() == 3) {
+                int horaEntradaIndex = cboHoraEntrada.getSelectedIndex();
+                if (horaEntradaIndex + 1 < cboHoraSalida.getItemCount()) {
+                    cboHoraSalida.setSelectedIndex(horaEntradaIndex + 1);
+                }
+            } else {
+                int minutoEntradaIndex = cboMinutosEntrada.getSelectedIndex();
+                if (minutoEntradaIndex + 1 < cboMinutosSalida.getItemCount()) {
+                    cboMinutosSalida.setSelectedIndex(minutoEntradaIndex + 1);
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(jdColocarHora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(jdColocarHora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(jdColocarHora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(jdColocarHora.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+    }//GEN-LAST:event_cboMinutosEntradaActionPerformed
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                jdColocarHora dialog = new jdColocarHora(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int valor = Utilidad.mensajeConfirmarAgregarServicio("Servicio");
+
+        if (valor == 0) {
+            String horaEntrada = cboHoraEntrada.getSelectedItem().toString() + ":" + cboMinutosEntrada.getSelectedItem().toString() + ":00 " + cboAMPMEntrada.getSelectedItem().toString();
+            String horaSalida = cboHoraSalida.getSelectedItem().toString() + ":" + cboMinutosSalida.getSelectedItem().toString() + ":00 " + cboAMPMSalida.getSelectedItem().toString();
+            String notaAdicional = txtNota.getText();
+            try {
+                pasarDatos(horaEntrada, horaSalida, notaAdicional);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, "Cantidad no válida");
             }
-        });
-    }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cboAMPMEntrada;
@@ -236,6 +242,7 @@ public class jdColocarHora extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cboHoraSalida;
     private javax.swing.JComboBox<String> cboMinutosEntrada;
     private javax.swing.JComboBox<String> cboMinutosSalida;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;

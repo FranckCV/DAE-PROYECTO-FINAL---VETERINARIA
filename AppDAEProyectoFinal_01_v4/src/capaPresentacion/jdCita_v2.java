@@ -382,7 +382,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         return objMedico.obtenerIDconDoc(docMedico);
     }
 
-    private void agregarDetalleCita() {
+    private void agregarDetalleCita(String horaE, String horaS, String notita) {
         try {
             String docMedico = txtDocMedico.getText().trim();
 
@@ -404,22 +404,25 @@ public class jdCita_v2 extends javax.swing.JDialog {
                 return;
             }
 
-            String horaInicio = JOptionPane.showInputDialog(this, "Ingrese la hora de inicio (HH:mm):");
-            if (horaInicio == null || horaInicio.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar una hora de inicio.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            String horaFin = JOptionPane.showInputDialog(this, "Ingrese la hora de fin (HH:mm):");
-            if (horaFin == null || horaFin.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar una hora de fin.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            String notaAdicional = JOptionPane.showInputDialog(this, "Ingrese una nota adicional (opcional):");
-            if (notaAdicional == null) {
-                notaAdicional = ""; // Establece un valor por defecto si se cancela el cuadro de diálogo
-            }
+//            String horaInicio = JOptionPane.showInputDialog(this, "Ingrese la hora de inicio (HH:mm):");
+//            if (horaInicio == null || horaInicio.trim().isEmpty()) {
+//                JOptionPane.showMessageDialog(this, "Debe ingresar una hora de inicio.", "Error", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
+//
+//            String horaFin = JOptionPane.showInputDialog(this, "Ingrese la hora de fin (HH:mm):");
+//            if (horaFin == null || horaFin.trim().isEmpty()) {
+//                JOptionPane.showMessageDialog(this, "Debe ingresar una hora de fin.", "Error", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
+//
+//            String notaAdicional = JOptionPane.showInputDialog(this, "Ingrese una nota adicional (opcional):");
+//            if (notaAdicional == null) {
+//                notaAdicional = ""; // Establece un valor por defecto si se cancela el cuadro de diálogo
+//            }
+            String horaInicio = horaE;
+            String horaFin = horaS;
+            String notaAdicional = notita;
 
             objDetalleCita.insertarDetalleServicioSiNoExiste(
                     Integer.parseInt(txtNumero.getText().trim()),
@@ -625,9 +628,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         jPanel5 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblDetalleServicio_PANEL_MEDIC = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
-        txtID1 = new javax.swing.JTextField();
-        btnBuscar1 = new javax.swing.JButton();
+        jLabel31 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
@@ -678,7 +679,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(204, 255, 255));
 
-        jLabel1.setText("Número:");
+        jLabel1.setText("Nro de cita:");
 
         btnBuscarCita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar-pequeño.png"))); // NOI18N
         btnBuscarCita.addActionListener(new java.awt.event.ActionListener() {
@@ -704,16 +705,16 @@ public class jdCita_v2 extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnBuscarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cboEstadoCita, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -805,7 +806,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
                     .addComponent(txtDNITabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1113,18 +1114,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         });
         jScrollPane4.setViewportView(tblDetalleServicio_PANEL_MEDIC);
 
-        jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel4.setText("ID:");
-
-        txtID1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-
-        btnBuscar1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        btnBuscar1.setText("Buscar");
-        btnBuscar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscar1ActionPerformed(evt);
-            }
-        });
+        jLabel31.setText("Tabla de servicios:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -1132,27 +1122,19 @@ public class jdCita_v2 extends javax.swing.JDialog {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtID1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBuscar1)))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel31)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabel31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel10.setBackground(new java.awt.Color(204, 255, 204));
@@ -1180,7 +1162,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel30)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtNombreMedico1_PANEL_MEDIC)
+                .addComponent(txtNombreMedico1_PANEL_MEDIC, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -1192,7 +1174,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
                     .addComponent(cboServicios_PANEL_MEDIC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel30)
                     .addComponent(txtNombreMedico1_PANEL_MEDIC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jPanel9.setBackground(new java.awt.Color(204, 255, 204));
@@ -1479,6 +1461,11 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/editar.png"))); // NOI18N
         jButton4.setText("Cancelar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/eliminar.png"))); // NOI18N
         jButton5.setText("Salir");
@@ -1539,7 +1526,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(btnTerminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
@@ -1600,10 +1587,6 @@ public class jdCita_v2 extends javax.swing.JDialog {
     private void cboServicios_PANEL_MEDICActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboServicios_PANEL_MEDICActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboServicios_PANEL_MEDICActionPerformed
-
-    private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscar1ActionPerformed
 
     private void tblDetalleServicio_PANEL_MEDICMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetalleServicio_PANEL_MEDICMouseClicked
 
@@ -1670,11 +1653,27 @@ public class jdCita_v2 extends javax.swing.JDialog {
             if (txtDocMedico.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Por favor rellenar los campos");
             } else {
-                agregarDetalleCita();
+                jdColocarHora objAniadirServicio
+                        = new jdColocarHora((Frame) SwingUtilities.getWindowAncestor(this), true);
+                objAniadirServicio.setLocationRelativeTo(this);
+                objAniadirServicio.setVisible(true);
+
+                String horaEntrada = objAniadirServicio.getHoraEntrada();
+                String horaSalida = objAniadirServicio.getHoraSalida();
+                String nota = objAniadirServicio.getNota();
+
+                try {
+//                    agregarServicio(horaEntrada, horaSalida, nota);
+                    agregarDetalleCita(horaEntrada, horaSalida, nota);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage());
+                }
+
+//                limpiarControlesDespuesDeAgregarServicio();
             }
             llenarTablaDetalleServicio_PANEL_MEDIC();
             actualizarResumenes();
-            
+
             //            objDetalleCita.insertarDetalleServicioNoRepetido(Integer.parseInt(txtNumero.getText()), tblDetalleServicio);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage() + " AL AGREGAR SERVICIO DESDE ATENCION");
@@ -2021,11 +2020,20 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
     }//GEN-LAST:event_cboMedicosActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            if (rootPaneCheckingEnabled) {
+                objCita.cancelarCita(Integer.parseInt(txtNumero.getText()));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No se pudo cancelar la cita " + e.getMessage());
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarMedicamento;
     private javax.swing.JButton btnAgregarServicio;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnBuscar1;
     private javax.swing.JButton btnBuscarCita;
     private javax.swing.JButton btnBuscarMedicamento;
     private javax.swing.JButton btnEliminarMedicamento;
@@ -2063,8 +2071,8 @@ public class jdCita_v2 extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -2107,7 +2115,6 @@ public class jdCita_v2 extends javax.swing.JDialog {
     private javax.swing.JTextField txtDNITabla;
     private javax.swing.JTextField txtDocMedico;
     private javax.swing.JTextField txtDosis;
-    private javax.swing.JTextField txtID1;
     private javax.swing.JTextField txtIgv;
     private javax.swing.JTextField txtIndicacion;
     private javax.swing.JTextField txtNombreDuenio;
