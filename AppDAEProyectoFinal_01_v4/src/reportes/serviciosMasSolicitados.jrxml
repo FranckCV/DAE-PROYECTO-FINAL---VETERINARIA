@@ -12,6 +12,9 @@
 	<parameter name="limite" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="anio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
     s.nom_servicio,
@@ -26,11 +29,13 @@ INNER JOIN
     cita c ON c.id = dc.cita_id
 WHERE
     EXTRACT(MONTH FROM c.fecha_cita) = $P{mes}
+    AND EXTRACT(YEAR FROM c.fecha_cita) = $P{anio}
 GROUP BY
     s.nom_servicio
 ORDER BY
     total_servicios DESC
-LIMIT $P{limite};]]>
+LIMIT $P{limite}
+]]>
 	</queryString>
 	<field name="nom_servicio" class="java.lang.String"/>
 	<field name="total_servicios" class="java.lang.Long"/>
@@ -61,7 +66,7 @@ LIMIT $P{limite};]]>
 				<text><![CDATA[Nombre del servicio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="334" y="21" width="61" height="20" uuid="f2380bb1-db8e-416e-861e-4f3746febf3a"/>
+				<reportElement x="347" y="21" width="61" height="20" uuid="f2380bb1-db8e-416e-861e-4f3746febf3a"/>
 				<textElement textAlignment="Center">
 					<font fontName="Century Gothic" isBold="true"/>
 				</textElement>
@@ -92,16 +97,16 @@ LIMIT $P{limite};]]>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="145" y="0" width="173" height="20" uuid="73c59fcd-2c61-4ceb-a40a-eb6bfa8489fb"/>
-				<textElement>
-					<font fontName="Century Gothic" isItalic="false"/>
+				<reportElement x="147" y="0" width="100" height="20" uuid="fb358260-897b-42e7-a9da-2179330c7c8d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nom_servicio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="318" y="0" width="90" height="20" uuid="914d9ce0-e264-4e43-8f96-c7c6a8e69c47"/>
-				<textElement textAlignment="Center">
-					<font fontName="Century Gothic" isItalic="true"/>
+				<reportElement x="334" y="0" width="100" height="20" uuid="d5a62971-a0f3-463e-a743-64cd81aedd46"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{total_servicios}]]></textFieldExpression>
 			</textField>
@@ -144,15 +149,15 @@ LIMIT $P{limite};]]>
 				<textFieldExpression><![CDATA["Pag. "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="103" y="17" width="305" height="20" uuid="eddbc0d0-f4b7-4f1d-9116-b9794fedd41a"/>
+				<reportElement x="49" y="17" width="305" height="20" uuid="eddbc0d0-f4b7-4f1d-9116-b9794fedd41a"/>
 				<textElement>
 					<font fontName="Century Gothic" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Gráfico de servicios más solicitados del mes ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="408" y="17" width="60" height="20" uuid="ea372393-adfc-48d8-bd6d-44ca4822257e"/>
-				<textElement>
+				<reportElement x="348" y="17" width="60" height="20" uuid="ea372393-adfc-48d8-bd6d-44ca4822257e"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Century Gothic" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{mes}]]></textFieldExpression>
@@ -179,6 +184,20 @@ LIMIT $P{limite};]]>
 					<pen lineWidth="3.0" lineColor="#0033CC"/>
 				</graphicElement>
 			</line>
+			<staticText>
+				<reportElement x="407" y="17" width="44" height="20" uuid="1446e584-f4fa-44ad-8e08-d17db6db7671"/>
+				<textElement>
+					<font fontName="Century Gothic" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[y año]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="451" y="17" width="58" height="20" uuid="0d46d99f-696f-47f2-98cd-e45181365271"/>
+				<textElement>
+					<font fontName="Century Gothic" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{anio}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
