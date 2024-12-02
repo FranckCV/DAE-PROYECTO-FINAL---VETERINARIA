@@ -454,11 +454,7 @@ public class jdMntRaza extends javax.swing.JDialog {
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-        char key = evt.getKeyChar();
-
-        if (!(Character.isLetter(key) || key == ' ')) {
-            evt.consume();
-        }
+        Utilidad.validarCampoTextoSoloLetras(evt);
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
@@ -466,17 +462,7 @@ public class jdMntRaza extends javax.swing.JDialog {
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
-        char c = evt.getKeyChar();
-
-        if (!Character.isDigit(c) && c != '\b') {
-            evt.consume();
-        }
-        
-        try {
-            Utilidad.validarLimiteCampoTexto(evt, "id", "usuario");
-        } catch (Exception ex) {
-            Logger.getLogger(jdMntRaza.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Utilidad.validarCampoTextoSoloNumero(evt);
     }//GEN-LAST:event_txtIdKeyTyped
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed

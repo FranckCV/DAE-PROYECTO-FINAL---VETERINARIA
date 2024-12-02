@@ -312,10 +312,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
                 btnEliminar.setText(Utilidad.BTN_CANCELAR);
 
                 Utilidad.desactivarBotones(btnNuevo, btnModificar, btnLimpiar);
-
-                tblEstadoCita.setEnabled(false);
-                limpiarControles();
-                txtNombre.requestFocus();
+                Utilidad.activarBotones(btnBuscar);
 
                 txtId.setText(String.valueOf(objEstadoCita.generarCodigo()));
 
@@ -365,15 +362,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-        int key = evt.getKeyChar();
-
-        boolean mayusculas = key >= 65 && key <= 90;
-        boolean minusculas = key >= 97 && key <= 122;
-        boolean espacio = key == 32;
-
-        if (!(minusculas || mayusculas || espacio)) {
-            evt.consume();
-        }
+        Utilidad.validarCampoTextoSoloLetras(evt);
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
@@ -382,21 +371,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
 
     private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
         // TODO add your handling code here:
-        if (txtId.getText().length() >= 10) {
-            evt.consume();
-        }
-
-        int key = evt.getKeyChar();
-
-        boolean numeros = key >= 48 && key <= 57;
-
-        if (!numeros) {
-            evt.consume();
-        }
-
-        if (txtId.getText().trim().length() == 10) {
-            evt.consume();
-        }
+        Utilidad.validarCampoTextoSoloNumero(evt);
     }//GEN-LAST:event_txtIdKeyTyped
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
