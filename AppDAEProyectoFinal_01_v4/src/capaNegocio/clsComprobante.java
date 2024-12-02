@@ -28,30 +28,34 @@ public class clsComprobante {
         }
     }
 
-   public int registrarComprobante(String tipo, String serieNumero, double montoTotal, Date fecha, int citaId) throws Exception {
-    String strSQL = "INSERT INTO COMPROBANTE (Tipo, serie_numero, monto_total, fecha, CITAid) "
-            + "VALUES ('" + tipo + "', '" + serieNumero + "', " + montoTotal + ", '" + fecha + "', " + citaId + ")";
-    try {
-        objConectar.ejecutarBD(strSQL);
-        
-        strSQL = "SELECT COUNT(*) as cantidad FROM COMPROBANTE WHERE Tipo = '" + tipo + "' AND serie_numero = '" + serieNumero + "' AND CITAid = " + citaId;
-        rs=objConectar.consultarBD(strSQL); 
-        int count=rs.getInt("cantidad");
-        if (count > 0) {
-            return rs.getInt("citaid");
-        }
-    } catch (Exception e) {
-        throw new Exception("Error al registrar comprobante: " + e.getMessage());
-    }
-    return 0;
-}
+    public int registrarComprobante(String tipo, String serieNumero, double montoTotal, Date fecha, int citaId) throws Exception {
+        String strSQL = "INSERT INTO COMPROBANTE (Tipo, serie_numero, monto_total, fecha, CITAid) "
+                + "VALUES ('" + tipo + "', '" + serieNumero + "', " + montoTotal + ", '" + fecha + "', " + citaId + ")";
+        try {
+            objConectar.ejecutarBD(strSQL);
 
+            strSQL = "SELECT citaid, COUNT(*) as cantidad FROM COMPROBANTE WHERE Tipo = '" + tipo + "' "
+                    + "AND serie_numero = '" + serieNumero + "' AND CITAid = " + citaId + " "
+                    + "GROUP BY citaid";
+
+            rs = objConectar.consultarBD(strSQL);
+
+            rs.next();
+            int count = rs.getInt("cantidad");
+            if (count > 0) {
+                return rs.getInt("citaid");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al registrar comprobante: " + e.getMessage());
+        }
+        return 0;
+    }
 
     public String generarNumeroSerieComprobante() throws Exception {
         strSQL = "SELECT serie_numero "
                 + "FROM COMPROBANTE "
                 + "ORDER BY serie_numero DESC "
-                + "LIMIT 1"; 
+                + "LIMIT 1";
         try {
             rs = objConectar.consultarBD(strSQL);
             if (rs.next()) {
@@ -92,5 +96,4 @@ public class clsComprobante {
 //        }
 //        return "000001";
 //    }
-    
 }
