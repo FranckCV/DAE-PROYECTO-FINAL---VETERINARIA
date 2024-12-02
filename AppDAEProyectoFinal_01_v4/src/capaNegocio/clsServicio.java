@@ -12,8 +12,6 @@ import java.sql.ResultSet;
  * @author franc
  */
 public class clsServicio {
-    
-    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
@@ -129,7 +127,9 @@ public class clsServicio {
                 + "INNER JOIN SERVICIO s ON ds.servicio_id = s.id "
                 + "INNER JOIN MEDICO m ON ds.medico_id = m.id "
                 + "WHERE s.id = " + codigoServicio + " "
-                + "AND m.doc_identidad = '" + documentoMedico + "'";
+                + "AND m.doc_identidad = '" + documentoMedico + "' "
+                + "AND m.disponibilidad = true "
+                + "AND m.vigencia = true";
 
         try {
             rs = objConectar.consultarBD(strSQL);
@@ -145,7 +145,9 @@ public class clsServicio {
                 + "FROM DETALLE_SERVICIO ds "
                 + "INNER JOIN SERVICIO s ON ds.servicio_id = s.id "
                 + "INNER JOIN MEDICO m ON ds.medico_id = m.id "
-                + "WHERE s.id = " + codigoServicio;
+                + "WHERE s.id = " + codigoServicio + " "
+                + "AND m.disponibilidad = true " // Asegura que el médico esté disponible
+                + "AND m.vigencia = true";
 
         try {
             rs = objConectar.consultarBD(strSQL);
@@ -156,12 +158,15 @@ public class clsServicio {
     }
 
     public ResultSet obtenerDatosDetalleServicioPorMedico(String documentoMedico) throws Exception {
+        // Consulta SQL que incluye disponibilidad y vigencia del médico
         strSQL = "SELECT ds.*, s.id, s.nom_servicio, s.descripcion, s.costo, "
                 + "m.nombres, m.apePaterno, m.apeMaterno "
                 + "FROM DETALLE_SERVICIO ds "
                 + "INNER JOIN SERVICIO s ON ds.servicio_id = s.id "
                 + "INNER JOIN MEDICO m ON ds.medico_id = m.id "
-                + "WHERE m.doc_identidad = '" + documentoMedico + "'";
+                + "WHERE m.doc_identidad = '" + documentoMedico + "' "
+                + "AND m.disponibilidad = true " // Asegura que el médico esté disponible
+                + "AND m.vigencia = true";  // Asegura que el médico esté vigente
 
         try {
             rs = objConectar.consultarBD(strSQL);
@@ -172,11 +177,14 @@ public class clsServicio {
     }
 
     public ResultSet obtenerDatosDetalleServicioTodos() throws Exception {
+        // Consulta SQL con las condiciones de disponibilidad y vigencia del médico
         strSQL = "SELECT ds.*, s.id, s.nom_servicio, s.descripcion, s.costo, "
                 + "m.nombres, m.apePaterno, m.apeMaterno "
                 + "FROM DETALLE_SERVICIO ds "
                 + "INNER JOIN SERVICIO s ON ds.servicio_id = s.id "
-                + "INNER JOIN MEDICO m ON ds.medico_id = m.id";
+                + "INNER JOIN MEDICO m ON ds.medico_id = m.id "
+                + "WHERE m.disponibilidad = true " // Solo médicos disponibles
+                + "AND m.vigencia = true";  // Solo médicos vigentes
 
         try {
             rs = objConectar.consultarBD(strSQL);
@@ -193,7 +201,9 @@ public class clsServicio {
                 + "INNER JOIN SERVICIO s ON ds.servicio_id = s.id "
                 + "INNER JOIN MEDICO m ON ds.medico_id = m.id "
                 + "WHERE s.id = " + codigoServicio + " "
-                + "AND m.id = " + codMedico;
+                + "AND m.id = " + codMedico + " "
+                + "AND m.disponibilidad = true " // Solo médicos disponibles
+                + "AND m.vigencia = true";  // Solo médicos vigentes
 
         try {
             rs = objConectar.consultarBD(strSQL);

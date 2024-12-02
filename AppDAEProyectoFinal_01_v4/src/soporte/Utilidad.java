@@ -27,7 +27,6 @@ import javax.swing.text.NumberFormatter;
  * @author franc
  */
 public class Utilidad {
-    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL = "";
@@ -161,6 +160,11 @@ public class Utilidad {
         "Modificar contraseña",
         "Cancelar"
     };
+    
+    public static final String[] opcionesCancelarCita = {
+        "Cancelar Cita",
+        "No cancelar"
+    };
 
 //    Texto de valores Booleanos
     public static String textoBool(boolean valor, String txtTrue, String txtFalse) {
@@ -222,6 +226,34 @@ public class Utilidad {
         if (!(numeros || punto)) {
             evt.consume();
         }
+    }
+
+    public static int mensajeConfirmarEliminarDetalleServicio(String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null,
+                "¿Está seguro que desea eliminar el servicio \"" + nombre + "?",
+                "Confirmar Eliminacion",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesEliminar,
+                opcionesEliminar[0]
+        );
+        return valor;
+    }
+    
+    public static int mensajeConfirmarCancelarCita(String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null,
+                "¿Está seguro que desea cancelar la cita \"" + nombre + "?",
+                "Confirmar Cancelación de cita",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesCancelarCita,
+                opcionesCancelarCita[0]
+        );
+        return valor;
     }
 
 //    public static void validarCampoTextoSoloLetras(java.awt.event.KeyEvent evt) {
@@ -295,6 +327,20 @@ public class Utilidad {
         int valor = JOptionPane.showOptionDialog(
                 null,
                 "¿Desea agregar algún " + entidad.toLowerCase() + " ?",
+                "Confirmación ",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesAgregarMedicamentos,
+                opcionesAgregarMedicamentos[0]
+        );
+        return valor;
+    }
+
+    public static int mensajeConfirmarAgregarServicio(String entidad) {
+        int valor = JOptionPane.showOptionDialog(
+                null,
+                "¿Desea agregar el " + entidad.toLowerCase() + " ?",
                 "Confirmación ",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
@@ -595,7 +641,6 @@ public class Utilidad {
             table.setDefaultEditor(Object.class, null);
         }
     }
-
 
     public static void atajoTecladoBoton(JDialog dialog, JButton boton, char tecla, String nombreAccion) {
         // Para ejecutar el botón con CTRL + tecla

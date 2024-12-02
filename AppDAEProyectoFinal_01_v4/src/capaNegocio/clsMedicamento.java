@@ -12,16 +12,15 @@ import java.sql.ResultSet;
  * @author franc
  */
 public class clsMedicamento {
-    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;
 
     public ResultSet listarMedicamentos() throws Exception {
-            String strSQL = "SELECT m.id, m.nombre, m.costo, m.stock, m.presentacion, m.vigencia, t.nomtipo AS tipo_medicamento "
-                    + "FROM medicamento m "
-                    + "JOIN tipo_medicamento t ON m.tipo_medicamento_id = t.id order by id";
+        String strSQL = "SELECT m.id, m.nombre, m.costo, m.stock, m.presentacion, m.vigencia, t.nomtipo AS tipo_medicamento "
+                + "FROM medicamento m "
+                + "JOIN tipo_medicamento t ON m.tipo_medicamento_id = t.id order by id";
         try {
             return objConectar.consultarBD(strSQL);
         } catch (Exception e) {
@@ -101,7 +100,9 @@ public class clsMedicamento {
 
     public ResultSet filtrar(String nom) throws Exception {
         strSQL = "SELECT M.*, T.nomTipo FROM (SELECT * FROM medicamento "
-                + "WHERE UPPER(nombre) LIKE UPPER('%" + nom + "%') AND vigencia = true) M "
+                + "WHERE UPPER(nombre) LIKE UPPER('%" + nom + "%') "
+                + "AND vigencia = true "
+                + "AND stock > 0) M "
                 + "INNER JOIN tipo_medicamento T on M.tipo_medicamento_id = T.id";
         try {
             rs = objConectar.consultarBD(strSQL);
@@ -172,5 +173,5 @@ public class clsMedicamento {
             }
         }
     }
-    
+
 }
