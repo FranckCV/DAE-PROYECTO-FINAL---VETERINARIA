@@ -5,7 +5,7 @@
 package capaPresentacion;
 
 import capaDatos.clsReporte;
-import capaNegocio.clsMascota;
+import capaNegocio.clsServicio;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -19,16 +19,17 @@ import net.sf.jasperreports.swing.JRViewer;
  * @author Fabiana Lucía
  */
 public class jdServiciosMasSolicitados extends javax.swing.JDialog {
+
     //Falta que solo se listen los meses y años donde hay registros
     //Validar que ningún campo esté vacío
     //Que el límite que coloque sea válido
-    clsMascota objMasco = new clsMascota();
+    clsServicio objServicio = new clsServicio();
     String docReporte = "serviciosMasSolicitados";
     String par_mes = "mes";
-    String par_anio = "par_anio";
+    String par_anio = "anio";
+    String limite = "limite";
     private int valorID = 0;
     private Dimension dimension;
-    
 
     /**
      * Creates new form jdServiciosMasSolicitados
@@ -37,47 +38,57 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         dimension = report.getPreferredSize();
-        
-         int value = (int) spnCantidad.getValue();
-                if (value < 0) {
-                    spnCantidad.setValue(0); // Si es negativo, se establece el valor en 0
-                }
+
+        int value = (int) spnCantidad.getValue();
+        if (value < 0) {
+            spnCantidad.setValue(0); // Si es negativo, se establece el valor en 0
+        }
 
     }
 
-     private void mostrar(){
+    private void mostrar() {
         try {
-            Container contenedor = this.report;
-            contenedor.setLayout(new BorderLayout());
-            contenedor.removeAll();
-            Map parametros = new HashMap();
-            parametros.put(
-                    par_mes,
-                    dtcMes.getMonth()+1
-            );
-            parametros.put(
-                    par_anio,
-                    dtcAnio.getYear()
-            ); 
-            JRViewer objReporte = new clsReporte().reporteInterno(docReporte+".jasper", parametros);
-            contenedor.add(objReporte);
-           
-            contenedor.revalidate();
-            contenedor.repaint();
-            
-            report.setPreferredSize(dimension);
-            this.report.setVisible(true);
+            int cantidad = objServicio.validarLimite(dtcAnio.getYear(), dtcMes.getMonth() + 1, Integer.parseInt(spnCantidad.getValue().toString()));
+            if (cantidad > 0 && cantidad >= Integer.parseInt(spnCantidad.getValue().toString())) {
+                Container contenedor = this.report;
+                contenedor.setLayout(new BorderLayout());
+                contenedor.removeAll();
+                Map parametros = new HashMap();
+                parametros.put(
+                        par_mes,
+                        dtcMes.getMonth() + 1
+                );
+                parametros.put(
+                        par_anio,
+                        dtcAnio.getYear()
+                );
+                parametros.put(
+                        limite,
+                        Integer.parseInt(spnCantidad.getValue().toString())
+                );
+                JRViewer objReporte = new clsReporte().reporteInterno(docReporte + ".jasper", parametros);
+                contenedor.add(objReporte);
+
+                contenedor.revalidate();
+                contenedor.repaint();
+
+                report.setPreferredSize(dimension);
+                this.report.setVisible(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Elija otros valores a ingresar");
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(
                     this,
-                    " Error en Reporte "+e.getMessage(),
+                    " Error en Reporte " + e.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
         }
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -109,7 +120,7 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
         );
         reportLayout.setVerticalGroup(
             reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 131, Short.MAX_VALUE)
+            .addGap(0, 126, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -189,20 +200,18 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(dtcAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
                         .addComponent(dtcMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42)
+                        .addGap(18, 18, 18)
+                        .addComponent(dtcAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(spnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,9 +224,9 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(spnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -248,7 +257,6 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JYearChooser dtcAnio;
