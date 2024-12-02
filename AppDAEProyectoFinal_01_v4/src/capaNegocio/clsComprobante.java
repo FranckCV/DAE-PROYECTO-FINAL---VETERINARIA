@@ -28,31 +28,11 @@ public class clsComprobante {
         }
     }
 
-<<<<<<< HEAD
     public int registrarComprobante(String tipo, String serieNumero, double montoTotal, Date fecha, int citaId) throws Exception {
         String strSQL = "INSERT INTO COMPROBANTE (Tipo, serie_numero, monto_total, fecha, CITAid) "
                 + "VALUES ('" + tipo + "', '" + serieNumero + "', " + montoTotal + ", '" + fecha + "', " + citaId + ")";
         try {
             objConectar.ejecutarBD(strSQL);
-=======
-   public int registrarComprobante(String tipo, String serieNumero, double montoTotal, Date fecha, int citaId) throws Exception {
-    String strSQL = "INSERT INTO COMPROBANTE (Tipo, serie_numero, monto_total, fecha, CITAid) "
-            + "VALUES ('" + tipo + "', '" + serieNumero + "', " + montoTotal + ", '" + fecha + "', " + citaId + ")";
-    try {
-        objConectar.ejecutarBD(strSQL);
-        
-        strSQL = "SELECT citaid, COUNT(*) as cantidad FROM COMPROBANTE WHERE Tipo = '" + tipo + "' AND serie_numero = '" + serieNumero + "' AND CITAid = " + citaId;
-        rs=objConectar.consultarBD(strSQL); 
-        int count=rs.getInt("cantidad");
-        if (count > 0) {
-            return rs.getInt("citaid");
-        }
-    } catch (Exception e) {
-        throw new Exception("Error al registrar comprobante: " + e.getMessage());
-    }
-    return 0;
-}
->>>>>>> 3fc369d52c915f20bac7ffb3c47e1a4d03ebafab
 
             strSQL = "SELECT citaid, COUNT(*) as cantidad FROM COMPROBANTE WHERE Tipo = '" + tipo + "' "
                     + "AND serie_numero = '" + serieNumero + "' AND CITAid = " + citaId + " "
