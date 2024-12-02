@@ -96,9 +96,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
-
         menuRepServicioMasSolicitado = new javax.swing.JMenuItem();
-        mnuIngresoPorServicio = new javax.swing.JMenuItem();
         jMenuItem24 = new javax.swing.JMenuItem();
         jMenuItem30 = new javax.swing.JMenuItem();
         rptMedicamentosXRangoPrecio = new javax.swing.JMenuItem();
@@ -126,6 +124,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
 
         panel.setBackground(new java.awt.Color(255, 255, 255));
+        panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -488,7 +487,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         jMenu11.add(jMenuItem1);
 
-
         menuRepServicioMasSolicitado.setText("Servicios más solicitados por mes");
         menuRepServicioMasSolicitado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -496,14 +494,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu11.add(menuRepServicioMasSolicitado);
-
-        mnuIngresoPorServicio.setText("Reporte de ingresos por servicio");
-        mnuIngresoPorServicio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuIngresoPorServicioActionPerformed(evt);
-            }
-        });
-        jMenu11.add(mnuIngresoPorServicio);
 
         jMenuItem24.setText("Nuevas mascotas segun mes y año");
         jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
@@ -807,11 +797,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         objForm.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void mnuIngresoPorServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuIngresoPorServicioActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_mnuIngresoPorServicioActionPerformed
-
     private void rptMedicamentosXRangoPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rptMedicamentosXRangoPrecioActionPerformed
         // TODO add your handling code here:
         RptMedicamentosXRangoPrecio objForm = new RptMedicamentosXRangoPrecio(this,true);
@@ -853,8 +838,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem24ActionPerformed
     private void menuRepServicioMasSolicitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRepServicioMasSolicitadoActionPerformed
         // TODO add your handling code here:
-//        jdRepServiciosMasSolicitados objFrm = new jdRepServiciosMasSolicitados(this, true);
-//        objFrm.setVisible(true);
+        
     }//GEN-LAST:event_menuRepServicioMasSolicitadoActionPerformed
 
     private void login() {
@@ -908,10 +892,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
-    private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem23;
+    private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem30;
     private javax.swing.JMenuItem jMenuItem34;
@@ -935,7 +919,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuEspecie;
     private javax.swing.JMenuItem mnuEstadoCita;
     private javax.swing.JMenu mnuInfoAdicional;
-    private javax.swing.JMenuItem mnuIngresoPorServicio;
     private javax.swing.JMenu mnuMantenimiento;
     private javax.swing.JMenuItem mnuMascota;
     private javax.swing.JMenuItem mnuMedicamento;

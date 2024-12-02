@@ -29,10 +29,13 @@ public class jdRptMedCitas extends javax.swing.JDialog {
     public jdRptMedCitas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-                dimension = report.getPreferredSize();
+        dimension = report.getPreferredSize();
 
     }
 
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
