@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
  * @author franc
  */
 public class clsMedico {
+
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
     ResultSet rs = null;
@@ -146,7 +147,6 @@ public class clsMedico {
 //
 //        return false;  // Si ocurre algún error, asumimos que no está disponible
 //    }
-
     public ResultSet buscarMedico(int id) throws Exception {
         strSQL = " select "
                 + "     med.*,"
@@ -352,6 +352,24 @@ public class clsMedico {
             throw new Exception("Error al buscar código de " + TABLA + " con el ID " + id_med + " --> " + e.getMessage());
         }
         return 0;
+    }
+
+    public ResultSet listarMedicosVigentesDisponibles() throws Exception {
+        strSQL = "SELECT "
+                + " M.*, "
+                + " E." + clsEspecialidad.NOMBRE + " "
+                + " FROM " + TABLA + " M "
+                + " INNER JOIN " + clsEspecialidad.TABLA + " E ON M." + ESPECIALIDAD_ID + " = E." + clsEspecialidad.ID
+                + " WHERE M.disponibilidad = true "
+                + " AND M.vigencia = true "
+                + " ORDER BY M." + ID;
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar los médicos vigentes y disponibles: " + e.getMessage());
+        }
     }
 
 }

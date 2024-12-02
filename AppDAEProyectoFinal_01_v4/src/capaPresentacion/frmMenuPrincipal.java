@@ -743,7 +743,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuUsuariosActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        jdCitaFirme objCita1 = new jdCitaFirme(this, true);
+        jdCita_v2 objCita1 = new jdCita_v2(this, true);
         objCita1.setLocationRelativeTo(this);
         objCita1.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed

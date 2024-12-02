@@ -101,7 +101,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
         modeloMed.addElement("-Ninguno-");
 
         try {
-            rsMed = objMedico.listarMedicos();
+            rsMed = objMedico.listarMedicosVigentesDisponibles();
             while (rsMed.next()) {
                 modeloMed.addElement("DNI: " + rsMed.getString("doc_identidad") + " | "
                         + rsMed.getString("nombres") + " " + rsMed.getString("apepaterno"));

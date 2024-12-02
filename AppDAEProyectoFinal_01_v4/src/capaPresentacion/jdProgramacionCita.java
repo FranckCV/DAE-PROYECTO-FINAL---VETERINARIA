@@ -55,7 +55,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         llenarTablaInicial();
     }
 
-
     private void generarCodigo() {
         try {
             int numero = objCita.generarCodigoCita();
@@ -109,6 +108,16 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                     if (codigoTablaSer == codServ && codTablaMed == codMed) {
                         repetido = true;
                         break;
+                    } else {
+                        if (codigoTablaSer == codServ) {
+                            if (JOptionPane.showConfirmDialog(this, "Agregar servicio repetido?") == JOptionPane.YES_OPTION) {
+                                repetido = false;
+                            } else {
+                                repetido = true;
+                                break;
+                            }
+
+                        }
                     }
                 }
                 // Mostrar mensaje si el servicio ya está en la tabla
@@ -129,13 +138,12 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                 // Formatear las horas
                 String horaEntradaFormateada = formatearHora(entradaDate);
                 String horaSalidaFormateada = formatearHora(salidaDate);
-                
+
 //                if (!objMedico.verificarDisponibilidad(codMed, horaEntrada, horaSalida)) {
 //                    JOptionPane.showMessageDialog(rootPane, "Este médico ya tiene un servicio en el horario indicado.");
 //                    return;  // No agregar el servicio si el médico no está disponible
 //                }
 //                
-
                 Object[] fila = new Object[7];
                 fila[0] = codServ + " - " + codMed;
                 fila[1] = rsSer.getString("nom_servicio"); // Aquí va el nombre del servicio (ajustar según tu lógica)
@@ -199,7 +207,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
 //            JOptionPane.showMessageDialog(rootPane, "Error al agregar servicio: " + e.getMessage());
 //        }
 //    }
-
     private Date convertirHoraAFecha(String hora) throws Exception {
         // Detectamos si es AM o PM
         String amPm = hora.substring(hora.length() - 2).trim();
@@ -308,7 +315,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     private void limpiarControlesDespuesDeAgregarServicio() {
 
 //        txtNotaDetalleCita.setText("");
-
         Calendar calendario = Calendar.getInstance();
         calendario.set(Calendar.HOUR_OF_DAY, 12);
         calendario.set(Calendar.MINUTE, 0);
