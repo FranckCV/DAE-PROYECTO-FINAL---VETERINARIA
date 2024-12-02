@@ -160,6 +160,11 @@ public class Utilidad {
         "Modificar contraseña",
         "Cancelar"
     };
+    
+    public static final String[] opcionesCancelarCita = {
+        "Cancelar Cita",
+        "No cancelar"
+    };
 
 //    Texto de valores Booleanos
     public static String textoBool(boolean valor, String txtTrue, String txtFalse) {
@@ -233,6 +238,20 @@ public class Utilidad {
                 null,
                 opcionesEliminar,
                 opcionesEliminar[0]
+        );
+        return valor;
+    }
+    
+    public static int mensajeConfirmarCancelarCita(String nombre) {
+        int valor = JOptionPane.showOptionDialog(
+                null,
+                "¿Está seguro que desea cancelar la cita \"" + nombre + "?",
+                "Confirmar Cancelación de cita",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesCancelarCita,
+                opcionesCancelarCita[0]
         );
         return valor;
     }

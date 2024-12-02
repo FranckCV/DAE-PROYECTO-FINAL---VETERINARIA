@@ -257,6 +257,19 @@ public class jdCita_v2 extends javax.swing.JDialog {
         tblDetalleServicio_PANEL_MEDIC.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
         tblDetalleServicio_PANEL_MEDIC.getTableHeader().getColumnModel().getColumn(0).setWidth(0);
     }
+    
+    private void cancelarCita(){
+        try {
+            int valor = Utilidad.mensajeConfirmarCancelarCita("Cita");
+            
+            if (valor == 0) {
+                objCita.cancelarCita(Integer.parseInt(txtNumero.getText()));
+                btnBuscarCitaActionPerformed(null);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No se pudo cancelar la cita " + e.getMessage());
+        }
+    }
 
     private void llenarTablaCitasPendientes() {
         ResultSet rsPendientes;
@@ -661,7 +674,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         tblMedicamentoResumen = new javax.swing.JTable();
         jScrollPane6 = new javax.swing.JScrollPane();
         tblServicioResumen = new javax.swing.JTable();
-        jLabel9 = new javax.swing.JLabel();
+        lblCitaPersona = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -992,7 +1005,12 @@ public class jdCita_v2 extends javax.swing.JDialog {
         });
 
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/eliminar.png"))); // NOI18N
-        jButton9.setText("Medicamentos");
+        jButton9.setText("Cancelar");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/salir.png"))); // NOI18N
         jButton10.setText("Salir");
@@ -1309,7 +1327,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         );
 
         btnTerminar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/veterinario.png"))); // NOI18N
-        btnTerminar3.setText("Terminar");
+        btnTerminar3.setText("Ir a resumen");
         btnTerminar3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTerminar3ActionPerformed(evt);
@@ -1436,9 +1454,9 @@ public class jdCita_v2 extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel9.setText("Resumen cita de ");
+        lblCitaPersona.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        lblCitaPersona.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblCitaPersona.setText("Resumen cita de: ");
 
         jPanel17.setBackground(new java.awt.Color(0, 102, 51));
 
@@ -1541,23 +1559,21 @@ public class jdCita_v2 extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 36, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                .addGap(12, 12, 12)
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 36, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblCitaPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 975, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblCitaPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1703,7 +1719,13 @@ public class jdCita_v2 extends javax.swing.JDialog {
     }//GEN-LAST:event_tblCitasPendientesMouseClicked
 
     private void cboEstadoCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEstadoCitaActionPerformed
-        // TODO add your handling code here:
+        if (!cboEstadoCita.getSelectedItem().equals("Pendiente")) {
+            btnTerminar.setEnabled(false);
+            btnTerminar2.setEnabled(false);
+            btnTerminar3.setEnabled(false);
+            this.jTabbedPane1.setEnabledAt(1, false);
+            this.jTabbedPane1.setEnabledAt(2, false);
+        }
     }//GEN-LAST:event_cboEstadoCitaActionPerformed
 
     private void btnBuscarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCitaActionPerformed
@@ -1781,6 +1803,12 @@ public class jdCita_v2 extends javax.swing.JDialog {
 //                btnBuscarMascotaActionPerformed(null);
             }
 //            llenarDetalleMedicamentosEnTabla();
+            String texto = "Resumen cita de: ";
+            String duenio = txtNombreDuenio.getText();
+            String mascota = txtNombreMascota.getText();
+            
+            lblCitaPersona.setText(texto+ duenio+" y su mascota " + mascota);
+            
             llenarTablitaServicios();
 
         } catch (Exception e) {
@@ -2022,14 +2050,12 @@ public class jdCita_v2 extends javax.swing.JDialog {
     }//GEN-LAST:event_cboMedicosActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        try {
-            if (rootPaneCheckingEnabled) {
-                objCita.cancelarCita(Integer.parseInt(txtNumero.getText()));
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "No se pudo cancelar la cita " + e.getMessage());
-        }
+        
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarMedicamento;
@@ -2075,7 +2101,6 @@ public class jdCita_v2 extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -2101,6 +2126,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lblCitaPersona;
     private javax.swing.JSpinner spnCantidad;
     private javax.swing.JTable tblCitasPendientes;
     private javax.swing.JTable tblDetalleMedicamento;
