@@ -12,7 +12,10 @@ import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import net.sf.jasperreports.swing.JRViewer;
+import soporte.Utilidad;
 
 /**
  *
@@ -39,54 +42,56 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
         initComponents();
         dimension = report.getPreferredSize();
 
-        int value = (int) spnCantidad.getValue();
-        if (value < 0) {
-            spnCantidad.setValue(0); // Si es negativo, se establece el valor en 0
-        }
-
     }
 
     private void mostrar() {
         try {
-            int cantidad = objServicio.validarLimite(dtcAnio.getYear(), dtcMes.getMonth() + 1, Integer.parseInt(spnCantidad.getValue().toString()));
-            if (cantidad > 0 && cantidad >= Integer.parseInt(spnCantidad.getValue().toString())) {
-                Container contenedor = this.report;
-                contenedor.setLayout(new BorderLayout());
-                contenedor.removeAll();
-                Map parametros = new HashMap();
-                parametros.put(
-                        par_mes,
-                        dtcMes.getMonth() + 1
-                );
-                parametros.put(
-                        par_anio,
-                        dtcAnio.getYear()
-                );
-                parametros.put(
-                        limite,
-                        Integer.parseInt(spnCantidad.getValue().toString())
-                );
-                JRViewer objReporte = new clsReporte().reporteInterno(docReporte + ".jasper", parametros);
-                contenedor.add(objReporte);
-
-                contenedor.revalidate();
-                contenedor.repaint();
-
-                report.setPreferredSize(dimension);
-                this.report.setVisible(true);
+            // Validar que el mes, el año y el límite no estén vacíos o tengan valores inválidos
+            if (dtcMes.getMonth() < 0 || dtcMes.getMonth() > 11) {
+                JOptionPane.showMessageDialog(this, "Por favor seleccione un mes válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;  // Salir del método si el mes no es válido
             }
-            else{
-                JOptionPane.showMessageDialog(this, "Elija otros valores a ingresar");
+
+            if (dtcAnio.getYear() <= 0) {
+                JOptionPane.showMessageDialog(this, "Por favor ingrese un año válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;  // Salir del método si el año no es válido
             }
+
+            String limiteTexto = txtCantidad.getText();
+            if (limiteTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor ingrese un límite válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;  // Salir del método si el límite está vacío
+            }
+
+            int limiteValor;
+            try {
+                limiteValor = Integer.parseInt(limiteTexto);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "El límite debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;  // Salir del método si el límite no es un número válido
+            }
+
+            // Si las validaciones pasan, generar el reporte
+            Container contenedor = this.report;
+            contenedor.setLayout(new BorderLayout());
+            contenedor.removeAll();
+            Map parametros = new HashMap();
+            parametros.put(par_mes, dtcMes.getMonth() + 1);  
+            parametros.put(par_anio, dtcAnio.getYear());
+            parametros.put(limite, limiteValor);
+            JRViewer objReporte = new clsReporte().reporteInterno(docReporte + ".jasper", parametros);
+            contenedor.add(objReporte);
+
+            contenedor.revalidate();
+            contenedor.repaint();
+
+            report.setPreferredSize(dimension);
+            this.report.setVisible(true);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    " Error en Reporte " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this, "Error en Reporte: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }
 
     /**
@@ -106,7 +111,8 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        spnCantidad = new javax.swing.JSpinner();
+        txtCantidad = new javax.swing.JTextField();
+        btnVerReporte = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -116,11 +122,11 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
         report.setLayout(reportLayout);
         reportLayout.setHorizontalGroup(
             reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 824, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         reportLayout.setVerticalGroup(
             reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 126, Short.MAX_VALUE)
+            .addGap(0, 125, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -186,9 +192,16 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel1.setText("Cantidad a visualizar:");
 
-        spnCantidad.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                spnCantidadPropertyChange(evt);
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyTyped(evt);
+            }
+        });
+
+        btnVerReporte.setText("Ver reporte");
+        btnVerReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerReporteActionPerformed(evt);
             }
         });
 
@@ -197,21 +210,24 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(dtcMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(dtcAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(dtcMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(dtcAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnVerReporte)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,7 +239,8 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
                     .addComponent(dtcAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(spnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnVerReporte)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
@@ -234,8 +251,7 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
 
     private void dtcMesPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dtcMesPropertyChange
         // TODO add your handling code here:
-        dimension = report.getPreferredSize();
-        mostrar();
+
     }//GEN-LAST:event_dtcMesPropertyChange
 
     private void dtcMesVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_dtcMesVetoableChange
@@ -244,21 +260,26 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
 
     private void dtcAnioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dtcAnioPropertyChange
         // TODO add your handling code here:
-        dimension = report.getPreferredSize();
-        mostrar();
+
     }//GEN-LAST:event_dtcAnioPropertyChange
 
-    private void spnCantidadPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_spnCantidadPropertyChange
+    private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
+        // TODO add your handling code here:
+        Utilidad.validarCampoTextoSoloNumero(evt);
+    }//GEN-LAST:event_txtCantidadKeyTyped
+
+    private void btnVerReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerReporteActionPerformed
         // TODO add your handling code here:
         dimension = report.getPreferredSize();
         mostrar();
-    }//GEN-LAST:event_spnCantidadPropertyChange
+    }//GEN-LAST:event_btnVerReporteActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVerReporte;
     private com.toedter.calendar.JYearChooser dtcAnio;
     private com.toedter.calendar.JMonthChooser dtcMes;
     private javax.swing.JLabel jLabel1;
@@ -267,6 +288,6 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JDesktopPane report;
-    private javax.swing.JSpinner spnCantidad;
+    private javax.swing.JTextField txtCantidad;
     // End of variables declaration//GEN-END:variables
 }
