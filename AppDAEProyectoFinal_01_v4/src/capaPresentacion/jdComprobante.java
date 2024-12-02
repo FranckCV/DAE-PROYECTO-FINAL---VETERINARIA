@@ -28,6 +28,7 @@ public class jdComprobante extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         dimension = report.getPreferredSize();
+        mostrar();
     }
 
     private void mostrar() {
