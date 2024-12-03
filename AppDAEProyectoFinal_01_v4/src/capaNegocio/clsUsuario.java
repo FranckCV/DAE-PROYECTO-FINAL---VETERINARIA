@@ -88,7 +88,7 @@ public class clsUsuario {
     }
 
     public ResultSet listarUsuarios() throws Exception {
-        strSQL = "select * from usuario";
+        strSQL = "select * from usuario order by codusuario";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
