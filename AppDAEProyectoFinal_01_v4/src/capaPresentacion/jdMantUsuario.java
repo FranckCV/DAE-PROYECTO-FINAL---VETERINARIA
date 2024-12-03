@@ -42,6 +42,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         btnVigencia.setText(Utilidad.BTN_VIGENCIA);
         Utilidad.validacionTabla(tblUsuario, modal, rootPaneCheckingEnabled, sexo);
+        txtId.requestFocus();
         listarCargos();
         listarUsuarios();
     }
@@ -94,6 +95,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Mantenimiento de usuario");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -430,7 +432,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -592,6 +594,14 @@ public class jdMantUsuario extends javax.swing.JDialog {
             if (txtId.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código para buscar");
             } else {
+                for (int i = 0; i < tblUsuario.getRowCount(); i++) {
+                    String valorCodigo = tblUsuario.getValueAt(i, 0).toString();
+                    if (valorCodigo.equals(txtId.getText())) {
+                        tblUsuario.setRowSelectionInterval(i, i);
+                        tblUsuario.scrollRectToVisible(tblUsuario.getCellRect(i, 0, true));
+                        break;
+                    }
+                }
                 rsUsuario = objUsuario.buscarUsuario(Integer.parseInt(txtId.getText()));
                 Utilidad.desactivarFields(txtId, txtId, txtNombre, txtApeMat, txtApePat, txtClave, txtUsuario);
                 radMasculino.setEnabled(false);
@@ -843,7 +853,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
 
     private void modificarUsuario() {
         try {
-            if (txtId.getText().isBlank()) {
+            if (txtId.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
             } else {
                 if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
@@ -856,10 +866,13 @@ public class jdMantUsuario extends javax.swing.JDialog {
                     btnModificar.setText(Utilidad.BTN_GUARDAR);
                     btnEliminar.setText(Utilidad.BTN_CANCELAR);
                     Utilidad.desactivarBotones(btnModificar, btnLimpiar, btnBuscar, btnNuevo, btnVigencia, btnContraseña);
-                    tblUsuario.setEnabled(true);
+                    tblUsuario.setEnabled(false);
                 } else if (Utilidad.verificarElementoParaUsoCodigo("usuario", "estado", "codusuario",Integer.parseInt(txtId.getText()))) {
                     Utilidad.mensajeElementoNoVigente("usuario", txtNombre.getText());
-                } else {
+                } else if(Utilidad.validarElementoTextoRepetido("usuario", "nomusuario", txtUsuario.getText())) {
+                    JOptionPane.showMessageDialog(this, "Ya fue registrado este nombre de usuario");
+                }
+                else {
                     int valor = Utilidad.mensajeConfirmarModificar("Usuario", Integer.parseInt(txtId.getText()), txtNombre.getText());
                     if (valor == JOptionPane.YES_OPTION) {
                         boolean sexo;
@@ -967,7 +980,7 @@ public class jdMantUsuario extends javax.swing.JDialog {
         try {
             Integer id = Integer.parseInt(txtId.getText());
             ResultSet rsUsuario = null;
-            if (txtId.getText().equals("")) {
+            if (txtId.getText().isEmpty()) {
                 JOptionPane.showConfirmDialog(this, "Debe ingresar un codigo");
             } else {
                 rsUsuario = objUsuario.buscarUsuario(id);

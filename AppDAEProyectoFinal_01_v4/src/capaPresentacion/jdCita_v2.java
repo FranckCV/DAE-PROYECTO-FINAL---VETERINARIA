@@ -1718,9 +1718,9 @@ public class jdCita_v2 extends javax.swing.JDialog {
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel20Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCitaPersona, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
+                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCitaPersona, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -2217,42 +2217,10 @@ public class jdCita_v2 extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton12ActionPerformed
 
-<<<<<<< HEAD
-=======
-    private void btnTerminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerminarActionPerformed
-        try {
-            objDetalleMedicamento.registrarDetalleMedicamento(Integer.parseInt(txtNumero.getText()), tblDetalleMedicamento);
-            objCita.terminarCita(Integer.parseInt(txtNumero.getText()));
 
-            for (int i = 0; i < tblDetalleMedicamento.getRowCount(); i++) {
-                int idMedicamento = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 0).toString());
-                int cantidad = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 6).toString());
-                objMedicamento.reducirStock(idMedicamento, cantidad);
-            }
+                                           
 
-            String tipo;
 
-            String num = objComprobante.generarNumeroSerieComprobante();
-            java.util.Date utilDate = jDateChooser1.getDate();
-            java.sql.Date fecha = new java.sql.Date(utilDate.getTime());
-
-            objComprobante.registrarComprobante("B", num, Float.parseFloat(txtTotal.getText()), fecha,
-                    Integer.parseInt(txtNumero.getText()));
-
-            JOptionPane.showMessageDialog(this, "La cita finalizó");
-//            limpiarTodoAlTerminar();
-            
-            jdComprobante objComprobante = new jdComprobante(
-                        (Frame) SwingUtilities.getWindowAncestor(this), true);
-            objComprobante.id_cita = Integer.parseInt(txtNumero.getText());
-            objComprobante.setVisible(true);
-                    
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "No se pudo terminar " + e.getMessage());
-        }
-    }//GEN-LAST:event_btnTerminarActionPerformed
-
->>>>>>> bd1b538d18e489dd7234f7820ae3a35ca1232d63
     private void btnEliminarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarServicioActionPerformed
         int valor = Utilidad.mensajeConfirmarEliminarDetalleServicio(cboServicios.getSelectedItem().toString() + "\"");
 
