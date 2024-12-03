@@ -25,6 +25,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import org.apache.bcel.generic.AALOAD;
 import org.hibernate.cfg.annotations.reflection.XMLContext;
 import soporte.*;
 
@@ -2014,7 +2015,12 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
             JOptionPane.showMessageDialog(this, "La cita finalizó");
 //            limpiarTodoAlTerminar();
-
+            
+            jdComprobante objComprobante = new jdComprobante(
+                        (Frame) SwingUtilities.getWindowAncestor(this), true);
+            objComprobante.id_cita = Integer.parseInt(txtNumero.getText());
+            objComprobante.setVisible(true);
+                    
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "No se pudo terminar " + e.getMessage());
         }
