@@ -17,27 +17,28 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import soporte.Utilidad;
 
-public class jdMantMascota_v2 extends javax.swing.JDialog {
+public class jdMantMascotaNOVALE extends javax.swing.JDialog {
 
-    private static jdMantMascota_v2 instanciaUnica;
+    private static jdMantMascotaNOVALE instanciaUnica;
 
     clsMascota objMasco = new clsMascota();
     clsRaza objRaza = new clsRaza();
     clsEspecie objEsp = new clsEspecie();
     Integer IdEspecie = -1;
 
-    public jdMantMascota_v2(java.awt.Frame parent, boolean modal) throws SQLException, Exception {
+    public jdMantMascotaNOVALE(java.awt.Frame parent, boolean modal) throws SQLException, Exception {
         super(parent, modal);
         initComponents();
         sinEditarP();
         txtId.requestFocus();
         listarMascotas();
+        Utilidad.validacionTabla(tblMascota, modal, rootPaneCheckingEnabled, modal);
 
     }
 
-    public static jdMantMascota_v2 getInstance(Frame parent, boolean modal) throws Exception {
+    public static jdMantMascotaNOVALE getInstance(Frame parent, boolean modal) throws Exception {
         if (instanciaUnica == null) {
-            instanciaUnica = new jdMantMascota_v2(parent, modal);
+            instanciaUnica = new jdMantMascotaNOVALE(parent, modal);
         }
         return instanciaUnica;
     }
@@ -506,6 +507,7 @@ public class jdMantMascota_v2 extends javax.swing.JDialog {
             }
         });
 
+        btnVigencia.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnVigencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/darBaja.png"))); // NOI18N
         btnVigencia.setText("Dar Baja");
         btnVigencia.addActionListener(new java.awt.event.ActionListener() {
@@ -514,6 +516,7 @@ public class jdMantMascota_v2 extends javax.swing.JDialog {
             }
         });
 
+        btnEliminar.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/eliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -679,9 +682,9 @@ public class jdMantMascota_v2 extends javax.swing.JDialog {
             listarNombreRaza();
             inicializarComboEstado();
         } catch (SQLException ex) {
-            Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdMantMascotaNOVALE.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdMantMascotaNOVALE.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -901,7 +904,6 @@ btnEliminar.setEnabled(true);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAgregarDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarDActionPerformed
-        //jdMantDuenio_v2 objForm = new jdMantDuenio_v2(null, true);
         jdMantDuenioNOVALE objForm = new jdMantDuenioNOVALE(null, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
@@ -909,7 +911,6 @@ btnEliminar.setEnabled(true);
     }//GEN-LAST:event_btnAgregarDActionPerformed
 
     private void btnRazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRazaActionPerformed
-        //jdMantDuenio_v2 objForm = new jdMantDuenio_v2(null, true);
         jdMantDuenioNOVALE objForm = new jdMantDuenioNOVALE(null, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
@@ -978,9 +979,9 @@ btnEliminar.setEnabled(true);
                 JOptionPane.showMessageDialog(this, "Error al listar Mascotas: " + e.getMessage());
                 listarMascotas();
             } catch (SQLException ex) {
-                Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(jdMantMascotaNOVALE.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
-                Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(jdMantMascotaNOVALE.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -1046,7 +1047,7 @@ btnEliminar.setEnabled(true);
                 cbxRazita.setSelectedIndex(0);
             }
         } catch (Exception ex) {
-            Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdMantMascotaNOVALE.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_cbxEspecieeActionPerformed
 
@@ -1142,9 +1143,9 @@ btnEliminar.setEnabled(true);
                 JOptionPane.showMessageDialog(this, "Error al listar Mascotas: " + e.getMessage());
                 listarMascotas();
             } catch (SQLException ex) {
-                Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(jdMantMascotaNOVALE.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
-                Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(jdMantMascotaNOVALE.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -1171,7 +1172,7 @@ btnEliminar.setEnabled(true);
             tblMascota.setEnabled(true);
             Utilidad.activarBotones(btnRegistrar, btnBuscar, btnLimpiar, btnModificar, btnVigencia);
         } catch (Exception ex) {
-            Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdMantMascotaNOVALE.class.getName()).log(Level.SEVERE, null, ex);
         }
     } else {
         eliminarMascota();
