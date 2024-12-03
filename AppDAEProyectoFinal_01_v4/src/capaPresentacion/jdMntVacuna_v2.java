@@ -34,6 +34,7 @@ public class jdMntVacuna_v2 extends javax.swing.JDialog {
         btnRegistrar.setText(Utilidad.BTN_NUEVO);
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+        Utilidad.validacionTabla(tblVacunas, modal, rootPaneCheckingEnabled, modal);
         spnDosis.setEnabled(false);
         chkDisponibilidad.setEnabled(false);
         chkDisponibilidad.setSelected(true);

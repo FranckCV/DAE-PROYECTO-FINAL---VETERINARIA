@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import soporte.Utilidad;
 
 /**
  *
@@ -40,6 +41,7 @@ public class jdCustodia_v2 extends javax.swing.JDialog {
         listarCustodia();
         buttonGroup3.add(bgMas);
         buttonGroup3.add(Dueño);
+        Utilidad.validacionTabla(tblDuenos, modal, rootPaneCheckingEnabled, modal);
     }
 
     private void listarMascotas() throws SQLException {

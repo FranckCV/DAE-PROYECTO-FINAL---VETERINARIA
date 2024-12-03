@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
  * @author franc
  */
 public class jdMantServicio extends javax.swing.JDialog {
+
     clsServicio objTabla = new clsServicio();
     clsEspecialidad objEs = new clsEspecialidad();
 
@@ -27,6 +28,7 @@ public class jdMantServicio extends javax.swing.JDialog {
         btnNuevo.setText(Utilidad.BTN_NUEVO);
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+        Utilidad.validacionTabla(tblServicio, modal, rootPaneCheckingEnabled, modal);
     }
 
     /**
@@ -391,9 +393,9 @@ public class jdMantServicio extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             txtID.setText(String.valueOf(tblServicio.getValueAt(tblServicio.getSelectedRow(), 0)));
-            btnBuscarActionPerformed(null);            
+            btnBuscarActionPerformed(null);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,"Debe finalizar la operacion actual primero");
+            JOptionPane.showMessageDialog(this, "Debe finalizar la operacion actual primero");
         }
     }//GEN-LAST:event_tblServicioMouseClicked
 
@@ -426,6 +428,7 @@ public class jdMantServicio extends javax.swing.JDialog {
     private void txtIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyTyped
         // TODO add your handling code here:
         Utilidad.validarCampoTextoSoloNumero(evt);
+
     }//GEN-LAST:event_txtIDKeyTyped
 
     private void txtCostoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCostoKeyTyped
@@ -439,11 +442,11 @@ public class jdMantServicio extends javax.swing.JDialog {
             Utilidad.validarCampoTextoSoloLetras(evt);
             Utilidad.validarLimiteCampoTexto(evt, clsServicio.NOMBRE, clsServicio.TABLA);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error en el campo "+evt.getSource().getClass().getName()+": " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error en el campo " + evt.getSource().getClass().getName() + ": " + e.getMessage());
         }
     }//GEN-LAST:event_txtNombreKeyTyped
-    
-    private void listarServicio(){
+
+    private void listarServicio() {
         ResultSet rsPro = null;
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");
@@ -451,10 +454,10 @@ public class jdMantServicio extends javax.swing.JDialog {
         modelo.addColumn("Descripcion");
         modelo.addColumn("Costo");
         modelo.addColumn("Disponibilidad");
-        tblServicio.setModel(modelo);        
+        tblServicio.setModel(modelo);
         try {
             rsPro = objTabla.listarServicios();
-            while (rsPro.next()){                
+            while (rsPro.next()) {
                 modelo.addRow(new Object[]{
                     rsPro.getInt(clsServicio.ID),
                     rsPro.getString(clsServicio.NOMBRE),
@@ -465,17 +468,17 @@ public class jdMantServicio extends javax.swing.JDialog {
             }
             tblServicio.setModel(modelo);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al listar tabla "+clsServicio.TABLA+": " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al listar tabla " + clsServicio.TABLA + ": " + e.getMessage());
         }
     }
-   
+
     private void buscarServicio() {
         ResultSet rsData = null;
         try {
             if (txtID.getText().isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
             } else {
-                
+
                 for (int i = 0; i < tblServicio.getRowCount(); i++) {
                     String valorCodigo = tblServicio.getValueAt(i, 0).toString();
                     if (valorCodigo.equals(txtID.getText())) {
@@ -484,16 +487,16 @@ public class jdMantServicio extends javax.swing.JDialog {
                         break;
                     }
                 }
-                
+
                 rsData = objTabla.buscarServicio(Integer.parseInt(txtID.getText()));
-                if (rsData.next()){
+                if (rsData.next()) {
                     txtNombre.setText(rsData.getString(clsServicio.NOMBRE));
                     txtDescripcion.setText(rsData.getString(clsServicio.DESCRIPCION));
                     txtCosto.setText(rsData.getString(clsServicio.COSTO));
                     chkDisponibilidad.setSelected(rsData.getBoolean(clsServicio.DISPONIBILIDAD));
                     rsData.close();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Este codigo en "+clsServicio.TABLA+" no existe");
+                    JOptionPane.showMessageDialog(this, "Este codigo en " + clsServicio.TABLA + " no existe");
                     limpiarControles();
                     listarServicio();
                 }
@@ -504,7 +507,7 @@ public class jdMantServicio extends javax.swing.JDialog {
             limpiarControles();
         }
     }
-    
+
     private void usarBotones(boolean bus, boolean nue, boolean mod, boolean eli, boolean lim, boolean sal) {
         btnBuscar.setEnabled(bus);
         btnNuevo.setEnabled(nue);
@@ -512,34 +515,34 @@ public class jdMantServicio extends javax.swing.JDialog {
         btnLimpiar.setEnabled(lim);
         btnModificar.setEnabled(mod);
     }
-    
+
     private void limpiarControles() {
         txtID.setText("");
         txtNombre.setText("");
         txtDescripcion.setText("");
         txtCosto.setText("");
-        
-        txtID.requestFocus();        
+
+        txtID.requestFocus();
     }
-   
+
     private void editableControles(boolean cod, boolean nom, boolean desc, boolean cos) {
         txtID.setEditable(cod);
-        txtNombre.setEditable(nom); 
+        txtNombre.setEditable(nom);
         txtDescripcion.setEditable(desc);
         txtCosto.setEditable(cos);
-    } 
-          
+    }
+
     private void eliminarServicio() {
         try {
             if (txtID.getText().isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
-            } else if (Utilidad.validarEliminacionForanea(clsServicio.TABLA, Integer.parseInt(txtID.getText()))){
-                JOptionPane.showMessageDialog(this, 
-                        "Hay datos externos asociados a " + clsServicio.TABLA + " \"" + txtNombre.getText()+ "\".\n"
+            } else if (Utilidad.validarEliminacionForanea(clsServicio.TABLA, Integer.parseInt(txtID.getText()))) {
+                JOptionPane.showMessageDialog(this,
+                        "Hay datos externos asociados a " + clsServicio.TABLA + " \"" + txtNombre.getText() + "\".\n"
                         + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. "
                 );
             } else {
-                int valor = JOptionPane.showConfirmDialog(null, "Deseas continuar?", "Confirmacion",JOptionPane.YES_NO_OPTION);
+                int valor = JOptionPane.showConfirmDialog(null, "Deseas continuar?", "Confirmacion", JOptionPane.YES_NO_OPTION);
                 if (valor == JOptionPane.YES_OPTION) {
                     objTabla.eliminarServicio(Integer.parseInt(txtID.getText()));
                     limpiarControles();
@@ -547,15 +550,15 @@ public class jdMantServicio extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " +e.getMessage()
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage()
             );
         }
     }
-    
+
     private void cancelarAccion() {
         btnNuevo.setText(Utilidad.BTN_NUEVO);
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
-        btnEliminar.setText(Utilidad.BTN_ELIMINAR);        
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         limpiarControles();
         listarServicio();
         editableControles(true, false, false, false);
@@ -574,10 +577,10 @@ public class jdMantServicio extends javax.swing.JDialog {
                     usarBotones(false, false, true, true, false, false);
                 } else {
                     objTabla.modificarServicio(
-                        Integer.parseInt(txtID.getText()),
-                        txtNombre.getText(),
-                        txtDescripcion.getText(),
-                        Double.parseDouble(txtCosto.getText())
+                            Integer.parseInt(txtID.getText()),
+                            txtNombre.getText(),
+                            txtDescripcion.getText(),
+                            Double.parseDouble(txtCosto.getText())
                     );
                     btnModificar.setText(Utilidad.BTN_MODIFICAR);
                     btnEliminar.setText(Utilidad.BTN_ELIMINAR);
@@ -587,11 +590,11 @@ public class jdMantServicio extends javax.swing.JDialog {
                     listarServicio();
                     JOptionPane.showMessageDialog(this, "Se modificó con exito");
                 }
-            }            
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error:" + e.getMessage());
         }
-    }    
+    }
 
     private void nuevoServicio() {
         try {
@@ -606,7 +609,7 @@ public class jdMantServicio extends javax.swing.JDialog {
             } else {
                 if (txtNombre.getText().trim().isBlank() || txtID.getText().trim().isBlank() || txtCosto.getText().trim().isBlank() || txtDescripcion.getText().trim().isBlank()) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
-                } else if (Utilidad.validarElementoTextoRepetido(clsServicio.TABLA, clsServicio.NOMBRE, txtNombre.getText())){
+                } else if (Utilidad.validarElementoTextoRepetido(clsServicio.TABLA, clsServicio.NOMBRE, txtNombre.getText())) {
                     JOptionPane.showMessageDialog(this, "Ya existe un servicio con este nombre");
                 } else {
                     btnNuevo.setText(Utilidad.BTN_NUEVO);
@@ -628,28 +631,26 @@ public class jdMantServicio extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error:" + e.getMessage());
         }
     }
-    
+
     private void cambiarDisponibilidad() {
         try {
             if (txtID.getText().isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
             } else {
-                int valor = Utilidad.mensajeConfirmarDisponibilidad(clsServicio.TABLA, Integer.parseInt(txtID.getText()),txtNombre.getText());
+                int valor = Utilidad.mensajeConfirmarDisponibilidad(clsServicio.TABLA, Integer.parseInt(txtID.getText()), txtNombre.getText());
                 if (valor == 0) {
                     objTabla.cambiarDisponibilidad(Integer.parseInt(txtID.getText()));
                     limpiarControles();
                     listarServicio();
                     JOptionPane.showMessageDialog(this, "Se modificó la Disponibilidad de esta Especialidad con exito");
-                }                
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }
-    
-    
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnDisponibilidad;

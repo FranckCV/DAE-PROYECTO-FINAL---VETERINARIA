@@ -32,6 +32,7 @@ public class jdDetalle_Servicio extends javax.swing.JDialog {
         initComponents();
         txtID.setText(jdMantMedico.id_medico_asignacion);
         btnDisponibilidad.setText(Utilidad.BTN_DISPONIBILIDAD);
+        Utilidad.validacionTabla(jTable1, modal, rootPaneCheckingEnabled, modal);
     }
 
     /**
