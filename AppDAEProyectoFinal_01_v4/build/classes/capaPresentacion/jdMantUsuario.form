@@ -7,10 +7,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
-<<<<<<< HEAD
-=======
     <Property name="title" type="java.lang.String" value="Mantenimiento de usuario"/>
->>>>>>> 66a5b054fdbc122c2845b3e6a2b435bf51adb6cb
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
