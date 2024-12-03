@@ -14,25 +14,27 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import soporte.Utilidad;
 
-public class jdMantDuenio extends javax.swing.JDialog {
-    private static jdMantDuenio instanciaUnica;
+public class jdMantDuenioNOVALE extends javax.swing.JDialog {
+
+    private static jdMantDuenioNOVALE instanciaUnica;
 
     clsDuenio objDuenio = new clsDuenio();
 
-    public jdMantDuenio(java.awt.Frame parent, boolean modal) {
+    public jdMantDuenioNOVALE(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         sinEditarP();
         txtId.requestFocus();
-listarDuenios();
+        listarDuenios();
     }
 
-       public static jdMantDuenio getInstance(Frame parent, boolean modal) throws Exception {
+    public static jdMantDuenioNOVALE getInstance(Frame parent, boolean modal) throws Exception {
         if (instanciaUnica == null) {
-            instanciaUnica = new jdMantDuenio(parent, modal);
+            instanciaUnica = new jdMantDuenioNOVALE(parent, modal);
         }
         return instanciaUnica;
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -98,12 +100,12 @@ listarDuenios();
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(301, 301, 301)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jSeparator1)
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(357, 357, 357)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -392,7 +394,7 @@ listarDuenios();
             }
         });
 
-        btnModificar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        btnModificar.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/editar.png"))); // NOI18N
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -410,6 +412,7 @@ listarDuenios();
             }
         });
 
+        btnNuevo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/veterinario.png"))); // NOI18N
         btnNuevo.setText("Registrar Dueño");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -423,37 +426,41 @@ listarDuenios();
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(9, 9, 9)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnVigencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnAgregarMas1))
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAgregarMas1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(9, 9, 9))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnModificar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnVigencia)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAgregarMas1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(9, 9, 9)
+                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAgregarMas1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(9, Short.MAX_VALUE))
         );
+
+        btnAgregarMas1.getAccessibleContext().setAccessibleName("");
+        btnVigencia.getAccessibleContext().setAccessibleName("");
+        btnModificar.getAccessibleContext().setAccessibleName("");
+        btnEliminar.getAccessibleContext().setAccessibleName("");
+        btnNuevo.getAccessibleContext().setAccessibleName("");
 
         jPanel6.setBackground(new java.awt.Color(128, 238, 238));
 
         jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel8.setText("Id:");
+        jLabel8.setText("ID:");
 
         txtId.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -479,13 +486,13 @@ listarDuenios();
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -511,27 +518,26 @@ listarDuenios();
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(15, 15, 15)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addComponent(jLabel4))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(57, 57, 57)
+                                .addComponent(jLabel4)))
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -540,7 +546,7 @@ listarDuenios();
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -584,7 +590,7 @@ listarDuenios();
 
     private void tblDuenioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDuenioMouseClicked
         // TODO add your handling code here:
-         Utilidad.buscarPorTabla(tblDuenio, btnBuscar, txtId);
+        Utilidad.buscarPorTabla(tblDuenio, btnBuscar, txtId);
         if (tblDuenio.getValueAt(tblDuenio.getSelectedRow(), 5).equals("Vigente")) {
             btnVigencia.setText("Dar baja");
             btnVigencia.setIcon(new ImageIcon(getClass().getResource("/conector/Recursos/darBaja.png")));
@@ -600,7 +606,7 @@ listarDuenios();
 
     private void btnBuscarPorDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPorDniActionPerformed
         // TODO add your handling code here:
-         ResultSet rsDuenio = null;
+        ResultSet rsDuenio = null;
         try {
             if (txtNumDoc.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un número de documento para buscar");
@@ -620,9 +626,9 @@ listarDuenios();
                     txtDireccion.setText(rsDuenio.getString("direccion"));
                     cmbSexo.setSelectedItem(getSexoString(rsDuenio.getBoolean("sexo")));
                     chkVigencia.setSelected(rsDuenio.getBoolean("vigencia"));
- 
+
                     sinEditarP();
-                  
+
                 } else {
                     JOptionPane.showMessageDialog(this, "Código de Dueño no existe");
                     limpiarControles();
@@ -633,12 +639,12 @@ listarDuenios();
             JOptionPane.showMessageDialog(this, "Ocurrió un error del sistema en la búsqueda");
 
         }
-        
+
     }//GEN-LAST:event_btnBuscarPorDniActionPerformed
 
     private void txtNumDocKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumDocKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (!Character.isDigit(c)) {
             evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
         }
@@ -646,7 +652,7 @@ listarDuenios();
 
     private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (!Character.isDigit(c)) {
             evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
         }
@@ -654,7 +660,7 @@ listarDuenios();
 
     private void txtNumCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumCKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (!Character.isDigit(c)) {
             evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
         }
@@ -662,7 +668,7 @@ listarDuenios();
 
     private void txtNumCAKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumCAKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (!Character.isDigit(c)) {
             evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
         }
@@ -670,7 +676,7 @@ listarDuenios();
 
     private void txtNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombresKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (!Character.isLetter(c) && c != ' ') {
             evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
         }
@@ -682,7 +688,7 @@ listarDuenios();
 
     private void txtMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMaternoKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (!Character.isLetter(c) && c != ' ') {
             evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
         }
@@ -690,7 +696,7 @@ listarDuenios();
 
     private void txtPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPaternoKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (!Character.isLetter(c) && c != ' ') {
             evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
         }
@@ -713,7 +719,7 @@ listarDuenios();
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código para buscar");
             } else {
                 rsMascota = objDuenio.buscarDuenio(Integer.parseInt(txtId.getText()));
-                Utilidad.desactivarFields(txtId,txtCorreo, txtDireccion, txtMaterno, txtNombres, txtNumC,txtNumCA,txtPaterno,txtNumDoc);
+                Utilidad.desactivarFields(txtId, txtCorreo, txtDireccion, txtMaterno, txtNombres, txtNumC, txtNumCA, txtPaterno, txtNumDoc);
                 cmbSexo.setEnabled(false);
                 chkVigencia.setEnabled(false);
                 if (rsMascota.next()) {
@@ -726,12 +732,11 @@ listarDuenios();
                     txtCorreo.setText(rsMascota.getString("correo"));
                     txtDireccion.setText(rsMascota.getString("direccion"));
                     chkVigencia.setSelected(rsMascota.getBoolean("vigencia"));
-                    String sexo="";
+                    String sexo = "";
                     if (rsMascota.getBoolean("sexo")) {
-                     sexo="Masculino";   
-                    }
-                    else{
-                        sexo="Femenino";
+                        sexo = "Masculino";
+                    } else {
+                        sexo = "Femenino";
                     }
                     cmbSexo.setSelectedItem(sexo);
 
@@ -745,64 +750,63 @@ listarDuenios();
             JOptionPane.showMessageDialog(this, "Error " + e.getLocalizedMessage());
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
-    
-    private void registrar() throws Exception{
+
+    private void registrar() throws Exception {
         if (btnNuevo.getText().equals("Registrar Dueño")) {
-                btnNuevo.setText("Guardar Datos");
-                limpiarControles();
-                txtId.setText(objDuenio.generarCodigoDuenio().toString());
-                txtNombres.requestFocus();
-                btnBuscar.setEnabled(false);
-                btnModificar.setEnabled(false);
-                btnLimpiar.setEnabled(false);
-                txtId.setEnabled(false);
-                btnEliminar.setEnabled(false);
-                btnVigencia.setEnabled(false);
-                chkVigencia.setEnabled(false);
-                chkVigencia.setSelected(true);
-                btnBuscarPorDni.setSelected(false);
-                btnAgregarMas1.setSelected(false);
-                editar();
-            } else {
-                if (!camposEstanLlenos()) {
-                    return;
-                }
-                  boolean sexo;
-                    if (cmbSexo.getSelectedItem().toString().equals("Masculino")) {
-                        sexo = true;
-                    } else {
-                        sexo = false;
-                    }
-                    
-                try {
-                    objDuenio.registrarDuenio(Integer.parseInt(
-                    txtId.getText()), txtNumDoc.getText(), txtNombres.getText(),
-                                txtPaterno.getText(), txtMaterno.getText(), txtNumC.getText(),txtNumCA.getText(),txtCorreo.getText(),
-                                txtDireccion.getText(),sexo, chkVigencia.isSelected()
-                    );
-                    limpiarControles();
-                    listarDuenios();
-                    sinEditarP();
-                    JOptionPane.showMessageDialog(this, "Dueño registrada con éxito");
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Error al registrar el dueño: " + e.getMessage());
-                    return;
-                }
-                btnNuevo.setText("Registrar Dueño");
-                btnBuscar.setEnabled(true);
-                btnModificar.setEnabled(true);
-                btnEliminar.setEnabled(true);
-                    btnVigencia.setEnabled(true);
-                btnLimpiar.setEnabled(true);
-                txtId.setEditable(true);
-                btnAgregarMas1.setSelected(true);
-                chkVigencia.setEnabled(false);
-                chkVigencia.setSelected(false);
-                btnBuscarPorDni.setSelected(true);
+            btnNuevo.setText("Guardar Datos");
+            limpiarControles();
+            txtId.setText(objDuenio.generarCodigoDuenio().toString());
+            txtNombres.requestFocus();
+            btnBuscar.setEnabled(false);
+            btnModificar.setEnabled(false);
+            btnLimpiar.setEnabled(false);
+            txtId.setEnabled(false);
+            btnEliminar.setEnabled(false);
+            btnVigencia.setEnabled(false);
+            chkVigencia.setEnabled(false);
+            chkVigencia.setSelected(true);
+            btnBuscarPorDni.setSelected(false);
+            btnAgregarMas1.setSelected(false);
+            editar();
+        } else {
+            if (!camposEstanLlenos()) {
+                return;
             }
+            boolean sexo;
+            if (cmbSexo.getSelectedItem().toString().equals("Masculino")) {
+                sexo = true;
+            } else {
+                sexo = false;
+            }
+
+            try {
+                objDuenio.registrarDuenio(Integer.parseInt(
+                        txtId.getText()), txtNumDoc.getText(), txtNombres.getText(),
+                        txtPaterno.getText(), txtMaterno.getText(), txtNumC.getText(), txtNumCA.getText(), txtCorreo.getText(),
+                        txtDireccion.getText(), sexo, chkVigencia.isSelected()
+                );
+                limpiarControles();
+                listarDuenios();
+                sinEditarP();
+                JOptionPane.showMessageDialog(this, "Dueño registrada con éxito");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al registrar el dueño: " + e.getMessage());
+                return;
+            }
+            btnNuevo.setText("Registrar Dueño");
+            btnBuscar.setEnabled(true);
+            btnModificar.setEnabled(true);
+            btnEliminar.setEnabled(true);
+            btnVigencia.setEnabled(true);
+            btnLimpiar.setEnabled(true);
+            txtId.setEditable(true);
+            btnAgregarMas1.setSelected(true);
+            chkVigencia.setEnabled(false);
+            chkVigencia.setSelected(false);
+            btnBuscarPorDni.setSelected(true);
+        }
     }
-    
-    
+
     private void btnVigenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVigenciaActionPerformed
         // TODO add your handling code here:
         darBaja();
@@ -818,7 +822,7 @@ listarDuenios();
         modificarUsuario();
     }//GEN-LAST:event_btnModificarActionPerformed
 
-     private void modificarUsuario() {
+    private void modificarUsuario() {
         try {
             if (txtId.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
@@ -834,14 +838,14 @@ listarDuenios();
                 } else {
                     int valor = Utilidad.mensajeConfirmarModificar("Usuario", Integer.parseInt(txtId.getText()), txtNombres.getText());
                     if (valor == JOptionPane.YES_OPTION) {
-                        boolean sexo=false;
+                        boolean sexo = false;
                         if (cmbSexo.getSelectedItem().toString().equals("Masculino")) {
-                            sexo=true;
+                            sexo = true;
                         }
-                        
+
                         objDuenio.modificarDuenio(Integer.parseInt(txtId.getText()), txtNumDoc.getText(), txtNombres.getText(),
-                                txtPaterno.getText(), txtMaterno.getText(), txtNumC.getText(),txtNumCA.getText(),txtCorreo.getText(),
-                                txtDireccion.getText(),sexo, chkVigencia.isSelected());
+                                txtPaterno.getText(), txtMaterno.getText(), txtNumC.getText(), txtNumCA.getText(), txtCorreo.getText(),
+                                txtDireccion.getText(), sexo, chkVigencia.isSelected());
                         btnModificar.setText(Utilidad.BTN_MODIFICAR);
                         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
                         Utilidad.activarBotones(btnNuevo, btnBuscar, btnLimpiar, btnModificar, btnVigencia);
@@ -858,11 +862,9 @@ listarDuenios();
         }
     }
 
-    
-    
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-                if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
+        if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
             cancelarAccion();
             tblDuenio.setEnabled(true);
             Utilidad.activarBotones(btnNuevo, btnBuscar, btnLimpiar, btnModificar, btnVigencia);
@@ -880,34 +882,33 @@ listarDuenios();
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-private void eliminarDuenio() {
-    try {
-        int selectedRow = tblDuenio.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Por favor, selecciona una fila.");
-            return;
-        }
-                int idMascota = Integer.parseInt(tblDuenio.getValueAt(selectedRow, 0).toString()); // Suponiendo que el ID está en la primera columna
-
-        if (txtId.getText().isBlank()) {
-            Utilidad.mensajeErrorFaltaID(this);
-        } else if (Utilidad.validarEliminacionForanea(clsServicio.TABLA, idMascota)) {
-            JOptionPane.showMessageDialog(this, 
-                    "Hay datos externos asociados a al  Dueño \"" + txtNombres.getText() + "\".\n"
-                    + "Considere cambiar su vigencia para que ya no pueda ser usado.");
-        } else {
-            int valor = JOptionPane.showConfirmDialog(null, "Deseas continuar?", "Confirmación", JOptionPane.YES_NO_OPTION);
-            if (valor == JOptionPane.YES_OPTION) {
-                objDuenio.eliminarDuenio(idMascota);
-                limpiarControles();
-                        listarDuenios();
+    private void eliminarDuenio() {
+        try {
+            int selectedRow = tblDuenio.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Por favor, selecciona una fila.");
+                return;
             }
-        }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-    }
-}
+            int idMascota = Integer.parseInt(tblDuenio.getValueAt(selectedRow, 0).toString()); // Suponiendo que el ID está en la primera columna
 
+            if (txtId.getText().isBlank()) {
+                Utilidad.mensajeErrorFaltaID(this);
+            } else if (Utilidad.validarEliminacionForanea(clsServicio.TABLA, idMascota)) {
+                JOptionPane.showMessageDialog(this,
+                        "Hay datos externos asociados a al  Dueño \"" + txtNombres.getText() + "\".\n"
+                        + "Considere cambiar su vigencia para que ya no pueda ser usado.");
+            } else {
+                int valor = JOptionPane.showConfirmDialog(null, "Deseas continuar?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                if (valor == JOptionPane.YES_OPTION) {
+                    objDuenio.eliminarDuenio(idMascota);
+                    limpiarControles();
+                    listarDuenios();
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }
 
     private void cancelarAccion() {
         btnNuevo.setText(Utilidad.BTN_NUEVO);
@@ -915,10 +916,8 @@ private void eliminarDuenio() {
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         limpiarControles();
         listarDuenios();
-    } 
-    
+    }
 
-    
     private String getSexoString(boolean sexo) {
         return sexo ? "Masculino" : "Femenino";
     }
@@ -928,9 +927,9 @@ private void eliminarDuenio() {
                 || txtNumDoc.getText().isEmpty() || txtMaterno.getText().isEmpty()
                 || txtNumC.getText().isEmpty() || txtDireccion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Los campos más importantes deben estar llenos.");
-            return false; 
+            return false;
         }
-        return true; 
+        return true;
     }
 
     private void sinEditar() {
@@ -938,7 +937,7 @@ private void eliminarDuenio() {
         txtNumDoc.setEditable(false);
         txtNombres.setEditable(false);
         txtPaterno.setEditable(false);
-        txtMaterno.setEditable(false); 
+        txtMaterno.setEditable(false);
         txtNumC.setEditable(false);
         txtNumCA.setEditable(false);
         txtCorreo.setEditable(false);
@@ -948,7 +947,7 @@ private void eliminarDuenio() {
     }
 
     private void sinEditarP() {
-        
+
         txtNombres.setEditable(false);
         txtPaterno.setEditable(false);
         txtMaterno.setEditable(false);
@@ -1037,7 +1036,8 @@ private void eliminarDuenio() {
         chkVigencia.setSelected(false);
 
     }
-     private void darBaja() {
+
+    private void darBaja() {
         try {
             Integer id = Integer.parseInt(txtId.getText());
             ResultSet rsUsuario = null;
