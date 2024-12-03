@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobante" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="866c4a12-e275-43e4-994c-6cad6e4e4ea2">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select distinct co.serie_numero,co.fecha,(du.nombres|| ' ' ||du.apepaterno) as nombre_duenio
+	,du.doc_identidad
+	from detalle_cita dc
+inner join cita c on c.id=dc.cita_id
+inner join comprobante co on co.citaid=c.id
+inner join custodia cu on cu.duenioid=c.custodiaduenioid
+inner join duenio du on du.id=cu.duenioid]]>
+	</queryString>
+	<field name="serie_numero" class="java.lang.String"/>
+	<field name="fecha" class="java.sql.Date"/>
+	<field name="nombre_duenio" class="java.lang.String"/>
+	<field name="doc_identidad" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="206" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="342" y="20" width="204" height="114" uuid="8a03f16f-6d2c-47b6-bd6e-ae4cfa3e7ad1"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="187" y="114" width="143" height="20" uuid="91656dc0-9ac6-4701-88ff-b7a2f34f55c5"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[curiosito@gmail.com]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="101" y="146" width="100" height="20" uuid="27870c42-e9ea-4707-99ae-ae04f0f98038"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="110" y="114" width="48" height="20" uuid="854974c5-6004-4b62-b7b6-934ca35cd436"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="342" y="59" width="204" height="23" forecolor="#FFFFFF" backcolor="#0033CC" uuid="7e835495-85aa-4513-a219-48f8f7067c10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BOLETA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="342" y="174" width="48" height="20" uuid="24199981-6e94-4c64-875e-25a5a837387f"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="201" y="174" width="111" height="20" uuid="2be99096-cd31-453a-be02-6f12e02bebcf"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{doc_identidad}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="187" y="84" width="77" height="20" uuid="33700f04-9241-44fe-a549-f38c3f168f90"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[906 300 962]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="392" y="174" width="133" height="20" backcolor="#CCCCCC" uuid="1f6d486e-e05d-4d54-90ae-07ff55120514"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="97" y="144" width="233" height="20" backcolor="#CCCCCC" uuid="54b7e985-c224-4e63-85dc-9ff5ad299933"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="187" y="58" width="92" height="20" uuid="3251cc43-9236-43ae-9f25-27e2cdb327d9"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Jr. curioson 173]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="31" width="93" height="15" uuid="fcff238b-9123-4a52-be0b-595904563210"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[10072486892]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="1" y="205" width="554" height="1" uuid="f78167a8-0dd7-4307-b08c-4f474eb8fb3e"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="110" y="84" width="67" height="20" uuid="00fa2b45-8b0b-4a7c-9da6-04464a718269"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="93" width="21" height="15" uuid="5d312d92-d58b-47e0-a5a4-4d82b4ac96f8"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="34" y="144" width="48" height="20" uuid="53209a57-46be-48a9-8d3e-b4c22cc06ac7"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="197" y="174" width="133" height="20" backcolor="#CCCCCC" uuid="44b54bb5-0548-4f2c-83c7-888a94df40ab"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="392" y="31" width="36" height="15" uuid="1a5a6ca4-3c5a-4e17-b17c-79e2c64994a2"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="34" y="174" width="153" height="20" uuid="4ae1eed3-85d7-48e7-9239-cfbcc35b3d63"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Documento de identidad:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="22" y="58" width="126" height="76" uuid="3e028ef5-9666-488c-ac33-facabf6c8e98"/>
+				<imageExpression><![CDATA["D:\\Descargas\\veterinaria_dae\\DAE-PROYECTO-FINAL---VETERINARIA\\AppDAEProyectoFinal_01_v4\\src\\conector\\Recursos\\logo_mediano.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="110" y="58" width="77" height="20" uuid="1cc6f7d2-78a6-41b3-bc1b-6c448b4e8d88"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="10" y="6" width="320" height="40" backcolor="#003399" uuid="45bee1f7-789c-4b90-9ef2-ec83d2f7cdab"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="Title" mode="Transparent" x="10" y="6" width="320" height="40" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="3a67b9fc-73fc-47ca-94b0-9f67dcf4da17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="30" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Veterinaria marmota]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="175" splitType="Stretch"/>
+		<band height="246"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
