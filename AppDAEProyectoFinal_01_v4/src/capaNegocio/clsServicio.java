@@ -213,4 +213,26 @@ public class clsServicio {
         }
     }
 
+    public int validarLimite(int año, int mes,int limite) throws Exception{
+        strSQL="SELECT COUNT(*) AS total_servicios FROM ( SELECT COUNT(*) AS cantidad FROM detalle_cita dc "
+                + "INNER JOIN cita c ON c.id = dc.cita_id "
+                + "  INNER JOIN detalle_servicio ds ON ds.servicio_id = dc.detalle_servicio_serv_id "
+                + "  INNER JOIN servicio s ON s.id = ds.servicio_id "
+                + "  WHERE EXTRACT(YEAR FROM c.fecha_cita) = "+año
+                + "    AND EXTRACT(MONTH FROM c.fecha_cita) = "+mes
+                + "  GROUP BY s.nom_servicio "
+                + ") AS subconsulta;";
+        try{
+            rs=objConectar.consultarBD(strSQL);
+            while (rs.next()) {                
+                return rs.getInt("total_servicios");
+            }
+        }
+        catch(Exception e){
+            throw new Exception("Error al validar el límite");
+        }
+        return -1;
+    } 
+        
+    
 }
