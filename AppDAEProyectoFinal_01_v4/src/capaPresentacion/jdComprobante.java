@@ -21,14 +21,8 @@ import soporte.Utilidad;
 public class jdComprobante extends javax.swing.JDialog {
     private Dimension dimension;
 
-<<<<<<< HEAD
-    public static int id_cita=0;
-=======
-    int detalle_cita_id=0;
-
     public static int id_cita=0;
 
->>>>>>> 47b8adcaa9eef2a7b4325531cff5f7ccd4212975
     /**
      * Creates new form jdComprobante
      */
@@ -47,20 +41,12 @@ public class jdComprobante extends javax.swing.JDialog {
         Map<String, Object> parametros = new HashMap<>();
         
 
-<<<<<<< HEAD
+
         parametros.put("detalle_cita_id", id_cita); 
-        parametros.put("detalle_cita_id", 39); // Convertir a java.sql.Date
-        parametros.put("SUBREPORT_DIR", "./");
-        
-=======
-
-        parametros.put("detalle_cita_id", detalle_cita_id); 
-
-        parametros.put("detalle_cita_id", 39); // Convertir a java.sql.Date
         parametros.put("SUBREPORT_DIR", "./");
         
 
->>>>>>> 47b8adcaa9eef2a7b4325531cff5f7ccd4212975
+
         JRViewer objReporte = new clsReporte().reporteInterno("comprobantePago" + ".jasper", parametros);
         contenedor.add(objReporte);
         contenedor.revalidate();

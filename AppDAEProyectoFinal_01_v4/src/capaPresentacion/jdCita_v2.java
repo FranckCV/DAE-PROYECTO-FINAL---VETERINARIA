@@ -2218,38 +2218,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton12ActionPerformed
 
 
-    private void btnTerminarActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        try {
-            objDetalleMedicamento.registrarDetalleMedicamento(Integer.parseInt(txtNumero.getText()), tblDetalleMedicamento);
-            objCita.terminarCita(Integer.parseInt(txtNumero.getText()));
-
-            for (int i = 0; i < tblDetalleMedicamento.getRowCount(); i++) {
-                int idMedicamento = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 0).toString());
-                int cantidad = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 6).toString());
-                objMedicamento.reducirStock(idMedicamento, cantidad);
-            }
-
-            String tipo;
-
-            String num = objComprobante.generarNumeroSerieComprobante();
-            java.util.Date utilDate = jDateChooser1.getDate();
-            java.sql.Date fecha = new java.sql.Date(utilDate.getTime());
-
-            objComprobante.registrarComprobante("B", num, Float.parseFloat(txtTotal.getText()), fecha,
-                    Integer.parseInt(txtNumero.getText()));
-
-            JOptionPane.showMessageDialog(this, "La cita finalizó");
-//            limpiarTodoAlTerminar();
-            
-            jdComprobante objComprobante = new jdComprobante(
-                        (Frame) SwingUtilities.getWindowAncestor(this), true);
-            objComprobante.id_cita = Integer.parseInt(txtNumero.getText());
-            objComprobante.setVisible(true);
-                    
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "No se pudo terminar " + e.getMessage());
-        }
-    }                                           
+                                           
 
 
     private void btnEliminarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarServicioActionPerformed
