@@ -1406,7 +1406,7 @@ public class jdCita1 extends javax.swing.JDialog {
                 }
             } else {
                 if (JOptionPane.showConfirmDialog(this, "Dueño no existe ¿Desea registrarlo?", "Alerta!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    jdMantDuenio objMantDuenio = new jdMantDuenio(null, true);
+                    jdMantDuenioNOVALE objMantDuenio = new jdMantDuenioNOVALE(null, true);
                     objMantDuenio.setLocationRelativeTo(this);
                     objMantDuenio.setVisible(true);
                 }
@@ -1455,7 +1455,7 @@ public class jdCita1 extends javax.swing.JDialog {
                 } else {
                     if (JOptionPane.showConfirmDialog(this, "Mascota no existe ¿Desea registrar?", "Alerta!",
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                        jdMantMascota objMantMascota = new jdMantMascota(null, true);
+                        jdMantMascotaNOVALE objMantMascota = new jdMantMascotaNOVALE(null, true);
                         objMantMascota.setLocationRelativeTo(this);
                         objMantMascota.setVisible(true);
                     }

@@ -707,7 +707,7 @@ public class jdCustodia extends javax.swing.JDialog {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try {
-            jdMantDuenio objForm = new jdMantDuenio(null, true);
+            jdMantDuenioNOVALE objForm = new jdMantDuenioNOVALE(null, true);
             objForm.setLocationRelativeTo(this);
             objForm.setVisible(true);
         } catch (Exception ex) {
@@ -758,7 +758,7 @@ public class jdCustodia extends javax.swing.JDialog {
 
     private void btnAgregarMasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMasActionPerformed
         try {
-            jdMantMascota objForm = new jdMantMascota(null, true);
+            jdMantMascotaNOVALE objForm = new jdMantMascotaNOVALE(null, true);
             objForm.setLocationRelativeTo(this);
             objForm.setVisible(true);
         }catch (Exception ex) {

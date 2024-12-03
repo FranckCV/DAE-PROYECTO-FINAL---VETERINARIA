@@ -32,7 +32,6 @@ public class jdMantMascota extends javax.swing.JDialog {
         sinEditarP();
         txtId.requestFocus();
         listarMascotas();
-        Utilidad.validacionTabla(tblMascota, modal, rootPaneCheckingEnabled, modal);
 
     }
 
@@ -507,7 +506,6 @@ public class jdMantMascota extends javax.swing.JDialog {
             }
         });
 
-        btnVigencia.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnVigencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/darBaja.png"))); // NOI18N
         btnVigencia.setText("Dar Baja");
         btnVigencia.addActionListener(new java.awt.event.ActionListener() {
@@ -516,7 +514,6 @@ public class jdMantMascota extends javax.swing.JDialog {
             }
         });
 
-        btnEliminar.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/eliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -904,14 +901,14 @@ btnEliminar.setEnabled(true);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAgregarDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarDActionPerformed
-        jdMantDuenio objForm = new jdMantDuenio(null, true);
+        jdMantDuenioNOVALE objForm = new jdMantDuenioNOVALE(null, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
 
     }//GEN-LAST:event_btnAgregarDActionPerformed
 
     private void btnRazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRazaActionPerformed
-        jdMantDuenio objForm = new jdMantDuenio(null, true);
+        jdMantDuenioNOVALE objForm = new jdMantDuenioNOVALE(null, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
 

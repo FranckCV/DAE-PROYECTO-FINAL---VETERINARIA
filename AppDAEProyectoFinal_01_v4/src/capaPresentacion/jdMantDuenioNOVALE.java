@@ -14,13 +14,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import soporte.Utilidad;
 
-public class jdMantDuenio extends javax.swing.JDialog {
+public class jdMantDuenioNOVALE extends javax.swing.JDialog {
 
-    private static jdMantDuenio instanciaUnica;
+    private static jdMantDuenioNOVALE instanciaUnica;
 
     clsDuenio objDuenio = new clsDuenio();
 
-    public jdMantDuenio(java.awt.Frame parent, boolean modal) {
+    public jdMantDuenioNOVALE(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         sinEditarP();
@@ -28,9 +28,9 @@ public class jdMantDuenio extends javax.swing.JDialog {
         listarDuenios();
     }
 
-    public static jdMantDuenio getInstance(Frame parent, boolean modal) throws Exception {
+    public static jdMantDuenioNOVALE getInstance(Frame parent, boolean modal) throws Exception {
         if (instanciaUnica == null) {
-            instanciaUnica = new jdMantDuenio(parent, modal);
+            instanciaUnica = new jdMantDuenioNOVALE(parent, modal);
         }
         return instanciaUnica;
     }

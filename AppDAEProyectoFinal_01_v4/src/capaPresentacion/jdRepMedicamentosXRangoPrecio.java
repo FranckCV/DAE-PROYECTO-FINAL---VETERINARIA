@@ -16,12 +16,12 @@ import net.sf.jasperreports.swing.JRViewer;
  *
  * @author Leona
  */
-public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
+public class jdRepMedicamentosXRangoPrecio extends javax.swing.JDialog {
 
     /**
      * Creates new form RptMedicamentosXRangoPrecio
      */
-    public RptMedicamentosXRangoPrecio(java.awt.Frame parent, boolean modal) {
+    public jdRepMedicamentosXRangoPrecio(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -54,7 +54,6 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
         );
         vistaReporteLayout.setVerticalGroup(
             vistaReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
             .addGap(0, 535, Short.MAX_VALUE)
         );
 
@@ -99,7 +98,6 @@ public class RptMedicamentosXRangoPrecio extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(txtPrecioMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReporte))
-
                 .addGap(18, 18, 18)
                 .addComponent(vistaReporte)
                 .addContainerGap())

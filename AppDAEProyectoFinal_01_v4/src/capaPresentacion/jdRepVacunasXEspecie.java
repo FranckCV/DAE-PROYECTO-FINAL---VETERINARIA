@@ -21,12 +21,12 @@ import soporte.Utilidad;
  *
  * @author Leona
  */
-public class RptVacunasXEspecie extends javax.swing.JDialog {
+public class jdRepVacunasXEspecie extends javax.swing.JDialog {
     clsEspecie objEsp = new clsEspecie();
     /**
      * Creates new form RptVacunaXEspecie
      */
-    public RptVacunasXEspecie(java.awt.Frame parent, boolean modal) {
+    public jdRepVacunasXEspecie(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         listarEspecies();

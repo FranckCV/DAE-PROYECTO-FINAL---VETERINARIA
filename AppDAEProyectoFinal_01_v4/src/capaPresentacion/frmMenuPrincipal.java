@@ -700,7 +700,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // Llamada al constructor que puede lanzar una excepción
-            jdMantMascota objForm = new jdMantMascota(null, true);
+            jdMantMascotaNOVALE objForm = new jdMantMascotaNOVALE(null, true);
             objForm.setLocationRelativeTo(this);
             objForm.setVisible(true);
         } catch (Exception e) {
@@ -712,7 +712,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void btnDueñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDueñoActionPerformed
         // TODO add your handling code here:
-        jdMantDuenio objForm = new jdMantDuenio(this, true);
+        jdMantDuenioNOVALE objForm = new jdMantDuenioNOVALE(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
     }//GEN-LAST:event_btnDueñoActionPerformed
@@ -798,14 +798,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void rptMedicamentosXRangoPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rptMedicamentosXRangoPrecioActionPerformed
         // TODO add your handling code here:
-        RptMedicamentosXRangoPrecio objForm = new RptMedicamentosXRangoPrecio(this,true);
+        jdRepMedicamentosXRangoPrecio objForm = new jdRepMedicamentosXRangoPrecio(this,true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
     }//GEN-LAST:event_rptMedicamentosXRangoPrecioActionPerformed
 
     private void rptVacunasXEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rptVacunasXEspecieActionPerformed
         // TODO add your handling code here:
-        RptVacunasXEspecie objForm = new RptVacunasXEspecie(this, true);
+        jdRepVacunasXEspecie objForm = new jdRepVacunasXEspecie(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);        
     }//GEN-LAST:event_rptVacunasXEspecieActionPerformed
