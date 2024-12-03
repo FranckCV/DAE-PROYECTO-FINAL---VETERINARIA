@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteMedicosEficientes_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="54104fea-7db3-4c2f-82f6-510251f1e554">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="31"/>
+	<parameter name="parCantidadMostrar" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parAnio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    e.nom_especialidad AS especialidad,
+    CONCAT(m.nombres, ' ', m.apePaterno, ' ', m.apeMaterno) AS medico,
+    COUNT(DISTINCT ci.id) AS cantidad_citas
+FROM
+    DETALLE_CITA dc
+JOIN
+    DETALLE_SERVICIO ds ON dc.detalle_servicio_med_id = ds.medico_id
+JOIN
+    MEDICO m ON ds.medico_id = m.id
+JOIN
+    ESPECIALIDAD e ON m.especialidad_id = e.id
+JOIN
+    CITA ci ON dc.cita_id = ci.id
+WHERE
+    EXTRACT(YEAR FROM ci.fecha_cita) = 2024 -- Filtra las citas por el año deseado
+    AND m.id IN (
+        SELECT ds.medico_id
+        FROM
+            DETALLE_CITA dc_sub
+        JOIN
+            DETALLE_SERVICIO ds ON dc_sub.detalle_servicio_med_id = ds.medico_id
+        JOIN
+            MEDICO m_sub ON ds.medico_id = m_sub.id
+        JOIN
+            ESPECIALIDAD e_sub ON m_sub.especialidad_id = e_sub.id
+        JOIN
+            CITA ci_sub ON dc_sub.cita_id = ci_sub.id
+        WHERE
+            EXTRACT(YEAR FROM ci_sub.fecha_cita) = $P{parAnio}
+            AND e_sub.nom_especialidad = e.nom_especialidad
+        GROUP BY
+            ds.medico_id, e_sub.nom_especialidad
+        ORDER BY
+            COUNT(DISTINCT ci_sub.id) DESC
+        LIMIT $P{parCantidadMostrar}
+    )
+GROUP BY
+    e.nom_especialidad, medico
+ORDER BY
+    e.nom_especialidad;]]>
+	</queryString>
+	<field name="especialidad" class="java.lang.String"/>
+	<field name="medico" class="java.lang.String"/>
+	<field name="cantidad_citas" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="49" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="6" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="3" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="5" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="254" splitType="Stretch">
+			<barChart>
+				<chart>
+					<reportElement x="10" y="51" width="534" height="178" uuid="6fd8ddaa-e72f-4cd6-82ba-43538463f477"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{especialidad}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{medico}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{cantidad_citas}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+			<staticText>
+				<reportElement x="0" y="9" width="555" height="42" uuid="cf56b4d7-d5d6-42c0-a149-aef3bcb30186"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gráfico anual, por especialidad]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
