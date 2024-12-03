@@ -12,7 +12,6 @@ import java.sql.ResultSet;
  * @author franc
  */
 public class clsEspecie {
-    
 
     String verificar;
     boolean dependencia;
@@ -29,7 +28,7 @@ public class clsEspecie {
     public static final String NOMBRE = "nombre";
 
     public ResultSet listarEspecies() throws Exception {
-        strSQL = "select * from " + TABLA +" where disponibilidad = true order by id";
+        strSQL = "select * from " + TABLA + " order by id";
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
@@ -118,6 +117,24 @@ public class clsEspecie {
         }
     }
 
+    public void cambiarDisponibilidad(Integer id) throws Exception {
+        Boolean disp = null;
+
+         rs = objConectar.consultarBD("select disponibilidad from " + TABLA + " where " + ID + " = '" + id + "'");
+
+        while (rs.next()) {
+            disp = rs.getBoolean("disponibilidad");
+        }
+        
+        strSQL = "update " + TABLA + " set disponibilidad = " + !disp + " where " + ID + " = '" + id + "'";
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al cambiar disponibilidad en ID:" + id + " en tabla " + TABLA + ": " + e.getMessage());
+        }
+
+    }
+
     public boolean validarNombre(String nom) throws Exception {
         strSQL = "SELECT nombre FROM especie WHERE LOWER(nombre) = LOWER('" + nom + "')";
         try {
@@ -130,6 +147,5 @@ public class clsEspecie {
         }
         return false;
     }
-    
-    
+
 }

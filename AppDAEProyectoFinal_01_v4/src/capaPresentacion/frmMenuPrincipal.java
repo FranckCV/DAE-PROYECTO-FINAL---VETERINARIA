@@ -607,7 +607,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // Llamada al constructor que puede lanzar una excepción
-            jdMantMascota objForm = new jdMantMascota(null, true);
+            jdMantMascota_v2 objForm = new jdMantMascota_v2(null, true);
             objForm.setLocationRelativeTo(this);
             objForm.setVisible(true);
         } catch (Exception e) {
@@ -641,7 +641,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void mnuDueñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDueñoActionPerformed
         // TODO add your handling code here:
-        jdMantDuenio objForm = new jdMantDuenio(this, true);
+        jdMantDuenio_v2 objForm = new jdMantDuenio_v2(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
     }//GEN-LAST:event_mnuDueñoActionPerformed
@@ -684,14 +684,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        jdMntVacuna objForm = new jdMntVacuna(this, true);
+        jdMntVacuna_v2 objForm = new jdMntVacuna_v2(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
     }
 
     private void mnuVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuVacunaActionPerformed
         // TODO add your handling code here:
-        jdMntVacuna objForm = new jdMntVacuna(this, true);
+        jdMntVacuna_v2 objForm = new jdMntVacuna_v2(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
     }//GEN-LAST:event_mnuVacunaActionPerformed
@@ -700,6 +700,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // Llamada al constructor que puede lanzar una excepción
+            //jdMantMascota_v2 objForm = new jdMantMascota_v2(null, true);
             jdMantMascotaNOVALE objForm = new jdMantMascotaNOVALE(null, true);
             objForm.setLocationRelativeTo(this);
             objForm.setVisible(true);
@@ -712,6 +713,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void btnDueñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDueñoActionPerformed
         // TODO add your handling code here:
+        //jdMantDuenio_v2 objForm = new jdMantDuenio_v2(this, true);
         jdMantDuenioNOVALE objForm = new jdMantDuenioNOVALE(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
@@ -745,9 +747,9 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void mnuCustodiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCustodiaActionPerformed
         // TODO add your handling code here:
-        jdCustodia objCus = null;
+        jdCustodia_v2 objCus = null;
         try {
-            objCus = new jdCustodia(this, true);
+            objCus = new jdCustodia_v2(this, true);
         } catch (SQLException ex) {
             Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -757,9 +759,9 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        jsDetalleVacunacion objCita = null;
+        jsDetalleVacunacion_v2 objCita = null;
         try {
-            objCita = new jsDetalleVacunacion(this, true);
+            objCita = new jsDetalleVacunacion_v2(this, true);
         } catch (SQLException ex) {
             Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -824,14 +826,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
         // TODO add your handling code here:
-        jdRptMedCitas obj = new jdRptMedCitas(this, true);
+        jdRptMedCitas_v2 obj = new jdRptMedCitas_v2(this, true);
         obj.setLocationRelativeTo(this);
         obj.setVisible(true);
     }//GEN-LAST:event_jMenuItem30ActionPerformed
 
     private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
         // TODO add your handling code here:
-        jdRepMasctXduenio obj = new jdRepMasctXduenio(this, true);
+        jdRepMasctXduenio_v2 obj = new jdRepMasctXduenio_v2(this, true);
         obj.setLocationRelativeTo(this);
         obj.setVisible(true);
     }//GEN-LAST:event_jMenuItem24ActionPerformed
