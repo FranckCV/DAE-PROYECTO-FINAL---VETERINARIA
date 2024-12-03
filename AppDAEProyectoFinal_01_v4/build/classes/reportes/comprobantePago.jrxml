@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobantePago" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="825f4b25-99e5-4984-aad6-2dabda247473">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="138"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -16,18 +16,25 @@
 	<parameter name="detalle_cita_id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["D:\\Descargas\\veterinaria_dae\\DAE-PROYECTO-FINAL---VETERINARIA\\AppDAEProyectoFinal_01_v4\\src\\reportes\\"]]></defaultValueExpression>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select distinct co.serie_numero,co.fecha,(du.nombres|| ' ' ||du.apepaterno) as nombre_duenio
-	,du.doc_identidad, co.monto_total, (co.monto_total/1.18) as subtotal, (co.monto_total-(co.monto_total/1.18)) as igv
-	from detalle_cita dc
-inner join cita c on c.id=dc.cita_id
-inner join comprobante co on co.citaid=c.id
-inner join custodia cu on cu.duenioid=c.custodiaduenioid
-inner join duenio du on du.id=cu.duenioid
-where dc.cita_id=$P{detalle_cita_id}]]>
+		<![CDATA[select distinct
+    co.serie_numero,
+    co.fecha,
+    (du.nombres || ' ' || du.apepaterno) as nombre_duenio,
+    du.doc_identidad,
+    co.monto_total,
+    ROUND(co.monto_total / 1.18, 2) as subtotal,
+    ROUND(co.monto_total - (co.monto_total / 1.18), 2) as igv
+from detalle_cita dc
+inner join cita c on c.id = dc.cita_id
+inner join comprobante co on co.citaid = c.id
+inner join custodia cu on cu.duenioid = c.custodiaduenioid
+inner join duenio du on du.id = cu.duenioid
+where dc.cita_id = $P{detalle_cita_id}
+]]>
 	</queryString>
 	<field name="serie_numero" class="java.lang.String"/>
 	<field name="fecha" class="java.sql.Date"/>
@@ -43,7 +50,12 @@ where dc.cita_id=$P{detalle_cita_id}]]>
 		<band height="206" splitType="Stretch">
 			<image>
 				<reportElement x="13" y="59" width="126" height="76" uuid="a7092877-a02a-4410-a7d2-1111e7ced697"/>
-				<imageExpression><![CDATA["D:\\Descargas\\veterinaria_dae\\DAE-PROYECTO-FINAL---VETERINARIA\\AppDAEProyectoFinal_01_v4\\src\\conector\\Recursos\\logo_mediano.png"]]></imageExpression>
+<<<<<<< HEAD
+				<imageExpression><![CDATA[$P{REPORT_DIR} + "/../conector/Recursos/logo_mediano.png"
+]]></imageExpression>
+=======
+				<imageExpression><![CDATA["..\\conector\\Recursos\\logo_mediano.png"]]></imageExpression>
+>>>>>>> e749e7bc7db41882dfb034f76f0eb427f0fe0561
 			</image>
 			<staticText>
 				<reportElement x="101" y="85" width="67" height="20" uuid="7232ee15-bf31-445f-9ef8-7290e3fea91d"/>

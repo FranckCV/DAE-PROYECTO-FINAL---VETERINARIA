@@ -25,6 +25,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import org.apache.bcel.generic.AALOAD;
 import org.hibernate.cfg.annotations.reflection.XMLContext;
 import soporte.*;
 
@@ -2216,6 +2217,42 @@ public class jdCita_v2 extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton12ActionPerformed
 
+<<<<<<< HEAD
+=======
+    private void btnTerminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerminarActionPerformed
+        try {
+            objDetalleMedicamento.registrarDetalleMedicamento(Integer.parseInt(txtNumero.getText()), tblDetalleMedicamento);
+            objCita.terminarCita(Integer.parseInt(txtNumero.getText()));
+
+            for (int i = 0; i < tblDetalleMedicamento.getRowCount(); i++) {
+                int idMedicamento = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 0).toString());
+                int cantidad = Integer.parseInt(tblDetalleMedicamento.getValueAt(i, 6).toString());
+                objMedicamento.reducirStock(idMedicamento, cantidad);
+            }
+
+            String tipo;
+
+            String num = objComprobante.generarNumeroSerieComprobante();
+            java.util.Date utilDate = jDateChooser1.getDate();
+            java.sql.Date fecha = new java.sql.Date(utilDate.getTime());
+
+            objComprobante.registrarComprobante("B", num, Float.parseFloat(txtTotal.getText()), fecha,
+                    Integer.parseInt(txtNumero.getText()));
+
+            JOptionPane.showMessageDialog(this, "La cita finalizó");
+//            limpiarTodoAlTerminar();
+            
+            jdComprobante objComprobante = new jdComprobante(
+                        (Frame) SwingUtilities.getWindowAncestor(this), true);
+            objComprobante.id_cita = Integer.parseInt(txtNumero.getText());
+            objComprobante.setVisible(true);
+                    
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No se pudo terminar " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnTerminarActionPerformed
+
+>>>>>>> bd1b538d18e489dd7234f7820ae3a35ca1232d63
     private void btnEliminarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarServicioActionPerformed
         int valor = Utilidad.mensajeConfirmarEliminarDetalleServicio(cboServicios.getSelectedItem().toString() + "\"");
 
