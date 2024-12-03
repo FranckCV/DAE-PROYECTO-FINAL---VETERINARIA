@@ -50,7 +50,12 @@ where dc.cita_id = $P{detalle_cita_id}
 		<band height="206" splitType="Stretch">
 			<image>
 				<reportElement x="13" y="59" width="126" height="76" uuid="a7092877-a02a-4410-a7d2-1111e7ced697"/>
+<<<<<<< HEAD
+				<imageExpression><![CDATA[$P{REPORT_DIR} + "/../conector/Recursos/logo_mediano.png"
+]]></imageExpression>
+=======
 				<imageExpression><![CDATA["..\\conector\\Recursos\\logo_mediano.png"]]></imageExpression>
+>>>>>>> e749e7bc7db41882dfb034f76f0eb427f0fe0561
 			</image>
 			<staticText>
 				<reportElement x="101" y="85" width="67" height="20" uuid="7232ee15-bf31-445f-9ef8-7290e3fea91d"/>

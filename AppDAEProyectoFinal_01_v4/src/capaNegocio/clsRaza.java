@@ -146,5 +146,21 @@ public class clsRaza {
         return false;
     }
    
-    
+    public void cambiarDisponibilidad(Integer id) throws Exception {
+        Boolean disp = null;
+
+         rs = objConectar.consultarBD("select disponibilidad from " + TABLA + " where " + ID + " = '" + id + "'");
+
+        while (rs.next()) {
+            disp = rs.getBoolean("disponibilidad");
+        }
+        
+        strSQL = "update " + TABLA + " set disponibilidad = " + !disp + " where " + ID + " = '" + id + "'";
+        try {
+            objConectar.ejecutarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al cambiar disponibilidad en ID:" + id + " en tabla " + TABLA + ": " + e.getMessage());
+        }
+
+    } 
 }

@@ -27,6 +27,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
         initComponents();
         listar();
         Utilidad.validacionTabla(tblEstadoCita, modal, rootPaneCheckingEnabled, modal);
+        txtId.requestFocus();
     }
 
     /**
@@ -58,6 +59,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
         btnLimpiar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Mantenimiento del estado de la cita");
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 102));
 
@@ -70,10 +72,10 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(62, 62, 62)
                 .addComponent(jLabel2)
-                .addGap(28, 28, 28))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,10 +173,10 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtNombre)
@@ -183,16 +185,16 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(11, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4))
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(11, Short.MAX_VALUE))
-            .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBuscar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/reportar.png"))); // NOI18N
@@ -219,7 +221,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1)
-                        .addGap(43, 43, 43)
+                        .addGap(74, 74, 74)
                         .addComponent(btnLimpiar))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -237,14 +239,14 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(9, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(btnLimpiar)
                         .addGap(1, 1, 1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGap(18, 18, 18)))
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -315,6 +317,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
                 Utilidad.activarBotones(btnBuscar);
 
                 txtId.setText(String.valueOf(objEstadoCita.generarCodigo()));
+                tblEstadoCita.setEnabled(true);
 
             } else {
                 if (Utilidad.verificarCamposLlenos(txtId, txtNombre)) {
@@ -338,13 +341,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
                         Utilidad.activarBotones(btnBuscar, btnEliminar, btnLimpiar, btnModificar);
 
                         JOptionPane.showMessageDialog(this, "Se registró con éxito");
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Se canceló operación");
-                        Utilidad.activarBotones(btnBuscar, btnEliminar, btnLimpiar, btnModificar);
-                        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-                        btnNuevo.setText(Utilidad.BTN_NUEVO);
-                        txtId.setEnabled(true);
-                    }
+                    } 
                 }
             }
         } catch (Exception e) {
@@ -382,6 +379,14 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
             if (txtId.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código para buscar");
             } else {
+                for (int i = 0; i < tblEstadoCita.getRowCount(); i++) {
+                    String valorCodigo = tblEstadoCita.getValueAt(i, 0).toString();
+                    if (valorCodigo.equals(txtId.getText())) {
+                        tblEstadoCita.setRowSelectionInterval(i, i);
+                        tblEstadoCita.scrollRectToVisible(tblEstadoCita.getCellRect(i, 0, true));
+                        break;
+                    }
+                }
                 rsEstado = objEstadoCita.buscar(Integer.parseInt(txtId.getText()));
                 Utilidad.desactivarFields(txtId, txtId, txtNombre);
                 if (rsEstado.next()) {
@@ -408,6 +413,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
         if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
             cancelarAccion();
             tblEstadoCita.setEnabled(true);
+            txtId.setEnabled(true);
             Utilidad.activarBotones(btnNuevo, btnBuscar, btnLimpiar, btnModificar);
 
         } else {
