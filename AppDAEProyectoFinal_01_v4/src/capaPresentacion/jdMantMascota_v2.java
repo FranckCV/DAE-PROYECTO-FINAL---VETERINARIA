@@ -17,16 +17,16 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import soporte.Utilidad;
 
-public class jdMantMascota extends javax.swing.JDialog {
+public class jdMantMascota_v2 extends javax.swing.JDialog {
 
-    private static jdMantMascota instanciaUnica;
+    private static jdMantMascota_v2 instanciaUnica;
 
     clsMascota objMasco = new clsMascota();
     clsRaza objRaza = new clsRaza();
     clsEspecie objEsp = new clsEspecie();
     Integer IdEspecie = -1;
 
-    public jdMantMascota(java.awt.Frame parent, boolean modal) throws SQLException, Exception {
+    public jdMantMascota_v2(java.awt.Frame parent, boolean modal) throws SQLException, Exception {
         super(parent, modal);
         initComponents();
         sinEditarP();
@@ -35,9 +35,9 @@ public class jdMantMascota extends javax.swing.JDialog {
 
     }
 
-    public static jdMantMascota getInstance(Frame parent, boolean modal) throws Exception {
+    public static jdMantMascota_v2 getInstance(Frame parent, boolean modal) throws Exception {
         if (instanciaUnica == null) {
-            instanciaUnica = new jdMantMascota(parent, modal);
+            instanciaUnica = new jdMantMascota_v2(parent, modal);
         }
         return instanciaUnica;
     }
@@ -681,9 +681,9 @@ public class jdMantMascota extends javax.swing.JDialog {
             listarNombreRaza();
             inicializarComboEstado();
         } catch (SQLException ex) {
-            Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -903,14 +903,14 @@ btnEliminar.setEnabled(true);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAgregarDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarDActionPerformed
-        jdMantDuenio objForm = new jdMantDuenio(null, true);
+        jdMantDuenio_v2 objForm = new jdMantDuenio_v2(null, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
 
     }//GEN-LAST:event_btnAgregarDActionPerformed
 
     private void btnRazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRazaActionPerformed
-        jdMantDuenio objForm = new jdMantDuenio(null, true);
+        jdMantDuenio_v2 objForm = new jdMantDuenio_v2(null, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
 
@@ -978,9 +978,9 @@ btnEliminar.setEnabled(true);
                 JOptionPane.showMessageDialog(this, "Error al listar Mascotas: " + e.getMessage());
                 listarMascotas();
             } catch (SQLException ex) {
-                Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
-                Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -1046,7 +1046,7 @@ btnEliminar.setEnabled(true);
                 cbxRazita.setSelectedIndex(0);
             }
         } catch (Exception ex) {
-            Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_cbxEspecieeActionPerformed
 
@@ -1142,9 +1142,9 @@ btnEliminar.setEnabled(true);
                 JOptionPane.showMessageDialog(this, "Error al listar Mascotas: " + e.getMessage());
                 listarMascotas();
             } catch (SQLException ex) {
-                Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
-                Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -1171,7 +1171,7 @@ btnEliminar.setEnabled(true);
             tblMascota.setEnabled(true);
             Utilidad.activarBotones(btnRegistrar, btnBuscar, btnLimpiar, btnModificar, btnVigencia);
         } catch (Exception ex) {
-            Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdMantMascota_v2.class.getName()).log(Level.SEVERE, null, ex);
         }
     } else {
         eliminarMascota();

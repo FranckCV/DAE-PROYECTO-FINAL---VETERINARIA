@@ -20,13 +20,13 @@ import soporte.Utilidad;
  *
  * @author Windows10
  */
-public class jdRepMasctXduenio extends javax.swing.JDialog {
+public class jdRepMasctXduenio_v2 extends javax.swing.JDialog {
 String docReporte = "REPORTE_UNO";
     private Dimension dimension;
     /**
      * Creates new form jdRepMasctXduenio
      */
-    public jdRepMasctXduenio(java.awt.Frame parent, boolean modal) {
+    public jdRepMasctXduenio_v2(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
                 dimension = report.getPreferredSize();

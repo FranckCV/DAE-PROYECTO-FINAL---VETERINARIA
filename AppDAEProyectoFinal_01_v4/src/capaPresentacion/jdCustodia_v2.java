@@ -22,13 +22,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Windows10
  */
-public class jdCustodia extends javax.swing.JDialog {
+public class jdCustodia_v2 extends javax.swing.JDialog {
 
     clsMascota objMas = new clsMascota();
     clsDuenio objDue = new clsDuenio();
     clsCustodia objCus = new clsCustodia();
 
-    public jdCustodia(java.awt.Frame parent, boolean modal) throws SQLException {
+    public jdCustodia_v2(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
         listarMascotas();
@@ -683,7 +683,7 @@ public class jdCustodia extends javax.swing.JDialog {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -705,11 +705,11 @@ public class jdCustodia extends javax.swing.JDialog {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try {
-            jdMantDuenio objForm = new jdMantDuenio(null, true);
+            jdMantDuenio_v2 objForm = new jdMantDuenio_v2(null, true);
             objForm.setLocationRelativeTo(this);
             objForm.setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(jdCustodia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdCustodia_v2.class.getName()).log(Level.SEVERE, null, ex);
         }
         dispose();
     }//GEN-LAST:event_btnRegistrarActionPerformed
@@ -750,13 +750,13 @@ public class jdCustodia extends javax.swing.JDialog {
             listarDuenios();
             listarCustodia();
         } catch (SQLException ex) {
-            Logger.getLogger(jdCustodia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdCustodia_v2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAgregarMasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMasActionPerformed
         try {
-            jdMantMascota objForm = new jdMantMascota(null, true);
+            jdMantMascota_v2 objForm = new jdMantMascota_v2(null, true);
             objForm.setLocationRelativeTo(this);
             objForm.setVisible(true);
         }catch (Exception ex) {
@@ -1155,7 +1155,7 @@ public class jdCustodia extends javax.swing.JDialog {
         try {
             listarMascotas();
         } catch (SQLException ex) {
-            Logger.getLogger(jdCustodia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdCustodia_v2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_tblMascotasMouseClicked
 
@@ -1166,7 +1166,7 @@ public class jdCustodia extends javax.swing.JDialog {
             listarDuenios();
             listarCustodia();
         } catch (SQLException ex) {
-            Logger.getLogger(jdCustodia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdCustodia_v2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -1241,7 +1241,7 @@ jRBCodD.requestFocusInWindow();
                             listarCustodia();
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(jsDetalleVacunacion.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(jsDetalleVacunacion_v2.class.getName()).log(Level.SEVERE, null, ex);
                         JOptionPane.showMessageDialog(this, "Error al realizar la acción: " + ex.getMessage());
                     }
                 }
@@ -1452,7 +1452,7 @@ jRBCodD.requestFocusInWindow();
                 dtcFechaNacimiento.setDate(null);
             }
         } catch (ParseException e) {
-            Logger.getLogger(jdCustodia.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(jdCustodia_v2.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(this, "Error al convertir la fecha: " + e.getMessage());
         }
 
@@ -1463,7 +1463,7 @@ jRBCodD.requestFocusInWindow();
         try {
             listarCustodia();
         } catch (SQLException ex) {
-            Logger.getLogger(jdCustodia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdCustodia_v2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_tblCustodiaMouseClicked
 

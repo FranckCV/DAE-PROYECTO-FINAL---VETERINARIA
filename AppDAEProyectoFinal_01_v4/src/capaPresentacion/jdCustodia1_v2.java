@@ -27,19 +27,19 @@ import soporte.Utilidad;
  *
  * @author Windows10
  */
-public class jdCustodia1 extends javax.swing.JDialog {
+public class jdCustodia1_v2 extends javax.swing.JDialog {
 
     clsMascota objMas = new clsMascota();
     clsDuenio objDue = new clsDuenio();
     clsCustodia objCus = new clsCustodia();
-    jdCustodiaDue objagregarDue = new jdCustodiaDue((Frame) SwingUtilities.getWindowAncestor(this), true);
-    jdCustodiaMasc objagregarMas;
+    jdCustodiaDue_v2 objagregarDue = new jdCustodiaDue_v2((Frame) SwingUtilities.getWindowAncestor(this), true);
+    jdCustodiaMasc_v2 objagregarMas;
     private Integer codigoDuenio = null;
     private Integer codigoMascota = null;
 
-    public jdCustodia1(java.awt.Frame parent, boolean modal) throws SQLException, Exception {
+    public jdCustodia1_v2(java.awt.Frame parent, boolean modal) throws SQLException, Exception {
         super(parent, modal);
-        this.objagregarMas = new jdCustodiaMasc((Frame) SwingUtilities.getWindowAncestor(this), true);
+        this.objagregarMas = new jdCustodiaMasc_v2((Frame) SwingUtilities.getWindowAncestor(this), true);
         initComponents();
         listarCustodia();
         btnDue.setEnabled(false);
@@ -421,12 +421,12 @@ public class jdCustodia1 extends javax.swing.JDialog {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try {
-            jdMantDuenio objForm = new jdMantDuenio(null, true);
+            jdMantDuenio_v2 objForm = new jdMantDuenio_v2(null, true);
             objForm.setLocationRelativeTo(this);
             objForm.setVisible(true);
             dispose();
         } catch (Exception ex) {
-            Logger.getLogger(jdCustodia1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdCustodia1_v2.class.getName()).log(Level.SEVERE, null, ex);
         }
         dispose();
     }//GEN-LAST:event_btnRegistrarActionPerformed
@@ -438,7 +438,7 @@ public class jdCustodia1 extends javax.swing.JDialog {
             listarCustodia();
             limpiarCamposCustodia();
         } catch (SQLException ex) {
-            Logger.getLogger(jdCustodia1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdCustodia1_v2.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         } else {
@@ -451,13 +451,13 @@ public class jdCustodia1 extends javax.swing.JDialog {
             limpiarCamposCustodia();
             listarCustodia();
         } catch (SQLException ex) {
-            Logger.getLogger(jdCustodia1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdCustodia1_v2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAgregarMasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMasActionPerformed
         try {
-            jdMantMascota objForm = new jdMantMascota(null, true);
+            jdMantMascota_v2 objForm = new jdMantMascota_v2(null, true);
             objForm.setLocationRelativeTo(this);
             objForm.setVisible(true);
             dispose();
@@ -473,7 +473,7 @@ public class jdCustodia1 extends javax.swing.JDialog {
 
             listarCustodia();
         } catch (SQLException ex) {
-            Logger.getLogger(jdCustodia1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdCustodia1_v2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -634,7 +634,7 @@ public class jdCustodia1 extends javax.swing.JDialog {
     }
 
     private void btnDueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDueActionPerformed
-        jdCustodiaDue objForm = new jdCustodiaDue(null, true);
+        jdCustodiaDue_v2 objForm = new jdCustodiaDue_v2(null, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
 
@@ -653,7 +653,7 @@ public class jdCustodia1 extends javax.swing.JDialog {
 
     private void btnMasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasActionPerformed
         try {
-            jdCustodiaMasc objFormM = new jdCustodiaMasc(null, true);
+            jdCustodiaMasc_v2 objFormM = new jdCustodiaMasc_v2(null, true);
             objFormM.setLocationRelativeTo(this);
             objFormM.setVisible(true);
             

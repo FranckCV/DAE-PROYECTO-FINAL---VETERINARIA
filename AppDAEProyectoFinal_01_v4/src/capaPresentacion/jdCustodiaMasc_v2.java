@@ -12,13 +12,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Windows10
  */
-public class jdCustodiaMasc extends javax.swing.JDialog {
+public class jdCustodiaMasc_v2 extends javax.swing.JDialog {
 
     private int mascota = 0;
     clsMascota objMas = new clsMascota();
     clsCustodia objCus = new clsCustodia();
 
-    public jdCustodiaMasc(java.awt.Frame parent, boolean modal) throws Exception {
+    public jdCustodiaMasc_v2(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
         listarMascotas();

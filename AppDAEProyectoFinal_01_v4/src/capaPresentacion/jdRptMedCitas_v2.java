@@ -18,7 +18,7 @@ import net.sf.jasperreports.swing.JRViewer;
  *
  * @author Windows10
  */
-public class jdRptMedCitas extends javax.swing.JDialog {
+public class jdRptMedCitas_v2 extends javax.swing.JDialog {
  clsMascota objMasco = new clsMascota();
     String docReporte = "REPORTE_DOS";
     private Dimension dimension;
@@ -26,7 +26,7 @@ public class jdRptMedCitas extends javax.swing.JDialog {
     /**
      * Creates new form jdRptMedCitas
      */
-    public jdRptMedCitas(java.awt.Frame parent, boolean modal) {
+    public jdRptMedCitas_v2(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
                 dimension = report.getPreferredSize();
@@ -134,7 +134,7 @@ public class jdRptMedCitas extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 979, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Windows10
  */
-public class jsDetalleVacunacion extends javax.swing.JDialog {
+public class jsDetalleVacunacion_v2 extends javax.swing.JDialog {
 
     /**
      * Creates new form jsDetalleVacunacion
@@ -30,7 +30,7 @@ public class jsDetalleVacunacion extends javax.swing.JDialog {
     clsMascota objMas = new clsMascota();
     clsDetalleVacunacion objDvac = new clsDetalleVacunacion();
 
-    public jsDetalleVacunacion(java.awt.Frame parent, boolean modal) throws SQLException {
+    public jsDetalleVacunacion_v2(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
         listarMascotas();
@@ -800,7 +800,7 @@ public class jsDetalleVacunacion extends javax.swing.JDialog {
         try {
             listarMascotas();
         } catch (SQLException ex) {
-            Logger.getLogger(jdCustodia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jdCustodia_v2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_tblMascotasMouseClicked
 
@@ -903,7 +903,7 @@ public class jsDetalleVacunacion extends javax.swing.JDialog {
             listarVacunas();
             listarDetalle_V();
         } catch (SQLException ex) {
-            Logger.getLogger(jsDetalleVacunacion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jsDetalleVacunacion_v2.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
@@ -926,7 +926,7 @@ if (respuesta == JOptionPane.YES_OPTION) {
             limpiarControles();
             listarMascotas();
         } catch (SQLException ex) {
-            Logger.getLogger(jsDetalleVacunacion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jsDetalleVacunacion_v2.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Error al realizar la operación: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     } else {
@@ -973,7 +973,7 @@ if (respuesta == JOptionPane.YES_OPTION) {
                             listarDetalle_V();
                         }
                     } catch (Exception ex) {
-                        Logger.getLogger(jsDetalleVacunacion.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(jsDetalleVacunacion_v2.class.getName()).log(Level.SEVERE, null, ex);
                         JOptionPane.showMessageDialog(this, "Error al realizar la acción: " + ex.getMessage());
                     }
                 }
@@ -1007,7 +1007,7 @@ if (respuesta == JOptionPane.YES_OPTION) {
             // Asigna la fecha al campo dtcFechaNacimiento
             dtcFechaNacimiento.setDate(fechaAdopcion);
         } catch (ParseException ex) {
-            Logger.getLogger(jsDetalleVacunacion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jsDetalleVacunacion_v2.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 

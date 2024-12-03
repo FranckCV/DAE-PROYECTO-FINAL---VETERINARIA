@@ -10,12 +10,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Windows10
  */
-public class jdCustodiaDue extends javax.swing.JDialog {
+public class jdCustodiaDue_v2 extends javax.swing.JDialog {
 
     private int duenio = 0;
     clsCustodia objCus = new clsCustodia();
 
-    public jdCustodiaDue(java.awt.Frame parent, boolean modal) {
+    public jdCustodiaDue_v2(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         listarDuenios();

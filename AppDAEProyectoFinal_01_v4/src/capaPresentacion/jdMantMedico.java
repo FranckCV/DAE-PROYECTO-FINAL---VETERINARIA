@@ -65,6 +65,7 @@ public class jdMantMedico extends javax.swing.JDialog {
         btnVigencia.setText(Utilidad.BTN_VIGENCIA);
         btnDisponibilidad.setText(Utilidad.BTN_DISPONIBILIDAD);
         btnContraseña.setText(Utilidad.BTN_CONTRASENIA);
+        Utilidad.fijarColumnasTabla(tblMedico);
     }
 
     /**

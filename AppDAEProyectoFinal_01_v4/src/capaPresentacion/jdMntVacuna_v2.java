@@ -20,12 +20,12 @@ import soporte.*;
  *
  * @author Fabiana Lucía
  */
-public class jdMntVacuna extends javax.swing.JDialog {
+public class jdMntVacuna_v2 extends javax.swing.JDialog {
 
     clsVacuna objVacuna = new clsVacuna();
     clsEspecie objEspecie = new clsEspecie();
 
-    public jdMntVacuna(java.awt.Frame parent, boolean modal) {
+    public jdMntVacuna_v2(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         formatoSpinner();
