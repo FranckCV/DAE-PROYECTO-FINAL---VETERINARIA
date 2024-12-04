@@ -17,19 +17,23 @@ import soporte.Utilidad;
  * @author Fabiana Lucía
  */
 public class jdMntEspecie extends javax.swing.JDialog {
-
+    
     clsEspecie objEspecie = new clsEspecie();
-
+    
     public jdMntEspecie(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         listarEspecies();
+        btnNuevo.setText(Utilidad.BTN_NUEVO);
+        btnModificar.setText(Utilidad.BTN_MODIFICAR);
+        btnDisponibilidad.setText(Utilidad.BTN_DISPONIBILIDAD);
+        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         chkVigencia.setEnabled(false);
         chkVigencia.setSelected(true);
         Utilidad.validacionTabla(tblEspecies, modal, rootPaneCheckingEnabled, modal);
         txtId.requestFocus();
     }
-
+    
     private void listarEspecies() {
         ResultSet rsEspecies = null;
         Vector registro;
@@ -57,7 +61,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -67,7 +71,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        btnRegistrar = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -77,10 +81,10 @@ public class jdMntEspecie extends javax.swing.JDialog {
         txtNombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
         chkVigencia = new javax.swing.JCheckBox();
-        jLabel1 = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         btnDisponibilidad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -101,11 +105,11 @@ public class jdMntEspecie extends javax.swing.JDialog {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(216, 216, 216)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(296, 296, 296))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,12 +125,12 @@ public class jdMntEspecie extends javax.swing.JDialog {
 
         jPanel5.setBackground(new java.awt.Color(204, 255, 255));
 
-        btnRegistrar.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/veterinario.png"))); // NOI18N
-        btnRegistrar.setText("Registrar");
-        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+        btnNuevo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/veterinario.png"))); // NOI18N
+        btnNuevo.setText("Registrar");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarActionPerformed(evt);
+                btnNuevoActionPerformed(evt);
             }
         });
 
@@ -174,7 +178,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
         });
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel4.setText("id: ");
+        jLabel4.setText("ID:");
 
         txtId.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         txtId.setBorder(null);
@@ -186,6 +190,15 @@ public class jdMntEspecie extends javax.swing.JDialog {
         txtId.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIdKeyTyped(evt);
+            }
+        });
+
+        chkVigencia.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        chkVigencia.setText("Disponible");
+        chkVigencia.setContentAreaFilled(false);
+        chkVigencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkVigenciaActionPerformed(evt);
             }
         });
 
@@ -202,52 +215,6 @@ public class jdMntEspecie extends javax.swing.JDialog {
             }
         });
 
-        chkVigencia.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        chkVigencia.setText("Disponible");
-        chkVigencia.setContentAreaFilled(false);
-        chkVigencia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkVigenciaActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNombre)
-                .addGap(18, 18, 18)
-                .addComponent(chkVigencia)
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4))
-                    .addComponent(btnBuscar)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(chkVigencia)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/refugio-de-animales.png"))); // NOI18N
-
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/opacado.png"))); // NOI18N
         btnLimpiar.setBorder(null);
         btnLimpiar.setContentAreaFilled(false);
@@ -260,7 +227,46 @@ public class jdMntEspecie extends javax.swing.JDialog {
             }
         });
 
-        btnDisponibilidad.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnBuscar)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(chkVigencia)
+                .addGap(31, 31, 31)
+                .addComponent(btnLimpiar)
+                .addGap(14, 14, 14))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnLimpiar)
+                    .addComponent(btnBuscar)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(chkVigencia)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)))
+                .addContainerGap(9, Short.MAX_VALUE))
+        );
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/refugio-de-animales.png"))); // NOI18N
+
+        btnDisponibilidad.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnDisponibilidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/disponible.png"))); // NOI18N
         btnDisponibilidad.setText("Disponible");
         btnDisponibilidad.setMaximumSize(new java.awt.Dimension(118, 39));
@@ -277,41 +283,40 @@ public class jdMntEspecie extends javax.swing.JDialog {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(103, 103, 103)
-                        .addComponent(btnLimpiar))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(btnRegistrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(btnEliminar))
                     .addComponent(jScrollPane1))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(12, 12, 12))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(223, 223, 223))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnLimpiar)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegistrar)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnDisponibilidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -320,8 +325,8 @@ public class jdMntEspecie extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,31 +365,25 @@ public class jdMntEspecie extends javax.swing.JDialog {
     private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
         Utilidad.validarCampoTextoSoloNumero(evt);
     }//GEN-LAST:event_txtIdKeyTyped
-
-    private void bloquearBotones() {
-        btnModificar.setEnabled(false);
-        btnBuscar.setEnabled(false);
-        btnLimpiar.setEnabled(false);
-    }
-
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+    
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         try {
             Utilidad.activarFields(txtNombre);
-
+            
             txtId.setEnabled(false);
-
-            if (btnRegistrar.getText().equals(Utilidad.BTN_NUEVO)) {
-                btnRegistrar.setText(Utilidad.BTN_GUARDAR);
+            
+            if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
+                btnNuevo.setText(Utilidad.BTN_GUARDAR);
                 btnEliminar.setText(Utilidad.BTN_CANCELAR);
-
-                Utilidad.desactivarBotones(btnRegistrar, btnModificar, btnLimpiar);
-
+                
+                Utilidad.desactivarBotones(btnNuevo, btnModificar, btnDisponibilidad, btnLimpiar);
+                
                 tblEspecies.setEnabled(false);
                 limpiarControles();
                 txtNombre.requestFocus();
-
+                
                 txtId.setText(String.valueOf(objEspecie.generarIDEspecie()));
-
+                
             } else {
                 if (Utilidad.verificarCamposLlenos(txtId, txtNombre)) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
@@ -393,18 +392,18 @@ public class jdMntEspecie extends javax.swing.JDialog {
                 } else {
                     int valor = Utilidad.mensajeConfirmarRegistro("especie", Integer.parseInt(txtId.getText()), txtNombre.getText());
                     if (valor == JOptionPane.YES_OPTION) {
-                        btnRegistrar.setText(Utilidad.BTN_NUEVO);
+                        btnNuevo.setText(Utilidad.BTN_NUEVO);
                         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-
+                        
                         objEspecie.registrarEspecie(Integer.parseInt(txtId.getText()),
                                 txtNombre.getText());
-
+                        
                         tblEspecies.setEnabled(true);
-
+                        
                         limpiarControles();
                         listarEspecies();
-
-                        Utilidad.activarBotones(btnBuscar, btnEliminar, btnLimpiar, btnModificar);
+                        
+                        Utilidad.activarBotones(btnBuscar, btnEliminar, btnLimpiar, btnDisponibilidad, btnModificar);
                         txtId.setEnabled(true);
                         JOptionPane.showMessageDialog(this, "Se registró con éxito");
                     } else {
@@ -415,26 +414,26 @@ public class jdMntEspecie extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error:" + e.getMessage());
         }
-    }//GEN-LAST:event_btnRegistrarActionPerformed
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         limpiarControles();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void tblEspeciesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEspeciesMouseClicked
-
+        
         if (tblEspecies.isEnabled()) {
             Utilidad.buscarPorTabla(tblEspecies, btnBuscar, txtId);
         } else {
             JOptionPane.showMessageDialog(null, "No se puede buscar por tabla mientras nos se cancele la operación");
         }
-
+        
 
     }//GEN-LAST:event_tblEspeciesMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         ResultSet rsEspecie = null;
-
+        
         try {
             if (txtId.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código para buscar");
@@ -451,9 +450,9 @@ public class jdMntEspecie extends javax.swing.JDialog {
                 Utilidad.desactivarFields(txtId, txtId, txtNombre);
                 if (rsEspecie.next()) {
                     txtNombre.setText(rsEspecie.getString("nombre"));
-
+                    
                     chkVigencia.setSelected(rsEspecie.getBoolean("disponibilidad"));
-
+                    
                     rsEspecie.close();
                 } else {
                     JOptionPane.showMessageDialog(this, "Codigo de especie no existente");
@@ -475,50 +474,46 @@ public class jdMntEspecie extends javax.swing.JDialog {
                     Utilidad.activarFields(txtNombre);
                     btnModificar.setText(Utilidad.BTN_GUARDAR);
                     btnEliminar.setText(Utilidad.BTN_CANCELAR);
-                    Utilidad.desactivarBotones(btnModificar, btnLimpiar, btnBuscar, btnRegistrar);
+                    Utilidad.desactivarBotones(btnModificar, btnLimpiar, btnDisponibilidad, btnBuscar, btnNuevo);
                     tblEspecies.setEnabled(false);
                 } else if (Utilidad.validarElementoTextoRepetido("especie", "nombre", txtNombre.getText())) {
                     JOptionPane.showMessageDialog(this, "Este nombre ya fue registrado");
                     limpiarControles();
                     btnModificar.setText(Utilidad.BTN_MODIFICAR);
                     btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-                    Utilidad.activarBotones(btnRegistrar, btnBuscar, btnLimpiar, btnModificar);
+                    Utilidad.activarBotones(btnNuevo, btnBuscar, btnDisponibilidad, btnLimpiar, btnModificar);
                     tblEspecies.setEnabled(true);
                 } else {
                     int valor = Utilidad.mensajeConfirmarModificar("Usuario", Integer.parseInt(txtId.getText()), txtNombre.getText());
                     if (valor == JOptionPane.YES_OPTION) {
-
+                        
                         objEspecie.modificarEspecie(Integer.parseInt(txtId.getText()), txtNombre.getText());
                         btnModificar.setText(Utilidad.BTN_MODIFICAR);
                         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-                        Utilidad.activarBotones(btnRegistrar, btnBuscar, btnLimpiar, btnModificar);
+                        Utilidad.activarBotones(btnNuevo, btnBuscar, btnDisponibilidad, btnLimpiar, btnModificar);
                         limpiarControles();
                         listarEspecies();
                         JOptionPane.showMessageDialog(this, "Se modificó con exito");
                         tblEspecies.setEnabled(true);
                         txtId.setEnabled(true);
                     }
-
+                    
                 }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error:" + e.getMessage());
         }
     }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void activarBotones() {
-        btnBuscar.setEnabled(true);
-        btnLimpiar.setEnabled(true);
-        btnModificar.setEnabled(true);
-    }
-
+    
     private void eliminar() {
         try {
             if (txtId.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo a eliminar!");
+                Utilidad.mensajeErrorFaltaID(this);
             } else if (Utilidad.validarEliminacionForanea("especie", Integer.parseInt(txtId.getText()))) {
+                btnBuscarActionPerformed(null);
                 Utilidad.mensajeErrorNoEliminarForanea("especie", txtNombre.getText());
             } else {
+                btnBuscarActionPerformed(null);
                 int valor = Utilidad.mensajeConfirmarEliminar("especie", Integer.parseInt(txtId.getText()), txtNombre.getText());
                 if (valor == JOptionPane.YES_OPTION) {
                     objEspecie.eliminarEspecie(Integer.parseInt(txtId.getText()));
@@ -536,13 +531,16 @@ public class jdMntEspecie extends javax.swing.JDialog {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_txtNombreActionPerformed
+    
     private void cancelarAccion() {
-        btnRegistrar.setText(Utilidad.BTN_NUEVO);
+        btnNuevo.setText(Utilidad.BTN_NUEVO);
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+        txtNombre.setEditable(false);
         limpiarControles();
         listarEspecies();
     }
+    
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
         Utilidad.validarCampoTextoSoloLetras(evt);
@@ -553,13 +551,14 @@ public class jdMntEspecie extends javax.swing.JDialog {
     }//GEN-LAST:event_chkVigenciaActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if (btnRegistrar.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
+        if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
             cancelarAccion();
             tblEspecies.setEnabled(true);
             txtId.setEnabled(true);
-            Utilidad.activarBotones(btnRegistrar, btnBuscar, btnLimpiar, btnModificar);
-
+            Utilidad.activarBotones(btnNuevo, btnBuscar, btnDisponibilidad, btnLimpiar, btnModificar);
+            
         } else {
+            
             eliminar();
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -572,10 +571,9 @@ public class jdMntEspecie extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        Utilidad.desactivarFields(txtId, txtId,txtNombre);
-        
+        Utilidad.desactivarFields(txtId, txtId, txtNombre);
     }//GEN-LAST:event_formWindowOpened
-
+    
     private void cambiarDisponibilidad() {
         String campoID = txtId.getText();
         int valorID;
@@ -584,23 +582,23 @@ public class jdMntEspecie extends javax.swing.JDialog {
             if (campoID.isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
             } else {
-                    valorID = Integer.parseInt(campoID);
-                    rsCateg = objEspecie.buscarEspecie(valorID);
-                    int valor = Utilidad.mensajeConfirmarDisponibilidad("especie", 
-                            Integer.parseInt(txtId.getText()),txtNombre.getText()+" "+txtNombre.getText());
-                    if (rsCateg.next()) {
-                        if (valor == 0) {
-                            objEspecie.cambiarDisponibilidad(valorID);
-                            limpiarControles();
-                            listarEspecies();
-                            txtId.setText(String.valueOf(valorID));
-                            btnBuscarActionPerformed(null);
-                            JOptionPane.showMessageDialog(this, "Se modificó la Disponibilidad de este médico con exito");
-                        }
-                    }     
-                }                           
-            }
-        catch (Exception e) {
+                btnBuscarActionPerformed(null);
+                valorID = Integer.parseInt(campoID);
+                rsCateg = objEspecie.buscarEspecie(valorID);
+                int valor = Utilidad.mensajeConfirmarDisponibilidad("especie",
+                        Integer.parseInt(txtId.getText()), txtNombre.getText() + " " + txtNombre.getText());
+                if (rsCateg.next()) {
+                    if (valor == 0) {
+                        objEspecie.cambiarDisponibilidad(valorID);
+                        limpiarControles();
+                        listarEspecies();
+                        txtId.setText(String.valueOf(valorID));
+                        btnBuscarActionPerformed(null);
+                        Utilidad.mensajeExitoCambioDisponibilidad("Especie");
+                    }
+                }                
+            }            
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }
@@ -608,6 +606,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
     public void limpiarControles() {
         txtId.setText("");
         txtNombre.setText("");
+        txtNombre.setEditable(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -616,7 +615,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JCheckBox chkVigencia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

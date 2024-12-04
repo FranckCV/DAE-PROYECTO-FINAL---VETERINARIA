@@ -160,7 +160,7 @@ public class Utilidad {
         "Modificar contraseña",
         "Cancelar"
     };
-    
+
     public static final String[] opcionesCancelarCita = {
         "Cancelar Cita",
         "No cancelar"
@@ -241,7 +241,7 @@ public class Utilidad {
         );
         return valor;
     }
-    
+
     public static int mensajeConfirmarCancelarCita(String nombre) {
         int valor = JOptionPane.showOptionDialog(
                 null,
@@ -301,7 +301,7 @@ public class Utilidad {
         }
     }
 
-//    Mensajes de Error
+//    Mensajes 
     public static void mensajeErrorFaltaID(JDialog parent) {
         JOptionPane.showMessageDialog(
                 parent,
@@ -433,6 +433,13 @@ public class Utilidad {
                 opcionesModificarContraseña[0]
         );
         return valor;
+    }
+
+    public static void mensajeExitoCambioDisponibilidad(String entidad) {
+        JOptionPane.showMessageDialog(
+                null,
+                "Se modificó la disponibilidad de " + entidad.toLowerCase() + " con exito"
+        );
     }
 
     public static void mensajeErrorNoEliminarForanea(String entidad, String nombre) {
