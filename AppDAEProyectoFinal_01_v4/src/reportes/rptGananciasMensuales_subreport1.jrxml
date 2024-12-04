@@ -8,42 +8,107 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
+    -- Fin de mes (último día del mes)
     (DATE_TRUNC('month', c.fecha) + INTERVAL '1 month' - INTERVAL '1 day')::DATE AS fin_mes,
+
+    -- Nombre del mes en español (mantenido el nombre original 'nombre_mes')
     TO_CHAR(DATE_TRUNC('month', c.fecha), 'TMMonth') AS nombre_mes,
-    TO_CHAR(DATE_TRUNC('month', c.fecha), 'TMMon') AS abreviacion_mes,
+
+    -- Abreviación del mes en español (mantenido el nombre original 'abreviacion_mes')
+    CASE EXTRACT(MONTH FROM c.fecha)
+        WHEN 1 THEN 'Ene'
+        WHEN 2 THEN 'Feb'
+        WHEN 3 THEN 'Mar'
+        WHEN 4 THEN 'Abr'
+        WHEN 5 THEN 'May'
+        WHEN 6 THEN 'Jun'
+        WHEN 7 THEN 'Jul'
+        WHEN 8 THEN 'Ago'
+        WHEN 9 THEN 'Sep'
+        WHEN 10 THEN 'Oct'
+        WHEN 11 THEN 'Nov'
+        WHEN 12 THEN 'Dic'
+    END AS abreviacion_mes,
+
+    -- Nombre de la serie (Medicamentos)
     'Medicamentos' AS nombre_serie,
-    ROUND(SUM(CASE WHEN dm.medicamento_id IS NOT NULL THEN dm.cantidad * m.costo ELSE 0 END), 2) AS valor
+
+    -- Valor de los medicamentos
+    ROUND(SUM(CASE
+                WHEN dm.medicamento_id IS NOT NULL
+                THEN dm.cantidad * m.costo
+                ELSE 0
+              END), 2) AS valor
+
 FROM
     COMPROBANTE c
 LEFT JOIN CITA ci ON c.CITAid = ci.id
 LEFT JOIN DETALLE_CITA dc ON ci.id = dc.cita_id
 LEFT JOIN DETALLE_SERVICIO ds ON dc.detalle_servicio_serv_id = ds.servicio_id AND dc.detalle_servicio_med_id = ds.medico_id
 LEFT JOIN SERVICIO s ON ds.servicio_id = s.id
-LEFT JOIN DETALLE_MEDICAMENTO dm ON dm.detalle_cita_id = dc.cita_id AND dm.detalle_servicio_servicio_id = dc.detalle_servicio_serv_id AND dm.detalle_servicio_medico_id = dc.detalle_servicio_med_id
+LEFT JOIN DETALLE_MEDICAMENTO dm ON dm.detalle_cita_id = dc.cita_id
+                                  AND dm.detalle_servicio_servicio_id = dc.detalle_servicio_serv_id
+                                  AND dm.detalle_servicio_medico_id = dc.detalle_servicio_med_id
 LEFT JOIN MEDICAMENTO m ON dm.medicamento_id = m.id
+
 WHERE
     EXTRACT(YEAR FROM c.fecha) = $P{parAnioSub}
+
 GROUP BY
-    DATE_TRUNC('month', c.fecha)
+    DATE_TRUNC('month', c.fecha), EXTRACT(MONTH FROM c.fecha), c.fecha
+
 UNION ALL
+
 SELECT
+    -- Fin de mes (último día del mes)
     (DATE_TRUNC('month', c.fecha) + INTERVAL '1 month' - INTERVAL '1 day')::DATE AS fin_mes,
+
+    -- Nombre del mes en español (mantenido el nombre original 'nombre_mes')
     TO_CHAR(DATE_TRUNC('month', c.fecha), 'TMMonth') AS nombre_mes,
-    TO_CHAR(DATE_TRUNC('month', c.fecha), 'TMMon') AS abreviacion_mes,
+
+    -- Abreviación del mes en español (mantenido el nombre original 'abreviacion_mes')
+    CASE EXTRACT(MONTH FROM c.fecha)
+        WHEN 1 THEN 'Ene'
+        WHEN 2 THEN 'Feb'
+        WHEN 3 THEN 'Mar'
+        WHEN 4 THEN 'Abr'
+        WHEN 5 THEN 'May'
+        WHEN 6 THEN 'Jun'
+        WHEN 7 THEN 'Jul'
+        WHEN 8 THEN 'Ago'
+        WHEN 9 THEN 'Sep'
+        WHEN 10 THEN 'Oct'
+        WHEN 11 THEN 'Nov'
+        WHEN 12 THEN 'Dic'
+    END AS abreviacion_mes,
+
+    -- Nombre de la serie (Servicios)
     'Servicios' AS nombre_serie,
-    ROUND(SUM(CASE WHEN dc.detalle_servicio_serv_id IS NOT NULL THEN s.costo ELSE 0 END), 2) AS valor
+
+    -- Valor de los servicios
+    ROUND(SUM(CASE
+                WHEN dc.detalle_servicio_serv_id IS NOT NULL
+                THEN s.costo
+                ELSE 0
+              END), 2) AS valor
+
 FROM
     COMPROBANTE c
 LEFT JOIN CITA ci ON c.CITAid = ci.id
 LEFT JOIN DETALLE_CITA dc ON ci.id = dc.cita_id
 LEFT JOIN DETALLE_SERVICIO ds ON dc.detalle_servicio_serv_id = ds.servicio_id AND dc.detalle_servicio_med_id = ds.medico_id
 LEFT JOIN SERVICIO s ON ds.servicio_id = s.id
-LEFT JOIN DETALLE_MEDICAMENTO dm ON dm.detalle_cita_id = dc.cita_id AND dm.detalle_servicio_servicio_id = dc.detalle_servicio_serv_id AND dm.detalle_servicio_medico_id = dc.detalle_servicio_med_id
+LEFT JOIN DETALLE_MEDICAMENTO dm ON dm.detalle_cita_id = dc.cita_id
+                                  AND dm.detalle_servicio_servicio_id = dc.detalle_servicio_serv_id
+                                  AND dm.detalle_servicio_medico_id = dc.detalle_servicio_med_id
 LEFT JOIN MEDICAMENTO m ON dm.medicamento_id = m.id
+
 WHERE
     EXTRACT(YEAR FROM c.fecha) = $P{parAnioSub}
+
 GROUP BY
-    DATE_TRUNC('month', c.fecha)
+    DATE_TRUNC('month', c.fecha), EXTRACT(MONTH FROM c.fecha), c.fecha
+
 ORDER BY
     fin_mes, nombre_serie;]]>
 	</queryString>
@@ -77,7 +142,7 @@ ORDER BY
 		<band height="225" splitType="Stretch">
 			<barChart>
 				<chart>
-					<reportElement x="0" y="0" width="555" height="210" uuid="4b8c4933-3baa-406e-aa89-a62b37e5c7cd"/>
+					<reportElement x="0" y="13" width="555" height="190" uuid="4b8c4933-3baa-406e-aa89-a62b37e5c7cd"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
