@@ -139,10 +139,10 @@ ORDER BY
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="225" splitType="Stretch">
+		<band height="316" splitType="Stretch">
 			<barChart>
 				<chart>
-					<reportElement x="0" y="13" width="555" height="190" uuid="4b8c4933-3baa-406e-aa89-a62b37e5c7cd"/>
+					<reportElement x="0" y="7" width="555" height="287" uuid="4b8c4933-3baa-406e-aa89-a62b37e5c7cd"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>

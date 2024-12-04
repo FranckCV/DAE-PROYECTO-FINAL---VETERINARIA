@@ -639,6 +639,33 @@ public class jdCita_v2 extends javax.swing.JDialog {
         txtIndicacion.setText("");
         txtDosis.setText("");
     }
+    
+    private void llenarDetalleMedicamentosEnTabla() {
+        ResultSet rsDetalleMedicamento;
+        ResultSet rsMedicamento;
+        try {
+            rsDetalleMedicamento = objDetalleMedicamento.obtenerDetalleMedicamentosPorCita(Integer.parseInt(txtNumero.getText()));
+            DefaultTableModel modelo = (DefaultTableModel) tblDetalleMedicamento.getModel();
+            modelo.setRowCount(0);
+            while (rsDetalleMedicamento.next()) {
+                int medicamento_id = rsDetalleMedicamento.getInt("medicamento_id");
+                int servicio_id = rsDetalleMedicamento.getInt("detalle_servicio_servicio_id");
+                int medico_id = rsDetalleMedicamento.getInt("detalle_servicio_medico_id");
+                String dosis = rsDetalleMedicamento.getString("dosis");
+                String indicacion = rsDetalleMedicamento.getString("indicacion");
+                int cantidad = rsDetalleMedicamento.getInt("cantidad");
+                Float costo = rsDetalleMedicamento.getFloat("costo");
+
+                modelo.addRow(new Object[]{medicamento_id, servicio_id, medico_id, dosis, indicacion,
+                    cantidad, costo});
+
+            }
+            tblDetalleMedicamento.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Error al llenar campos tabla ser " + e.getMessage());
+        }
+
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -2092,7 +2119,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
             lblCitaPersona.setText(duenio + " y su mascota " + mascota);
 
             llenarTablitaServicios();
-
+            llenarDetalleMedicamentosEnTabla();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage() + "...");
         }
