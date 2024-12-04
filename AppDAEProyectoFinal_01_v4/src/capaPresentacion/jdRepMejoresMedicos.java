@@ -17,12 +17,12 @@ import java.awt.Dimension;
  *
  * @author Junior
  */
-public class jdRptMejoresMedicos extends javax.swing.JDialog {
+public class jdRepMejoresMedicos extends javax.swing.JDialog {
 
     /**
      * Creates new form jdRptMejoresMedicos
      */
-    public jdRptMejoresMedicos(java.awt.Frame parent, boolean modal) {
+    public jdRepMejoresMedicos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         llenarCombo();
