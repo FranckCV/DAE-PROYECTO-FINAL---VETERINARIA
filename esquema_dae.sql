@@ -1371,3 +1371,13 @@ INSERT INTO DETALLE_MEDICAMENTO (medicamento_id, detalle_cita_id, detalle_servic
 (17, 23, 10, 5, 400.00, 'Uso limitado bajo supervisión, cada 7 días', 2);
 
 
+delete from detalle_medicamento where detalle_cita_id=1;
+delete from detalle_medicamento where detalle_cita_id=4;
+delete from detalle_medicamento where detalle_cita_id=6;
+delete from detalle_medicamento where detalle_cita_id=9;
+delete from detalle_medicamento where detalle_cita_id=12;
+delete from detalle_medicamento where detalle_cita_id=18;
+delete from detalle_medicamento where detalle_cita_id=21;
+delete from detalle_medicamento where detalle_cita_id=24;
+delete from detalle_medicamento where detalle_cita_id=27;
+delete from detalle_medicamento where detalle_cita_id=30;
