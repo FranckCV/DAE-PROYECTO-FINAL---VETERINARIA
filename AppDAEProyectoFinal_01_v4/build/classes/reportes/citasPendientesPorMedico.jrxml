@@ -3,6 +3,47 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+<<<<<<< HEAD
+	<queryString>
+		<![CDATA[SELECT distinct
+    c.fecha_cita,
+    s.nom_servicio,
+    dc.horaentrada,
+    dc.horasalida,
+    m.nombre,
+    r.nombre,
+    m.altura,
+    m.peso,
+    (me.nombres || ' ' || me.apepaterno) AS medico_nombre,
+    (d.nombres || ' ' || d.apepaterno) AS duenio_nombre,
+    CASE
+        WHEN m.sexo = TRUE THEN 'femenino'
+        ELSE 'masculino'
+    END AS sexo_mascota
+FROM
+    detalle_cita dc
+INNER JOIN cita c ON c.id = dc.cita_id
+	inner join detalle_servicio ds on ds.servicio_id=dc.detalle_servicio_serv_id
+	inner join servicio s on s.id=ds.servicio_id
+INNER JOIN custodia cu ON c.custodiamascotaid = cu.mascotaid
+    AND c.custodiaduenioid = cu.duenioid
+INNER JOIN duenio d ON d.id = cu.duenioid
+INNER JOIN mascota m ON m.id = cu.mascotaid
+inner join raza r on r.id=m.raza_id
+INNER JOIN medico me ON me.id = dc.detalle_servicio_med_id;]]>
+	</queryString>
+	<field name="fecha_cita" class="java.sql.Date"/>
+	<field name="nom_servicio" class="java.lang.String"/>
+	<field name="horaentrada" class="java.sql.Time"/>
+	<field name="horasalida" class="java.sql.Time"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="altura" class="java.math.BigDecimal"/>
+	<field name="peso" class="java.math.BigDecimal"/>
+	<field name="medico_nombre" class="java.lang.String"/>
+	<field name="duenio_nombre" class="java.lang.String"/>
+	<field name="sexo_mascota" class="java.lang.String"/>
+=======
+>>>>>>> 58d9ef3ec168076397d89c7918df32670e8e1c94
 	<background>
 		<band splitType="Stretch"/>
 	</background>

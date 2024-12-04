@@ -91,7 +91,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         mnuCita = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu11 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
@@ -116,6 +115,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem26.setText("jMenuItem26");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menú Principal");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -124,6 +124,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
 
         panel.setBackground(new java.awt.Color(255, 255, 255));
+        panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -454,9 +455,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem4);
-
-        jMenuItem5.setText("Comprobantes de pago");
-        jMenu1.add(jMenuItem5);
 
         jMenuBar1.add(jMenu1);
 
@@ -839,7 +837,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem24ActionPerformed
     private void menuRepServicioMasSolicitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRepServicioMasSolicitadoActionPerformed
         // TODO add your handling code here:
-        jdServiciosMasSolicitados obj = new jdServiciosMasSolicitados(this, true);
+        jdRepServiciosMasSolicitados obj = new jdRepServiciosMasSolicitados(this, true);
         obj.setLocationRelativeTo(this);
         obj.setVisible(true);
         
@@ -905,7 +903,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem34;
     private javax.swing.JMenuItem jMenuItem35;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
