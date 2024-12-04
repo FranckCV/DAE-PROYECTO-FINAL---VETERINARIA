@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteMedicosEficientes" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bd28cb11-1e06-4f65-9018-46029867080e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
+	<parameter name="parCantMedicos" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parAnio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parMes" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    CONCAT(m.nombres, ' ', m.apePaterno, ' ', m.apeMaterno) AS medico,
+    COUNT(DISTINCT ci.id) AS cantidad_citas,
+    ROUND(SUM(s.costo), 2) AS ingresos_generados
+FROM
+    DETALLE_CITA dc
+JOIN
+    DETALLE_SERVICIO ds ON dc.detalle_servicio_med_id = ds.medico_id
+JOIN
+    MEDICO m ON ds.medico_id = m.id
+JOIN
+    SERVICIO s ON ds.servicio_id = s.id
+JOIN
+    CITA ci ON dc.cita_id = ci.id
+JOIN
+    COMPROBANTE co ON co.CITAid = ci.id
+WHERE
+    EXTRACT(YEAR FROM ci.fecha_cita) = $P{parAnio}
+    AND EXTRACT(MONTH FROM ci.fecha_cita) = $P{parMes}
+GROUP BY
+    medico
+ORDER BY
+    ingresos_generados DESC
+LIMIT $P{parCantMedicos};]]>
+	</queryString>
+	<field name="medico" class="java.lang.String"/>
+	<field name="cantidad_citas" class="java.lang.Long"/>
+	<field name="ingresos_generados" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="42" uuid="1cae7f22-801c-4e6d-92c9-d20cf339559f"/>
+				<textElement textAlignment="Center">
+					<font size="26" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Reporte de los " + $P{parCantMedicos}+" mejores médicos"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="42" width="555" height="37" uuid="97ec7782-7a11-46e4-8bf5-0f68dee34d7b"/>
+				<textElement textAlignment="Center">
+					<font size="26" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{parAnio} + " - " + $P{parMes}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="4" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="0" width="121" height="20" uuid="395be215-cc4e-4d2d-afa6-46c3f57da948"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre Médico]]></text>
+			</staticText>
+			<line>
+				<reportElement x="13" y="23" width="522" height="1" forecolor="#006666" uuid="3aa5011a-569d-46f9-a23c-88ff49c05164"/>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="211" y="0" width="136" height="20" uuid="050b76f8-31ef-42dd-80f9-6a585010300f"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad de Citas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="393" y="0" width="156" height="20" uuid="e3eb61e3-2812-49f3-a2c3-af1e7de07480"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ingresos Generados]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="31" y="0" width="87" height="20" uuid="42c8a483-0b93-460e-ad07-85811c48db37"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="169" y="0" width="102" height="20" uuid="d1bb0b39-0705-4329-bf30-608ac9fb3c42"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad_citas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="341" y="0" width="144" height="20" uuid="460f3d28-4ba9-48cb-81a1-d1699bf5bffe"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ingresos_generados}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="8" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="8" y="2" width="208" height="20" uuid="35e20f48-ce81-43e2-bc34-3aa3decea070"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Elaborado por: Junior Perez Davila]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="509" y="2" width="40" height="20" uuid="5ecbb86f-9977-40e1-8f65-3e55a2737671"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="429" y="2" width="80" height="20" uuid="d51700de-52d9-4f78-9ebb-d304ac807262"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="485" splitType="Stretch">
+			<bar3DChart>
+				<chart>
+					<reportElement x="16" y="42" width="519" height="134" uuid="b44499e5-9dfc-4a76-b265-61b211d78c56"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Ingresos"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{medico}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{ingresos_generados}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+			<bar3DChart>
+				<chart>
+					<reportElement x="16" y="222" width="519" height="156" uuid="42644618-cff3-424a-99d0-7f11e9b7d35b"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Citas"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{medico}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{cantidad_citas}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+			<subreport>
+				<reportElement x="16" y="389" width="519" height="96" uuid="9be19520-8609-4bfc-8601-d7a6504475dc"/>
+				<subreportParameter name="parAnio">
+					<subreportParameterExpression><![CDATA[$P{parAnio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parCantidadMostrar">
+					<subreportParameterExpression><![CDATA[$P{parCantMedicos}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "reporteMedicosEficientes_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="18" y="0" width="517" height="42" uuid="b2f8bac5-3b3d-4f55-8195-b605757bf5a2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gráfico de ingresos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="180" width="517" height="42" uuid="d4fc9303-759c-41a7-bdd3-72dfb6b2a2cf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gráfico de citas]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

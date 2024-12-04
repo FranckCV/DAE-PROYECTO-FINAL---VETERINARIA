@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="citasPendientesPorMedico" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3bcada47-aea9-4260-8357-206a55dbdfb5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT distinct
+    c.fecha_cita,
+    s.nom_servicio,
+    dc.horaentrada,
+    dc.horasalida,
+    m.nombre,
+    r.nombre,
+    m.altura,
+    m.peso,
+    (me.nombres || ' ' || me.apepaterno) AS medico_nombre,
+    (d.nombres || ' ' || d.apepaterno) AS duenio_nombre,
+    CASE
+        WHEN m.sexo = TRUE THEN 'femenino'
+        ELSE 'masculino'
+    END AS sexo_mascota
+FROM
+    detalle_cita dc
+INNER JOIN cita c ON c.id = dc.cita_id
+	inner join detalle_servicio ds on ds.servicio_id=dc.detalle_servicio_serv_id
+	inner join servicio s on s.id=ds.servicio_id
+INNER JOIN custodia cu ON c.custodiamascotaid = cu.mascotaid
+    AND c.custodiaduenioid = cu.duenioid
+INNER JOIN duenio d ON d.id = cu.duenioid
+INNER JOIN mascota m ON m.id = cu.mascotaid
+inner join raza r on r.id=m.raza_id
+INNER JOIN medico me ON me.id = dc.detalle_servicio_med_id;]]>
+	</queryString>
+	<field name="fecha_cita" class="java.sql.Date"/>
+	<field name="nom_servicio" class="java.lang.String"/>
+	<field name="horaentrada" class="java.sql.Time"/>
+	<field name="horasalida" class="java.sql.Time"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="altura" class="java.math.BigDecimal"/>
+	<field name="peso" class="java.math.BigDecimal"/>
+	<field name="medico_nombre" class="java.lang.String"/>
+	<field name="duenio_nombre" class="java.lang.String"/>
+	<field name="sexo_mascota" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="0" width="444" height="34" forecolor="#000066" backcolor="#FFFFFF" uuid="45a52a48-f73f-4655-b24a-b72d66ee8e56"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CITAS PENDIENTES DEL MÉDICO :]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
