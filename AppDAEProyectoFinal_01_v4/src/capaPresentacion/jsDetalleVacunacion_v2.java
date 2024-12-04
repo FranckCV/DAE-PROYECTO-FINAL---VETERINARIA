@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import soporte.Utilidad;
 
 /**
  *
@@ -664,20 +665,10 @@ public class jsDetalleVacunacion_v2 extends javax.swing.JDialog {
 
     private void txtVacunaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtVacunaKeyTyped
         // TODO add your handling code here:
-        if (jRBCod.isSelected()) {
-            // Si la opción de código está seleccionada, permitir solo números
-            char c = evt.getKeyChar();
-            if (!Character.isDigit(c)) {
-                evt.consume(); // Ignora la entrada si no es un dígito
-                JOptionPane.showMessageDialog(txtVacuna, "Solo se permiten números en esta opción");
-            }
+        if (jRBCodD.isSelected()) {
+            Utilidad.validarCampoTextoSoloNumero(evt);
         } else if (jRBNOmb.isSelected()) {
-            // Si la opción de nombre está seleccionada, permitir solo letras
-            char c = evt.getKeyChar();
-            if (!Character.isLetter(c) && c != ' ') {
-                evt.consume(); // Ignora la entrada si no es una letra o espacio
-                JOptionPane.showMessageDialog(txtVacuna, "Solo se permiten letras en esta opción");
-            }
+            Utilidad.validarCampoTextoSoloLetras(evt);
         }
     }//GEN-LAST:event_txtVacunaKeyTyped
 
@@ -732,7 +723,6 @@ public class jsDetalleVacunacion_v2 extends javax.swing.JDialog {
                         txtVacuna.setText("");
                     }
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "El código debe ser un número válido");
                     listarVacunas();
                     txtVacuna.setText("");
                 }
@@ -912,28 +902,30 @@ public class jsDetalleVacunacion_v2 extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         Object[] opciones = {"Sí", "No"};
-int respuesta = JOptionPane.showOptionDialog(null,
-        "¿Estás seguro que deseas eliminar la vacunación asignada? Recuerda que puedes asignar nuevamente.",
-        "Confirmar",
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.QUESTION_MESSAGE,
-        null,
-        opciones,
-        opciones[0]);
+        int respuesta = JOptionPane.showOptionDialog(null,
+                "¿Estás seguro que deseas eliminar la vacunación asignada? Recuerda que puedes asignar nuevamente.",
+                "Confirmar",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                opciones[0]);
 
-if (respuesta == JOptionPane.YES_OPTION) {
-    if (tblDetVac.getSelectedRow() != -1) {
-        try {eliminarAsignacion();listarDetalle_V();
-            limpiarControles();
-            listarMascotas();
-        } catch (SQLException ex) {
-            Logger.getLogger(jsDetalleVacunacion_v2.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Error al realizar la operación: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            if (tblDetVac.getSelectedRow() != -1) {
+                try {
+                    eliminarAsignacion();
+                    listarDetalle_V();
+                    limpiarControles();
+                    listarMascotas();
+                } catch (SQLException ex) {
+                    Logger.getLogger(jsDetalleVacunacion_v2.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Error al realizar la operación: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleccione una fila de la 3ra tabla para hacer esta operación", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "Seleccione una fila de la 3ra tabla para hacer esta operación", "Advertencia", JOptionPane.WARNING_MESSAGE);
-    }
-}
 
 
     }//GEN-LAST:event_btnEliminarActionPerformed
