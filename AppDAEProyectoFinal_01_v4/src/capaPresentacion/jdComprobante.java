@@ -19,9 +19,10 @@ import soporte.Utilidad;
  * @author Junior
  */
 public class jdComprobante extends javax.swing.JDialog {
+
     private Dimension dimension;
 
-    public static int id_cita=0;
+    public static int id_cita;
 
     /**
      * Creates new form jdComprobante
@@ -33,37 +34,41 @@ public class jdComprobante extends javax.swing.JDialog {
         mostrar();
     }
 
-    private void mostrar() {
-    try {
-        Container contenedor = this.report;
-        contenedor.setLayout(new BorderLayout());
-        contenedor.removeAll();
-        Map<String, Object> parametros = new HashMap<>();
-        
-
-
-        parametros.put("detalle_cita_id", id_cita); 
-        parametros.put("SUBREPORT_DIR", "./");
-        
-
-
-        JRViewer objReporte = new clsReporte().reporteInterno("comprobantePago" + ".jasper", parametros);
-        contenedor.add(objReporte);
-        contenedor.revalidate();
-        contenedor.repaint();
-
-        report.setPreferredSize(dimension);
-        this.report.setVisible(true);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(
-                this,
-                "Error en Reporte: " + e.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE
-        );
+    public void setIdCita(int idCita) {
+        this.id_cita = idCita;
     }
-}
-    
+
+    public int getIdCita() {
+        return this.id_cita;
+    }
+
+    private void mostrar() {
+        try {
+            Container contenedor = this.report;
+            contenedor.setLayout(new BorderLayout());
+            contenedor.removeAll();
+            Map<String, Object> parametros = new HashMap<>();
+
+            parametros.put("detalle_cita_id", id_cita);
+//            parametros.put("SUBREPORT_DIR", "");
+
+            JRViewer objReporte = new clsReporte().reporteInterno("comprobantePago" + ".jasper", parametros);
+            contenedor.add(objReporte);
+            contenedor.revalidate();
+            contenedor.repaint();
+
+            report.setPreferredSize(dimension);
+            this.report.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error en Reporte: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -108,6 +113,11 @@ public class jdComprobante extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(0, 0, 153));
 
         jButton1.setText("Cerrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -148,6 +158,10 @@ public class jdComprobante extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

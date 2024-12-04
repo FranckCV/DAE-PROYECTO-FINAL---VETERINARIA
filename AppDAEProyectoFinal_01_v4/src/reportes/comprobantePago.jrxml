@@ -28,13 +28,14 @@
     co.monto_total,
     ROUND(co.monto_total / 1.18, 2) as subtotal,
     ROUND(co.monto_total - (co.monto_total / 1.18), 2) as igv
-from detalle_cita dc
+from
+    detalle_cita dc
 inner join cita c on c.id = dc.cita_id
 inner join comprobante co on co.citaid = c.id
 inner join custodia cu on cu.duenioid = c.custodiaduenioid
 inner join duenio du on du.id = cu.duenioid
-where dc.cita_id = $P{detalle_cita_id}
-]]>
+where
+    dc.cita_id = $P{detalle_cita_id}]]>
 	</queryString>
 	<field name="serie_numero" class="java.lang.String"/>
 	<field name="fecha" class="java.sql.Date"/>
@@ -50,12 +51,7 @@ where dc.cita_id = $P{detalle_cita_id}
 		<band height="206" splitType="Stretch">
 			<image>
 				<reportElement x="13" y="59" width="126" height="76" uuid="a7092877-a02a-4410-a7d2-1111e7ced697"/>
-<<<<<<< HEAD
-				<imageExpression><![CDATA[$P{REPORT_DIR} + "/../conector/Recursos/logo_mediano.png"
-]]></imageExpression>
-=======
-				<imageExpression><![CDATA["..\\conector\\Recursos\\logo_mediano.png"]]></imageExpression>
->>>>>>> e749e7bc7db41882dfb034f76f0eb427f0fe0561
+				<imageExpression><![CDATA["../conector/Recursos/logo_mediano.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="101" y="85" width="67" height="20" uuid="7232ee15-bf31-445f-9ef8-7290e3fea91d"/>

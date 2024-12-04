@@ -268,7 +268,8 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
             if (valor == 0) {
                 objCita.cancelarCita(Integer.parseInt(txtNumero.getText()));
-                btnBuscarCitaActionPerformed(null);
+//                btnBuscarCitaActionPerformed(null);
+                limpiarTodoAlFinalizar();
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "No se pudo cancelar la cita " + e.getMessage());
@@ -277,7 +278,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
     private void llenarTablaCitasPendientes() {
         ResultSet rsPendientes;
-        
+
         try {
             rsPendientes = objCita.listarCitasPendientesOrdenadas();
             DefaultTableModel modelo = new DefaultTableModel();
@@ -554,6 +555,44 @@ public class jdCita_v2 extends javax.swing.JDialog {
         }
     }
 
+    private void limpiarTodoAlFinalizar() {
+        txtANotaAdicional.setText("");
+        txtCodMascota.setText("");
+        txtCodMedicamento.setText("");
+        txtCodServicio.setText("");
+        txtDocMedico.setText("");
+        txtDosis.setText("");
+
+        txtIgv.setText("");
+        txtIndicacion.setText("");
+        txtNombreDuenio.setText("");
+        txtNombreMascota.setText("");
+        txtNombreMedicamento.setText("");
+
+        txtNotaMascota.setText("");
+        txtNumero.setText("");
+
+        txtSubtotal.setText("");
+        txtTelefono.setText("");
+        txtTotal.setText("");
+
+        spnCantidad.setValue(0);
+        jDateChooser1.setDate(null);
+
+        cboServicios.setSelectedIndex(0);
+        cboMedicos.setSelectedIndex(0);
+        cboServicios_PANEL_MEDIC.setSelectedIndex(0);
+
+        llenarTablaDetalleServicio_PANEL_MEDIC();
+
+        llenarTablaInicialServicio();
+        llenarTablaInicialMedicamento();
+        llenarTablaCitasPendientes();
+
+//        cboEstadoCita.setSelectedIndex(-1);
+//        cboServicios.setSelectedIndex(-1);
+    }
+
     private void eliminarMedicamentoDeTabla() {
 //        int codMed = Integer.parseInt(txtCodMedicamento.getText());
 
@@ -591,6 +630,14 @@ public class jdCita_v2 extends javax.swing.JDialog {
         txtSubtotal.setText(String.format("%.2f", subtotal));
         txtIgv.setText(String.format("%.2f", igv));
         txtTotal.setText(String.format("%.2f", total));
+    }
+
+    private void limpiarTodoMedicamento() {
+        txtCodMedicamento.setText("");
+        spnCantidad.setValue(0);
+        txtNombreMedicamento.setText("");
+        txtIndicacion.setText("");
+        txtDosis.setText("");
     }
 
     @SuppressWarnings("unchecked")
@@ -1454,6 +1501,11 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
         jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/eliminar.png"))); // NOI18N
         jButton11.setText("Cancelar");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/salir.png"))); // NOI18N
         jButton12.setText("Salir");
@@ -1625,8 +1677,13 @@ public class jdCita_v2 extends javax.swing.JDialog {
             }
         });
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/eliminar.png"))); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/salir.png"))); // NOI18N
         jButton5.setText("Salir");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel17.setText("Nota Adicional:");
 
@@ -1729,7 +1786,6 @@ public class jdCita_v2 extends javax.swing.JDialog {
         jPanel21.setBackground(new java.awt.Color(204, 255, 255));
 
         jLabel9.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("RESUMEN DE MEDICAMENTO");
 
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
@@ -1752,7 +1808,6 @@ public class jdCita_v2 extends javax.swing.JDialog {
         jPanel22.setBackground(new java.awt.Color(204, 255, 255));
 
         jLabel7.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("RESUMEN DE SERVICIO");
 
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
@@ -1950,6 +2005,8 @@ public class jdCita_v2 extends javax.swing.JDialog {
             btnTerminar3.setEnabled(false);
             this.jTabbedPane1.setEnabledAt(1, false);
             this.jTabbedPane1.setEnabledAt(2, false);
+
+            this.jTabbedPane1.setSelectedIndex(0);
         }
     }//GEN-LAST:event_cboEstadoCitaActionPerformed
 
@@ -2032,7 +2089,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
             String duenio = txtNombreDuenio.getText();
             String mascota = txtNombreMascota.getText();
 
-            lblCitaPersona.setText(texto + duenio + " y su mascota " + mascota);
+            lblCitaPersona.setText(duenio + " y su mascota " + mascota);
 
             llenarTablitaServicios();
 
@@ -2071,14 +2128,17 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
         int id_m = Integer.parseInt(tblDetalleMedicamento.getValueAt(tblDetalleMedicamento.getSelectedRow(), 2).toString());
 
-        String nombre = tblDetalleMedicamento.getValueAt(tblDetalleMedicamento.getSelectedRow(), 3).toString();
+        if (id_m != 0) {
+            String nombre = tblDetalleMedicamento.getValueAt(tblDetalleMedicamento.getSelectedRow(), 3).toString();
 
-        int valor = Utilidad.mensajeConfirmarEliminar("Medicamento", id_m, nombre);
+            int valor = Utilidad.mensajeConfirmarEliminar("Medicamento", id_m, nombre);
 
-        if (valor == 0) {
-            eliminarMedicamentoDeTabla();
+            if (valor == 0) {
+                eliminarMedicamentoDeTabla();
+            }
+            actualizarResumenes();
+            limpiarTodoMedicamento();
         }
-        actualizarResumenes();
     }//GEN-LAST:event_btnEliminarMedicamentoActionPerformed
 
     private void btnAgregarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMedicamentoActionPerformed
@@ -2196,7 +2256,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         }
 
         actualizarResumenes();
-
+        limpiarTodoMedicamento();
         calcularTotales();
     }//GEN-LAST:event_btnAgregarMedicamentoActionPerformed
 
@@ -2214,11 +2274,8 @@ public class jdCita_v2 extends javax.swing.JDialog {
     }//GEN-LAST:event_btnTerminar3ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButton12ActionPerformed
-
-
-                                           
 
 
     private void btnEliminarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarServicioActionPerformed
@@ -2251,7 +2308,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
     }//GEN-LAST:event_cboMedicosActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+        cancelarCita();
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void txtANotaAdicionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtANotaAdicionalActionPerformed
@@ -2259,7 +2316,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
     }//GEN-LAST:event_txtANotaAdicionalActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
+        cancelarCita();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btnTerminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerminarActionPerformed
@@ -2280,15 +2337,32 @@ public class jdCita_v2 extends javax.swing.JDialog {
             java.sql.Date fecha = new java.sql.Date(utilDate.getTime());
 
             objComprobante.registrarComprobante("B", num, Float.parseFloat(txtTotal.getText()), fecha,
-                Integer.parseInt(txtNumero.getText()));
+                    Integer.parseInt(txtNumero.getText()));
 
+            int idCita = Integer.parseInt(txtNumero.getText());
+            jdComprobante.id_cita = idCita;
+            jdComprobante objComprobante_interfaz = new jdComprobante((Frame) SwingUtilities.getWindowAncestor(this), true);
+            // Establecer id_cita en la instancia
+            System.out.println(objComprobante_interfaz.getIdCita());
+
+            objComprobante_interfaz.setVisible(true);
             JOptionPane.showMessageDialog(this, "La cita finalizó");
-            //            limpiarTodoAlTerminar();
+            limpiarTodoAlFinalizar();
+//            limpiarTodoAlTerminar();
 
+            actualizarResumenes();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "No se pudo terminar " + e.getMessage());
         }
     }//GEN-LAST:event_btnTerminarActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        cancelarCita();
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarMedicamento;
