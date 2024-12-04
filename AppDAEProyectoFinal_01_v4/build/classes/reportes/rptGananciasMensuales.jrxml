@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptGananciasMensuales" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="03c6db41-a61d-47a9-8156-5cf8253961a8">
-	<property name="ireport.zoom" value="1.1000000000000016"/>
+	<property name="ireport.zoom" value="0.8264462809917368"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="59"/>
 	<parameter name="parAnioReporte" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -240,7 +240,7 @@ ORDER BY
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="571" splitType="Stretch">
+		<band height="522" splitType="Stretch">
 			<pie3DChart>
 				<chart>
 					<reportElement x="17" y="59" width="522" height="205" uuid="e395b8c9-5103-4b68-a28f-cb089573aee0"/>
@@ -257,14 +257,6 @@ ORDER BY
 					<itemLabel/>
 				</pie3DPlot>
 			</pie3DChart>
-			<subreport>
-				<reportElement x="17" y="338" width="473" height="225" uuid="2ab90457-2f2d-46e1-b610-3bccc0f9140a"/>
-				<subreportParameter name="parAnioSub">
-					<subreportParameterExpression><![CDATA[$P{parAnioReporte}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rptGananciasMensuales_subreport1.jasper"]]></subreportExpression>
-			</subreport>
 			<staticText>
 				<reportElement x="0" y="0" width="555" height="27" uuid="856f8df7-86c2-497f-a464-ab73c9e09fba"/>
 				<textElement textAlignment="Center">
@@ -293,6 +285,14 @@ ORDER BY
 				</textElement>
 				<textFieldExpression><![CDATA[$P{parAnioReporte}]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement x="11" y="273" width="528" height="235" uuid="fdedaae3-f92e-4f6f-968b-469879794fcc"/>
+				<subreportParameter name="parAnioSub">
+					<subreportParameterExpression><![CDATA[$P{parAnioReporte}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rptGananciasMensuales_subreport2.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</summary>
 </jasperReport>

@@ -1433,7 +1433,7 @@ public class jdCitaFirme extends javax.swing.JDialog {
             } else {
                 if (JOptionPane.showConfirmDialog(this, "Dueño no existe ¿Desea registrarlo?", "Alerta!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     //jdMantDuenio_v2 objMantDuenio = new jdMantDuenio_v2(null, true);
-                    jdMantDuenioNOVALE objMantDuenio = new jdMantDuenioNOVALE(null, true);
+                    jdMantDuenio objMantDuenio = new jdMantDuenio(null, true);
                     objMantDuenio.setLocationRelativeTo(this);
                     objMantDuenio.setVisible(true);
                 }
@@ -1472,7 +1472,7 @@ public class jdCitaFirme extends javax.swing.JDialog {
                     if (JOptionPane.showConfirmDialog(this, "Mascota no existe ¿Desea registrar?", "Alerta!",
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                        // jdMantMascota_v2 objMantMascota = new jdMantMascota_v2(null, true);
-                        jdMantMascotaNOVALE objMantMascota = new jdMantMascotaNOVALE(null, true);
+                        jdMantMascota objMantMascota = new jdMantMascota(null, true);
                         objMantMascota.setLocationRelativeTo(this);
                         objMantMascota.setVisible(true);
                     }
