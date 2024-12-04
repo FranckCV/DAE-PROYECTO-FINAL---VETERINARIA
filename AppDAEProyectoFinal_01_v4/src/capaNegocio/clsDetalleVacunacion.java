@@ -115,4 +115,69 @@ public class clsDetalleVacunacion {
             throw new Exception("Error al eliminar el código de mascota: " + id_M + " --> " + e.getMessage());
         }
     }
+    
+    
+    public ResultSet listarDetalleVigentes() throws Exception {
+        strSQL = "SELECT dv.*,  ma.nombre as nom_mas,va.nombre as nom_vac FROM DETALLES_VACUNACION  dv "
+                + " inner join mascota ma on dv.mascota_id= ma.id"
+                + " inner join vacuna va on dv.vacuna_id=va.id  ";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar Detalle Vacunación");
+        }
+    }
+
+    
+    public ResultSet listarVacunasPorEspecie(int idEspecie) throws Exception {
+        strSQL = "SELECT v.id, v.nombre, v.dosis_x_kgpeso, e.nombre as es_nom, v.disponibilidad "
+                + "FROM VACUNA v "
+                + "INNER JOIN ESPECIE e ON e.id = v.especie_id "
+                + "WHERE v.disponibilidad = true AND v.especie_id = " + idEspecie + "";  // Consulta corregida
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al filtrar las vacunas por Nombre de mascota" + e.getMessage());
+        }
+    }
+    
+    public ResultSet filtrarPorNombreYEspecie(String nom_m, int idEspecie) throws Exception {
+        // Construcción dinámica de la consulta SQL
+        strSQL = "SELECT v.id AS vacuna_id, v.nombre AS vacuna_nombre, v.dosis_x_kgpeso, e.nombre AS especie_nombre, "
+                + "v.disponibilidad, ma.id AS mascota_id, ma.nombre AS mascota_nombre "
+                + "FROM VACUNA v "
+                + "INNER JOIN ESPECIE e ON e.id = v.especie_id "
+                + "INNER JOIN MASCOTA ma ON e.id = ma.especie_id "
+                + "WHERE v.disponibilidad = true AND v.especie_id = " + idEspecie
+                + " AND UPPER(ma.nombre) LIKE UPPER('%" + nom_m + "%')";
+
+        try {
+            rs = objConectar.consultarBD(strSQL); // Ejecuta la consulta
+            return rs; // Devuelve el conjunto de resultados
+        } catch (Exception e) {
+            throw new Exception("Error al filtrar por nombre de mascota y especie: " + e.getMessage());
+        }
+    }
+    
+    public ResultSet filtrarporNombreNVIG(String nom_m) throws Exception {
+        strSQL = "SELECT dv.*, ma.nombre as nom_mas, va.nombre as nom_vac "
+                + "FROM DETALLES_VACUNACION dv "
+                + "INNER JOIN mascota ma ON dv.mascota_id = ma.id "
+                + "INNER JOIN vacuna va ON dv.vacuna_id = va.id "
+                + "WHERE UPPER(ma.nombre) LIKE UPPER('%" + nom_m + "%')";
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al filtrar Custodia por Nombre de mascota" + e.getMessage());
+        }
+    }
+    
+    
+    
+    
 }
