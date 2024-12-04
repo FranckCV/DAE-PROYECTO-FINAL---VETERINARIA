@@ -3,7 +3,6 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-<<<<<<< HEAD
 	<queryString>
 		<![CDATA[SELECT distinct
     c.fecha_cita,
@@ -42,8 +41,6 @@ INNER JOIN medico me ON me.id = dc.detalle_servicio_med_id;]]>
 	<field name="medico_nombre" class="java.lang.String"/>
 	<field name="duenio_nombre" class="java.lang.String"/>
 	<field name="sexo_mascota" class="java.lang.String"/>
-=======
->>>>>>> 58d9ef3ec168076397d89c7918df32670e8e1c94
 	<background>
 		<band splitType="Stretch"/>
 	</background>
