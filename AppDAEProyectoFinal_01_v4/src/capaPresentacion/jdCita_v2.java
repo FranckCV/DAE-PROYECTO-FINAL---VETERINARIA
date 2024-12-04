@@ -579,6 +579,12 @@ public class jdCita_v2 extends javax.swing.JDialog {
         spnCantidad.setValue(0);
         jDateChooser1.setDate(null);
 
+        cboServicios.setSelectedIndex(0);
+        cboMedicos.setSelectedIndex(0);
+        cboServicios_PANEL_MEDIC.setSelectedIndex(0);
+
+        llenarTablaDetalleServicio_PANEL_MEDIC();
+
         llenarTablaInicialServicio();
         llenarTablaInicialMedicamento();
         llenarTablaCitasPendientes();
@@ -624,6 +630,14 @@ public class jdCita_v2 extends javax.swing.JDialog {
         txtSubtotal.setText(String.format("%.2f", subtotal));
         txtIgv.setText(String.format("%.2f", igv));
         txtTotal.setText(String.format("%.2f", total));
+    }
+
+    private void limpiarTodoMedicamento() {
+        txtCodMedicamento.setText("");
+        spnCantidad.setValue(0);
+        txtNombreMedicamento.setText("");
+        txtIndicacion.setText("");
+        txtDosis.setText("");
     }
 
     @SuppressWarnings("unchecked")
@@ -2075,7 +2089,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
             String duenio = txtNombreDuenio.getText();
             String mascota = txtNombreMascota.getText();
 
-            lblCitaPersona.setText(texto + duenio + " y su mascota " + mascota);
+            lblCitaPersona.setText(duenio + " y su mascota " + mascota);
 
             llenarTablitaServicios();
 
@@ -2123,6 +2137,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
                 eliminarMedicamentoDeTabla();
             }
             actualizarResumenes();
+            limpiarTodoMedicamento();
         }
     }//GEN-LAST:event_btnEliminarMedicamentoActionPerformed
 
@@ -2241,7 +2256,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         }
 
         actualizarResumenes();
-
+        limpiarTodoMedicamento();
         calcularTotales();
     }//GEN-LAST:event_btnAgregarMedicamentoActionPerformed
 
@@ -2332,8 +2347,10 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
             objComprobante_interfaz.setVisible(true);
             JOptionPane.showMessageDialog(this, "La cita finalizó");
+            limpiarTodoAlFinalizar();
+//            limpiarTodoAlTerminar();
 
-            //            limpiarTodoAlTerminar();
+            actualizarResumenes();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "No se pudo terminar " + e.getMessage());
         }
