@@ -298,16 +298,13 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         txtDocDuenio.setText("");
         txtDocMedico.setText("");
         txtEdadMascota.setText("");
-        txtIgv.setText("");
         txtNombreCliente.setText("");
         txtNombreMascota.setText("");
         txtNombreMedico.setText("");
 //        txtNotaDetalleCita.setText("");
         txtNotaMascota.setText("");
         txtNumero.setText("");
-        txtSubtotal.setText("");
         txtTelefono.setText("");
-        txtTotal.setText("");
 
         cboServicios.setSelectedIndex(0);
     }
@@ -415,14 +412,8 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         cboServicios = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
-        txtSubtotal = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        txtIgv = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        txtTotal = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtAObservacion = new javax.swing.JTextArea();
-        jLabel26 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtDocDuenio = new javax.swing.JTextField();
@@ -599,18 +590,9 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         jLabel16.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel16.setText("Observación:");
 
-        jLabel17.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel17.setText("IGV:");
-
-        jLabel18.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel18.setText("TOTAL:");
-
         txtAObservacion.setColumns(20);
         txtAObservacion.setRows(5);
         jScrollPane3.setViewportView(txtAObservacion);
-
-        jLabel26.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel26.setText("Subtotal:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -620,40 +602,16 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                 .addGap(12, 12, 12)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel26)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtIgv, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(11, 11, 11)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel26))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel17)
-                            .addComponent(txtIgv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel18)
-                            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -1250,13 +1208,10 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1282,14 +1237,11 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     private javax.swing.JTextField txtDocDuenio;
     private javax.swing.JTextField txtDocMedico;
     private javax.swing.JTextField txtEdadMascota;
-    private javax.swing.JTextField txtIgv;
     private javax.swing.JTextField txtNombreCliente;
     private javax.swing.JTextField txtNombreMascota;
     private javax.swing.JTextField txtNombreMedico;
     private javax.swing.JTextField txtNotaMascota;
     private javax.swing.JTextField txtNumero;
-    private javax.swing.JTextField txtSubtotal;
     private javax.swing.JTextField txtTelefono;
-    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }
