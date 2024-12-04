@@ -115,6 +115,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem26.setText("jMenuItem26");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menú Principal");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -835,7 +836,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem24ActionPerformed
     private void menuRepServicioMasSolicitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRepServicioMasSolicitadoActionPerformed
         // TODO add your handling code here:
-        jdServiciosMasSolicitados obj = new jdServiciosMasSolicitados(this, true);
+        jdRepServiciosMasSolicitados obj = new jdRepServiciosMasSolicitados(this, true);
         obj.setLocationRelativeTo(this);
         obj.setVisible(true);
         

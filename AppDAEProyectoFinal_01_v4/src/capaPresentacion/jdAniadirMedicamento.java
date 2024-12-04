@@ -140,6 +140,7 @@ public class jdAniadirMedicamento extends javax.swing.JDialog {
         tblMedicamentos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Añadir Medicamento");
 
         txtNombreMedicamento.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {

@@ -233,6 +233,7 @@ public class jsDetalleVacunacion_v2 extends javax.swing.JDialog {
         btnRe = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Detalle Vacunación");
 
         jPanel5.setBackground(new java.awt.Color(0, 0, 102));
 
