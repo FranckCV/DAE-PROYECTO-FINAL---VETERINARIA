@@ -220,6 +220,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
         txtNota = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Añadir Servicio");
 
         tblServicios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

@@ -21,7 +21,7 @@ import soporte.Utilidad;
  *
  * @author Fabiana Lucía
  */
-public class jdServiciosMasSolicitados extends javax.swing.JDialog {
+public class jdRepServiciosMasSolicitados extends javax.swing.JDialog {
 
     //Falta que solo se listen los meses y años donde hay registros
     //Validar que ningún campo esté vacío
@@ -37,7 +37,7 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
     /**
      * Creates new form jdServiciosMasSolicitados
      */
-    public jdServiciosMasSolicitados(java.awt.Frame parent, boolean modal) {
+    public jdRepServiciosMasSolicitados(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         dimension = report.getPreferredSize();
@@ -115,6 +115,7 @@ public class jdServiciosMasSolicitados extends javax.swing.JDialog {
         btnVerReporte = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Servicios Más Solicitados");
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 

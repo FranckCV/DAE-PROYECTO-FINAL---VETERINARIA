@@ -65,6 +65,7 @@ public class jdRptMejoresMedicos extends javax.swing.JDialog {
         vistaReporte = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Reporte Mejores Médicos");
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 102));
 
