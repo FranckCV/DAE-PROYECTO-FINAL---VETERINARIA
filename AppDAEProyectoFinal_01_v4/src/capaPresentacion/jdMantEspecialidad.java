@@ -15,8 +15,9 @@ import javax.swing.table.DefaultTableModel;
  * @author franc
  */
 public class jdMantEspecialidad extends javax.swing.JDialog {
+
     clsEspecialidad objTabla = new clsEspecialidad();
-    
+
     /**
      * Creates new form jdMantMarca
      */
@@ -370,12 +371,12 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             txtID.setText(String.valueOf(tblEspecialidad.getValueAt(tblEspecialidad.getSelectedRow(), 0)));
-            btnBuscarActionPerformed(null);  
+            btnBuscarActionPerformed(null);            
         } catch (Exception e) {
 //            JOptionPane.showMessageDialog(this,"Error: "+e.getMessage());
-            JOptionPane.showMessageDialog(this,"Debe finalizar la operacion actual primero");
+            JOptionPane.showMessageDialog(this, "Debe finalizar la operacion actual primero");
         }
-      
+        
     }//GEN-LAST:event_tblEspecialidadMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -401,7 +402,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
             btnBuscarActionPerformed(null);
         } else {
             Utilidad.mensajeErrorFaltaID(this);
-
+            
         }
     }//GEN-LAST:event_btnDisponibilidadActionPerformed
 
@@ -411,7 +412,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
             Utilidad.validarCampoTextoSoloLetras(evt);
             Utilidad.validarLimiteCampoTexto(evt, clsEspecialidad.NOMBRE, clsEspecialidad.TABLA);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error en el campo "+evt.getSource().getClass().getName()+": " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error en el campo " + evt.getSource().getClass().getName() + ": " + e.getMessage());
         }
     }//GEN-LAST:event_txtNombreKeyTyped
 
@@ -420,7 +421,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         Utilidad.validarCampoTextoSoloNumero(evt);
     }//GEN-LAST:event_txtIDKeyTyped
     
-    private void listarEspecialidades(){
+    private void listarEspecialidades() {
         ResultSet rsDato = null;
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");
@@ -429,7 +430,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         tblEspecialidad.setModel(modelo);        
         try {
             rsDato = objTabla.listarEspecialidad();
-            while (rsDato.next()){                
+            while (rsDato.next()) {                
                 modelo.addRow(new Object[]{
                     rsDato.getInt(clsEspecialidad.ID),
                     rsDato.getString(clsEspecialidad.NOMBRE),
@@ -451,7 +452,6 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
 //            JOptionPane.showMessageDialog(this, e.getMessage());
 //        }
 //    }
-    
     private void buscarEspecialidad() {
         ResultSet rsEsp = null;
         try {
@@ -469,12 +469,12 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 }
                 
                 rsEsp = objTabla.buscarEspecialidad(Integer.parseInt(txtID.getText()));
-                if (rsEsp.next()){
+                if (rsEsp.next()) {
                     txtNombre.setText(rsEsp.getString(clsEspecialidad.NOMBRE));
                     chkDisponibilidad.setSelected(rsEsp.getBoolean(clsEspecialidad.DISPONIBILIDAD));
                     rsEsp.close();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Este codigo en "+clsEspecialidad.TABLA+" no existe");
+                    JOptionPane.showMessageDialog(this, "Este codigo en " + clsEspecialidad.TABLA + " no existe");
                     limpiarControles();
                     listarEspecialidades();
                 }
@@ -485,9 +485,8 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
             limpiarControles();
         }
     }
-    
+
     // de informacion
-    
     private void usarBotones(boolean bus, boolean nue, boolean mod, boolean eli, boolean baj, boolean lim) {
         btnBuscar.setEnabled(bus);
         btnNuevo.setEnabled(nue);
@@ -505,18 +504,18 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         
         txtID.requestFocus();        
     }
-   
+    
     private void editableControles(boolean cod, boolean nom) {
         txtID.setEditable(cod);
         txtNombre.setEditable(nom);
     }
-          
+    
     private void eliminarEspecialidad() {
         try {
             if (txtID.getText().isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
-            } else if (Utilidad.validarEliminacionForanea(clsEspecialidad.TABLA, Integer.parseInt(txtID.getText()))){
-                Utilidad.mensajeErrorNoEliminarForanea(clsEspecialidad.TABLA,txtNombre.getText());
+            } else if (Utilidad.validarEliminacionForanea(clsEspecialidad.TABLA, Integer.parseInt(txtID.getText()))) {
+                Utilidad.mensajeErrorNoEliminarForanea(clsEspecialidad.TABLA, txtNombre.getText());
             } else {
                 int valor = Utilidad.mensajeConfirmarEliminar(clsEspecialidad.TABLA, Integer.parseInt(txtID.getText()), txtNombre.getText());
                 
@@ -527,10 +526,10 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage()  );
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }
-      
+    
     private void cancelarOperacion() {
         btnNuevo.setText(Utilidad.BTN_NUEVO);
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
@@ -538,9 +537,9 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
         limpiarControles();
         listarEspecialidades();
         editableControles(true, false);
-        usarBotones(true, true, true, true, true ,true);
+        usarBotones(true, true, true, true, true, true);
     }
-   
+    
     private void modificarEspecialidad() {
         try {
             if (txtID.getText().isBlank()) {
@@ -552,11 +551,11 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                     editableControles(false, true);
                     usarBotones(false, false, true, true, false, false);
                 } else {
-                    int valor = Utilidad.mensajeConfirmarModificar(clsEspecialidad.TABLA, Integer.parseInt(txtID.getText()),txtNombre.getText());
+                    int valor = Utilidad.mensajeConfirmarModificar(clsEspecialidad.TABLA, Integer.parseInt(txtID.getText()), txtNombre.getText());
                     if (valor == 0) {
                         objTabla.modificarEspecialidad(
-                            Integer.parseInt(txtID.getText()),
-                            txtNombre.getText()
+                                Integer.parseInt(txtID.getText()),
+                                txtNombre.getText()
                         );
                         btnModificar.setText(Utilidad.BTN_MODIFICAR);
                         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
@@ -574,7 +573,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error:" + e.getMessage());
         }
     }    
-
+    
     private void nuevaEspecialidad() {
         try {
             if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
@@ -587,7 +586,7 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
                 txtID.setText(objTabla.generarIDEspecialidad().toString());
                 txtNombre.requestFocus();
                 chkDisponibilidad.setSelected(true);
-            }else{
+            } else {
                 if (txtNombre.getText().trim().isBlank() || txtID.getText().trim().isBlank()) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
                 } else {
@@ -616,20 +615,20 @@ public class jdMantEspecialidad extends javax.swing.JDialog {
             if (campoID.isBlank()) {
                 Utilidad.mensajeErrorFaltaID(this);
             } else {
-                int valor = Utilidad.mensajeConfirmarDisponibilidad(clsEspecialidad.TABLA, Integer.parseInt(txtID.getText()),txtNombre.getText());
+                int valor = Utilidad.mensajeConfirmarDisponibilidad(clsEspecialidad.TABLA, Integer.parseInt(txtID.getText()), txtNombre.getText());
                 if (valor == 0) {
                     objTabla.cambiarDisponibilidad(Integer.parseInt(txtID.getText()));
                     limpiarControles();
                     listarEspecialidades();
-                    JOptionPane.showMessageDialog(this, "Se cambió la disponibilidad de esta especialidad con exito");
+                    Utilidad.mensajeExitoCambioDisponibilidad(clsEspecialidad.TABLA);
                 }                
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnDisponibilidad;
