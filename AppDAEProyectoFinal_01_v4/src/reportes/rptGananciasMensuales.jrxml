@@ -2,42 +2,87 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptGananciasMensuales" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="03c6db41-a61d-47a9-8156-5cf8253961a8">
 	<property name="ireport.zoom" value="1.1000000000000016"/>
 	<property name="ireport.x" value="0"/>
-<<<<<<< HEAD
-	<property name="ireport.y" value="201"/>
-=======
-	<property name="ireport.y" value="420"/>
->>>>>>> 02bb607f29fbed8bdeb31f3acce4c6bad047751e
+	<property name="ireport.y" value="0"/>
 	<parameter name="parAnioReporte" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-<<<<<<< HEAD
-		<defaultValueExpression><![CDATA["src\\reportes\\"]]></defaultValueExpression>
-=======
-		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
->>>>>>> 02bb607f29fbed8bdeb31f3acce4c6bad047751e
+		<defaultValueExpression><![CDATA["/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
+    -- Fin de mes (último día del mes)
     (DATE_TRUNC('month', c.fecha) + INTERVAL '1 month' - INTERVAL '1 day')::DATE AS fin_mes,
-    TO_CHAR(DATE_TRUNC('month', c.fecha), 'TMMonth') AS nombre_mes,
-    TO_CHAR(DATE_TRUNC('month', c.fecha), 'TMMon') AS abreviacion_mes,
-    ROUND(SUM(CASE WHEN dm.medicamento_id IS NOT NULL THEN dm.cantidad * m.costo ELSE 0 END), 2) AS ingresos_medicamentos,
-    ROUND(SUM(CASE WHEN dc.detalle_servicio_serv_id IS NOT NULL THEN s.costo ELSE 0 END), 2) AS ingresos_servicios,
+
+    -- Nombre del mes en español (mantenido el nombre original 'nombre_mes')
+    CASE EXTRACT(MONTH FROM c.fecha)
+        WHEN 1 THEN 'Enero'
+        WHEN 2 THEN 'Febrero'
+        WHEN 3 THEN 'Marzo'
+        WHEN 4 THEN 'Abril'
+        WHEN 5 THEN 'Mayo'
+        WHEN 6 THEN 'Junio'
+        WHEN 7 THEN 'Julio'
+        WHEN 8 THEN 'Agosto'
+        WHEN 9 THEN 'Septiembre'
+        WHEN 10 THEN 'Octubre'
+        WHEN 11 THEN 'Noviembre'
+        WHEN 12 THEN 'Diciembre'
+    END AS nombre_mes,
+
+    -- Abreviación del mes en español (mantenido el nombre original 'abreviacion_mes')
+    CASE EXTRACT(MONTH FROM c.fecha)
+        WHEN 1 THEN 'Ene'
+        WHEN 2 THEN 'Feb'
+        WHEN 3 THEN 'Mar'
+        WHEN 4 THEN 'Abr'
+        WHEN 5 THEN 'May'
+        WHEN 6 THEN 'Jun'
+        WHEN 7 THEN 'Jul'
+        WHEN 8 THEN 'Ago'
+        WHEN 9 THEN 'Sep'
+        WHEN 10 THEN 'Oct'
+        WHEN 11 THEN 'Nov'
+        WHEN 12 THEN 'Dic'
+    END AS abreviacion_mes,
+
+    -- Ingresos por medicamentos (sin cambio en el nombre)
+    ROUND(SUM(CASE
+                WHEN dm.medicamento_id IS NOT NULL
+                THEN dm.cantidad * m.costo
+                ELSE 0
+              END), 2) AS ingresos_medicamentos,
+
+    -- Ingresos por servicios (sin cambio en el nombre)
+    ROUND(SUM(CASE
+                WHEN dc.detalle_servicio_serv_id IS NOT NULL
+                THEN s.costo
+                ELSE 0
+              END), 2) AS ingresos_servicios,
+
+    -- Ingresos totales (sin cambio en el nombre)
     ROUND(SUM(c.monto_total), 2) AS ingresos_totales,
+
+    -- IGV calculado (sin cambio en el nombre)
     ROUND(SUM(c.monto_total) / 1.18 * 0.18, 2) AS igv_calculado
+
 FROM
     COMPROBANTE c
 LEFT JOIN CITA ci ON c.CITAid = ci.id
 LEFT JOIN DETALLE_CITA dc ON ci.id = dc.cita_id
 LEFT JOIN DETALLE_SERVICIO ds ON dc.detalle_servicio_serv_id = ds.servicio_id AND dc.detalle_servicio_med_id = ds.medico_id
 LEFT JOIN SERVICIO s ON ds.servicio_id = s.id
-LEFT JOIN DETALLE_MEDICAMENTO dm ON dm.detalle_cita_id = dc.cita_id AND dm.detalle_servicio_servicio_id = dc.detalle_servicio_serv_id AND dm.detalle_servicio_medico_id = dc.detalle_servicio_med_id
+LEFT JOIN DETALLE_MEDICAMENTO dm ON dm.detalle_cita_id = dc.cita_id
+                                  AND dm.detalle_servicio_servicio_id = dc.detalle_servicio_serv_id
+                                  AND dm.detalle_servicio_medico_id = dc.detalle_servicio_med_id
 LEFT JOIN MEDICAMENTO m ON dm.medicamento_id = m.id
+
 WHERE
     EXTRACT(YEAR FROM c.fecha) = $P{parAnioReporte}
+
 GROUP BY
-    DATE_TRUNC('month', c.fecha)
+    DATE_TRUNC('month', c.fecha), EXTRACT(MONTH FROM c.fecha)
+
 ORDER BY
     fin_mes;]]>
 	</queryString>
@@ -213,7 +258,7 @@ ORDER BY
 				</pie3DPlot>
 			</pie3DChart>
 			<subreport>
-				<reportElement x="39" y="341" width="473" height="225" uuid="2ab90457-2f2d-46e1-b610-3bccc0f9140a"/>
+				<reportElement x="17" y="338" width="473" height="225" uuid="2ab90457-2f2d-46e1-b610-3bccc0f9140a"/>
 				<subreportParameter name="parAnioSub">
 					<subreportParameterExpression><![CDATA[$P{parAnioReporte}]]></subreportParameterExpression>
 				</subreportParameter>
