@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptGananciasMensuales" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="03c6db41-a61d-47a9-8156-5cf8253961a8">
-	<property name="ireport.zoom" value="0.8264462809917368"/>
+	<property name="ireport.zoom" value="1.6105100000000037"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="59"/>
+	<property name="ireport.y" value="527"/>
 	<parameter name="parAnioReporte" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -110,14 +110,14 @@ ORDER BY
 			<staticText>
 				<reportElement x="0" y="0" width="555" height="42" uuid="6ba918f0-54bc-4418-8bea-41f03a330535"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font size="30" isBold="true"/>
+					<font fontName="Century Gothic" size="30" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Reporte de ventas mensuales del año]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="42" width="555" height="37" uuid="be1756e8-25d0-4f91-841b-e4f3cab2da67"/>
 				<textElement textAlignment="Center">
-					<font size="20" isBold="true" isItalic="true"/>
+					<font fontName="Century Gothic" size="20" isBold="true" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{parAnioReporte}]]></textFieldExpression>
 			</textField>
@@ -131,7 +131,7 @@ ORDER BY
 			<staticText>
 				<reportElement x="27" y="0" width="92" height="27" uuid="21dd84b9-d2dc-4eb5-a61b-3fa6336dd811"/>
 				<textElement>
-					<font size="15" isBold="true"/>
+					<font fontName="Century Gothic" size="15" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Mes]]></text>
 			</staticText>
@@ -144,28 +144,28 @@ ORDER BY
 			<staticText>
 				<reportElement x="108" y="0" width="111" height="20" uuid="c335bf19-67eb-47f5-94b6-5de005f88ae7"/>
 				<textElement>
-					<font size="15" isBold="true"/>
+					<font fontName="Century Gothic" size="15" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Medicamentos]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="243" y="0" width="100" height="20" uuid="ba03ec96-cd17-473b-9e69-32062258b6c7"/>
 				<textElement>
-					<font size="15" isBold="true"/>
+					<font fontName="Century Gothic" size="15" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Servicios]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="420" y="0" width="135" height="27" uuid="ea31e753-1a47-4f07-b943-5784f566409f"/>
 				<textElement>
-					<font size="15" isBold="true"/>
+					<font fontName="Century Gothic" size="15" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Ingresos Totales]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="359" y="0" width="100" height="20" uuid="b52e2e97-cb9b-4d2f-af0c-317bcf170d04"/>
 				<textElement>
-					<font size="15" isBold="true"/>
+					<font fontName="Century Gothic" size="15" isBold="true"/>
 				</textElement>
 				<text><![CDATA[IGV]]></text>
 			</staticText>
@@ -176,14 +176,14 @@ ORDER BY
 			<textField>
 				<reportElement x="27" y="0" width="92" height="20" uuid="a0306395-b621-4319-9020-259f94e70f14"/>
 				<textElement>
-					<font size="13"/>
+					<font fontName="Century Gothic" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre_mes}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="411" y="0" width="144" height="20" uuid="0b3c104e-d903-47f9-b443-7203dcad54e3"/>
 				<textElement textAlignment="Center">
-					<font size="13"/>
+					<font fontName="Century Gothic" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ingresos_totales}]]></textFieldExpression>
 			</textField>
@@ -196,21 +196,21 @@ ORDER BY
 			<textField>
 				<reportElement x="108" y="0" width="100" height="20" uuid="82103136-9354-493d-8676-6c8373e8657b"/>
 				<textElement textAlignment="Center">
-					<font size="13"/>
+					<font fontName="Century Gothic" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ingresos_medicamentos}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="219" y="0" width="100" height="20" uuid="a13bcf6b-b5cf-4e75-802e-8e926c0f4955"/>
 				<textElement textAlignment="Center">
-					<font size="13"/>
+					<font fontName="Century Gothic" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ingresos_servicios}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="338" y="0" width="73" height="20" uuid="0c617a95-68f1-477f-a7c6-93075e57bc85"/>
 				<textElement textAlignment="Center">
-					<font size="13"/>
+					<font fontName="Century Gothic" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{igv_calculado}]]></textFieldExpression>
 			</textField>
@@ -224,17 +224,22 @@ ORDER BY
 			<staticText>
 				<reportElement x="11" y="3" width="208" height="20" uuid="e5ac2def-1ce6-43d9-8e2e-b8b162d1f4e5"/>
 				<textElement>
-					<font size="12" isBold="true" isItalic="true"/>
+					<font fontName="Century Gothic" size="12" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Elaborado por: Junior Perez Davila]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="432" y="3" width="80" height="20" uuid="84617507-4c72-4c16-8a34-c82b89bd4ab1"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic"/>
+				</textElement>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement x="512" y="3" width="40" height="20" uuid="c801dd61-a289-4cb2-824d-a867ecb1459f"/>
+				<textElement>
+					<font fontName="Century Gothic"/>
+				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -252,7 +257,7 @@ ORDER BY
 					<keyExpression><![CDATA[$F{abreviacion_mes}]]></keyExpression>
 					<valueExpression><![CDATA[$F{ingresos_totales}]]></valueExpression>
 				</pieDataset>
-				<pie3DPlot>
+				<pie3DPlot labelFormat="{0}-({2})">
 					<plot/>
 					<itemLabel/>
 				</pie3DPlot>
@@ -260,14 +265,14 @@ ORDER BY
 			<staticText>
 				<reportElement x="0" y="0" width="555" height="27" uuid="856f8df7-86c2-497f-a464-ab73c9e09fba"/>
 				<textElement textAlignment="Center">
-					<font size="20"/>
+					<font fontName="Century Gothic" size="20"/>
 				</textElement>
 				<text><![CDATA[Gráfico Ingresos totales por mes]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="27" width="555" height="32" uuid="530f3447-7764-4262-b7e1-6145db7cd782"/>
 				<textElement textAlignment="Center">
-					<font size="20" isBold="true" isItalic="true"/>
+					<font fontName="Century Gothic" size="20" isBold="true" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{parAnioReporte}]]></textFieldExpression>
 			</textField>
