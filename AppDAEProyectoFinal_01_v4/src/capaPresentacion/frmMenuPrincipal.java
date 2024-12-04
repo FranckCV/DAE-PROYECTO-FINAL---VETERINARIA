@@ -604,7 +604,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // Llamada al constructor que puede lanzar una excepción
-            jdMantMascota_v2 objForm = new jdMantMascota_v2(null, true);
+            jdMantMascota objForm = new jdMantMascota(null, true);
             objForm.setLocationRelativeTo(this);
             objForm.setVisible(true);
         } catch (Exception e) {
@@ -638,7 +638,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void mnuDueñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDueñoActionPerformed
         // TODO add your handling code here:
-        jdMantDuenio_v2 objForm = new jdMantDuenio_v2(this, true);
+        jdMantDuenio objForm = new jdMantDuenio(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
     }//GEN-LAST:event_mnuDueñoActionPerformed
@@ -698,7 +698,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         try {
             // Llamada al constructor que puede lanzar una excepción
             //jdMantMascota_v2 objForm = new jdMantMascota_v2(null, true);
-            jdMantMascotaNOVALE objForm = new jdMantMascotaNOVALE(null, true);
+            jdMantMascota objForm = new jdMantMascota(null, true);
             objForm.setLocationRelativeTo(this);
             objForm.setVisible(true);
         } catch (Exception e) {
@@ -711,7 +711,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void btnDueñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDueñoActionPerformed
         // TODO add your handling code here:
         //jdMantDuenio_v2 objForm = new jdMantDuenio_v2(this, true);
-        jdMantDuenioNOVALE objForm = new jdMantDuenioNOVALE(this, true);
+        jdMantDuenio objForm = new jdMantDuenio(this, true);
         objForm.setLocationRelativeTo(this);
         objForm.setVisible(true);
     }//GEN-LAST:event_btnDueñoActionPerformed
@@ -744,10 +744,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void mnuCustodiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCustodiaActionPerformed
         // TODO add your handling code here:
-        jdCustodia_v2 objCus = null;
+        jdCustodia1 objCus = null;
         try {
-            objCus = new jdCustodia_v2(this, true);
-        } catch (SQLException ex) {
+            objCus = new jdCustodia1(this, true);
+        } catch (Exception ex) {
             Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
         objCus.setLocationRelativeTo(this);
@@ -756,10 +756,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        jsDetalleVacunacion_v2 objCita = null;
+        jdDetalleVacunacion objCita = null;
         try {
-            objCita = new jsDetalleVacunacion_v2(this, true);
-        } catch (SQLException ex) {
+            objCita = new jdDetalleVacunacion(this, true);
+        } catch (Exception ex) {
             Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
         objCita.setLocationRelativeTo(this);
