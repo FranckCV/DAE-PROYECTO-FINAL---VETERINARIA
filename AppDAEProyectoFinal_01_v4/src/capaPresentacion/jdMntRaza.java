@@ -72,6 +72,11 @@ public class jdMntRaza extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Mantenimiento de raza");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 102));
 
@@ -568,6 +573,12 @@ public class jdMntRaza extends javax.swing.JDialog {
     private void chkVigenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkVigenciaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_chkVigenciaActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        Utilidad.desactivarFields(txtId, txtId,txtNombre);
+        cboEspecie.setEnabled(false);
+    }//GEN-LAST:event_formWindowOpened
 
      private void limpiarControles() {
         txtId.setText("");

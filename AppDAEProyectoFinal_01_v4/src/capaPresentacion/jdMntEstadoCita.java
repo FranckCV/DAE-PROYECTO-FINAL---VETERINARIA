@@ -60,6 +60,11 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Mantenimiento del estado de la cita");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 102));
 
@@ -490,6 +495,11 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error:" + e.getMessage());
         }
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        Utilidad.desactivarFields(txtId, txtId,txtNombre);
+    }//GEN-LAST:event_formWindowOpened
 
     private void limpiarControles() {
         txtId.setText("");

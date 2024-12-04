@@ -527,6 +527,10 @@ public class jdMantUsuario extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         listarUsuarios();
+        Utilidad.desactivarFields(txtId, txtId,txtNombre,txtApeMat,txtApePat,txtClave,txtUsuario);
+        cmbCargo.setEnabled(false);
+        radFemenino.setEnabled(false);
+        radMasculino.setEnabled(false);
     }//GEN-LAST:event_formWindowOpened
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
