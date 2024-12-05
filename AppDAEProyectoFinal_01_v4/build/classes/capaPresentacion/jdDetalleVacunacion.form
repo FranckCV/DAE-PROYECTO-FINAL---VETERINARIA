@@ -96,11 +96,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-<<<<<<< HEAD
-                      <EmptySpace max="-2" attributes="0"/>
-=======
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
@@ -110,56 +106,6 @@
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                               <Component id="jScrollPane5" min="-2" pref="509" max="-2" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
-<<<<<<< HEAD
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="btnEliminar" min="-2" pref="209" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="btnRe" min="-2" pref="248" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" attributes="0">
-                                          <Component id="btnLimpiar" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTextField1" min="-2" pref="113" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="btnMas1" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jScrollPane3" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                                          <Component id="btnMas" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="jLabel1" min="-2" pref="207" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="btnVac" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="jLabel2" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
-                      </Group>
-                      <EmptySpace pref="7" max="32767" attributes="0"/>
-=======
                                   <Component id="btnLimpiar" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
@@ -203,18 +149,13 @@
                           </Group>
                       </Group>
                       <EmptySpace pref="16" max="32767" attributes="0"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-<<<<<<< HEAD
-                      <EmptySpace max="-2" attributes="0"/>
-=======
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="dtcFechaNacimiento" min="-2" pref="19" max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" pref="22" max="-2" attributes="0"/>
@@ -237,20 +178,12 @@
                               <Component id="jLabel2" min="-2" pref="22" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-<<<<<<< HEAD
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel4" min="-2" pref="22" max="-2" attributes="0"/>
-                          <Component id="jScrollPane3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="32767" attributes="0"/>
-=======
                       <EmptySpace type="unrelated" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel4" min="-2" pref="22" max="-2" attributes="0"/>
                           <Component id="jScrollPane3" min="-2" pref="80" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnRe" max="32767" attributes="0"/>
                           <Component id="btnEliminar" max="32767" attributes="0"/>
@@ -265,13 +198,8 @@
                           <Component id="btnLimpiar" alignment="1" min="-2" pref="33" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-<<<<<<< HEAD
-                      <Component id="jScrollPane5" pref="269" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-=======
                       <Component id="jScrollPane5" min="-2" pref="212" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                   </Group>
               </Group>
             </DimensionLayout>
@@ -456,11 +384,7 @@
                   <Font name="Century Gothic" size="14" style="0"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-<<<<<<< HEAD
-                  <Image iconType="3" name="/conector/Recursos/flecha derecha.png"/>
-=======
                   <Image iconType="3" name="/conector/Recursos/veterinario.png"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                 </Property>
                 <Property name="text" type="java.lang.String" value="Asignar Vacunaci&#xf3;n"/>
               </Properties>

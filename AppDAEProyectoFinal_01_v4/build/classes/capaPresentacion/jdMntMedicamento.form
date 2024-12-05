@@ -87,41 +87,24 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-<<<<<<< HEAD
-                      <EmptySpace max="-2" attributes="0"/>
-=======
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnRegistrar" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnModificar" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnEliminar" alignment="0" max="32767" attributes="0"/>
-<<<<<<< HEAD
-                          <Group type="102" attributes="0">
-=======
                           <Group type="102" alignment="1" attributes="0">
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                               <Component id="jLabel1" min="-2" pref="258" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Component id="btnDisponibilidad" alignment="0" max="32767" attributes="0"/>
                       </Group>
-<<<<<<< HEAD
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jScrollPane1" pref="525" max="32767" attributes="0"/>
-                          <Component id="jPanel4" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-=======
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jScrollPane1" max="32767" attributes="0"/>
                           <Component id="jPanel4" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                   </Group>
               </Group>
             </DimensionLayout>
@@ -129,26 +112,18 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
 <<<<<<< HEAD
-=======
-<<<<<<< HEAD
                       <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" min="-2" pref="205" max="-2" attributes="0"/>
 =======
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jPanel4" max="32767" attributes="0"/>
                           <Component id="jLabel1" pref="297" max="32767" attributes="0"/>
-<<<<<<< HEAD
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-=======
 >>>>>>> 9b371d7e64d6d43b0c0a8a7831acfb9d19a205bb
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
@@ -164,11 +139,7 @@
                           </Group>
                           <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
                       </Group>
-<<<<<<< HEAD
-                      <EmptySpace max="-2" attributes="0"/>
-=======
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                   </Group>
               </Group>
             </DimensionLayout>
@@ -241,10 +212,6 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-<<<<<<< HEAD
-                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-=======
                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
 <<<<<<< HEAD
@@ -261,7 +228,6 @@
                                   <Component id="chkVigencia" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
 =======
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
@@ -296,12 +262,6 @@
                                   <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
                                   <Component id="chkVigencia" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="173" max="32767" attributes="0"/>
-<<<<<<< HEAD
-                                  <Component id="btnLimpiar" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-=======
 >>>>>>> 9b371d7e64d6d43b0c0a8a7831acfb9d19a205bb
                                   <Component id="btnLimpiar" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -314,7 +274,6 @@
                               </Group>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -322,8 +281,6 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-<<<<<<< HEAD
-=======
 <<<<<<< HEAD
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="txtNombre" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -359,7 +316,6 @@
                           </Group>
                           <EmptySpace pref="16" max="32767" attributes="0"/>
 =======
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="btnLimpiar" min="-2" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
@@ -398,10 +354,7 @@
                               </Group>
                           </Group>
                           <EmptySpace pref="17" max="32767" attributes="0"/>
-<<<<<<< HEAD
-=======
 >>>>>>> 9b371d7e64d6d43b0c0a8a7831acfb9d19a205bb
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -564,40 +517,18 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-<<<<<<< HEAD
-                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="txtId" min="-2" pref="113" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnBuscar" min="-2" pref="44" max="-2" attributes="0"/>
-=======
                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="txtId" min="-2" pref="113" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnBuscar" min="-2" pref="28" max="-2" attributes="0"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="btnBuscar" min="-2" pref="35" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtId" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-=======
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -608,7 +539,6 @@
                               <Component id="btnBuscar" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="10" max="32767" attributes="0"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -619,11 +549,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Century Gothic" size="14" style="0"/>
                     </Property>
-<<<<<<< HEAD
-                    <Property name="text" type="java.lang.String" value="id: "/>
-=======
                     <Property name="text" type="java.lang.String" value="ID:"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtId">
@@ -693,32 +619,19 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
-<<<<<<< HEAD
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="279" max="-2" attributes="0"/>
-=======
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="261" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-<<<<<<< HEAD
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel2" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-=======
                   <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                   <Component id="jLabel2" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
->>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
                   <Component id="jSeparator1" min="-2" pref="16" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
