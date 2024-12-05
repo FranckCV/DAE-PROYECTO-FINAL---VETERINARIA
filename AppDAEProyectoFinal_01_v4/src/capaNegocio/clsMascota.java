@@ -13,7 +13,6 @@ import java.util.Date;
  * @author franc
  */
 public class clsMascota {
-    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
@@ -273,4 +272,54 @@ public class clsMascota {
             throw new Exception("Error al eliminar la mascota: " + e.getMessage());
         }
     }
+
+    public String calcularEdadMascota2(int idMascota) throws Exception {
+        strSQL = "SELECT EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_nacimiento)) AS años, "
+                + "EXTRACT(MONTH FROM AGE(CURRENT_DATE, fecha_nacimiento)) AS meses "
+                + "FROM mascota WHERE id = " + idMascota;
+        rs = null;
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            if (rs.next()) {
+                int anios = rs.getInt("años");
+                int meses = rs.getInt("meses");
+                if (anios!=0) {
+                    return String.format("%d años", anios);
+                } else {
+                    return String.format("%d meses", meses);
+                }
+                
+            } else {
+                throw new Exception("No se encontró la mascota con el ID proporcionado.");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al calcular la edad de la mascota --> " + e.getMessage());
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+        }
+    }
+
+    public ResultSet filtrarMascotaPorDuenioYNombre2(Integer duenioId, String nombreMascota) throws Exception {
+        // Base de la consulta
+        strSQL = "SELECT m.*, r.nombre as nombre_raza FROM MASCOTA m "
+                + "INNER JOIN CUSTODIA c ON m.id = c.MASCOTAid "
+                + "INNER JOIN DUEniO d ON c.DUEniOid = d.id "
+                + "INNER JOIN RAZA r ON m.raza_id = r.id "
+                + "WHERE m.vigencia = true AND d.id = " + duenioId;
+
+        // Agregar filtro por nombre si se proporciona
+        if (nombreMascota != null && !nombreMascota.isEmpty()) {
+            strSQL += " AND UPPER(m.nombre) LIKE UPPER('%" + nombreMascota + "%')";
+        }
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al filtrar mascotas por dueño y nombre --> " + e.getLocalizedMessage());
+        }
+    }
+
 }

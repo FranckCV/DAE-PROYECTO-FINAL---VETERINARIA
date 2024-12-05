@@ -88,10 +88,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mnuEspecialidad = new javax.swing.JMenuItem();
         mnuEspecie = new javax.swing.JMenuItem();
         mnuRazas = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        mnuCitas = new javax.swing.JMenu();
         mnuCita = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu11 = new javax.swing.JMenu();
+        mnuReportes = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -102,7 +102,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         rptVacunasXEspecie = new javax.swing.JMenuItem();
         jMenuItem34 = new javax.swing.JMenuItem();
         jMenuItem35 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        mnuOperaciones = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         mnuCustodia = new javax.swing.JMenuItem();
 
@@ -124,6 +124,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
 
         panel.setBackground(new java.awt.Color(255, 255, 255));
+        // panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -437,7 +438,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(mnuMantenimiento);
 
-        jMenu1.setText("Citas");
+        mnuCitas.setText("Citas");
 
         mnuCita.setText("Programación de Citas");
         mnuCita.addActionListener(new java.awt.event.ActionListener() {
@@ -445,7 +446,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 mnuCitaActionPerformed(evt);
             }
         });
-        jMenu1.add(mnuCita);
+        mnuCitas.add(mnuCita);
 
         jMenuItem4.setText("Atención de Citas");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -453,11 +454,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem4);
+        mnuCitas.add(jMenuItem4);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(mnuCitas);
 
-        jMenu11.setText("Reportes");
+        mnuReportes.setText("Reportes");
 
         jMenuItem7.setText("Historial Clinico");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
@@ -465,7 +466,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 jMenuItem7ActionPerformed(evt);
             }
         });
-        jMenu11.add(jMenuItem7);
+        mnuReportes.add(jMenuItem7);
 
         jMenuItem18.setText("Citas Pendientes");
         jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
@@ -473,7 +474,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 jMenuItem18ActionPerformed(evt);
             }
         });
-        jMenu11.add(jMenuItem18);
+        mnuReportes.add(jMenuItem18);
 
         jMenuItem1.setText("Citas registradas segun Mes y Año");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -481,7 +482,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu11.add(jMenuItem1);
+        mnuReportes.add(jMenuItem1);
 
         menuRepServicioMasSolicitado.setText("Servicios más solicitados por mes y año");
         menuRepServicioMasSolicitado.addActionListener(new java.awt.event.ActionListener() {
@@ -489,7 +490,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 menuRepServicioMasSolicitadoActionPerformed(evt);
             }
         });
-        jMenu11.add(menuRepServicioMasSolicitado);
+        mnuReportes.add(menuRepServicioMasSolicitado);
 
         jMenuItem24.setText("Nuevas mascotas segun mes y año");
         jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
@@ -497,7 +498,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 jMenuItem24ActionPerformed(evt);
             }
         });
-        jMenu11.add(jMenuItem24);
+        mnuReportes.add(jMenuItem24);
 
         jMenuItem30.setText("Citas atendidas por cada medico en un periodo de tiempo");
         jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
@@ -505,7 +506,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 jMenuItem30ActionPerformed(evt);
             }
         });
-        jMenu11.add(jMenuItem30);
+        mnuReportes.add(jMenuItem30);
 
         rptMedicamentosXRangoPrecio.setText("Reporte de Medicamentos por Rango de Precio");
         rptMedicamentosXRangoPrecio.addActionListener(new java.awt.event.ActionListener() {
@@ -513,7 +514,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 rptMedicamentosXRangoPrecioActionPerformed(evt);
             }
         });
-        jMenu11.add(rptMedicamentosXRangoPrecio);
+        mnuReportes.add(rptMedicamentosXRangoPrecio);
 
         rptVacunasXEspecie.setText("Reporte de Vacunas por Especie");
         rptVacunasXEspecie.addActionListener(new java.awt.event.ActionListener() {
@@ -521,7 +522,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 rptVacunasXEspecieActionPerformed(evt);
             }
         });
-        jMenu11.add(rptVacunasXEspecie);
+        mnuReportes.add(rptVacunasXEspecie);
 
         jMenuItem34.setText("Ingresos Mensuales");
         jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
@@ -529,7 +530,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 jMenuItem34ActionPerformed(evt);
             }
         });
-        jMenu11.add(jMenuItem34);
+        mnuReportes.add(jMenuItem34);
 
         jMenuItem35.setText("Mejores médicos");
         jMenuItem35.addActionListener(new java.awt.event.ActionListener() {
@@ -537,11 +538,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 jMenuItem35ActionPerformed(evt);
             }
         });
-        jMenu11.add(jMenuItem35);
+        mnuReportes.add(jMenuItem35);
 
-        jMenuBar1.add(jMenu11);
+        jMenuBar1.add(mnuReportes);
 
-        jMenu2.setText("Operaciones");
+        mnuOperaciones.setText("Operaciones");
 
         jMenuItem2.setText("Asignación de Vacunación");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -549,7 +550,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        mnuOperaciones.add(jMenuItem2);
 
         mnuCustodia.setText("Custodia de mascotas");
         mnuCustodia.addActionListener(new java.awt.event.ActionListener() {
@@ -557,9 +558,9 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 mnuCustodiaActionPerformed(evt);
             }
         });
-        jMenu2.add(mnuCustodia);
+        mnuOperaciones.add(mnuCustodia);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(mnuOperaciones);
 
         setJMenuBar(jMenuBar1);
 
@@ -585,7 +586,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 //         TODO add your handling code here:
-        login();
+//        login();
 
 //        jdInicioSesionVet objForm= new jdInicioSesionVet(this, true);
 //        objForm.setLocationRelativeTo(this);
@@ -854,18 +855,24 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 mnuMantenimiento.setVisible(false);
                 mnuUsuarios.setVisible(false);
                 mnuInfoAdicional.setVisible(false);
+                mnuReportes.setVisible(false);
+                mnuCita.setVisible(false);
                 break;
             case "E":
                 txtCargo.setText("Empleado");
                 mnuMantenimiento.setVisible(true);
                 mnuUsuarios.setVisible(false);
                 mnuInfoAdicional.setVisible(false);
+                mnuReportes.setVisible(true);
+                mnuCita.setVisible(true);
                 break;
             case "A":
                 txtCargo.setText("Administrador");
                 mnuMantenimiento.setVisible(true);
                 mnuUsuarios.setVisible(true);
                 mnuInfoAdicional.setVisible(true);
+                mnuReportes.setVisible(true);
+                mnuCita.setVisible(true);
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "Error al obtener puesto");
@@ -883,9 +890,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu11;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
@@ -913,6 +917,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuRepServicioMasSolicitado;
     private javax.swing.JMenuItem mnuCambiarUsuario;
     private javax.swing.JMenuItem mnuCita;
+    private javax.swing.JMenu mnuCitas;
     private javax.swing.JMenuItem mnuCustodia;
     private javax.swing.JMenuItem mnuDueño;
     private javax.swing.JMenuItem mnuEspecialidad;
@@ -923,7 +928,9 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuMascota;
     private javax.swing.JMenuItem mnuMedicamento;
     private javax.swing.JMenuItem mnuMedico;
+    private javax.swing.JMenu mnuOperaciones;
     private javax.swing.JMenuItem mnuRazas;
+    private javax.swing.JMenu mnuReportes;
     private javax.swing.JMenuItem mnuServicio;
     private javax.swing.JMenuItem mnuTipoMedicamento;
     private javax.swing.JMenuItem mnuUsuarios;

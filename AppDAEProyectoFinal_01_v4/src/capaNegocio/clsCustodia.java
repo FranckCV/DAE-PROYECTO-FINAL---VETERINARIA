@@ -313,17 +313,28 @@ public class clsCustodia {
     }
   
     public ResultSet listarCustodia() throws Exception {
-        strSQL = "SELECT m.*,c.MASCOTAid as id_mas,c.DUEniOid as id_due, m.nombre as nom_mas, d.nombres as due_mas, c.fecha_adopción as fa "
-                + "FROM MASCOTA m "
-                + "INNER JOIN CUSTODIA c ON m.id = c.MASCOTAid "
-                + "INNER JOIN DUEniO d ON c.DUEniOid = d.id "
-                + "ORDER BY id_due";
+        strSQL = " SELECT m.* , "
+                + " c.MASCOTAid as id_mas, "
+                + " c.DUEniOid as id_due, "
+                + " m.nombre as nom_mas, "
+                + " d.nombres as due_mas,"
+                + " d.apePaterno as due_app,"
+                + " d.apeMaterno as due_apm,"
+                + " raz.nombre as raz_nom,"
+                + " esp.nombre as esp_nom,"
+                + " c.fecha_adopción as fa "
+                + " FROM MASCOTA m "
+                + " INNER JOIN RAZA raz ON raz.id = m.raza_id "
+                + " INNER JOIN ESPECIE esp ON esp.id = raz.especie_id "
+                + " INNER JOIN CUSTODIA c ON m.id = c.MASCOTAid "
+                + " INNER JOIN DUEniO d ON c.DUEniOid = d.id "
+                + " ORDER BY id_due ";
 
         try {
             rs = objConectar.consultarBD(strSQL);
             return rs;
         } catch (Exception e) {
-            throw new Exception("Error al listar las custodias");
+            throw new Exception("Error al listar las custodias : "+e.getMessage());
         }
     }
     
