@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import soporte.Utilidad;
 
 /**
  *
@@ -16,7 +17,7 @@ public class jdCustodiaMasc extends javax.swing.JDialog {
 
     private int mascota = 0;
     private int codigoEspecie = 0;
-  
+
     clsMascota objMas = new clsMascota();
     clsCustodia objCus = new clsCustodia();
 
@@ -25,7 +26,6 @@ public class jdCustodiaMasc extends javax.swing.JDialog {
         initComponents();
         listarMascotas();
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -169,11 +169,11 @@ public class jdCustodiaMasc extends javax.swing.JDialog {
         txtMas.setText(String.valueOf(tblMascotas.getValueAt(tblMascotas.getSelectedRow(), 1)));
         if (selectedRow != -1) {
             int cod = Integer.parseInt(String.valueOf(tblMascotas.getValueAt(selectedRow, 0)));
-           
-             codigoEspecie = Integer.parseInt(String.valueOf(tblMascotas.getValueAt(selectedRow, 5))); // Código de especie
-            
-      //      pasarMascotaYEspecie(cod, especieId); // Método modificado para pasar ambos valores
-                   pasarM(cod);
+
+            codigoEspecie = Integer.parseInt(String.valueOf(tblMascotas.getValueAt(selectedRow, 5))); // Código de especie
+
+            //      pasarMascotaYEspecie(cod, especieId); // Método modificado para pasar ambos valores
+            pasarM(cod);
         } else {
             JOptionPane.showMessageDialog(this, "Seleccione una mascota válido.");
         }
@@ -199,12 +199,11 @@ public class jdCustodiaMasc extends javax.swing.JDialog {
             rsDuenio = objCus.filtrarMascotaVig(txtMas.getText());
             while (rsDuenio.next() && rsDuenio != null) {
                 String sexoTexto = rsDuenio.getBoolean("sexo") ? "Macho" : "Hembra";
-                String fechaNacimiento = rsDuenio.getDate("fecha_nacimiento") != null
-                        ? rsDuenio.getDate("fecha_nacimiento").toString() : "Sin fecha";
+                String fechaNacimiento = rsDuenio.getString("fecha_nacimiento");
                 modeloM.addRow(new Object[]{
                     rsDuenio.getString("ma_id"),
                     rsDuenio.getString("nom_mas"),
-                    fechaNacimiento,
+                    fechaNacimiento != null ? Utilidad.textoFormatoFecha(fechaNacimiento) : "",
                     sexoTexto,
                     rsDuenio.getString("raza_nombre")
                 });
@@ -226,46 +225,44 @@ public class jdCustodiaMasc extends javax.swing.JDialog {
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-private void listarMascotas() throws Exception {
-    ResultSet rsMas = null;
-    DefaultTableModel modeloM = new DefaultTableModel();
-    modeloM.addColumn("Id");
-    modeloM.addColumn("Nombre");
-    modeloM.addColumn("Fecha Nacimiento");
-    modeloM.addColumn("Sexo");
-    modeloM.addColumn("Raza");
-    modeloM.addColumn("Especie ID"); // Columna oculta para el código de especie
-    tblMascotas.setModel(modeloM);
-
-    try {
-        rsMas = objCus.listarMascotasVig();
-        while (rsMas.next()) {
-            String sexoTexto = rsMas.getBoolean("sexo") ? "Macho" : "Hembra";
-            String fechaNacimiento = rsMas.getDate("fecha_nacimiento") != null
-                    ? rsMas.getDate("fecha_nacimiento").toString() : "Sin fecha";
-            modeloM.addRow(new Object[]{
-                rsMas.getString("id"),
-                rsMas.getString("nombre"),
-                fechaNacimiento,
-                sexoTexto,
-                rsMas.getString("raza_nombre"),
-                rsMas.getInt("especie_id") // Agregando el código de especie
-            });
+    private void listarMascotas() throws Exception {
+        ResultSet rsMas = null;
+        DefaultTableModel modeloM = new DefaultTableModel();
+        modeloM.addColumn("Id");
+        modeloM.addColumn("Nombre");
+        modeloM.addColumn("Fecha Nacimiento");
+        modeloM.addColumn("Sexo");
+        modeloM.addColumn("Raza");
+        modeloM.addColumn("Especie ID"); // Columna oculta para el código de especie
+        tblMascotas.setModel(modeloM);
+        Utilidad.alineacionDerechaColumnaTabla(tblMascotas, 0);
+        Utilidad.alineacionDerechaColumnaTabla(tblMascotas, 3);
+        try {
+            rsMas = objCus.listarMascotasVig();
+            while (rsMas.next()) {
+                String sexoTexto = rsMas.getBoolean("sexo") ? "Macho" : "Hembra";
+                String fechaNacimiento = rsMas.getString("fecha_nacimiento");
+                modeloM.addRow(new Object[]{
+                    rsMas.getString("id"),
+                    rsMas.getString("nombre"),
+                    fechaNacimiento != null ? Utilidad.textoFormatoFecha(fechaNacimiento) : "",
+                    sexoTexto,
+                    rsMas.getString("raza_nombre"),
+                    rsMas.getInt("especie_id") // Agregando el código de especie
+                });
+            }
+            // Ocultando la columna de Especie ID
+            tblMascotas.getColumnModel().getColumn(5).setMinWidth(0);
+            tblMascotas.getColumnModel().getColumn(5).setMaxWidth(0);
+            tblMascotas.getColumnModel().getColumn(5).setWidth(0);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al listar Mascotas: " + e.getMessage());
         }
-        // Ocultando la columna de Especie ID
-        tblMascotas.getColumnModel().getColumn(5).setMinWidth(0);
-        tblMascotas.getColumnModel().getColumn(5).setMaxWidth(0);
-        tblMascotas.getColumnModel().getColumn(5).setWidth(0);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al listar Mascotas: " + e.getMessage());
     }
-}
-
 
     public int getCod() {
         return mascota;
     }
-
 
     private void pasarM(int cod) {
         try {
@@ -276,7 +273,8 @@ private void listarMascotas() throws Exception {
         }
 
     }
-        private void pasarMascotaYEspecie(int codMascota, int codEspecie) {
+
+    private void pasarMascotaYEspecie(int codMascota, int codEspecie) {
         try {
             mascota = codMascota;
             codigoEspecie = codEspecie;
@@ -285,9 +283,10 @@ private void listarMascotas() throws Exception {
             JOptionPane.showMessageDialog(this, "ERROR AL PASAR LOS DATOS DE LA MASCOTA Y ESPECIE: " + e.getMessage());
         }
     }
-public int getCodigoEspecie() {
-    return this.codigoEspecie; // Asegúrate de que `codigoEspecie` esté correctamente definido y asignado
-}
+
+    public int getCodigoEspecie() {
+        return this.codigoEspecie; // Asegúrate de que `codigoEspecie` esté correctamente definido y asignado
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar1;
     private javax.swing.ButtonGroup buttonGroup1;
