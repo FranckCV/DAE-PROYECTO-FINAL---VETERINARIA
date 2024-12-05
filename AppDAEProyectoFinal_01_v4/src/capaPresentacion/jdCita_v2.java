@@ -678,6 +678,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         txtDocMedico.setText("");
         txtDosis.setText("");
         txtDNITabla.setText("");
+        txtNombreMedico1_PANEL_MEDIC.setText("");
 
         txtIgv.setText("");
         txtIndicacion.setText("");
