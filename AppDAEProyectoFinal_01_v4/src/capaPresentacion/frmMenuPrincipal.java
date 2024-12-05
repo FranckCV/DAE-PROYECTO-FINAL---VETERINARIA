@@ -125,7 +125,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
 
         panel.setBackground(new java.awt.Color(255, 255, 255));
-        // panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -491,7 +490,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 mnuCitasPendientesPorMedicoActionPerformed(evt);
             }
         });
-        jMenu11.add(mnuCitasPendientesPorMedico);
 
         menuRepServicioMasSolicitado.setText("Servicios más solicitados por mes y año");
         menuRepServicioMasSolicitado.addActionListener(new java.awt.event.ActionListener() {
@@ -933,11 +931,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuRepServicioMasSolicitado;
     private javax.swing.JMenuItem mnuCambiarUsuario;
     private javax.swing.JMenuItem mnuCita;
-<<<<<<< HEAD
     private javax.swing.JMenuItem mnuCitasPendientesPorMedico;
-=======
     private javax.swing.JMenu mnuCitas;
->>>>>>> 072cd59af44c6ee50fc5cc9fd208e72c4f5a6efa
     private javax.swing.JMenuItem mnuCustodia;
     private javax.swing.JMenuItem mnuDueño;
     private javax.swing.JMenuItem mnuEspecialidad;
