@@ -689,6 +689,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         txtNotaMascota.setText("");
         txtNumero.setText("");
 
+        lblCitaPersona.setText("");
         txtSubtotal.setText("");
         txtTelefono.setText("");
         txtTotal.setText("");
@@ -2141,11 +2142,13 @@ public class jdCita_v2 extends javax.swing.JDialog {
                 String horaSalida = objAniadirServicio.getHoraSalida();
                 String nota = objAniadirServicio.getNota();
 
-                try {
+                if (horaEntrada != "" || horaSalida != "" || nota != "") {
+                    try {
 //                    agregarServicio(horaEntrada, horaSalida, nota);
-                    agregarDetalleCita(horaEntrada, horaSalida, nota);
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e.getMessage());
+                        agregarDetalleCita(horaEntrada, horaSalida, nota);
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, e.getMessage());
+                    }
                 }
 
 //                limpiarControlesDespuesDeAgregarServicio();
