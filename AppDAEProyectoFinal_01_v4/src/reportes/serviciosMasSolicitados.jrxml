@@ -34,8 +34,7 @@ GROUP BY
     s.nom_servicio
 ORDER BY
     total_servicios DESC
-LIMIT $P{limite}
-]]>
+LIMIT $P{limite}]]>
 	</queryString>
 	<field name="nom_servicio" class="java.lang.String"/>
 	<field name="total_servicios" class="java.lang.Long"/>
@@ -173,7 +172,7 @@ LIMIT $P{limite}
 					<keyExpression><![CDATA[$F{nom_servicio}]]></keyExpression>
 					<valueExpression><![CDATA[$F{total_servicios}]]></valueExpression>
 				</pieDataset>
-				<piePlot>
+				<piePlot labelFormat="{0}-({2})" legendLabelFormat="{0}">
 					<plot/>
 					<itemLabel/>
 				</piePlot>

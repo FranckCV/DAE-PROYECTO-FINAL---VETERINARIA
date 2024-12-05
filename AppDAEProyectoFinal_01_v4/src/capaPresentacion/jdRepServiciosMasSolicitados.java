@@ -46,21 +46,20 @@ public class jdRepServiciosMasSolicitados extends javax.swing.JDialog {
 
     private void mostrar() {
         try {
-            // Validar que el mes, el año y el límite no estén vacíos o tengan valores inválidos
             if (dtcMes.getMonth() < 0 || dtcMes.getMonth() > 11) {
                 JOptionPane.showMessageDialog(this, "Por favor seleccione un mes válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;  // Salir del método si el mes no es válido
+                return;
             }
 
             if (dtcAnio.getYear() <= 0) {
                 JOptionPane.showMessageDialog(this, "Por favor ingrese un año válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;  // Salir del método si el año no es válido
+                return;
             }
 
             String limiteTexto = txtCantidad.getText();
             if (limiteTexto.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Por favor ingrese un límite válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;  // Salir del método si el límite está vacío
+                return;
             }
 
             int limiteValor;
@@ -68,15 +67,14 @@ public class jdRepServiciosMasSolicitados extends javax.swing.JDialog {
                 limiteValor = Integer.parseInt(limiteTexto);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "El límite debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;  // Salir del método si el límite no es un número válido
+                return;
             }
 
-            // Si las validaciones pasan, generar el reporte
             Container contenedor = this.report;
             contenedor.setLayout(new BorderLayout());
             contenedor.removeAll();
             Map parametros = new HashMap();
-            parametros.put(par_mes, dtcMes.getMonth() + 1);  
+            parametros.put(par_mes, dtcMes.getMonth() + 1);
             parametros.put(par_anio, dtcAnio.getYear());
             parametros.put(limite, limiteValor);
             JRViewer objReporte = new clsReporte().reporteInterno(docReporte + ".jasper", parametros);
@@ -267,6 +265,21 @@ public class jdRepServiciosMasSolicitados extends javax.swing.JDialog {
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         // TODO add your handling code here:
         Utilidad.validarCampoTextoSoloNumero(evt);
+        int limite = 0;
+        try {
+            if (!txtCantidad.getText().isEmpty()) {
+                int cantidad = Integer.parseInt(txtCantidad.getText());
+                int mes = dtcMes.getMonth();
+                int anio = dtcAnio.getYear() - 1900;
+                limite = objServicio.validarLimite(mes, anio, cantidad);
+                if (Integer.parseInt(txtCantidad.getText()) > limite) {
+                    evt.consume();
+                    JOptionPane.showMessageDialog(this, "No existe esa cantidad para ser visualizada");
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }//GEN-LAST:event_txtCantidadKeyTyped
 
     private void btnVerReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerReporteActionPerformed

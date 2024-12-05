@@ -432,17 +432,36 @@ public class jdCustodia1 extends javax.swing.JDialog {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-    if (tblCustodia.getSelectedRow() != -1) {
-        try {
-            eliminarAsignacion();
-            listarCustodia();
-            limpiarCamposCustodia();
-        } catch (SQLException ex) {
-            Logger.getLogger(jdCustodia1.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        if (btnRe1.getText().equals("Guardar Datos")) {
+            try {
+                listarCustodia();
+                limpiarCamposCustodia();
+                limpiarCamposCustodia();
+                btnRe1.setText("Asignar Custodia");
+                btnDue.setEnabled(false);
+                btnMas.setEnabled(false);
+                dtcFechaNacimiento.setEnabled(false);
+                btnAgregarMas.setEnabled(true);
+                btnRegistrar.setEnabled(true);
+                btnLimpiar.setEnabled(true);
+                btnEliminar.setText("Eliminar Custodia");
+                btnEliminar.setEnabled(true);
+                btnCustodia.setEnabled(true);
+                txtCus.setEditable(true);
+            } catch (Exception ex) {
+                Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (tblCustodia.getSelectedRow() != -1) {
+            try {
+                eliminarAsignacion();
+                listarCustodia();
+                limpiarCamposCustodia();
+            } catch (SQLException ex) {
+                Logger.getLogger(jdCustodia1.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         } else {
-            JOptionPane.showMessageDialog(this, "Seleccione una fila de la 2da tabla para hacer esta operacion");
+            JOptionPane.showMessageDialog(this, "Seleccione una fila de la las custodias disponibles para hacer esta operacion");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -546,7 +565,7 @@ public class jdCustodia1 extends javax.swing.JDialog {
     }//GEN-LAST:event_txtCusActionPerformed
 
     private void btnRe1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRe1ActionPerformed
-            Object[] opciones = {"Sí", "No"};
+        Object[] opciones = {"Sí", "No"};
         int respuesta = JOptionPane.showOptionDialog(
                 null,
                 "¿Seguro que el dueño desea obtener la información de la mascota?",
@@ -559,19 +578,21 @@ public class jdCustodia1 extends javax.swing.JDialog {
         );
         if (respuesta == 0) { // Opción "Sí"
             btnRe1.setText("Guardar Datos");
+            btnEliminar.setText("Cancelar");
             btnDue.setEnabled(true);
             btnMas.setEnabled(true);
             dtcFechaNacimiento.setEnabled(true);
             btnAgregarMas.setEnabled(false);
             btnRegistrar.setEnabled(false);
             btnLimpiar.setEnabled(false);
-            btnEliminar.setEnabled(false);
+            // btnEliminar.setEnabled(false);
             btnCustodia.setEnabled(false);
             txtCus.setEditable(false);
         } else if (respuesta == 1) { // Opción "No"
             limpiarCamposCustodia();
             btnRe1.setText("Asignar Custodia");
             btnDue.setEnabled(false);
+            btnEliminar.setText("Eliminar Custodia");
             btnMas.setEnabled(false);
             dtcFechaNacimiento.setEnabled(false);
             btnAgregarMas.setEnabled(true);
@@ -612,6 +633,7 @@ public class jdCustodia1 extends javax.swing.JDialog {
                 btnAgregarMas.setEnabled(true);
                 btnRegistrar.setEnabled(true);
                 btnLimpiar.setEnabled(true);
+                btnEliminar.setText("Eliminar Custodia");
                 btnEliminar.setEnabled(true);
                 btnCustodia.setEnabled(true);
                 txtCus.setEditable(true);
@@ -656,8 +678,7 @@ public class jdCustodia1 extends javax.swing.JDialog {
             jdCustodiaMasc objFormM = new jdCustodiaMasc(null, true);
             objFormM.setLocationRelativeTo(this);
             objFormM.setVisible(true);
-            
-            
+
             Integer mascota = objFormM.getCod();
             if (mascota != null && mascota != 0) {
                 codigoMascota = mascota;
@@ -669,7 +690,7 @@ public class jdCustodia1 extends javax.swing.JDialog {
             }
         } catch (Exception ex) {
         }
-        
+
 
     }//GEN-LAST:event_btnMasActionPerformed
 
@@ -733,43 +754,43 @@ public class jdCustodia1 extends javax.swing.JDialog {
             jLabel2.setText("Código de la mascota inválido.");
         }
     }
-    
-private void eliminarAsignacion() {
-    int fila = tblCustodia.getSelectedRow();
-    if (fila == -1) {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar un registro para eliminar.");
-        return; // Detiene el flujo si no hay fila seleccionada.
-    }
 
-    try {
-        Object valorColumna1 = tblCustodia.getValueAt(fila, 1);
-        Object valorColumna2 = tblCustodia.getValueAt(fila, 2);
-        Object valorColumna0 = tblCustodia.getValueAt(fila, 0);
-
-        if ( valorColumna2 == null || valorColumna0 == null) {
-            JOptionPane.showMessageDialog(this, "El registro seleccionado tiene datos incompletos.");
-            return;
+    private void eliminarAsignacion() {
+        int fila = tblCustodia.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un registro para eliminar.");
+            return; // Detiene el flujo si no hay fila seleccionada.
         }
 
-        if (Utilidad.validarEliminacionForanea("CUSTODIA", fila)) {
-            JOptionPane.showMessageDialog(this,
-                "Hay datos externos asociados al servicio asignado \"" +
-                valorColumna1.toString() +
-                "\".\nConsidere cambiar su disponibilidad o vigencia para que ya no pueda ser usado."
-            );
-        } else {
-            objCus.eliminarCustodia(
-                Integer.parseInt(valorColumna2.toString()),
-                Integer.parseInt(valorColumna0.toString())
-            );
-            JOptionPane.showMessageDialog(this, "Eliminación exitosa.");
+        try {
+            Object valorColumna1 = tblCustodia.getValueAt(fila, 1);
+            Object valorColumna2 = tblCustodia.getValueAt(fila, 2);
+            Object valorColumna0 = tblCustodia.getValueAt(fila, 0);
+
+            if (valorColumna2 == null || valorColumna0 == null) {
+                JOptionPane.showMessageDialog(this, "El registro seleccionado tiene datos incompletos.");
+                return;
+            }
+
+            if (Utilidad.validarEliminacionForanea("CUSTODIA", fila)) {
+                JOptionPane.showMessageDialog(this,
+                        "Hay datos externos asociados en la custodia \""
+                        + valorColumna1.toString()
+                        + "\".\nConsidere cambiar la vigencia para que ya no pueda ser usada."
+                );
+            } else {
+                objCus.eliminarCustodia(
+                        Integer.parseInt(valorColumna2.toString()),
+                        Integer.parseInt(valorColumna0.toString())
+                );
+                JOptionPane.showMessageDialog(this, "Eliminación exitosa.");
+            }
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(this, "Error de formato en los datos: " + nfe.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage());
         }
-    } catch (NumberFormatException nfe) {
-        JOptionPane.showMessageDialog(this, "Error de formato en los datos: " + nfe.getMessage());
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage());
     }
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarMas;

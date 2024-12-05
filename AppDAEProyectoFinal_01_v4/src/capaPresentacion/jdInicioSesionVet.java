@@ -23,6 +23,7 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
     public String usuario_id = "";
 
     int count = 0;
+    final int LIMITE = 3;
 
     public jdInicioSesionVet(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -301,28 +302,42 @@ public class jdInicioSesionVet extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowOpened
 
 
-
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         try {
-
-            if (!txtUsuario.getText().isEmpty() && !txtClave.getText().isEmpty() && !txtRespuesta.getText().isEmpty()) {
-                if (objCaptcha.validarCaptcha(txtCaptchaEnunciado.getText(), txtRespuesta.getText())
-                        && !objUsuario.login(txtUsuario.getText(), txtClave.getText()).isEmpty()
-                        && objUsuario.validarUsuario(txtUsuario.getText())) {
-                    usuario = objUsuario.obtenerNombreUsuario(txtUsuario.getText(), txtClave.getText());
-                    nombreUsuario = objUsuario.obtenerUsuario(txtUsuario.getText());
-                    cargo = objUsuario.obtenerCargo(txtUsuario.getText());
-                    JOptionPane.showMessageDialog(this, "Bienvenido al sistema " + nombreUsuario);
-                    this.dispose();
+            if (count < LIMITE) {
+                if (!txtUsuario.getText().isEmpty() && !txtClave.getText().isEmpty() && !txtRespuesta.getText().isEmpty()) {
+                    if (objCaptcha.validarCaptcha(txtCaptchaEnunciado.getText(), txtRespuesta.getText())) {
+                        if (objUsuario.validarUsuario(txtUsuario.getText())) {
+                            if (!objUsuario.login(txtUsuario.getText(), txtClave.getText()).isEmpty()) {
+                                usuario = objUsuario.obtenerNombreUsuario(txtUsuario.getText(), txtClave.getText());
+                                nombreUsuario = objUsuario.obtenerUsuario(txtUsuario.getText());
+                                cargo = objUsuario.obtenerCargo(txtUsuario.getText());
+                                JOptionPane.showMessageDialog(this, "Bienvenido al sistema " + nombreUsuario);
+                                this.dispose();
+                            }else {
+                                count++;
+                                cambioCaptcha();
+                                JOptionPane.showMessageDialog(this, "Contraseña incorrecta. \nIntentos:" + count);
+                            }
+                        } else {
+                            count++;
+                            cambioCaptcha();
+                            JOptionPane.showMessageDialog(this, "No es posible iniciar sesión con este usuario. \nIntentos:" + count);
+                        }
+                    } else {
+                        count++;
+                        JOptionPane.showMessageDialog(this, "Captcha incorrecto! \nInténtalo de nuevo. \nIntentos:" + count);
+                        cambioCaptcha();
+                        txtRespuesta.setText("");
+                        return;
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Captcha incorrecto. \nInténtalo de nuevo. Intentos:" + count);
-                    cambioCaptcha(); 
-                    txtRespuesta.setText(""); 
-                    return;
+                    JOptionPane.showMessageDialog(null, "No puedes haber campos vacíos");
                 }
-            } else{
-                JOptionPane.showMessageDialog(null, "No puedes haber campos vacíos");
+            } else {
+                JOptionPane.showMessageDialog(null, "Ha alcanzado el limite de intentos (" + LIMITE + ")");
+                System.exit(0);
             }
 
         } catch (Exception e) {

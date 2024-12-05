@@ -273,8 +273,8 @@ public class clsCustodia {
         }
     }
 	
-	    public ResultSet listarMascotasVig() throws Exception {
-        strSQL = "SELECT ma.*, ra.nombre AS raza_nombre FROM MASCOTA ma INNER JOIN raza ra ON ra.id = ma.raza_id "
+    public ResultSet listarMascotasVig() throws Exception {
+        strSQL = "SELECT ma.*, ra.nombre AS raza_nombre , ra.* FROM MASCOTA ma INNER JOIN raza ra ON ra.id = ma.raza_id "
                 + " where ma.vigencia= true order by 1";
         try {
             return objConectar.consultarBD(strSQL);

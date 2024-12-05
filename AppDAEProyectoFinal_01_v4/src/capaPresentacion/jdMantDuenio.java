@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import soporte.Utilidad;
 
 public class jdMantDuenio extends javax.swing.JDialog {
+
     private static jdMantDuenio instanciaUnica;
 
     clsDuenio objDuenio = new clsDuenio();
@@ -24,15 +25,16 @@ public class jdMantDuenio extends javax.swing.JDialog {
         initComponents();
         sinEditarP();
         txtId.requestFocus();
-listarDuenios();
+        listarDuenios();
     }
 
-       public static jdMantDuenio getInstance(Frame parent, boolean modal) throws Exception {
+    public static jdMantDuenio getInstance(Frame parent, boolean modal) throws Exception {
         if (instanciaUnica == null) {
             instanciaUnica = new jdMantDuenio(parent, modal);
         }
         return instanciaUnica;
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -392,7 +394,7 @@ listarDuenios();
             }
         });
 
-        btnModificar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        btnModificar.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/editar.png"))); // NOI18N
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -410,6 +412,7 @@ listarDuenios();
             }
         });
 
+        btnNuevo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/veterinario.png"))); // NOI18N
         btnNuevo.setText("Registrar Dueño");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -584,7 +587,7 @@ listarDuenios();
 
     private void tblDuenioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDuenioMouseClicked
         // TODO add your handling code here:
-         Utilidad.buscarPorTabla(tblDuenio, btnBuscar, txtId);
+        Utilidad.buscarPorTabla(tblDuenio, btnBuscar, txtId);
         if (tblDuenio.getValueAt(tblDuenio.getSelectedRow(), 5).equals("Vigente")) {
             btnVigencia.setText("Dar baja");
             btnVigencia.setIcon(new ImageIcon(getClass().getResource("/conector/Recursos/darBaja.png")));
@@ -600,7 +603,7 @@ listarDuenios();
 
     private void btnBuscarPorDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPorDniActionPerformed
         // TODO add your handling code here:
-         ResultSet rsDuenio = null;
+        ResultSet rsDuenio = null;
         try {
             if (txtNumDoc.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar un número de documento para buscar");
@@ -620,9 +623,9 @@ listarDuenios();
                     txtDireccion.setText(rsDuenio.getString("direccion"));
                     cmbSexo.setSelectedItem(getSexoString(rsDuenio.getBoolean("sexo")));
                     chkVigencia.setSelected(rsDuenio.getBoolean("vigencia"));
- 
+
                     sinEditarP();
-                  
+
                 } else {
                     JOptionPane.showMessageDialog(this, "Código de Dueño no existe");
                     limpiarControles();
@@ -633,12 +636,12 @@ listarDuenios();
             JOptionPane.showMessageDialog(this, "Ocurrió un error del sistema en la búsqueda");
 
         }
-        
+
     }//GEN-LAST:event_btnBuscarPorDniActionPerformed
 
     private void txtNumDocKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumDocKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (!Character.isDigit(c)) {
             evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
         }
@@ -646,7 +649,7 @@ listarDuenios();
 
     private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (!Character.isDigit(c)) {
             evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
         }
@@ -654,7 +657,7 @@ listarDuenios();
 
     private void txtNumCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumCKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (!Character.isDigit(c)) {
             evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
         }
@@ -662,7 +665,7 @@ listarDuenios();
 
     private void txtNumCAKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumCAKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (!Character.isDigit(c)) {
             evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
         }
@@ -670,7 +673,7 @@ listarDuenios();
 
     private void txtNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombresKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (!Character.isLetter(c) && c != ' ') {
             evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
         }
@@ -682,7 +685,7 @@ listarDuenios();
 
     private void txtMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMaternoKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (!Character.isLetter(c) && c != ' ') {
             evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
         }
@@ -690,7 +693,7 @@ listarDuenios();
 
     private void txtPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPaternoKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (!Character.isLetter(c) && c != ' ') {
             evt.consume(); // Consume el evento para evitar que se escriba el carácter no permitido
         }
@@ -702,7 +705,14 @@ listarDuenios();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAgregarMas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMas1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            jdMantMascota objForm = new jdMantMascota(null, true);
+            objForm.setLocationRelativeTo(this);
+            objForm.setVisible(true);
+            this.dispose();
+        } catch (Exception ex) {
+            Logger.getLogger(jdMantDuenio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAgregarMas1ActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -713,7 +723,7 @@ listarDuenios();
                 JOptionPane.showMessageDialog(this, "Debe ingresar un código para buscar");
             } else {
                 rsMascota = objDuenio.buscarDuenio(Integer.parseInt(txtId.getText()));
-                Utilidad.desactivarFields(txtId,txtCorreo, txtDireccion, txtMaterno, txtNombres, txtNumC,txtNumCA,txtPaterno,txtNumDoc);
+                Utilidad.desactivarFields(txtId, txtCorreo, txtDireccion, txtMaterno, txtNombres, txtNumC, txtNumCA, txtPaterno, txtNumDoc);
                 cmbSexo.setEnabled(false);
                 chkVigencia.setEnabled(false);
                 if (rsMascota.next()) {
@@ -726,12 +736,11 @@ listarDuenios();
                     txtCorreo.setText(rsMascota.getString("correo"));
                     txtDireccion.setText(rsMascota.getString("direccion"));
                     chkVigencia.setSelected(rsMascota.getBoolean("vigencia"));
-                    String sexo="";
+                    String sexo = "";
                     if (rsMascota.getBoolean("sexo")) {
-                     sexo="Masculino";   
-                    }
-                    else{
-                        sexo="Femenino";
+                        sexo = "Masculino";
+                    } else {
+                        sexo = "Femenino";
                     }
                     cmbSexo.setSelectedItem(sexo);
 
@@ -745,64 +754,9 @@ listarDuenios();
             JOptionPane.showMessageDialog(this, "Error " + e.getLocalizedMessage());
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
+
     
-    private void registrar() throws Exception{
-        if (btnNuevo.getText().equals("Registrar Dueño")) {
-                btnNuevo.setText("Guardar Datos");
-                limpiarControles();
-                txtId.setText(objDuenio.generarCodigoDuenio().toString());
-                txtNombres.requestFocus();
-                btnBuscar.setEnabled(false);
-                btnModificar.setEnabled(false);
-                btnLimpiar.setEnabled(false);
-                txtId.setEnabled(false);
-                btnEliminar.setEnabled(false);
-                btnVigencia.setEnabled(false);
-                chkVigencia.setEnabled(false);
-                chkVigencia.setSelected(true);
-                btnBuscarPorDni.setSelected(false);
-                btnAgregarMas1.setSelected(false);
-                editar();
-            } else {
-                if (!camposEstanLlenos()) {
-                    return;
-                }
-                  boolean sexo;
-                    if (cmbSexo.getSelectedItem().toString().equals("Masculino")) {
-                        sexo = true;
-                    } else {
-                        sexo = false;
-                    }
-                    
-                try {
-                    objDuenio.registrarDuenio(Integer.parseInt(
-                    txtId.getText()), txtNumDoc.getText(), txtNombres.getText(),
-                                txtPaterno.getText(), txtMaterno.getText(), txtNumC.getText(),txtNumCA.getText(),txtCorreo.getText(),
-                                txtDireccion.getText(),sexo, chkVigencia.isSelected()
-                    );
-                    limpiarControles();
-                    listarDuenios();
-                    sinEditarP();
-                    JOptionPane.showMessageDialog(this, "Dueño registrada con éxito");
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Error al registrar el dueño: " + e.getMessage());
-                    return;
-                }
-                btnNuevo.setText("Registrar Dueño");
-                btnBuscar.setEnabled(true);
-                btnModificar.setEnabled(true);
-                btnEliminar.setEnabled(true);
-                    btnVigencia.setEnabled(true);
-                btnLimpiar.setEnabled(true);
-                txtId.setEditable(true);
-                btnAgregarMas1.setSelected(true);
-                chkVigencia.setEnabled(false);
-                chkVigencia.setSelected(false);
-                btnBuscarPorDni.setSelected(true);
-            }
-    }
-    
-    
+
     private void btnVigenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVigenciaActionPerformed
         // TODO add your handling code here:
         darBaja();
@@ -814,58 +768,74 @@ listarDuenios();
     }//GEN-LAST:event_btnVigenciaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
-        modificarUsuario();
-    }//GEN-LAST:event_btnModificarActionPerformed
-
-     private void modificarUsuario() {
+      
+        
+        
         try {
             if (txtId.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento a modificar");
             } else {
-                if (btnModificar.getText().equals(Utilidad.BTN_MODIFICAR)) {
+                if (btnModificar.getText().equals("Modificar")) {
+                    btnModificar.setText("Guardar Datos");
+                    btnEliminar.setText("Cancelar");
+btnAgregarMas1.setEnabled(false);
                     txtId.setEnabled(false);
                     Utilidad.activarFields(txtCorreo, txtDireccion, txtMaterno, txtNombres, txtNumC);
                     cmbSexo.setEnabled(true);
-                    btnModificar.setText(Utilidad.BTN_GUARDAR);
-                    btnEliminar.setText(Utilidad.BTN_CANCELAR);
+                    //   btnEliminar.setText(Utilidad.BTN_CANCELAR);
                     Utilidad.desactivarBotones(btnModificar, btnLimpiar, btnBuscar, btnNuevo, btnVigencia);
                     tblDuenio.setEnabled(true);
                 } else {
-                    int valor = Utilidad.mensajeConfirmarModificar("Usuario", Integer.parseInt(txtId.getText()), txtNombres.getText());
-                    if (valor == JOptionPane.YES_OPTION) {
-                        boolean sexo=false;
+                 //   int valor = Utilidad.mensajeConfirmarModificar("Usuario", Integer.parseInt(txtId.getText()), txtNombres.getText());
+                 //   if (valor == JOptionPane.YES_OPTION) {
+                        boolean sexo = false;
                         if (cmbSexo.getSelectedItem().toString().equals("Masculino")) {
-                            sexo=true;
+                            sexo = true;
                         }
-                        
+
                         objDuenio.modificarDuenio(Integer.parseInt(txtId.getText()), txtNumDoc.getText(), txtNombres.getText(),
-                                txtPaterno.getText(), txtMaterno.getText(), txtNumC.getText(),txtNumCA.getText(),txtCorreo.getText(),
-                                txtDireccion.getText(),sexo, chkVigencia.isSelected());
-                        btnModificar.setText(Utilidad.BTN_MODIFICAR);
-                        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
+                                txtPaterno.getText(), txtMaterno.getText(), txtNumC.getText(), txtNumCA.getText(), txtCorreo.getText(),
+                                txtDireccion.getText(), sexo, chkVigencia.isSelected());
+                        btnEliminar.setText("Eliminar");
                         Utilidad.activarBotones(btnNuevo, btnBuscar, btnLimpiar, btnModificar, btnVigencia);
                         limpiarControles();
                         listarDuenios();
+                        btnAgregarMas1.setEnabled(true);
+                        btnModificar.setText("Modificar");
                         JOptionPane.showMessageDialog(this, "Se modificó con exito");
                         tblDuenio.setEnabled(true);
                     }
 
-                }
+             //   }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error:" + e.getMessage());
         }
-    }
+    }//GEN-LAST:event_btnModificarActionPerformed
 
-    
-    
+
+
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-                if (btnNuevo.getText().equals(Utilidad.BTN_GUARDAR) || btnModificar.getText().equals(Utilidad.BTN_GUARDAR)) {
-            cancelarAccion();
+        if (btnNuevo.getText().equals("Guardar Datos") || btnModificar.getText().equals("Guardar Datos")) {
+            limpiarControles();
+            listarDuenios();
             tblDuenio.setEnabled(true);
-            Utilidad.activarBotones(btnNuevo, btnBuscar, btnLimpiar, btnModificar, btnVigencia);
+            btnNuevo.setText("Registrar Dueño");
+            btnModificar.setText("Modificar");
+            btnBuscar.setEnabled(true);
+            btnModificar.setEnabled(true);
+            btnNuevo.setEnabled(true);
+            btnEliminar.setText("Eliminar");
+            btnEliminar.setEnabled(true);
+            btnVigencia.setEnabled(true);
+            btnLimpiar.setEnabled(true);
+            txtId.setEditable(true);
+            btnAgregarMas1.setEnabled(true);
+            chkVigencia.setEnabled(false);
+            chkVigencia.setSelected(false);
+            btnBuscarPorDni.setSelected(true);
+            sinEditarP();
 
         } else {
             eliminarDuenio();
@@ -873,52 +843,97 @@ listarDuenios();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        try {
-            // TODO add your handling code here:
-            registrar();
-        } catch (Exception e) {
+        if (btnNuevo.getText().equals("Registrar Dueño")) {
+            try {
+                btnNuevo.setText("Guardar Datos");
+                btnEliminar.setText("Cancelar");
+                
+                limpiarControles();
+                txtId.setText(objDuenio.generarCodigoDuenio().toString());
+                txtNombres.requestFocus();
+                btnBuscar.setEnabled(false);
+                btnModificar.setEnabled(false);
+                btnLimpiar.setEnabled(true);
+                txtId.setEnabled(false);
+                btnAgregarMas1.setEnabled(false);
+                // btnEliminar.setEnabled(false);
+                btnVigencia.setEnabled(false);
+                chkVigencia.setEnabled(false);
+                chkVigencia.setSelected(true);
+                btnBuscarPorDni.setSelected(false);
+                editar();
+            } catch (Exception ex) {
+                Logger.getLogger(jdMantDuenio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            if (!camposEstanLlenos()) {
+                return;
+            }
+            boolean sexo;
+            if (cmbSexo.getSelectedItem().toString().equals("Masculino")) {
+                sexo = true;
+            } else {
+                sexo = false;
+            }
+
+            try {
+                objDuenio.registrarDuenio(Integer.parseInt(
+                        txtId.getText()), txtNumDoc.getText(), txtNombres.getText(),
+                        txtPaterno.getText(), txtMaterno.getText(), txtNumC.getText(), txtNumCA.getText(), txtCorreo.getText(),
+                        txtDireccion.getText(), sexo, chkVigencia.isSelected()
+                );
+                limpiarControles();
+                listarDuenios();
+                sinEditarP();
+                JOptionPane.showMessageDialog(this, "Dueño registrada con éxito");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al registrar el dueño: " + e.getMessage());
+                return;
+            }
+            btnNuevo.setText("Registrar Dueño");
+            btnBuscar.setEnabled(true);
+            btnModificar.setEnabled(true);
+            btnEliminar.setText("Eliminar");
+            btnVigencia.setEnabled(true);
+            btnLimpiar.setEnabled(true);
+            txtId.setEditable(true);
+            btnAgregarMas1.setSelected(true);
+            chkVigencia.setEnabled(false);
+            chkVigencia.setSelected(false);
+            btnBuscarPorDni.setSelected(true);
         }
+    
+
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-private void eliminarDuenio() {
-    try {
-        int selectedRow = tblDuenio.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Por favor, selecciona una fila.");
-            return;
-        }
-                int idMascota = Integer.parseInt(tblDuenio.getValueAt(selectedRow, 0).toString()); // Suponiendo que el ID está en la primera columna
-
-        if (txtId.getText().isBlank()) {
-            Utilidad.mensajeErrorFaltaID(this);
-        } else if (Utilidad.validarEliminacionForanea(clsServicio.TABLA, idMascota)) {
-            JOptionPane.showMessageDialog(this, 
-                    "Hay datos externos asociados a al  Dueño \"" + txtNombres.getText() + "\".\n"
-                    + "Considere cambiar su vigencia para que ya no pueda ser usado.");
-        } else {
-            int valor = JOptionPane.showConfirmDialog(null, "Deseas continuar?", "Confirmación", JOptionPane.YES_NO_OPTION);
-            if (valor == JOptionPane.YES_OPTION) {
-                objDuenio.eliminarDuenio(idMascota);
-                limpiarControles();
-                        listarDuenios();
+    private void eliminarDuenio() {
+        try {
+            int selectedRow = tblDuenio.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Por favor, selecciona una fila.");
+                return;
             }
+            int idMascota = Integer.parseInt(tblDuenio.getValueAt(selectedRow, 0).toString()); // Suponiendo que el ID está en la primera columna
+
+            if (txtId.getText().isBlank()) {
+                Utilidad.mensajeErrorFaltaID(this);
+            } else if (Utilidad.validarEliminacionForanea(clsServicio.TABLA, idMascota)) {
+                JOptionPane.showMessageDialog(this,
+                        "Hay datos externos asociados a al  Dueño \"" + txtNombres.getText() + "\".\n"
+                        + "Considere cambiar su vigencia para que ya no pueda ser usado.");
+            } else {
+                int valor = JOptionPane.showConfirmDialog(null, "Deseas continuar?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                if (valor == JOptionPane.YES_OPTION) {
+                    objDuenio.eliminarDuenio(idMascota);
+                    limpiarControles();
+                    listarDuenios();
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
     }
-}
 
-
-    private void cancelarAccion() {
-        btnNuevo.setText(Utilidad.BTN_NUEVO);
-        btnModificar.setText(Utilidad.BTN_MODIFICAR);
-        btnEliminar.setText(Utilidad.BTN_ELIMINAR);
-        limpiarControles();
-        listarDuenios();
-    } 
-    
-
-    
     private String getSexoString(boolean sexo) {
         return sexo ? "Masculino" : "Femenino";
     }
@@ -928,9 +943,9 @@ private void eliminarDuenio() {
                 || txtNumDoc.getText().isEmpty() || txtMaterno.getText().isEmpty()
                 || txtNumC.getText().isEmpty() || txtDireccion.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Los campos más importantes deben estar llenos.");
-            return false; 
+            return false;
         }
-        return true; 
+        return true;
     }
 
     private void sinEditar() {
@@ -938,7 +953,7 @@ private void eliminarDuenio() {
         txtNumDoc.setEditable(false);
         txtNombres.setEditable(false);
         txtPaterno.setEditable(false);
-        txtMaterno.setEditable(false); 
+        txtMaterno.setEditable(false);
         txtNumC.setEditable(false);
         txtNumCA.setEditable(false);
         txtCorreo.setEditable(false);
@@ -948,7 +963,7 @@ private void eliminarDuenio() {
     }
 
     private void sinEditarP() {
-        
+
         txtNombres.setEditable(false);
         txtPaterno.setEditable(false);
         txtMaterno.setEditable(false);
@@ -1037,7 +1052,8 @@ private void eliminarDuenio() {
         chkVigencia.setSelected(false);
 
     }
-     private void darBaja() {
+
+    private void darBaja() {
         try {
             Integer id = Integer.parseInt(txtId.getText());
             ResultSet rsUsuario = null;
