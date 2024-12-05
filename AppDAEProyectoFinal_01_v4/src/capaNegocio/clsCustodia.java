@@ -13,9 +13,10 @@ import java.util.Date;
 
 /**
  *
- * @author Windows10
+ * @author franc
  */
 public class clsCustodia {
+    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
