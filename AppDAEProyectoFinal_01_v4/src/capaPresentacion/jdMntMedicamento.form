@@ -207,7 +207,6 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
@@ -245,20 +244,6 @@
                                       <Component id="txtPresentacion" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-=======
-                              <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel14" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel11" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel13" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="chkVigencia" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
->>>>>>> 88c245e381b997b8bb3096d11a4e2ce5dc7db9bc
                                   <Component id="btnLimpiar" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                               </Group>
@@ -307,11 +292,7 @@
                                   </Group>
                               </Group>
                           </Group>
-<<<<<<< HEAD
                           <EmptySpace max="32767" attributes="0"/>
-=======
-                          <EmptySpace pref="17" max="32767" attributes="0"/>
->>>>>>> 88c245e381b997b8bb3096d11a4e2ce5dc7db9bc
                       </Group>
                   </Group>
                 </DimensionLayout>

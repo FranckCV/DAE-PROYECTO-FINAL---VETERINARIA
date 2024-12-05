@@ -15,7 +15,7 @@ import soporte.Utilidad;
 
 /**
  *
- * @author Leona
+ * @author Leonardo Guzmán
  */
 public class jdRepMedicamentosXRangoPrecio extends javax.swing.JDialog {
 
@@ -144,7 +144,7 @@ public class jdRepMedicamentosXRangoPrecio extends javax.swing.JDialog {
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
         // TODO add your handling code here:
         double minPrecio = (double) spnMin.getValue();
-        double maxPrecio = (double) spnMin.getValue();
+        double maxPrecio = (double) spnMax.getValue();
 
         try {
             if (minPrecio > maxPrecio) {

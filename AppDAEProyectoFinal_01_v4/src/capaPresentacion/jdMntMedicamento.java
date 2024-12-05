@@ -56,6 +56,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         modelo.addColumn("Disponible");
         modelo.addColumn("Tipo Medicamento");
         tblMedicamento.setModel(modelo);
+        Utilidad.alineacionDerechaColumnaTabla(tblMedicamento, 0);
 
         try {
             rsMed = objMedicamento.listarMedicamentos();
@@ -764,7 +765,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
     private void txtIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) { 
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
             try {
                 if (txtId.getText().trim().isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Ingrese un ID válido.", "Error", JOptionPane.WARNING_MESSAGE);
