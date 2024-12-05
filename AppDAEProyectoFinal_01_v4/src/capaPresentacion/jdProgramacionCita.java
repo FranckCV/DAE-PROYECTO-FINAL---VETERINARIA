@@ -107,8 +107,8 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         tblDetalleServicio.getTableHeader().setReorderingAllowed(false); //no mover los headers
         alinearIzquierda(1);  // SERVICIO
         alinearIzquierda(2);  // MEDICO
-        alinearDerecha(3);     // HORA ENTRADA
-        alinearDerecha(4);     // HORA SALIDA
+        alinearIzquierda(3);     // HORA ENTRADA
+        alinearIzquierda(4);     // HORA SALIDA
         alinearIzquierda(5);  // NOTA ADICIONAL
         alinearDerecha(6);    // COSTO
     }
@@ -1046,18 +1046,19 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // Guardar la cita y el detalle de la cita, para luego updatear simplemente el estado de la cita y el contenido del detalle
 
-        Date fechaSeleccionada = jdcDiaCita.getDate();
-        if (fechaSeleccionada != null) {
-            // Convertir la fecha a java.sql.Date
-            java.sql.Date fechaCita = new java.sql.Date(fechaSeleccionada.getTime());
+        if (tblDetalleServicio.getRowCount() >= 0) {
+            Date fechaSeleccionada = jdcDiaCita.getDate();
+            if (fechaSeleccionada != null) {
+                // Convertir la fecha a java.sql.Date
+                java.sql.Date fechaCita = new java.sql.Date(fechaSeleccionada.getTime());
 
-            // Obtener otros datos necesarios
-            int numero = Integer.parseInt(txtNumero.getText());
-            String observacion = txtAObservacion.getText();
+                // Obtener otros datos necesarios
+                int numero = Integer.parseInt(txtNumero.getText());
+                String observacion = txtAObservacion.getText();
 
-            if (observacion.isEmpty()) {
-                observacion = "Sin observación";
-            }
+                if (observacion.isEmpty()) {
+                    observacion = "Sin observación";
+                }
 
 //            System.out.println("Datos de Cita:");
 //            System.out.println("Número: " + numero);
@@ -1073,7 +1074,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
 //            System.out.println("Código Servicio: " + servicioCod);
 //            System.out.println("Código Médico: " + medicoCod);
 //            System.out.println("Nota detalle: " + notaDetalle);
-            try {
+                try {
 //                objCita.insertarCita(numero, 1, fechaCita, observacion, Integer.parseInt(txtCodDuenio.getText()),
 //                        Integer.parseInt(txtCodMascota.getText()));
 //
@@ -1087,27 +1088,30 @@ public class jdProgramacionCita extends javax.swing.JDialog {
 //                            horaEntrada, horaSalida, notaDetalle);
 //                }
 
-                if (fechaSeleccionada != null) {
-                    try {
-                        // Llamar al método registrarCita pasándole la fecha
-                        objCita.registrarCita(1, Integer.parseInt(txtCodMascota.getText()), Integer.parseInt(txtCodDuenio.getText()), tblDetalleServicio, fechaCita, observacion);
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(this, "Error al registrar cita: " + ex.getMessage());
+                    if (fechaSeleccionada != null) {
+                        try {
+                            // Llamar al método registrarCita pasándole la fecha
+                            objCita.registrarCita(1, Integer.parseInt(txtCodMascota.getText()), Integer.parseInt(txtCodDuenio.getText()), tblDetalleServicio, fechaCita, observacion);
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(this, "Error al registrar cita: " + ex.getMessage());
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Por favor, seleccione una fecha.");
                     }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Por favor, seleccione una fecha.");
-                }
 
-                JOptionPane.showMessageDialog(this, "Registrado exitosamente");
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(rootPane, e.getMessage() + " AL CREAR CITA");
-            }
-            limpiarControles();
-            generarCodigo();
-            llenarTablaInicial();
+                    JOptionPane.showMessageDialog(this, "Registrado exitosamente");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(rootPane, e.getMessage() + " AL CREAR CITA");
+                }
+                limpiarControles();
+                generarCodigo();
+                llenarTablaInicial();
 //            medicoCod = -1;
-        } else {
-            JOptionPane.showMessageDialog(this, "Seleccione una fecha válida");
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleccione una fecha válida");
+            }
+        } else{
+            JOptionPane.showMessageDialog(this, "Debe agregar al menos un servicio", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }//GEN-LAST:event_btnNuevoActionPerformed

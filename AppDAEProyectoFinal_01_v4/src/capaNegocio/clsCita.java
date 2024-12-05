@@ -232,6 +232,31 @@ public class clsCita {
         }
     }
 
+    public ResultSet listarCitasPendientesOrdenadasFechaActual() throws Exception {
+        strSQL = "SELECT "
+                + " C.id AS id_cita, "
+                + " C.fecha_cita, "
+                + " DUEniO.nombres AS duenio_nombres, "
+                + " DUEniO.apePaterno AS duenio_apPaterno, "
+                + " DUEniO.apeMaterno AS duenio_apMaterno, "
+                + " DUEniO.doc_identidad "
+                + "FROM "
+                + " CITA C "
+                + " LEFT JOIN CUSTODIA CU ON C.CUSTODIAMASCOTAid = CU.MASCOTAid AND C.CUSTODIADUEniOid = CU.DUEniOid "
+                + " LEFT JOIN DUEniO ON C.CUSTODIADUEniOid = DUEniO.id "
+                + "WHERE "
+                + " C.estado_cita_id = 1 "
+                + " AND DATE(C.fecha_cita) = CURRENT_DATE " // Filtra solo las citas del día actual
+                + "ORDER BY "
+                + " C.fecha_cita ASC";
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar las citas pendientes: " + e.getMessage());
+        }
+    }
+
     public int contarFilas(int mes) throws Exception {
         String strSQL = "SELECT COUNT(*) "
                 + "FROM ( "
@@ -295,6 +320,33 @@ public class clsCita {
             } catch (SQLException e) {
                 throw new Exception("Error al cerrar la conexión o el statement: " + e.getMessage());
             }
+        }
+    }
+
+    public ResultSet listarCitasPendientesPorDNI2(String dni) throws Exception {
+        strSQL = "SELECT "
+                + " C.id AS id_cita, "
+                + " C.fecha_cita, "
+                + " DUEniO.nombres AS duenio_nombres, "
+                + " DUEniO.apePaterno AS duenio_apPaterno, "
+                + " DUEniO.apeMaterno AS duenio_apMaterno, "
+                + " DUEniO.doc_identidad "
+                + "FROM "
+                + " CITA C "
+                + " LEFT JOIN CUSTODIA CU ON C.CUSTODIAMASCOTAid = CU.MASCOTAid AND C.CUSTODIADUEniOid = CU.DUEniOid "
+                + " LEFT JOIN DUEniO ON C.CUSTODIADUEniOid = DUEniO.id "
+                + "WHERE "
+                + " C.estado_cita_id = 1 "
+                + " AND DUEniO.doc_identidad = '" + dni + "' "
+                + " AND DATE(C.fecha_cita) = CURRENT_DATE " // Filtra solo las citas del día actual
+                + "ORDER BY "
+                + " C.fecha_cita ASC";
+
+        try {
+            rs = objConectar.consultarBD(strSQL);
+            return rs;
+        } catch (Exception e) {
+            throw new Exception("Error al listar las citas pendientes por DNI: " + e.getMessage());
         }
     }
 
