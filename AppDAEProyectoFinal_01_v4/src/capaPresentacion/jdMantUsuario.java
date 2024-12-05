@@ -706,7 +706,9 @@ public class jdMantUsuario extends javax.swing.JDialog {
         modelo.addColumn("Vigencia");
         modelo.addColumn("Sexo");
         modelo.addColumn("Cargo");
-        tblUsuario.setModel(modelo);
+        tblUsuario.setModel(modelo);       
+        Utilidad.alineacionDerechaColumnaTabla(tblUsuario, 0);
+        Utilidad.tamañoColumnaTablaxPos(tblUsuario, 0, 50);
 
         try {
             rsDato = objUsuario.listarUsuarios();

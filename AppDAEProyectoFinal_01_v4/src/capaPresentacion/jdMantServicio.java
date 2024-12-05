@@ -29,6 +29,7 @@ public class jdMantServicio extends javax.swing.JDialog {
         btnModificar.setText(Utilidad.BTN_MODIFICAR);
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         Utilidad.validacionTabla(tblServicio, modal, rootPaneCheckingEnabled, modal);
+        Utilidad.validarSpinnerNumerosDecimales(spnCosto);
     }
 
     /**
@@ -50,7 +51,6 @@ public class jdMantServicio extends javax.swing.JDialog {
         txtNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
-        txtCosto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -58,6 +58,7 @@ public class jdMantServicio extends javax.swing.JDialog {
         btnLimpiar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         chkDisponibilidad = new javax.swing.JCheckBox();
+        spnCosto = new javax.swing.JSpinner();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -134,14 +135,6 @@ public class jdMantServicio extends javax.swing.JDialog {
             }
         });
 
-        txtCosto.setEditable(false);
-        txtCosto.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtCosto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCostoKeyTyped(evt);
-            }
-        });
-
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel3.setText("Costo:");
 
@@ -176,6 +169,8 @@ public class jdMantServicio extends javax.swing.JDialog {
         chkDisponibilidad.setContentAreaFilled(false);
         chkDisponibilidad.setEnabled(false);
 
+        spnCosto.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -188,15 +183,14 @@ public class jdMantServicio extends javax.swing.JDialog {
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(37, 37, 37)
-                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(txtCosto, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(chkDisponibilidad))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre)
+                    .addComponent(chkDisponibilidad)
+                    .addComponent(spnCosto))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
@@ -229,8 +223,8 @@ public class jdMantServicio extends javax.swing.JDialog {
                                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtCosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3))
+                                    .addComponent(jLabel3)
+                                    .addComponent(spnCosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(chkDisponibilidad)
@@ -306,7 +300,7 @@ public class jdMantServicio extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
+                .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -363,16 +357,6 @@ public class jdMantServicio extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        // TODO add your handling code here:
-        if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
-            limpiarControles();
-        } else {
-            JOptionPane.showMessageDialog(this, "No puede ejecutar esta accion");
-        }
-        listarServicio();
-    }//GEN-LAST:event_btnLimpiarActionPerformed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         listarServicio();
@@ -383,11 +367,6 @@ public class jdMantServicio extends javax.swing.JDialog {
         // TODO add your handling code here:
         nuevoServicio();
     }//GEN-LAST:event_btnNuevoActionPerformed
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-        buscarServicio();
-    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void tblServicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblServicioMouseClicked
         // TODO add your handling code here:
@@ -425,16 +404,20 @@ public class jdMantServicio extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnDisponibilidadActionPerformed
 
-    private void txtIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyTyped
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
-        Utilidad.validarCampoTextoSoloNumero(evt);
+        if (btnNuevo.getText().equals(Utilidad.BTN_NUEVO)) {
+            limpiarControles();
+        } else {
+            JOptionPane.showMessageDialog(this, "No puede ejecutar esta accion");
+        }
+        listarServicio();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    }//GEN-LAST:event_txtIDKeyTyped
-
-    private void txtCostoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCostoKeyTyped
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        Utilidad.validarCampoTextoSoloNumeroDecimal(evt);
-    }//GEN-LAST:event_txtCostoKeyTyped
+        buscarServicio();
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
@@ -446,6 +429,11 @@ public class jdMantServicio extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtNombreKeyTyped
 
+    private void txtIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyTyped
+        // TODO add your handling code here:
+        Utilidad.validarCampoTextoSoloNumero(evt);
+    }//GEN-LAST:event_txtIDKeyTyped
+
     private void listarServicio() {
         ResultSet rsPro = null;
         DefaultTableModel modelo = new DefaultTableModel();
@@ -455,6 +443,8 @@ public class jdMantServicio extends javax.swing.JDialog {
         modelo.addColumn("Costo");
         modelo.addColumn("Disponibilidad");
         tblServicio.setModel(modelo);
+        Utilidad.alineacionDerechaColumnaTabla(tblServicio, 0);
+        Utilidad.alineacionDerechaColumnaTabla(tblServicio, 3);
         try {
             rsPro = objTabla.listarServicios();
             while (rsPro.next()) {
@@ -492,7 +482,7 @@ public class jdMantServicio extends javax.swing.JDialog {
                 if (rsData.next()) {
                     txtNombre.setText(rsData.getString(clsServicio.NOMBRE));
                     txtDescripcion.setText(rsData.getString(clsServicio.DESCRIPCION));
-                    txtCosto.setText(rsData.getString(clsServicio.COSTO));
+                    spnCosto.setValue(rsData.getDouble(clsServicio.COSTO));
                     chkDisponibilidad.setSelected(rsData.getBoolean(clsServicio.DISPONIBILIDAD));
                     rsData.close();
                 } else {
@@ -520,7 +510,7 @@ public class jdMantServicio extends javax.swing.JDialog {
         txtID.setText("");
         txtNombre.setText("");
         txtDescripcion.setText("");
-        txtCosto.setText("");
+        spnCosto.setValue(0);
 
         txtID.requestFocus();
     }
@@ -529,7 +519,7 @@ public class jdMantServicio extends javax.swing.JDialog {
         txtID.setEditable(cod);
         txtNombre.setEditable(nom);
         txtDescripcion.setEditable(desc);
-        txtCosto.setEditable(cos);
+        spnCosto.setEnabled(cos);
     }
 
     private void eliminarServicio() {
@@ -580,7 +570,7 @@ public class jdMantServicio extends javax.swing.JDialog {
                             Integer.parseInt(txtID.getText()),
                             txtNombre.getText(),
                             txtDescripcion.getText(),
-                            Double.parseDouble(txtCosto.getText())
+                            Double.parseDouble(String.valueOf(spnCosto.getValue()))
                     );
                     btnModificar.setText(Utilidad.BTN_MODIFICAR);
                     btnEliminar.setText(Utilidad.BTN_ELIMINAR);
@@ -606,8 +596,9 @@ public class jdMantServicio extends javax.swing.JDialog {
                 usarBotones(false, true, false, true, false, false);
                 txtID.setText(objTabla.generarIDServicio().toString());
                 txtNombre.requestFocus();
+                tblServicio.setEnabled(false);
             } else {
-                if (txtNombre.getText().trim().isBlank() || txtID.getText().trim().isBlank() || txtCosto.getText().trim().isBlank() || txtDescripcion.getText().trim().isBlank()) {
+                if (txtNombre.getText().trim().isBlank() || txtID.getText().trim().isBlank() || spnCosto.getValue().toString().isBlank() || txtDescripcion.getText().trim().isBlank()) {
                     JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
                 } else if (Utilidad.validarElementoTextoRepetido(clsServicio.TABLA, clsServicio.NOMBRE, txtNombre.getText())) {
                     JOptionPane.showMessageDialog(this, "Ya existe un servicio con este nombre");
@@ -618,12 +609,13 @@ public class jdMantServicio extends javax.swing.JDialog {
                             Integer.parseInt(txtID.getText()),
                             txtNombre.getText(),
                             txtDescripcion.getText(),
-                            Double.parseDouble(txtCosto.getText())
+                            Double.parseDouble(String.valueOf(spnCosto.getValue()))
                     );
                     limpiarControles();
                     editableControles(true, false, false, false);
                     usarBotones(true, true, true, true, true, true);
                     listarServicio();
+                    tblServicio.setEnabled(true);
                     JOptionPane.showMessageDialog(this, "Se registró con exito");
                 }
             }
@@ -672,8 +664,8 @@ public class jdMantServicio extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSpinner spnCosto;
     private javax.swing.JTable tblServicio;
-    private javax.swing.JTextField txtCosto;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombre;

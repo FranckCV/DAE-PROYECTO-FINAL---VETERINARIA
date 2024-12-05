@@ -199,6 +199,17 @@
             <Property name="text" type="java.lang.String" value="Reportes"/>
           </Properties>
           <SubComponents>
+<<<<<<< HEAD
+=======
+            <MenuItem class="javax.swing.JMenuItem" name="mnuCitasPendientesPorMedicoId">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Citas pendientes por m&#xe9;dico"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuCitasPendientesPorMedicoIdActionPerformed"/>
+              </Events>
+            </MenuItem>
+>>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem7">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Historial Clinico"/>
@@ -223,6 +234,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
               </Events>
             </MenuItem>
+<<<<<<< HEAD
             <MenuItem class="javax.swing.JMenuItem" name="mnuCitasPendientesPorMedico">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Citas pendientes por m&#xe9;dico"/>
@@ -231,6 +243,8 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuCitasPendientesPorMedicoActionPerformed"/>
               </Events>
             </MenuItem>
+=======
+>>>>>>> ac51dd7399772fd85fc730c7193b3ebfb5657972
             <MenuItem class="javax.swing.JMenuItem" name="menuRepServicioMasSolicitado">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Servicios m&#xe1;s solicitados por mes y a&#xf1;o"/>
