@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobantePago" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="825f4b25-99e5-4984-aad6-2dabda247473">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="82"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="detalle_cita_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct
+    co.serie_numero,
+    co.fecha,
+    (du.nombres || ' ' || du.apepaterno) as nombre_duenio,
+    du.doc_identidad,
+    co.monto_total,
+    ROUND(co.monto_total / 1.18, 2) as subtotal,
+    ROUND(co.monto_total - (co.monto_total / 1.18), 2) as igv
+from
+    detalle_cita dc
+inner join cita c on c.id = dc.cita_id
+inner join comprobante co on co.citaid = c.id
+inner join custodia cu on cu.duenioid = c.custodiaduenioid
+inner join duenio du on du.id = cu.duenioid
+where
+    dc.cita_id = $P{detalle_cita_id}]]>
+	</queryString>
+	<field name="serie_numero" class="java.lang.String"/>
+	<field name="fecha" class="java.sql.Date"/>
+	<field name="nombre_duenio" class="java.lang.String"/>
+	<field name="doc_identidad" class="java.lang.String"/>
+	<field name="monto_total" class="java.math.BigDecimal"/>
+	<field name="subtotal" class="java.math.BigDecimal"/>
+	<field name="igv" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="206" splitType="Stretch">
+			<image>
+				<reportElement x="13" y="59" width="126" height="76" uuid="a7092877-a02a-4410-a7d2-1111e7ced697"/>
+				<imageExpression><![CDATA["../conector/Recursos/logo_mediano.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="101" y="85" width="67" height="20" uuid="7232ee15-bf31-445f-9ef8-7290e3fea91d"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="59" width="77" height="20" uuid="238f7a3d-db0e-4ead-a672-32e881e4ba13"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="1" y="11" width="320" height="40" backcolor="#003399" uuid="2bbf593c-7248-4bb6-99fb-f3c0919cd840"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="Title" mode="Transparent" x="1" y="11" width="320" height="40" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="2725e4a9-a3de-497d-ad36-8f68440a52ee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="30" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Veterinaria marmota]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="333" y="20" width="204" height="114" uuid="b062e92c-a455-4e59-bf02-b3e188e122be"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="333" y="60" width="204" height="23" forecolor="#FFFFFF" backcolor="#0033CC" uuid="f3b574c0-44a6-4d02-9435-6097fb43be73"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BOLETA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="383" y="32" width="36" height="15" uuid="41959cb8-dc6c-4d78-b004-0c3527d48ba3"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="32" width="93" height="15" uuid="a692a8b9-098d-493a-b26b-0cab6f6fff5b"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[10072486892]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="94" width="21" height="15" uuid="1665cff8-2a00-437d-ab18-98be5329eacb"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="115" width="48" height="20" uuid="fe6ffb12-5a13-4711-8d99-ade9102c2c34"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="178" y="59" width="92" height="20" uuid="a6e5fb59-429d-4848-8295-f254d7ec0d7d"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Jr. curioson 173]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="178" y="115" width="143" height="20" uuid="b1068a81-31ac-401b-a67a-c367493cf05c"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[curiosito@gmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="178" y="85" width="77" height="20" uuid="0545551b-4e97-43c9-8696-e155827638e0"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[906 300 962]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="145" width="48" height="20" uuid="620c178b-a341-4887-af8a-053b94936504"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="175" width="153" height="20" uuid="642677ab-ad85-4b06-8479-611d3c05088f"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Documento de identidad:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="188" y="175" width="133" height="20" backcolor="#CCCCCC" uuid="48a4817e-acbc-4728-845c-89ad95334354"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="333" y="175" width="48" height="20" uuid="012b3558-53dd-4a95-90bb-b6b959cbefeb"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="383" y="175" width="133" height="20" backcolor="#CCCCCC" uuid="ba9b77b4-b4a3-4fe4-867b-a27a88e2ee38"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="88" y="145" width="233" height="20" backcolor="#CCCCCC" uuid="dd999bac-bc4e-4c67-a94b-01694c0d7097"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="1" y="200" width="554" height="1" uuid="21a38f1b-1d85-4830-b141-3b6f238eda9d"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="416" y="94" width="100" height="20" uuid="21d84649-2fd3-4349-a1fd-aa62e758e83f"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{serie_numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="395" y="177" width="57" height="20" uuid="0189fa6a-58e0-45e0-93f0-ee713896a605"/>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="92" y="147" width="182" height="20" uuid="70455eb4-bb5f-43bd-a401-6b807efbb7b7"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_duenio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="194" y="176" width="121" height="20" uuid="54aecd48-7209-458c-895d-aeaa9d8d31c4"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{doc_identidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="163" splitType="Stretch">
+			<subreport>
+				<reportElement x="2" y="0" width="553" height="160" uuid="ab94974b-9ff8-4f40-9b43-22264b4dcc86"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="detalle_cita_id">
+					<subreportParameterExpression><![CDATA[$P{detalle_cita_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "reporte_servicios.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="116">
+			<subreport>
+				<reportElement x="1" y="0" width="554" height="116" uuid="870c1715-ed90-4230-8459-c353dd2509be"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="detalle_cita_id">
+					<subreportParameterExpression><![CDATA[$P{detalle_cita_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "reporte_medicamentos.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement x="382" y="11" width="58" height="20" uuid="77d90ec7-5727-4043-a70d-003e255b5cd5"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subtotal:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="439" y="11" width="97" height="20" backcolor="#CCCCCC" uuid="b131b80e-a96b-46c7-9f24-45b4fadea702"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="382" y="43" width="58" height="20" uuid="e8c9821c-2912-49b1-9b79-48b823f6b1e1"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Igv:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="439" y="43" width="97" height="20" backcolor="#CCCCCC" uuid="c8ccbfd5-8be1-49cb-bab3-2d30128c5cdd"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="383" y="73" width="58" height="20" uuid="7a519a0f-bf6c-4957-8963-2318cd229815"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="440" y="73" width="97" height="20" backcolor="#CCCCCC" uuid="67b75f7d-1b77-47a8-9f2b-f3eb935dda6c"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="437" y="73" width="95" height="20" uuid="d4308e7b-cecf-4a36-a2d8-b194875481d9"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="437" y="43" width="95" height="20" uuid="a09fec33-8926-44ba-8336-79be15c67614"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{igv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="437" y="11" width="96" height="20" uuid="fe845926-a94c-4698-af45-98cba1a810af"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="0" width="553" height="1" uuid="1cea0589-0f11-4fd1-ba96-a504ef59b759"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
