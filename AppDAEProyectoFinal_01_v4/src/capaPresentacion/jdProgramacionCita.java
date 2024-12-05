@@ -82,6 +82,13 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         txtNombreMedico.setEditable(false);
         txtCodMascota.setEditable(false);
         jdcDiaCita.setDateFormatString("dd/MM/yyyy");
+        txtNombreCliente.setEditable(false);
+        txtTelefono.setEditable(false);
+        txtCodDuenio.setEditable(false);
+        txtRaza.setEditable(false);
+        txtEdadMascota.setEditable(false);
+        txtNotaMascota.setEditable(false);
+        cboServicios.setEditable(false);
     }
 
     private void llenarTablaInicial() {
@@ -534,7 +541,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDarBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -621,9 +628,9 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                     .addComponent(txtDocMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombreMedico)
+                    .addComponent(txtNombreMedico, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
                     .addComponent(cboServicios, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEliminarServicio)
                 .addGap(18, 18, 18)
                 .addComponent(btnAgregarServicio)
@@ -690,6 +697,9 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         txtDocDuenio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtDocDuenioKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDocDuenioKeyTyped(evt);
             }
         });
 
@@ -848,6 +858,9 @@ public class jdProgramacionCita extends javax.swing.JDialog {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNombreMascotaKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreMascotaKeyTyped(evt);
+            }
         });
 
         jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -886,16 +899,15 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(txtCodMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(9, 9, 9)
-                        .addComponent(txtNombreMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNombreMascota)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscarMascota)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtNotaMascota)
+                        .addComponent(btnBuscarMascota))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                        .addComponent(txtRaza)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtEdadMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(32, 32, 32))
+                        .addComponent(txtRaza, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtEdadMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNotaMascota))
+                .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -924,16 +936,17 @@ public class jdProgramacionCita extends javax.swing.JDialog {
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Datos de la mascota");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -971,16 +984,17 @@ public class jdProgramacionCita extends javax.swing.JDialog {
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Datos del dueño");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(62, 62, 62))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1110,7 +1124,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
             } else {
                 JOptionPane.showMessageDialog(this, "Seleccione una fecha válida");
             }
-        } else{
+        } else {
             JOptionPane.showMessageDialog(this, "Debe agregar al menos un servicio", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         }
 
@@ -1211,12 +1225,13 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                 txtTelefono.setText(rsCliente.getString("telefono"));
 
             } else {
-                if (JOptionPane.showConfirmDialog(this, "Dueño no existe ¿Desea registrarlo?", "Alerta!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    //jdMantDuenio_v2 objMantDuenio = new jdMantDuenio_v2(null, true);
-                    jdMantDuenio objMantDuenio = new jdMantDuenio(null, true);
-                    objMantDuenio.setLocationRelativeTo(this);
-                    objMantDuenio.setVisible(true);
-                }
+//                if (JOptionPane.showConfirmDialog(this, "Dueño no existe ¿Desea registrarlo?", "Alerta!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+//                    //jdMantDuenio_v2 objMantDuenio = new jdMantDuenio_v2(null, true);
+//                    jdMantDuenio objMantDuenio = new jdMantDuenio(null, true);
+//                    objMantDuenio.setLocationRelativeTo(this);
+//                    objMantDuenio.setVisible(true);
+//                }
+                JOptionPane.showMessageDialog(this, "Por favor registrar primero al cliente y su mascota", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -1303,6 +1318,20 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         limpiarControles();
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void txtDocDuenioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocDuenioKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtDocDuenioKeyTyped
+
+    private void txtNombreMascotaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreMascotaKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetter(c) && c != ' ') { // Aceptar letras y espacio
+            evt.consume(); // Evitar que se registre el carácter si no es una letra
+        }
+    }//GEN-LAST:event_txtNombreMascotaKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
