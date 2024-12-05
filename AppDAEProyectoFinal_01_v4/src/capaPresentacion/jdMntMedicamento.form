@@ -114,7 +114,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jPanel4" max="32767" attributes="0"/>
-                          <Component id="jLabel1" pref="298" max="32767" attributes="0"/>
+                          <Component id="jLabel1" pref="294" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -207,6 +207,10 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> ea5406278a6706ad2f131a75c1e0b4481a2ecb08
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
@@ -222,6 +226,7 @@
                                               <Component id="txtNombre" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
+<<<<<<< HEAD
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
@@ -229,6 +234,12 @@
                                               <Component id="cbxPresentacion" max="32767" attributes="0"/>
                                               <Component id="spnStock" max="32767" attributes="0"/>
                                           </Group>
+=======
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
+                                          <Component id="spnStock" max="32767" attributes="0"/>
+>>>>>>> ea5406278a6706ad2f131a75c1e0b4481a2ecb08
                                       </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
@@ -239,8 +250,33 @@
                                       <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+<<<<<<< HEAD
                                   <Component id="chkVigencia" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="173" max="32767" attributes="0"/>
+=======
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="chkVigencia" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="0" pref="167" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Component id="txtPresentacion" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+=======
+                              <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel14" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel11" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel13" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="chkVigencia" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+>>>>>>> 88c245e381b997b8bb3096d11a4e2ce5dc7db9bc
+>>>>>>> ea5406278a6706ad2f131a75c1e0b4481a2ecb08
                                   <Component id="btnLimpiar" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                               </Group>
@@ -279,17 +315,21 @@
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="txtPresentacion" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                                       <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="cbxPresentacion" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                       <Component id="chkVigencia" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
+<<<<<<< HEAD
+                          <EmptySpace max="32767" attributes="0"/>
+=======
                           <EmptySpace pref="17" max="32767" attributes="0"/>
+>>>>>>> 88c245e381b997b8bb3096d11a4e2ce5dc7db9bc
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -397,6 +437,16 @@
                     <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCostoKeyTyped"/>
                   </Events>
                 </Component>
+                <Component class="javax.swing.JTextField" name="txtPresentacion">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="null"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtPresentacionKeyTyped"/>
+                  </Events>
+                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel3">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -412,21 +462,6 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkVigenciaActionPerformed"/>
                   </Events>
-                </Component>
-                <Component class="javax.swing.JComboBox" name="cbxPresentacion">
-                  <Properties>
-                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
-                        <StringItem index="0" value="Item 1"/>
-                        <StringItem index="1" value="Item 2"/>
-                        <StringItem index="2" value="Item 3"/>
-                        <StringItem index="3" value="Item 4"/>
-                      </StringArray>
-                    </Property>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
