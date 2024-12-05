@@ -26,6 +26,8 @@ import java.time.LocalTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import soporte.*;
 
 /**
@@ -49,7 +51,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         initComponents();
         this.setTitle("Programación de cita");
 
-        txtNumero.setEditable(false);
+        formatoInicial();
         generarCodigo();
         llenarCboServicios();
         llenarTablaInicial();
@@ -63,6 +65,23 @@ public class jdProgramacionCita extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
 
+    }
+
+    private void formatoInicial() {
+        jdcDiaCita.setFont(new java.awt.Font("Century Gothic", 0, 12));
+
+        Date fechaActual = new Date();
+        jdcDiaCita.setMinSelectableDate(fechaActual);
+
+        cboServicios.setEditable(false);
+        txtCodServicio.setEditable(false);
+        jdcDiaCita.setOpaque(false);
+        txtNumero.setEditable(false);
+        cboServicios.setEditable(false);
+        txtDocMedico.setEditable(false);
+        txtNombreMedico.setEditable(false);
+        txtCodMascota.setEditable(false);
+        jdcDiaCita.setDateFormatString("dd/MM/yyyy");
     }
 
     private void llenarTablaInicial() {
@@ -86,6 +105,30 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         tblDetalleServicio.getTableHeader().getColumnModel().getColumn(0).setWidth(0);
 
         tblDetalleServicio.getTableHeader().setReorderingAllowed(false); //no mover los headers
+        alinearIzquierda(1);  // SERVICIO
+        alinearIzquierda(2);  // MEDICO
+        alinearDerecha(3);     // HORA ENTRADA
+        alinearDerecha(4);     // HORA SALIDA
+        alinearIzquierda(5);  // NOTA ADICIONAL
+        alinearDerecha(6);    // COSTO
+    }
+
+    private void alinearIzquierda(int columna) {
+        DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+        leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
+        tblDetalleServicio.getColumnModel().getColumn(columna).setCellRenderer(leftRenderer);
+    }
+
+    private void alinearDerecha(int columna) {
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+        tblDetalleServicio.getColumnModel().getColumn(columna).setCellRenderer(rightRenderer);
+    }
+
+    private void alinearCentro(int columna) {
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tblDetalleServicio.getColumnModel().getColumn(columna).setCellRenderer(centerRenderer);
     }
 
     private void agregarServicio(int codServ, int codMed, String horaEntrada, String horaSalida, String notita) {
@@ -301,28 +344,32 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         txtNombreCliente.setText("");
         txtNombreMascota.setText("");
         txtNombreMedico.setText("");
+        txtRaza.setText("");
 //        txtNotaDetalleCita.setText("");
         txtNotaMascota.setText("");
         txtNumero.setText("");
         txtTelefono.setText("");
+        jdcDiaCita.setCalendar(null);
 
         cboServicios.setSelectedIndex(0);
+
+        llenarTablaInicial();
+        generarCodigo();
     }
 
     private void limpiarControlesDespuesDeAgregarServicio() {
 
 //        txtNotaDetalleCita.setText("");
-        Calendar calendario = Calendar.getInstance();
-        calendario.set(Calendar.HOUR_OF_DAY, 12);
-        calendario.set(Calendar.MINUTE, 0);
-        calendario.set(Calendar.SECOND, 0);
-        calendario.set(Calendar.MILLISECOND, 0);
-
-        Date horaCero = calendario.getTime();
-
+//        Calendar calendario = Calendar.getInstance();
+//        calendario.set(Calendar.HOUR_OF_DAY, 12);
+//        calendario.set(Calendar.MINUTE, 0);
+//        calendario.set(Calendar.SECOND, 0);
+//        calendario.set(Calendar.MILLISECOND, 0);
+//
+//        Date horaCero = calendario.getTime();
+        txtCodServicio.setText("");
         cboServicios.setSelectedIndex(0);
         txtDocMedico.setText("");
-        txtCodServicio.setText("");
         txtNombreMedico.setText("");
     }
 
@@ -430,7 +477,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         txtNumero = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jdcDiaCita = new com.toedter.calendar.JDateChooser();
         jPanel9 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         txtNombreMascota = new javax.swing.JTextField();
@@ -440,6 +487,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         txtNotaMascota = new javax.swing.JTextField();
         btnBuscarMascota = new javax.swing.JButton();
         txtCodMascota = new javax.swing.JTextField();
+        txtRaza = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
@@ -450,10 +498,11 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel2.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         btnNuevo.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/veterinario.png"))); // NOI18N
-        btnNuevo.setText("Nuevo");
+        btnNuevo.setText("Programar");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
@@ -461,12 +510,22 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         });
 
         btnModificar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/editar.png"))); // NOI18N
-        btnModificar.setText("Modificar");
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/escoba-mascota.png"))); // NOI18N
+        btnModificar.setText("Limpiar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnDarBaja.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        btnDarBaja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/darBaja.png"))); // NOI18N
-        btnDarBaja.setText("Dar baja");
+        btnDarBaja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/salir.png"))); // NOI18N
+        btnDarBaja.setText("Salir");
+        btnDarBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDarBajaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -482,17 +541,18 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(btnNuevo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnModificar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDarBaja)
                 .addGap(63, 63, 63))
         );
 
         jPanel10.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel10.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         jLabel21.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel21.setText("Servicio:");
@@ -500,6 +560,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         jLabel22.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel22.setText("Médico:");
 
+        txtCodServicio.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtCodServicio.setMinimumSize(new java.awt.Dimension(61, 22));
         txtCodServicio.setPreferredSize(new java.awt.Dimension(61, 22));
         txtCodServicio.addActionListener(new java.awt.event.ActionListener() {
@@ -522,6 +583,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
             }
         });
 
+        txtDocMedico.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtDocMedico.setMinimumSize(new java.awt.Dimension(61, 22));
         txtDocMedico.setPreferredSize(new java.awt.Dimension(61, 22));
         txtDocMedico.addActionListener(new java.awt.event.ActionListener() {
@@ -530,12 +592,14 @@ public class jdProgramacionCita extends javax.swing.JDialog {
             }
         });
 
+        txtNombreMedico.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtNombreMedico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreMedicoActionPerformed(evt);
             }
         });
 
+        cboServicios.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cboServicios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboServiciosActionPerformed(evt);
@@ -586,6 +650,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         );
 
         jPanel5.setBackground(new java.awt.Color(204, 255, 255));
+        jPanel5.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         jLabel16.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel16.setText("Observación:");
@@ -611,15 +676,17 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                 .addGap(11, 11, 11)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addComponent(jScrollPane3)
+                .addContainerGap())
         );
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel1.setText("Doc. Ide:");
 
+        txtDocDuenio.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtDocDuenio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtDocDuenioKeyPressed(evt);
@@ -628,6 +695,8 @@ public class jdProgramacionCita extends javax.swing.JDialog {
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel2.setText("Dueño:");
+
+        txtNombreCliente.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel8.setText("Teléfono:");
@@ -639,13 +708,17 @@ public class jdProgramacionCita extends javax.swing.JDialog {
             }
         });
 
+        txtCodDuenio.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+
+        txtTelefono.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1)
@@ -662,8 +735,8 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                                 .addComponent(txtNombreCliente))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtTelefono)))
+                        .addGap(18, 18, 18)
+                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -688,7 +761,9 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         );
 
         jPanel3.setBackground(new java.awt.Color(51, 0, 51));
+        jPanel3.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
+        tblDetalleServicio.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         tblDetalleServicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblDetalleServicioMouseClicked(evt);
@@ -719,6 +794,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         );
 
         jPanel4.setBackground(new java.awt.Color(4, 222, 222));
+        jPanel4.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel10.setText("Día de la cita:");
@@ -726,6 +802,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         jLabel11.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel11.setText("Número de la cita:");
 
+        txtNumero.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtNumero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNumeroActionPerformed(evt);
@@ -744,7 +821,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jdcDiaCita, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
         jPanel4Layout.setVerticalGroup(
@@ -752,7 +829,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jdcDiaCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel10)
                         .addComponent(jLabel11)
@@ -761,10 +838,12 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         );
 
         jPanel9.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel9.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel7.setText("Nombre:");
 
+        txtNombreMascota.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtNombreMascota.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNombreMascotaKeyPressed(evt);
@@ -774,8 +853,12 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel12.setText("Mascota:");
 
+        txtEdadMascota.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+
         jLabel19.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel19.setText("Nota:");
+
+        txtNotaMascota.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         btnBuscarMascota.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar-pequeño.png"))); // NOI18N
         btnBuscarMascota.addActionListener(new java.awt.event.ActionListener() {
@@ -783,6 +866,10 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                 btnBuscarMascotaActionPerformed(evt);
             }
         });
+
+        txtCodMascota.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+
+        txtRaza.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -795,17 +882,20 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                     .addComponent(jLabel12)
                     .addComponent(jLabel7))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(txtNombreMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnBuscarMascota))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(txtCodMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCodMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(txtNombreMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEdadMascota))
-                    .addComponent(txtNotaMascota))
-                .addGap(0, 32, Short.MAX_VALUE))
+                        .addComponent(btnBuscarMascota)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtNotaMascota)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addComponent(txtRaza)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtEdadMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(32, 32, 32))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -815,12 +905,13 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                     .addComponent(btnBuscarMascota)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtNombreMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel7)))
+                        .addComponent(jLabel7)
+                        .addComponent(txtCodMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEdadMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
-                    .addComponent(txtCodMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRaza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
@@ -829,6 +920,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         );
 
         jPanel6.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel6.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -851,9 +943,11 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         );
 
         jPanel7.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel7.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Elegir servicio");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -861,9 +955,9 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(213, 213, 213)
-                .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -873,6 +967,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         );
 
         jPanel8.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel8.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -939,10 +1034,10 @@ public class jdProgramacionCita extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -951,7 +1046,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // Guardar la cita y el detalle de la cita, para luego updatear simplemente el estado de la cita y el contenido del detalle
 
-        Date fechaSeleccionada = jDateChooser1.getDate();
+        Date fechaSeleccionada = jdcDiaCita.getDate();
         if (fechaSeleccionada != null) {
             // Convertir la fecha a java.sql.Date
             java.sql.Date fechaCita = new java.sql.Date(fechaSeleccionada.getTime());
@@ -1050,12 +1145,17 @@ public class jdProgramacionCita extends javax.swing.JDialog {
 //        String[] codigos = cadena.split(" - ");
 //        int codigoSer = Integer.parseInt(txtCodServicio.getText());
 //        int codTablaMed = Integer.parseInt(codigos[1].trim());
+        DefaultTableModel modelito = (DefaultTableModel) tblDetalleServicio.getModel();
 
-        int valor = Utilidad.mensajeConfirmarEliminarDetalleServicio(cboServicios.getSelectedItem().toString() + "\"");
+        if (tblDetalleServicio.getSelectedRow() != -1) {
+            int valor = Utilidad.mensajeConfirmarEliminarDetalleServicio(cboServicios.getSelectedItem().toString() + "\"");
 
-        if (valor == 0) {
-            DefaultTableModel modelito = (DefaultTableModel) tblDetalleServicio.getModel();
-            modelito.removeRow(tblDetalleServicio.getSelectedRow());
+            if (valor == 0) {
+                modelito.removeRow(tblDetalleServicio.getSelectedRow());
+                limpiarControlesDespuesDeAgregarServicio();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Para eliminar debe seleccionar un servicio de la tabla", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }//GEN-LAST:event_btnEliminarServicioActionPerformed
@@ -1137,19 +1237,20 @@ public class jdProgramacionCita extends javax.swing.JDialog {
             } else if (txtNombreMascota.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar el nombre de la mascota");
             } else {
-                rsMascota = objMascota.filtrarMascotaPorDuenioYNombre(Integer.valueOf(txtCodDuenio.getText()),
+                rsMascota = objMascota.filtrarMascotaPorDuenioYNombre2(Integer.valueOf(txtCodDuenio.getText()),
                         txtNombreMascota.getText());
 
                 if (rsMascota.next()) {
                     txtCodMascota.setText(String.valueOf(rsMascota.getString("id")));
                     txtNotaMascota.setText(String.valueOf(rsMascota.getString("notaAdicional")));
-                    txtEdadMascota.setText(String.valueOf(objMascota.calcularEdadMascota(rsMascota.getInt("id"))));
-
+                    txtEdadMascota.setText(String.valueOf(objMascota.calcularEdadMascota2(rsMascota.getInt("id"))));
+                    txtRaza.setText(rsMascota.getString("nombre_raza"));
 //                    if (rsMascota.getBoolean("esterilizado")) {
 //                        rdbCastrado.setSelected(true);
 //                    } else {
 //                        rdbNoCastrado.setSelected(true);
 //                    }
+                    txtNombreMascota.setText(rsMascota.getString("nombre"));
                 } else {
                     if (JOptionPane.showConfirmDialog(this, "Mascota no existe ¿Desea registrar?", "Alerta!",
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -1191,6 +1292,14 @@ public class jdProgramacionCita extends javax.swing.JDialog {
         llenarServicioMedico();
     }//GEN-LAST:event_tblDetalleServicioMouseClicked
 
+    private void btnDarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarBajaActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnDarBajaActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        limpiarControles();
+    }//GEN-LAST:event_btnModificarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarServicio;
@@ -1202,7 +1311,6 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     private javax.swing.JButton btnNuevo;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cboServicios;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1229,6 +1337,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private com.toedter.calendar.JDateChooser jdcDiaCita;
     private javax.swing.JTable tblDetalleServicio;
     private javax.swing.JTextArea txtAObservacion;
     private javax.swing.JTextField txtCodDuenio;
@@ -1242,6 +1351,7 @@ public class jdProgramacionCita extends javax.swing.JDialog {
     private javax.swing.JTextField txtNombreMedico;
     private javax.swing.JTextField txtNotaMascota;
     private javax.swing.JTextField txtNumero;
+    private javax.swing.JTextField txtRaza;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

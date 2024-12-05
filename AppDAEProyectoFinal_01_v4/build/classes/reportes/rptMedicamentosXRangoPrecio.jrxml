@@ -85,7 +85,7 @@ ORDER BY
 				<text><![CDATA[Tipo de Medicamento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="436" y="10" width="65" height="20" uuid="112d71bf-3365-4d06-8e55-65ee27a09115"/>
+				<reportElement x="446" y="10" width="65" height="20" uuid="112d71bf-3365-4d06-8e55-65ee27a09115"/>
 				<textElement textAlignment="Center">
 					<font fontName="Century Gothic" size="12" isBold="true"/>
 				</textElement>
@@ -99,7 +99,7 @@ ORDER BY
 				<text><![CDATA[Presentación]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="501" y="10" width="64" height="20" uuid="ab1bcc45-3206-49e5-bd5b-b3a1f39b1758"/>
+				<reportElement x="511" y="10" width="64" height="20" uuid="ab1bcc45-3206-49e5-bd5b-b3a1f39b1758"/>
 				<textElement textAlignment="Center">
 					<font fontName="Century Gothic" size="12" isBold="true"/>
 				</textElement>
@@ -120,8 +120,8 @@ ORDER BY
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="436" y="9" width="65" height="20" uuid="bed1f22b-7a6c-4923-b1d5-bf4c7ada77b9"/>
-				<textElement textAlignment="Center">
+				<reportElement x="425" y="9" width="65" height="20" uuid="bed1f22b-7a6c-4923-b1d5-bf4c7ada77b9"/>
+				<textElement textAlignment="Right">
 					<font fontName="Century Gothic" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{costo}]]></textFieldExpression>
@@ -134,8 +134,8 @@ ORDER BY
 				<textFieldExpression><![CDATA[$F{presentacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="501" y="10" width="64" height="20" uuid="007fb930-72f7-4398-abc9-c233c047384d"/>
-				<textElement textAlignment="Center">
+				<reportElement x="491" y="10" width="64" height="20" uuid="007fb930-72f7-4398-abc9-c233c047384d"/>
+				<textElement textAlignment="Right">
 					<font fontName="Century Gothic" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{stock}]]></textFieldExpression>
@@ -168,33 +168,40 @@ ORDER BY
 	<pageFooter>
 		<band height="41" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="20" width="217" height="20" uuid="61c0e00b-23d0-43d3-8e88-c68fdf2713a8"/>
+				<reportElement x="0" y="0" width="217" height="20" uuid="61c0e00b-23d0-43d3-8e88-c68fdf2713a8"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Century Gothic" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Elaborado por Leonardo Guzmán Salazar]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="465" y="20" width="70" height="20" uuid="e1221069-7a2e-4cb1-96c6-c1f4e1aee2cb"/>
+				<reportElement x="465" y="0" width="70" height="20" uuid="e1221069-7a2e-4cb1-96c6-c1f4e1aee2cb"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Century Gothic" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Pag. "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="535" y="20" width="40" height="20" uuid="c46f31a0-03c0-4e1f-b9bc-19000b9f596d"/>
+				<reportElement x="535" y="0" width="40" height="20" uuid="c46f31a0-03c0-4e1f-b9bc-19000b9f596d"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Century Gothic" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy HH.mm.ss">
-				<reportElement x="276" y="20" width="100" height="20" uuid="ee1df782-2123-4a22-b6e0-659591c1b368"/>
+				<reportElement x="276" y="0" width="100" height="20" uuid="ee1df782-2123-4a22-b6e0-659591c1b368"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Century Gothic" isBold="true" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="164" height="21" uuid="d95c38d3-9de9-40b3-bb2b-ca58ae40d229"/>
+				<textElement>
+					<font fontName="Century Gothic" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[rptMedicamentosXRangoPrecio]]></text>
+			</staticText>
 		</band>
 	</pageFooter>
 	<summary>
