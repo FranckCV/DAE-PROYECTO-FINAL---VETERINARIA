@@ -170,6 +170,7 @@ public class clsMedico {
         }
     }
 
+
     public ResultSet buscarDniMedicoPorNombreCompleto(String nombreCompleto) throws Exception {
         // Formulamos la consulta SQL para buscar el DNI del médico por nombre completo
         String strSQL = "SELECT med.doc_identidad " // Solo seleccionamos el DNI
@@ -341,6 +342,7 @@ public class clsMedico {
         return 0;
     }
 
+    
     public Integer obtenerIDUser(Integer id_med) throws Exception {
         strSQL = "SELECT " + CODIGO_USUARIO + " as user_id FROM " + TABLA + " WHERE " + ID + " = " + id_med + " ";
         try {
@@ -372,4 +374,29 @@ public class clsMedico {
         }
     }
 
+  public ResultSet listarMedicosVigentesDisponiblesConCitasPendientes() throws Exception {
+    strSQL = "SELECT distinct "
+            + " Me.*, "
+            + " E." + clsEspecialidad.NOMBRE + " "
+            + " FROM detalle_cita dc "
+            + " INNER JOIN cita c ON c.id = dc.cita_id "
+            + " INNER JOIN detalle_servicio ds ON ds.servicio_id = dc.detalle_servicio_serv_id "
+            + " AND ds.medico_id = dc.detalle_servicio_med_id "
+            + " INNER JOIN medico me ON me.id = dc.detalle_servicio_med_id "
+            + " INNER JOIN " + clsEspecialidad.TABLA + " E ON me." + ESPECIALIDAD_ID + " = E." + clsEspecialidad.ID
+            + " WHERE Me.disponibilidad = true "
+            + " AND Me.vigencia = true "
+            + " AND c.estado_cita_id = 1 AND c.fecha_cita::DATE >= CURRENT_DATE "
+            + " ORDER BY Me." + ID;
+
+    try {
+        rs = objConectar.consultarBD(strSQL);
+        return rs;
+    } catch (Exception e) {
+        throw new Exception("Error al listar los médicos vigentes y disponibles: " + e.getMessage());
+    }
+}
+
+    
+    
 }

@@ -95,6 +95,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+        mnuCitasPendientesPorMedico = new javax.swing.JMenuItem();
         menuRepServicioMasSolicitado = new javax.swing.JMenuItem();
         jMenuItem24 = new javax.swing.JMenuItem();
         jMenuItem30 = new javax.swing.JMenuItem();
@@ -484,6 +485,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         mnuReportes.add(jMenuItem1);
 
+        mnuCitasPendientesPorMedico.setText("Citas pendientes por médico");
+        mnuCitasPendientesPorMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCitasPendientesPorMedicoActionPerformed(evt);
+            }
+        });
+        jMenu11.add(mnuCitasPendientesPorMedico);
+
         menuRepServicioMasSolicitado.setText("Servicios más solicitados por mes y año");
         menuRepServicioMasSolicitado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -843,6 +852,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_menuRepServicioMasSolicitadoActionPerformed
 
+    private void mnuCitasPendientesPorMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCitasPendientesPorMedicoActionPerformed
+        // TODO add your handling code here:
+        jdRepCitasPendientesPorMedico obj = new jdRepCitasPendientesPorMedico(this, true);
+        obj.setVisible(true);
+        obj.setLocationRelativeTo(this);
+    }//GEN-LAST:event_mnuCitasPendientesPorMedicoActionPerformed
+
     private void login() {
         jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
         objForm.setLocationRelativeTo(this);
@@ -917,7 +933,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuRepServicioMasSolicitado;
     private javax.swing.JMenuItem mnuCambiarUsuario;
     private javax.swing.JMenuItem mnuCita;
+<<<<<<< HEAD
+    private javax.swing.JMenuItem mnuCitasPendientesPorMedico;
+=======
     private javax.swing.JMenu mnuCitas;
+>>>>>>> 072cd59af44c6ee50fc5cc9fd208e72c4f5a6efa
     private javax.swing.JMenuItem mnuCustodia;
     private javax.swing.JMenuItem mnuDueño;
     private javax.swing.JMenuItem mnuEspecialidad;

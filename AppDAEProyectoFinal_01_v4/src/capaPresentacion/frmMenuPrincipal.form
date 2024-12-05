@@ -223,6 +223,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnuCitasPendientesPorMedico">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Citas pendientes por m&#xe9;dico"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuCitasPendientesPorMedicoActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuRepServicioMasSolicitado">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Servicios m&#xe1;s solicitados por mes y a&#xf1;o"/>
