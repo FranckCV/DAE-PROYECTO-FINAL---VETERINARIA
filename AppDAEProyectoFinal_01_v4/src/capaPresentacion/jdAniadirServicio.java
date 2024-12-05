@@ -139,7 +139,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error al llenar medicos", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-    
+
     private void alinearIzquierda(int columna) {
         DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
         leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
@@ -574,18 +574,22 @@ public class jdAniadirServicio extends javax.swing.JDialog {
             int valor = Utilidad.mensajeConfirmarAgregarServicio("Servicio");
 
             if (valor == 0) {
-                String cadena = String.valueOf(tblServicios.getValueAt(tblServicios.getSelectedRow(), 0));
-                String[] codigos = cadena.split(" - ");
-                int codSer = Integer.parseInt(codigos[0].trim());
-                int codMed = Integer.parseInt(codigos[1].trim());
-                String horaEntrada = cboHoraEntrada.getSelectedItem().toString() + ":" + cboMinutosEntrada.getSelectedItem().toString() + ":00 " + cboAMPMEntrada.getSelectedItem().toString();
-                String horaSalida = cboHoraSalida.getSelectedItem().toString() + ":" + cboMinutosSalida.getSelectedItem().toString() + ":00 " + cboAMPMSalida.getSelectedItem().toString();
-                String notaAdicional = txtNota.getText();
-                System.out.println(codSer + " - " + codMed);
-                try {
-                    pasarDatos(codSer, codMed, horaEntrada, horaSalida, notaAdicional);
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(rootPane, "Ocurrió un error", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                if (tblServicios.getSelectedRow() != -1) {
+                    String cadena = String.valueOf(tblServicios.getValueAt(tblServicios.getSelectedRow(), 0));
+                    String[] codigos = cadena.split(" - ");
+                    int codSer = Integer.parseInt(codigos[0].trim());
+                    int codMed = Integer.parseInt(codigos[1].trim());
+                    String horaEntrada = cboHoraEntrada.getSelectedItem().toString() + ":" + cboMinutosEntrada.getSelectedItem().toString() + ":00 " + cboAMPMEntrada.getSelectedItem().toString();
+                    String horaSalida = cboHoraSalida.getSelectedItem().toString() + ":" + cboMinutosSalida.getSelectedItem().toString() + ":00 " + cboAMPMSalida.getSelectedItem().toString();
+                    String notaAdicional = txtNota.getText();
+                    System.out.println(codSer + " - " + codMed);
+                    try {
+                        pasarDatos(codSer, codMed, horaEntrada, horaSalida, notaAdicional);
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(rootPane, "Ocurrió un error", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Por favor seleccionar en la tabla el servicio", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         }
