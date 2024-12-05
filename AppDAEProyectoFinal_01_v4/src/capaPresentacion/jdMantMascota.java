@@ -700,7 +700,7 @@ public class jdMantMascota extends javax.swing.JDialog {
                             Double.parseDouble(txtAltura.getText()),
                             Double.parseDouble(txtPeso.getText()),
                             txtNotaAdicional.getText(),
-                            cbxSexo.getSelectedItem().toString().equals(""),
+                            textoSexo(cbxSexo.getSelectedItem().toString()),
                             chkCastrado.isSelected(),
                             chkDesparasitado.isSelected(),
                             extraerEstado(cmbEstadoSalud.getSelectedItem().toString()),
@@ -735,6 +735,17 @@ public class jdMantMascota extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
+    private boolean textoSexo(String texto) {
+        if (texto.equalsIgnoreCase("Macho")) {
+                        return true;
+
+        } else if (texto.equalsIgnoreCase("Hembra")){
+            return false;
+        }
+        return false;
+        
+    }
+    
     private void tblMascotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMascotaMouseClicked
         // TODO add your handling code here:
         try {
