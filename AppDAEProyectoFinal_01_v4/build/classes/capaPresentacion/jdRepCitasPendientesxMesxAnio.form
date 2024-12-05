@@ -50,9 +50,9 @@
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="205" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
                       <Component id="dtcAnio" min="-2" pref="82" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
                       <Component id="dtcMes" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
