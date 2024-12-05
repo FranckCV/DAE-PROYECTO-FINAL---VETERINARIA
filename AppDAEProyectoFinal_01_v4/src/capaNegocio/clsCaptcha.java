@@ -48,11 +48,11 @@ public class clsCaptcha {
     }
 
     public Boolean validarCaptcha(String captcha, String respuesta) throws Exception {
-        
         if (captcha.equals(respuesta)) {
             return true;
         } else {
             return false;
         }
+        
     }
 }

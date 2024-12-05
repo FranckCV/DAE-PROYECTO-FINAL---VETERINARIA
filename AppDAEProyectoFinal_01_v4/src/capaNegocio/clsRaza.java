@@ -91,7 +91,7 @@ public class clsRaza {
     }
 
     public void registrarRaza(int id, String nom, int especie_id) throws Exception {
-        strSQL = "insert into " + TABLA + " values (" + id + ", '" + nom + "', " + especie_id + ")";
+        strSQL = "insert into " + TABLA + " values (" + id + ", '" + nom + "', " + especie_id + ",true)";
         try {
             objConectar.ejecutarBD(strSQL);
         } catch (Exception e) {
