@@ -527,6 +527,7 @@ public class jdMntEstadoCita extends javax.swing.JDialog {
                 modelo.addRow(registro);
             }
             tblEstadoCita.setModel(modelo);
+            Utilidad.alineacionDerechaColumnaTabla(tblEstadoCita, 0);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }

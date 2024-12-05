@@ -58,7 +58,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
                 modelo.addRow(registro);
             }
             tblEspecies.setModel(modelo);
-            Utilidad.alineacionDerechaColumnaTabla(tblEspecies, 0);
+            Utilidad.alineacionDerechaColumnaTabla(tblEspecies, 0 );
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }

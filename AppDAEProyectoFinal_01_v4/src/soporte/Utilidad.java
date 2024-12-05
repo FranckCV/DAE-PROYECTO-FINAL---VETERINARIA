@@ -5,9 +5,11 @@
 package soporte;
 
 import capaDatos.clsJDBC;
+import com.toedter.calendar.JDateChooser;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -181,10 +183,13 @@ public class Utilidad {
     }
 
     public static String textoFormatoFecha(String fechaOriginal) {
-        LocalDate fecha = LocalDate.parse(fechaOriginal);
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String fechaFormateada = fecha.format(formato);
-        return fechaFormateada;
+        if (!fechaOriginal.isBlank()){
+            LocalDate fecha = LocalDate.parse(fechaOriginal);
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String fechaFormateada = fecha.format(formato);
+            return fechaFormateada;
+        }
+        return null;
     }
     
     public static double numeroFormato2Decimales(double number) {
@@ -593,6 +598,21 @@ public class Utilidad {
         }
     }
 
+    public static void validarFechasFuturas(JDateChooser dateFecha , java.beans.PropertyChangeEvent evt) {
+        if ("date".equals(evt.getPropertyName())) {
+            if (dateFecha.getDate() == null) {
+                return;
+            }
+            Date fechaSeleccionada = dateFecha.getDate();
+            Date fechaActual = new Date();
+
+            if (fechaSeleccionada.after(fechaActual)) {
+                JOptionPane.showMessageDialog(null, "En este campo no es permitido ingresar fechas futuras");
+                dateFecha.setDate(null);
+            }
+        }
+    }
+    
     public static void validacionTabla(JTable table, boolean desactivarReordenacion, boolean desactivarModificacionCabecera, boolean desactivarEdicion) {
         // Desactivar la reordenación de columnas si es necesario
         if (desactivarReordenacion) {
@@ -620,6 +640,22 @@ public class Utilidad {
 
         TableColumn columna = table.getColumnModel().getColumn(columnIndex);
         columna.setPreferredWidth(Math.round(5 / 100 * table.getWidth()));
+        
+        table.getColumnModel().getColumn(columnIndex).setCellRenderer(alignRenderer);
+        table.setRowSelectionAllowed(true);
+        table.setColumnSelectionAllowed(false);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+    
+    public static void alineacionDerechaColumnaTabla(JTable table, int columnIndex , int porcentaje) {
+//        TableCellRenderer renderer = table.getDefaultRenderer(Object.class);
+
+        // Configurar el renderer para la columna específica
+        DefaultTableCellRenderer alignRenderer = new DefaultTableCellRenderer();
+        alignRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        TableColumn columna = table.getColumnModel().getColumn(columnIndex);
+        columna.setPreferredWidth(Math.round(porcentaje / 100 * table.getWidth()));
         
         table.getColumnModel().getColumn(columnIndex).setCellRenderer(alignRenderer);
         table.setRowSelectionAllowed(true);

@@ -3,6 +3,9 @@
 	<property name="ireport.zoom" value="1.6105100000000037"/>
 	<property name="ireport.x" value="0"/>
 <<<<<<< HEAD
+	<property name="ireport.y" value="623"/>
+=======
+<<<<<<< HEAD
 	<property name="ireport.y" value="527"/>
 =======
 <<<<<<< HEAD
@@ -15,6 +18,7 @@
 >>>>>>> 7194a85b5ff263dda0fb4080cf1e4740e27c9a3d
 >>>>>>> 9a1ae227e6f16cc908d9b31c396653bcc71fb788
 >>>>>>> 037bbcc1f12df70696521edb2442eefee73d612e
+>>>>>>> bfac9dc60db1537d3dd1de725c94874ab9216f28
 	<parameter name="parAnioReporte" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
