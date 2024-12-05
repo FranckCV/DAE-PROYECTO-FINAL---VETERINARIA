@@ -7,9 +7,13 @@ package capaPresentacion;
 import capaNegocio.clsMedico;
 import capaNegocio.clsServicio;
 import java.sql.ResultSet;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import soporte.Utilidad;
 
@@ -34,6 +38,9 @@ public class jdAniadirServicio extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
+        this.setTitle("Agregar servicio");
+
+        txtSeleccion.setEditable(false);
         llenarMedico();
         llenarServicio();
         llenarComboHorasMinutosYAMPM();
@@ -62,7 +69,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
             }
             cboServicio.setModel(modeloSer);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al llenar servicios");
+            JOptionPane.showMessageDialog(this, "Error al llenar servicios", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -96,6 +103,26 @@ public class jdAniadirServicio extends javax.swing.JDialog {
         }
     }
 
+    private Date convertirHoraAFecha(String hora) {
+        // Detectamos si es AM o PM
+        String amPm = hora.substring(hora.length() - 2).trim();
+        int horas = Integer.parseInt(hora.substring(0, 2).trim());
+        int minutos = Integer.parseInt(hora.substring(3, 5).trim());
+
+        if (amPm.equalsIgnoreCase("PM") && horas != 12) {
+            horas += 12;
+        } else if (amPm.equalsIgnoreCase("AM") && horas == 12) {
+            horas = 0;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, horas);
+        calendar.set(Calendar.MINUTE, minutos);
+        calendar.set(Calendar.SECOND, 0);
+
+        return calendar.getTime();
+    }
+
     private void llenarMedico() {
         ResultSet rsMed = null;
         DefaultComboBoxModel modeloMed = new DefaultComboBoxModel();
@@ -109,8 +136,26 @@ public class jdAniadirServicio extends javax.swing.JDialog {
             }
             cboMedico.setModel(modeloMed);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al llenar medicos");
+            JOptionPane.showMessageDialog(this, "Error al llenar medicos", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         }
+    }
+    
+    private void alinearIzquierda(int columna) {
+        DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+        leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
+        tblServicios.getColumnModel().getColumn(columna).setCellRenderer(leftRenderer);
+    }
+
+    private void alinearDerecha(int columna) {
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+        tblServicios.getColumnModel().getColumn(columna).setCellRenderer(rightRenderer);
+    }
+
+    private void alinearCentro(int columna) {
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tblServicios.getColumnModel().getColumn(columna).setCellRenderer(centerRenderer);
     }
 
     private void listarDetalleServicios() {
@@ -149,9 +194,12 @@ public class jdAniadirServicio extends javax.swing.JDialog {
             txtTotalProductos.setText(String.valueOf(tblServicios.getRowCount()));
 
             ocultarColumna(tblServicios, 0);
+            alinearDerecha(3);
+            alinearIzquierda(1);
+            alinearIzquierda(2);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }
@@ -167,7 +215,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
             notaAdicionalPasar = notita;
             dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -222,6 +270,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Añadir Servicio");
 
+        tblServicios.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         tblServicios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -240,16 +289,22 @@ public class jdAniadirServicio extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblServicios);
 
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel1.setText("Servicio:");
 
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel2.setText("Medico:");
 
+        jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel6.setText("Total de Elegibles:");
 
+        txtTotalProductos.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtTotalProductos.setText("total");
 
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel4.setText("Seleccion:");
 
+        btnSalir.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,6 +312,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
             }
         });
 
+        cboServicio.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cboServicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboServicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -264,6 +320,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
             }
         });
 
+        btnLimpiar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnLimpiar.setText("Guardar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -271,6 +328,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
             }
         });
 
+        cboMedico.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cboMedico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboMedico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -278,6 +336,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
             }
         });
 
+        txtSeleccion.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtSeleccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSeleccionActionPerformed(evt);
@@ -289,6 +348,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
             }
         });
 
+        cboHoraEntrada.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cboHoraEntrada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboHoraEntrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -296,8 +356,10 @@ public class jdAniadirServicio extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel3.setText("Hora Entrada:");
 
+        cboMinutosEntrada.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cboMinutosEntrada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboMinutosEntrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -305,17 +367,25 @@ public class jdAniadirServicio extends javax.swing.JDialog {
             }
         });
 
+        cboAMPMEntrada.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cboAMPMEntrada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        cboMinutosSalida.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cboMinutosSalida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        cboAMPMSalida.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cboAMPMSalida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        cboHoraSalida.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cboHoraSalida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel8.setText("Hora Salida:");
 
+        jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel5.setText("Nota Adicional:");
+
+        txtNota.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -455,7 +525,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
         try {
             codServicio = objServicio.obtenerID(cboServicio.getSelectedItem().toString());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "No se obtuvo el id de servicio" + e.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "No se obtuvo el id de servicio" + e.getMessage(), "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         }
 
         listarDetalleServicios();
@@ -477,21 +547,46 @@ public class jdAniadirServicio extends javax.swing.JDialog {
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
 
-        int valor = Utilidad.mensajeConfirmarAgregarServicio("Servicio");
+        Date hora1 = convertirHoraAFecha(cboHoraEntrada.getSelectedItem().toString() + ":"
+                + cboMinutosEntrada.getSelectedItem().toString()
+                + cboAMPMEntrada.getSelectedItem().toString());
 
-        if (valor == 0) {
-            String cadena = String.valueOf(tblServicios.getValueAt(tblServicios.getSelectedRow(), 0));
-            String[] codigos = cadena.split(" - ");
-            int codSer = Integer.parseInt(codigos[0].trim());
-            int codMed = Integer.parseInt(codigos[1].trim());
-            String horaEntrada = cboHoraEntrada.getSelectedItem().toString() + ":" + cboMinutosEntrada.getSelectedItem().toString() + ":00 " + cboAMPMEntrada.getSelectedItem().toString();
-            String horaSalida = cboHoraSalida.getSelectedItem().toString() + ":" + cboMinutosSalida.getSelectedItem().toString() + ":00 " + cboAMPMSalida.getSelectedItem().toString();
-            String notaAdicional = txtNota.getText();
-            System.out.println(codSer + " - " + codMed);
-            try {
-                pasarDatos(codSer, codMed, horaEntrada, horaSalida, notaAdicional);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(rootPane, "Cantidad no válida");
+        Date hora2 = convertirHoraAFecha(cboHoraSalida.getSelectedItem().toString() + ":"
+                + cboMinutosSalida.getSelectedItem().toString()
+                + cboAMPMSalida.getSelectedItem().toString());
+
+        Calendar inicioRango = Calendar.getInstance();
+        inicioRango.set(Calendar.HOUR_OF_DAY, 8);
+        inicioRango.set(Calendar.MINUTE, 0);
+        inicioRango.set(Calendar.SECOND, 0);
+
+        Calendar finRango = Calendar.getInstance();
+        finRango.set(Calendar.HOUR_OF_DAY, 20);
+        finRango.set(Calendar.MINUTE, 0);
+        finRango.set(Calendar.SECOND, 0);
+
+        if (hora1.before(inicioRango.getTime()) || hora1.after(finRango.getTime())) {
+            JOptionPane.showMessageDialog(this, "La hora de entrada debe estar entre las 8 AM y las 8 PM.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        } else if (hora2.before(hora1) || (hora2.getTime() - hora1.getTime()) < 15 * 60 * 1000) {
+
+            JOptionPane.showMessageDialog(this, "La hora de salida debe ser al menos 15 minutos después de la de entrada.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            int valor = Utilidad.mensajeConfirmarAgregarServicio("Servicio");
+
+            if (valor == 0) {
+                String cadena = String.valueOf(tblServicios.getValueAt(tblServicios.getSelectedRow(), 0));
+                String[] codigos = cadena.split(" - ");
+                int codSer = Integer.parseInt(codigos[0].trim());
+                int codMed = Integer.parseInt(codigos[1].trim());
+                String horaEntrada = cboHoraEntrada.getSelectedItem().toString() + ":" + cboMinutosEntrada.getSelectedItem().toString() + ":00 " + cboAMPMEntrada.getSelectedItem().toString();
+                String horaSalida = cboHoraSalida.getSelectedItem().toString() + ":" + cboMinutosSalida.getSelectedItem().toString() + ":00 " + cboAMPMSalida.getSelectedItem().toString();
+                String notaAdicional = txtNota.getText();
+                System.out.println(codSer + " - " + codMed);
+                try {
+                    pasarDatos(codSer, codMed, horaEntrada, horaSalida, notaAdicional);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(rootPane, "Cantidad no válida", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         }
     }//GEN-LAST:event_btnLimpiarActionPerformed
