@@ -384,12 +384,29 @@ public class jdDetalleVacunacion extends javax.swing.JDialog {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if (tblDetVac1.getSelectedRow() != -1) {
+        if (btnRe.getText().equals("Guardar Datos")) {
+            try {
+                listarDetalle_V();
+            limpiarControles();
+                btnRe.setText("Asignar Vacunación");
+                btnVac.setEnabled(false);
+                btnMas.setEnabled(false);
+                dtcFechaNacimiento.setEnabled(false);
+                btnMas1.setEnabled(true);
+                jTextField1.setEditable(true);
+                btnLimpiar.setEnabled(true);
+                btnEliminar.setText("Eliminar Asignación");
+                btnEliminar.setEnabled(true);
+                txtObser.setEditable(true);
+            } catch (Exception ex) {
+                Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (tblDetVac1.getSelectedRow() != -1) {
             eliminarAsignacion();
             listarDetalle_V();
             limpiarControles();
         } else {
-            JOptionPane.showMessageDialog(this, "Seleccione una fila de la 2da tabla para hacer esta operacion");
+            JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla Vacunación para hacer esta operacion");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -408,18 +425,21 @@ public class jdDetalleVacunacion extends javax.swing.JDialog {
         );
         if (respuesta == 0) { // Opción "Sí"
             btnRe.setText("Guardar Datos");
+            
             btnVac.setEnabled(true);
             btnMas.setEnabled(true);
             txtObser.setEnabled(true);
             dtcFechaNacimiento.setEnabled(true);
             btnLimpiar.setEnabled(false);
-            btnEliminar.setEnabled(false);
+            btnEliminar.setText("Cancelar");
             btnMas1.setEnabled(false);
             jTextField1.setEnabled(false);
         } else if (respuesta == 1) { // Opción "No"
             limpiarControles();
             btnVac.setEnabled(false);
             btnRe.setText("Asignar Vacuna");
+                        btnEliminar.setText("Eliminar Custodia");
+
             btnMas.setEnabled(false);
             dtcFechaNacimiento.setEnabled(false);
             btnLimpiar.setEnabled(true);
@@ -468,6 +488,8 @@ public class jdDetalleVacunacion extends javax.swing.JDialog {
                 btnEliminar.setEnabled(true);
                 btnMas1.setEnabled(true);
                 txtObser.setEnabled(false);
+                            btnEliminar.setText("Eliminar Asignación");
+
                 jTextField1.setEnabled(true);
                 listarDetalle_V();
             } catch (Exception e) {
@@ -652,8 +674,8 @@ public class jdDetalleVacunacion extends javax.swing.JDialog {
                     datosMascota.append("").append(rs.getString("nombre"))
                             .append(" | ").append(rs.getString("fecha_nacimiento"));
                     jLabel1.setText(datosMascota.toString());
-                     codigoVacuna = null; // Resetea el código de la vacuna
-                jLabel2.setText("");
+                    codigoVacuna = null; // Resetea el código de la vacuna
+                    jLabel2.setText("");
                 } else {
                     jLabel1.setText("No se encontraron datos para el código: " + codMas);
                 }

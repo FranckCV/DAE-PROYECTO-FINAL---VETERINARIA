@@ -4,6 +4,8 @@
  */
 package capaPresentacion;
 
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import soporte.Utilidad;
 
@@ -35,6 +37,26 @@ public class jdColocarHora extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
+    }
+
+    private Date convertirHoraAFecha(String hora) {
+        // Detectamos si es AM o PM
+        String amPm = hora.substring(hora.length() - 2).trim();
+        int horas = Integer.parseInt(hora.substring(0, 2).trim());
+        int minutos = Integer.parseInt(hora.substring(3, 5).trim());
+
+        if (amPm.equalsIgnoreCase("PM") && horas != 12) {
+            horas += 12;
+        } else if (amPm.equalsIgnoreCase("AM") && horas == 12) {
+            horas = 0;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, horas);
+        calendar.set(Calendar.MINUTE, minutos);
+        calendar.set(Calendar.SECOND, 0);
+
+        return calendar.getTime();
     }
 
     private void llenarComboHorasMinutosYAMPM() {
@@ -222,16 +244,42 @@ public class jdColocarHora extends javax.swing.JDialog {
     }//GEN-LAST:event_cboMinutosEntradaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int valor = Utilidad.mensajeConfirmarAgregarServicio("Servicio");
 
-        if (valor == 0) {
-            String horaEntrada = cboHoraEntrada.getSelectedItem().toString() + ":" + cboMinutosEntrada.getSelectedItem().toString() + ":00 " + cboAMPMEntrada.getSelectedItem().toString();
-            String horaSalida = cboHoraSalida.getSelectedItem().toString() + ":" + cboMinutosSalida.getSelectedItem().toString() + ":00 " + cboAMPMSalida.getSelectedItem().toString();
-            String notaAdicional = txtNota.getText();
-            try {
-                pasarDatos(horaEntrada, horaSalida, notaAdicional);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(rootPane, "Cantidad no válida");
+        Date hora1 = convertirHoraAFecha(cboHoraEntrada.getSelectedItem().toString() + ":"
+                + cboMinutosEntrada.getSelectedItem().toString()
+                + cboAMPMEntrada.getSelectedItem().toString());
+
+        Date hora2 = convertirHoraAFecha(cboHoraSalida.getSelectedItem().toString() + ":"
+                + cboMinutosSalida.getSelectedItem().toString()
+                + cboAMPMSalida.getSelectedItem().toString());
+
+        Calendar inicioRango = Calendar.getInstance();
+        inicioRango.set(Calendar.HOUR_OF_DAY, 8);
+        inicioRango.set(Calendar.MINUTE, 0);
+        inicioRango.set(Calendar.SECOND, 0);
+
+        Calendar finRango = Calendar.getInstance();
+        finRango.set(Calendar.HOUR_OF_DAY, 20);
+        finRango.set(Calendar.MINUTE, 0);
+        finRango.set(Calendar.SECOND, 0);
+
+        if (hora1.before(inicioRango.getTime()) || hora1.after(finRango.getTime())) {
+            JOptionPane.showMessageDialog(this, "La hora de entrada debe estar entre las 8 AM y las 8 PM.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        } else if (hora2.before(hora1) || (hora2.getTime() - hora1.getTime()) < 15 * 60 * 1000) {
+
+            JOptionPane.showMessageDialog(this, "La hora de salida debe ser al menos 15 minutos después de la de entrada.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            int valor = Utilidad.mensajeConfirmarAgregarServicio("Servicio");
+
+            if (valor == 0) {
+                String horaEntrada = cboHoraEntrada.getSelectedItem().toString() + ":" + cboMinutosEntrada.getSelectedItem().toString() + ":00 " + cboAMPMEntrada.getSelectedItem().toString();
+                String horaSalida = cboHoraSalida.getSelectedItem().toString() + ":" + cboMinutosSalida.getSelectedItem().toString() + ":00 " + cboAMPMSalida.getSelectedItem().toString();
+                String notaAdicional = txtNota.getText();
+                try {
+                    pasarDatos(horaEntrada, horaSalida, notaAdicional);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(rootPane, "Cantidad no válida");
+                }
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed

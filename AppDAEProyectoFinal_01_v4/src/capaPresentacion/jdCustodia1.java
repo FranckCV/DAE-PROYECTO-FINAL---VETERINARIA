@@ -41,7 +41,7 @@ public class jdCustodia1 extends javax.swing.JDialog {
         super(parent, modal);
         this.objagregarMas = new jdCustodiaMasc((Frame) SwingUtilities.getWindowAncestor(this), true);
         initComponents();
-        listarCustodia();
+//        listarCustodia();
         btnDue.setEnabled(false);
         btnMas.setEnabled(false);
         dtcFechaNacimiento.setEnabled(false);
@@ -51,25 +51,32 @@ public class jdCustodia1 extends javax.swing.JDialog {
     private void listarCustodia() throws SQLException {
         ResultSet rsMas = null;
         DefaultTableModel modeloM = new DefaultTableModel();
-        modeloM.addColumn("Id Dueño");
+        modeloM.addColumn("ID Dueño");
         modeloM.addColumn("Nombre Dueño");
-        modeloM.addColumn("Id Mascota");
+        modeloM.addColumn("ID Mascota");
         modeloM.addColumn("Nombre Mascota");
+        modeloM.addColumn("Clase Mascota");
         modeloM.addColumn("Fecha Adopción");
         tblCustodia.setModel(modeloM);
+        Utilidad.alineacionDerechaColumnaTabla(tblCustodia, 0);
+        Utilidad.alineacionDerechaColumnaTabla(tblCustodia, 2);
+        Utilidad.alineacionDerechaColumnaTabla(tblCustodia, 5);
         try {
             rsMas = objCus.listarCustodia();  // Obtener el ResultSet
             while (rsMas.next()) {
-                String ado = rsMas.getDate("fa") != null ? rsMas.getDate("fa").toString() : null;
+                String ado = rsMas.getDate("fa") != null ? rsMas.getString("fa") : "";
                 modeloM.addRow(new Object[]{
                     rsMas.getInt("id_due"),
-                    rsMas.getString("due_mas"),
+                    rsMas.getString("due_mas")+" "+rsMas.getString("due_app")+" "+rsMas.getString("due_apm"),
                     rsMas.getInt("id_mas"),
                     rsMas.getString("nom_mas"),
-                    ado,});
+                    rsMas.getString("esp_nom") + " - " + rsMas.getString("raz_nom"),
+                    Utilidad.textoFormatoFecha(ado),});
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al listar las custodias: " + e.getMessage());
+            System.out.println(e);
+            System.out.println(e.getLocalizedMessage());
         } finally {
             if (rsMas != null) {
                 rsMas.close();
@@ -104,8 +111,6 @@ public class jdCustodia1 extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         btnRe1 = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnAgregarMas = new javax.swing.JButton();
-        btnRegistrar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         txtCus = new javax.swing.JTextField();
         btnCustodia = new javax.swing.JButton();
@@ -117,12 +122,12 @@ public class jdCustodia1 extends javax.swing.JDialog {
             }
         });
 
-        jPanel3.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel3.setBackground(new java.awt.Color(221, 221, 255));
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel3.setText("Fecha Adopción:");
 
-        dtcFechaNacimiento.setDateFormatString("yyyy-MM-dd");
+        dtcFechaNacimiento.setDateFormatString("dd/MM/yyyy");
         dtcFechaNacimiento.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         dtcFechaNacimiento.setOpaque(false);
         dtcFechaNacimiento.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -178,20 +183,10 @@ public class jdCustodia1 extends javax.swing.JDialog {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnDue))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(60, 60, 60)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -199,20 +194,29 @@ public class jdCustodia1 extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnMas))
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLimpiar))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addComponent(btnLimpiar)
+                        .addGap(16, 16, 16))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDue)
+                            .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnLimpiar)
+                    .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(dtcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnDue)
                             .addComponent(btnMas)
@@ -221,7 +225,8 @@ public class jdCustodia1 extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnLimpiar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -236,10 +241,10 @@ public class jdCustodia1 extends javax.swing.JDialog {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator2)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(89, 89, 89)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel9)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(133, 133, 133))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,10 +282,10 @@ public class jdCustodia1 extends javax.swing.JDialog {
         });
         jScrollPane3.setViewportView(tblCustodia);
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(221, 221, 255));
 
         btnRe1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        btnRe1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/flecha derecha.png"))); // NOI18N
+        btnRe1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/veterinario.png"))); // NOI18N
         btnRe1.setText("Asignar Custodia");
         btnRe1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -297,24 +302,6 @@ public class jdCustodia1 extends javax.swing.JDialog {
             }
         });
 
-        btnAgregarMas.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        btnAgregarMas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/veterinario.png"))); // NOI18N
-        btnAgregarMas.setText("Agregar Mascota");
-        btnAgregarMas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarMasActionPerformed(evt);
-            }
-        });
-
-        btnRegistrar.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/veterinario.png"))); // NOI18N
-        btnRegistrar.setText("Agregar Dueño");
-        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -322,29 +309,22 @@ public class jdCustodia1 extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRe1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAgregarMas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 5, Short.MAX_VALUE))
+                    .addComponent(btnRe1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(btnRe1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(btnAgregarMas, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnRegistrar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel8.setText("Número Documento Dueño:");
+        jLabel8.setText("Doc. Identidad del Dueño:");
 
         txtCus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -377,72 +357,81 @@ public class jdCustodia1 extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addGap(142, 142, 142)
+                        .addGap(117, 117, 117)
                         .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCus, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCustodia))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCus, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCustodia)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(15, 15, 15))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel8)
-                                .addComponent(txtCus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnCustodia))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel8)
+                    .addComponent(txtCus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCustodia))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        try {
-            jdMantDuenio objForm = new jdMantDuenio(null, true);
-            objForm.setLocationRelativeTo(this);
-            objForm.setVisible(true);
-            dispose();
-        } catch (Exception ex) {
-            Logger.getLogger(jdCustodia1.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        dispose();
-    }//GEN-LAST:event_btnRegistrarActionPerformed
-
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-    if (tblCustodia.getSelectedRow() != -1) {
-        try {
-            eliminarAsignacion();
-            listarCustodia();
-            limpiarCamposCustodia();
-        } catch (SQLException ex) {
-            Logger.getLogger(jdCustodia1.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        if (btnRe1.getText().equals("Guardar Datos")) {
+            try {
+                listarCustodia();
+                limpiarCamposCustodia();
+                limpiarCamposCustodia();
+                btnRe1.setText("Asignar Custodia");
+                btnDue.setEnabled(false);
+                btnMas.setEnabled(false);
+                dtcFechaNacimiento.setEnabled(false);
+//                btnAgregarMas.setEnabled(true);
+//                btnRegistrar.setEnabled(true);
+                btnLimpiar.setEnabled(true);
+                btnEliminar.setText("Eliminar Custodia");
+                btnEliminar.setEnabled(true);
+                btnCustodia.setEnabled(true);
+                txtCus.setEditable(true);
+            } catch (Exception ex) {
+                Logger.getLogger(jdMantMascota.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (tblCustodia.getSelectedRow() != -1) {
+            try {
+                eliminarAsignacion();
+                listarCustodia();
+                limpiarCamposCustodia();
+            } catch (SQLException ex) {
+                Logger.getLogger(jdCustodia1.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         } else {
-            JOptionPane.showMessageDialog(this, "Seleccione una fila de la 2da tabla para hacer esta operacion");
+            JOptionPane.showMessageDialog(this, "Seleccione una fila de la las custodias disponibles para hacer esta operacion");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -454,18 +443,6 @@ public class jdCustodia1 extends javax.swing.JDialog {
             Logger.getLogger(jdCustodia1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnLimpiarActionPerformed
-
-    private void btnAgregarMasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMasActionPerformed
-        try {
-            jdMantMascota objForm = new jdMantMascota(null, true);
-            objForm.setLocationRelativeTo(this);
-            objForm.setVisible(true);
-            dispose();
-        } catch (Exception ex) {
-
-        }
-        dispose();
-    }//GEN-LAST:event_btnAgregarMasActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
@@ -546,7 +523,7 @@ public class jdCustodia1 extends javax.swing.JDialog {
     }//GEN-LAST:event_txtCusActionPerformed
 
     private void btnRe1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRe1ActionPerformed
-            Object[] opciones = {"Sí", "No"};
+        Object[] opciones = {"Sí", "No"};
         int respuesta = JOptionPane.showOptionDialog(
                 null,
                 "¿Seguro que el dueño desea obtener la información de la mascota?",
@@ -559,23 +536,25 @@ public class jdCustodia1 extends javax.swing.JDialog {
         );
         if (respuesta == 0) { // Opción "Sí"
             btnRe1.setText("Guardar Datos");
+            btnEliminar.setText("Cancelar");
             btnDue.setEnabled(true);
             btnMas.setEnabled(true);
             dtcFechaNacimiento.setEnabled(true);
-            btnAgregarMas.setEnabled(false);
-            btnRegistrar.setEnabled(false);
+//            btnAgregarMas.setEnabled(false);
+//            btnRegistrar.setEnabled(false);
             btnLimpiar.setEnabled(false);
-            btnEliminar.setEnabled(false);
+            // btnEliminar.setEnabled(false);
             btnCustodia.setEnabled(false);
             txtCus.setEditable(false);
         } else if (respuesta == 1) { // Opción "No"
             limpiarCamposCustodia();
             btnRe1.setText("Asignar Custodia");
             btnDue.setEnabled(false);
+            btnEliminar.setText("Eliminar Custodia");
             btnMas.setEnabled(false);
             dtcFechaNacimiento.setEnabled(false);
-            btnAgregarMas.setEnabled(true);
-            btnRegistrar.setEnabled(true);
+//            btnAgregarMas.setEnabled(true);
+//            btnRegistrar.setEnabled(true);
             btnLimpiar.setEnabled(true);
             btnEliminar.setEnabled(true);
             btnCustodia.setEnabled(true);
@@ -597,8 +576,8 @@ public class jdCustodia1 extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Error: Ya existe registro para esta combinación de Dueño y Mascota.");
                     limpiarCamposCustodia();
                     btnRe1.setText("Asignar Custodia");
-                    btnAgregarMas.setEnabled(true);
-                    btnRegistrar.setEnabled(true);
+//                    btnAgregarMas.setEnabled(true);
+//                    btnRegistrar.setEnabled(true);
                     btnLimpiar.setEnabled(true);
                     btnCustodia.setEnabled(true);
                     txtCus.setEditable(true);
@@ -609,9 +588,10 @@ public class jdCustodia1 extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Custodia asignada con éxito, ahora el dueño tendrá acceso a toda la información de su mascota");
                 limpiarCamposCustodia();
                 btnRe1.setText("Asignar Custodia");
-                btnAgregarMas.setEnabled(true);
-                btnRegistrar.setEnabled(true);
+//                btnAgregarMas.setEnabled(true);
+//                btnRegistrar.setEnabled(true);
                 btnLimpiar.setEnabled(true);
+                btnEliminar.setText("Eliminar Custodia");
                 btnEliminar.setEnabled(true);
                 btnCustodia.setEnabled(true);
                 txtCus.setEditable(true);
@@ -656,8 +636,7 @@ public class jdCustodia1 extends javax.swing.JDialog {
             jdCustodiaMasc objFormM = new jdCustodiaMasc(null, true);
             objFormM.setLocationRelativeTo(this);
             objFormM.setVisible(true);
-            
-            
+
             Integer mascota = objFormM.getCod();
             if (mascota != null && mascota != 0) {
                 codigoMascota = mascota;
@@ -669,7 +648,7 @@ public class jdCustodia1 extends javax.swing.JDialog {
             }
         } catch (Exception ex) {
         }
-        
+
 
     }//GEN-LAST:event_btnMasActionPerformed
 
@@ -733,53 +712,51 @@ public class jdCustodia1 extends javax.swing.JDialog {
             jLabel2.setText("Código de la mascota inválido.");
         }
     }
-    
-private void eliminarAsignacion() {
-    int fila = tblCustodia.getSelectedRow();
-    if (fila == -1) {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar un registro para eliminar.");
-        return; // Detiene el flujo si no hay fila seleccionada.
-    }
 
-    try {
-        Object valorColumna1 = tblCustodia.getValueAt(fila, 1);
-        Object valorColumna2 = tblCustodia.getValueAt(fila, 2);
-        Object valorColumna0 = tblCustodia.getValueAt(fila, 0);
-
-        if ( valorColumna2 == null || valorColumna0 == null) {
-            JOptionPane.showMessageDialog(this, "El registro seleccionado tiene datos incompletos.");
-            return;
+    private void eliminarAsignacion() {
+        int fila = tblCustodia.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un registro para eliminar.");
+            return; // Detiene el flujo si no hay fila seleccionada.
         }
 
-        if (Utilidad.validarEliminacionForanea("CUSTODIA", fila)) {
-            JOptionPane.showMessageDialog(this,
-                "Hay datos externos asociados al servicio asignado \"" +
-                valorColumna1.toString() +
-                "\".\nConsidere cambiar su disponibilidad o vigencia para que ya no pueda ser usado."
-            );
-        } else {
-            objCus.eliminarCustodia(
-                Integer.parseInt(valorColumna2.toString()),
-                Integer.parseInt(valorColumna0.toString())
-            );
-            JOptionPane.showMessageDialog(this, "Eliminación exitosa.");
+        try {
+            Object valorColumna1 = tblCustodia.getValueAt(fila, 1);
+            Object valorColumna2 = tblCustodia.getValueAt(fila, 2);
+            Object valorColumna0 = tblCustodia.getValueAt(fila, 0);
+
+            if (valorColumna2 == null || valorColumna0 == null) {
+                JOptionPane.showMessageDialog(this, "El registro seleccionado tiene datos incompletos.");
+                return;
+            }
+
+            if (Utilidad.validarEliminacionForanea("CUSTODIA", fila)) {
+                JOptionPane.showMessageDialog(this,
+                        "Hay datos externos asociados en la custodia \""
+                        + valorColumna1.toString()
+                        + "\".\nConsidere cambiar la vigencia para que ya no pueda ser usada."
+                );
+            } else {
+                objCus.eliminarCustodia(
+                        Integer.parseInt(valorColumna2.toString()),
+                        Integer.parseInt(valorColumna0.toString())
+                );
+                JOptionPane.showMessageDialog(this, "Eliminación exitosa.");
+            }
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(this, "Error de formato en los datos: " + nfe.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage());
         }
-    } catch (NumberFormatException nfe) {
-        JOptionPane.showMessageDialog(this, "Error de formato en los datos: " + nfe.getMessage());
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage());
     }
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregarMas;
     private javax.swing.JButton btnCustodia;
     private javax.swing.JButton btnDue;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnMas;
     private javax.swing.JButton btnRe1;
-    private javax.swing.JButton btnRegistrar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;

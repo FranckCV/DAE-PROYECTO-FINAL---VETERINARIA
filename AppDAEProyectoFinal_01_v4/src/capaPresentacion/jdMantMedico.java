@@ -873,7 +873,9 @@ public class jdMantMedico extends javax.swing.JDialog {
         modelo.addColumn(columnName_Vigencia);
         modelo.addColumn(columnName_Especialidad);
         modelo.addColumn(columnName_CantServicios);
-        tblMedico.setModel(modelo);        
+        tblMedico.setModel(modelo);
+        Utilidad.alineacionDerechaColumnaTabla(tblMedico, 0);
+        Utilidad.alineacionDerechaColumnaTabla(tblMedico, 10);
         try {
             rsDato = objTabla.listarMedicosconServicios();
             while (rsDato.next()){
@@ -1250,6 +1252,8 @@ public class jdMantMedico extends javax.swing.JDialog {
         modelo.addColumn(columnName_CostoServicio);
         modelo.addColumn(columnName_DisponibilidadDetServicio);
         tblServiciosxMedico.setModel(modelo);        
+        Utilidad.alineacionDerechaColumnaTabla(tblServiciosxMedico, 0);
+        Utilidad.alineacionDerechaColumnaTabla(tblServiciosxMedico, 2);
         try {
             rsDato = objDetalleServicio.listarServiciosxMedico(Integer.parseInt(txtID.getText()));
             while (rsDato.next()){

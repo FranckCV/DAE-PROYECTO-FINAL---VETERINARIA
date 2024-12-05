@@ -29,7 +29,6 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="txtNombreMedicamento" alignment="0" max="32767" attributes="0"/>
                   <Component id="jScrollPane1" alignment="0" pref="422" max="32767" attributes="0"/>
-                  <Component id="btnBusqueda" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -41,10 +40,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txtNombreMedicamento" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="355" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="384" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnBusqueda" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -53,14 +50,6 @@
     <Component class="javax.swing.JTextField" name="txtNombreMedicamento">
       <Events>
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNombreMedicamentoKeyReleased"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnBusqueda">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="B&#xfa;squeda Avanzada"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBusquedaActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">

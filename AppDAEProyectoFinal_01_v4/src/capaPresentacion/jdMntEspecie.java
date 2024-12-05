@@ -30,6 +30,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
         btnEliminar.setText(Utilidad.BTN_ELIMINAR);
         chkVigencia.setEnabled(false);
         chkVigencia.setSelected(true);
+        Utilidad.alineacionDerechaColumnaTabla(tblEspecies , 0);
         Utilidad.validacionTabla(tblEspecies, modal, rootPaneCheckingEnabled, modal);
         txtId.requestFocus();
     }
@@ -57,6 +58,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
                 modelo.addRow(registro);
             }
             tblEspecies.setModel(modelo);
+            Utilidad.alineacionDerechaColumnaTabla(tblEspecies, 0 );
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -152,6 +154,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
             }
         });
 
+        tblEspecies.setCellSelectionEnabled(true);
         tblEspecies.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblEspeciesMouseClicked(evt);
@@ -289,7 +292,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
                         .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addComponent(btnDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -299,7 +302,7 @@ public class jdMntEspecie extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(223, 223, 223))
+                .addGap(224, 224, 224))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

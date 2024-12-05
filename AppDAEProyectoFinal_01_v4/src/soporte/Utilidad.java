@@ -5,9 +5,11 @@
 package soporte;
 
 import capaDatos.clsJDBC;
+import com.toedter.calendar.JDateChooser;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -19,7 +21,12 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.text.NumberFormatter;
 
 /**
@@ -175,12 +182,27 @@ public class Utilidad {
         }
     }
 
-//    Texto a Fechas
     public static String textoFormatoFecha(String fechaOriginal) {
-        LocalDate fecha = LocalDate.parse(fechaOriginal);
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String fechaFormateada = fecha.format(formato);
-        return fechaFormateada;
+        if (!fechaOriginal.isBlank()){
+            LocalDate fecha = LocalDate.parse(fechaOriginal);
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String fechaFormateada = fecha.format(formato);
+            return fechaFormateada;
+        }
+        return null;
+    }
+    
+    public static double numeroFormato2Decimales(double number) {
+        return Math.round(number * 100.0) / 100.0;
+    }
+
+    public static String numeroFormato2Decimales(String numberText) {
+        try {
+            double number = Double.parseDouble(numberText);
+            return String.format("%.2f", number);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("El texto proporcionado no es un número válido: " + numberText);
+        }
     }
 
 //    Validaciones de Elementos de Interfaz
@@ -256,25 +278,6 @@ public class Utilidad {
         return valor;
     }
 
-//    public static void validarCampoTextoSoloLetras(java.awt.event.KeyEvent evt) {
-//        int key = evt.getKeyChar();
-//
-//        boolean mayusculas = key >= 65 && key <= 90;
-//        boolean minusculas = key >= 97 && key <= 122;
-//        boolean tildes = 
-//                (key >= 160 && key <= 163) || // á í ó ú 
-//                key == 130 || key == 144 || // é É
-//                key == 181 || // Á
-//                key == 224 || // Ó
-//                key == 233 || // Ú
-//                key == 239; // ´
-//        boolean enie = key == 164 || key == 165;
-//        boolean espacio = key == 32;
-//
-//        if (!( minusculas || mayusculas || espacio || tildes || enie )) {
-//            evt.consume();
-//        }
-//    }
     public static void validarCampoTextoSoloLetras(java.awt.event.KeyEvent evt) {
         char key = evt.getKeyChar();
 
@@ -309,6 +312,13 @@ public class Utilidad {
         );
     }
 
+    public static void mensajeVerificarCamposLlenos() {
+        JOptionPane.showMessageDialog(
+                null,
+                "Debe llenar todos los campos para continuar esta operación"
+        );
+    }
+    
     public static int mensajeConfirmarRegistro(String entidad, int id, String nombre) {
         int valor = JOptionPane.showOptionDialog(
                 null,
@@ -327,6 +337,20 @@ public class Utilidad {
         int valor = JOptionPane.showOptionDialog(
                 null,
                 "¿Desea agregar algún " + entidad.toLowerCase() + " ?",
+                "Confirmación ",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesAgregarMedicamentos,
+                opcionesAgregarMedicamentos[0]
+        );
+        return valor;
+    }
+    
+    public static int mensajeConfirmar() {
+        int valor = JOptionPane.showOptionDialog(
+                null,
+                "¿Los datos son correctos?",
                 "Confirmación ",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
@@ -542,49 +566,6 @@ public class Utilidad {
         return false;
     }
 
-//    DESCARTADAS (no borrar aun)
-//    public static void mostrarInterfazjDialog(String nombreClase, JFrame parent) {
-//        try {
-//            Class<?> clase = Class.forName(nombreClase);
-//
-//            if (!JDialog.class.isAssignableFrom(clase)) {
-//                throw new IllegalArgumentException("La clase proporcionada no es un JDialog válido.");
-//            }
-//
-//            JDialog objForm = (JDialog) clase
-//                    .getConstructor(java.awt.Frame.class, boolean.class)
-//                    .newInstance(parent, true);
-//
-//            objForm.setLocationRelativeTo(parent);
-//            objForm.setVisible(true);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            System.out.println("Error al intentar abrir el diálogo: " + e.getMessage());
-//        }
-//    }
-//    private void mostrarInterfazjDialog(JDialog interfaz){
-//        Class clase = interfaz.getClass();
-//        clase objForm = new clase(this, true);
-//        objForm.setLocationRelativeTo(this);
-//        objForm.setVisible(true);
-//    }
-//    public static String mensajeErrorEliminacionForanea(Exception e, String entidad, String nombre) {
-//        String mensaje = e.getMessage();
-//        String[] palabras = {
-//            "referida desde la tabla",
-//            "foránea",
-//            "fk",
-//            "ERROR: update o delete en"
-//        };
-//
-//        for (String keyword : palabras) {
-//            if (!mensaje.contains(keyword)) {
-//                return mensaje;
-//            }
-//        }
-//        return "Hay datos externos asociados a " + entidad + " \"" + nombre + "\".\n"
-//                + "Considere cambiar su disponibilidad o vigencia para que ya no pueda ser usado. ";
-//    }
     //BLOQUEAR BOTONES
     public static void desactivarBotones(JButton botonActivo, JButton... botones) {
         for (JButton boton : botones) {
@@ -631,6 +612,21 @@ public class Utilidad {
         }
     }
 
+    public static void validarFechasFuturas(JDateChooser dateFecha , java.beans.PropertyChangeEvent evt) {
+        if ("date".equals(evt.getPropertyName())) {
+            if (dateFecha.getDate() == null) {
+                return;
+            }
+            Date fechaSeleccionada = dateFecha.getDate();
+            Date fechaActual = new Date();
+
+            if (fechaSeleccionada.after(fechaActual)) {
+                JOptionPane.showMessageDialog(null, "En este campo no es permitido ingresar fechas futuras");
+                dateFecha.setDate(null);
+            }
+        }
+    }
+    
     public static void validacionTabla(JTable table, boolean desactivarReordenacion, boolean desactivarModificacionCabecera, boolean desactivarEdicion) {
         // Desactivar la reordenación de columnas si es necesario
         if (desactivarReordenacion) {
@@ -649,6 +645,51 @@ public class Utilidad {
         }
     }
 
+    public static void alineacionDerechaColumnaTabla(JTable table, int columnIndex) {
+//        TableCellRenderer renderer = table.getDefaultRenderer(Object.class);
+
+        // Configurar el renderer para la columna específica
+        DefaultTableCellRenderer alignRenderer = new DefaultTableCellRenderer();
+        alignRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        TableColumn columna = table.getColumnModel().getColumn(columnIndex);
+        columna.setPreferredWidth(Math.round(5 / 100 * table.getWidth()));
+        
+        table.getColumnModel().getColumn(columnIndex).setCellRenderer(alignRenderer);
+        table.setRowSelectionAllowed(true);
+        table.setColumnSelectionAllowed(false);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+    
+    public static void alineacionDerechaColumnaTabla(JTable table, int columnIndex , int porcentaje) {
+//        TableCellRenderer renderer = table.getDefaultRenderer(Object.class);
+
+        // Configurar el renderer para la columna específica
+        DefaultTableCellRenderer alignRenderer = new DefaultTableCellRenderer();
+        alignRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        TableColumn columna = table.getColumnModel().getColumn(columnIndex);
+        columna.setPreferredWidth(Math.round(porcentaje / 100 * table.getWidth()));
+        
+        table.getColumnModel().getColumn(columnIndex).setCellRenderer(alignRenderer);
+        table.setRowSelectionAllowed(true);
+        table.setColumnSelectionAllowed(false);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+    
+    public static void tamañoColumnaTablaxPos(JTable table, int columnIndex , int ancho) {
+        table.getColumnModel().getColumn(columnIndex).setPreferredWidth(ancho);
+    }
+    
+//   
+//     public static void tamañoColumnaTablaxNombre(JTable table, String nombreColumn , int ancho) {
+//        table.getColumnModel().getColumn(0).getHeaderValue().toString().equals(nombreColumn);
+//}
+//    
+    
+    
+    
+    
     public static void atajoTecladoBoton(JDialog dialog, JButton boton, char tecla, String nombreAccion) {
         // Para ejecutar el botón con CTRL + tecla
         dialog.getRootPane().getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW)
@@ -661,4 +702,9 @@ public class Utilidad {
             }
         });
     }
+
+
+
+
+
 }
