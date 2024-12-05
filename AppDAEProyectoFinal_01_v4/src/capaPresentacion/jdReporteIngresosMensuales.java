@@ -28,7 +28,7 @@ public class jdReporteIngresosMensuales extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         dimension = report.getPreferredSize();
-
+        mostrar();
     }
 
     /**
@@ -42,12 +42,12 @@ public class jdReporteIngresosMensuales extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         report = new javax.swing.JDesktopPane();
-        txtAnio = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
+        txtAnio = new com.toedter.calendar.JYearChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -57,40 +57,29 @@ public class jdReporteIngresosMensuales extends javax.swing.JDialog {
         report.setLayout(reportLayout);
         reportLayout.setHorizontalGroup(
             reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 896, Short.MAX_VALUE)
+            .addGap(0, 887, Short.MAX_VALUE)
         );
         reportLayout.setVerticalGroup(
             reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 402, Short.MAX_VALUE)
+            .addGap(0, 397, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(report)
-                .addGap(12, 12, 12))
+                .addComponent(report, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(21, 21, 21)
                 .addComponent(report, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(16, Short.MAX_VALUE))
         );
-
-        txtAnio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAnioActionPerformed(evt);
-            }
-        });
-        txtAnio.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtAnioKeyTyped(evt);
-            }
-        });
 
         jLabel1.setText("Año:");
 
@@ -128,6 +117,12 @@ public class jdReporteIngresosMensuales extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        txtAnio.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txtAnioPropertyChange(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -136,15 +131,14 @@ public class jdReporteIngresosMensuales extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(113, 113, 113)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 573, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(24, 24, 24)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jButton1))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -152,10 +146,11 @@ public class jdReporteIngresosMensuales extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jLabel1))
+                    .addComponent(txtAnio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
@@ -164,27 +159,14 @@ public class jdReporteIngresosMensuales extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtAnioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtAnioActionPerformed
-
-    private void txtAnioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAnioKeyTyped
-        String texto = txtAnio.getText();
-
-        char caracter = evt.getKeyChar();
-        if (!Character.isDigit(caracter)) {
-            evt.consume();
-        }
-
-        if (texto.length() >= 4) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtAnioKeyTyped
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
         mostrar();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtAnioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtAnioPropertyChange
+        // TODO add your handling code here:
+//        mostrar();
+    }//GEN-LAST:event_txtAnioPropertyChange
     private void mostrar() {
         try {
             Container contenedor = this.report;
@@ -192,7 +174,7 @@ public class jdReporteIngresosMensuales extends javax.swing.JDialog {
             contenedor.removeAll();
             Map parametros = new HashMap();
 
-            parametros.put("parAnioReporte", Integer.parseInt(txtAnio.getText()));
+            parametros.put("parAnioReporte", txtAnio.getYear());
 //            parametros.put("SUBREPORT_DIR", "./");
 
             JRViewer objReporte = new clsReporte().reporteInterno(docReporte + ".jasper", parametros);
@@ -221,6 +203,6 @@ public class jdReporteIngresosMensuales extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JDesktopPane report;
-    private javax.swing.JTextField txtAnio;
+    private com.toedter.calendar.JYearChooser txtAnio;
     // End of variables declaration//GEN-END:variables
 }

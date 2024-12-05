@@ -261,10 +261,11 @@ public class clsCustodia {
     }
     
      public ResultSet filtrarMascotaVig(String nom) throws Exception {
-        strSQL = "SELECT m.*, ra.nombre AS raza_nombre, m.id as ma_id, m.nombre as nom_mas "
+        strSQL = "SELECT m.*, ra.nombre AS raza_nombre, m.id as ma_id, m.nombre as nom_mas , especie_id "
                 + "FROM MASCOTA m "
-                + "INNER JOIN raza ra ON m.raza_id = ra.id " // Asegurando que la relación se haga por el campo correcto
-                + "WHERE UPPER(m.nombre) LIKE UPPER ('%" + nom + "%') and vigencia= true";  // Concatenación con cuidado (pero no recomendado)
+                + "INNER JOIN raza ra ON m.raza_id = ra.id " 
+                + " inner join especie esp on esp.id = ra.especie_id "// Asegurando que la relación se haga por el campo correcto
+                + " WHERE UPPER(m.nombre) LIKE UPPER ('%" + nom + "%') and vigencia= true";  // Concatenación con cuidado (pero no recomendado)
 
         try {
             rs = objConectar.consultarBD(strSQL);  // Ejecutar la consulta
@@ -276,7 +277,7 @@ public class clsCustodia {
 	
     public ResultSet listarMascotasVig() throws Exception {
         strSQL = "SELECT ma.*, ra.nombre AS raza_nombre , ra.* FROM MASCOTA ma INNER JOIN raza ra ON ra.id = ma.raza_id "
-                + " where ma.vigencia= true order by 1";
+                + " where ma.vigencia= true order by 1 desc";
         try {
             return objConectar.consultarBD(strSQL);
 
