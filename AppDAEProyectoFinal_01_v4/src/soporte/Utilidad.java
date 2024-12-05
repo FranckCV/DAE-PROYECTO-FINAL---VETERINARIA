@@ -492,6 +492,12 @@ public class Utilidad {
         );
     }
     
+    public static final String[] opcionesAgregar = {
+        "Agregar",
+        "Cancelar"
+    };
+
+    
     public static Object mensajeInputSpinnerDecimal(String titulo , String texto){
         JSpinner spinner = new JSpinner();
         validarSpinnerNumerosDecimales(spinner);
@@ -509,11 +515,11 @@ public class Utilidad {
             JOptionPane.DEFAULT_OPTION,
             JOptionPane.QUESTION_MESSAGE,
             null,
-            opcionesDisponibilidad,
-            opcionesDisponibilidad[0]
+            opcionesAgregar,
+            opcionesAgregar[0]
         );
 
-        if (option == JOptionPane.OK_OPTION) {            
+        if (option == 0) {            
             return spinner.getValue();
         }
         return null;
@@ -536,11 +542,11 @@ public class Utilidad {
             JOptionPane.DEFAULT_OPTION,
             JOptionPane.QUESTION_MESSAGE,
             null,
-            opcionesDisponibilidad,
-            opcionesDisponibilidad[0]
+            opcionesAgregar,
+            opcionesAgregar[0]
         );
 
-        if (option == JOptionPane.OK_OPTION) {            
+        if (option == 0) {            
             return spinner.getValue();
         }
         return null;
