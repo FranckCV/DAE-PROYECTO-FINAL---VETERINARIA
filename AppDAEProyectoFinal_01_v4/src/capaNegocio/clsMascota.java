@@ -13,6 +13,7 @@ import java.util.Date;
  * @author franc
  */
 public class clsMascota {
+    
 
     clsJDBC objConectar = new clsJDBC();
     String strSQL;
