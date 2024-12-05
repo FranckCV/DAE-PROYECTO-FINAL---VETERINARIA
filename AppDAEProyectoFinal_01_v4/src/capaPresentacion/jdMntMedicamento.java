@@ -56,6 +56,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
         modelo.addColumn("Disponible");
         modelo.addColumn("Tipo Medicamento");
         tblMedicamento.setModel(modelo);
+        Utilidad.alineacionDerechaColumnaTabla(tblMedicamento, 0);
 
         try {
             rsMed = objMedicamento.listarMedicamentos();
@@ -91,23 +92,6 @@ public class jdMntMedicamento extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error al listar tipos de medicamento: " + e.getMessage());
         }
     }
-<<<<<<< HEAD
-        public void listarPresentaciones() {
-        ResultSet rsPres = null;
-        DefaultComboBoxModel modeloTipoMed = new DefaultComboBoxModel();
-        cbxPresentacion.setModel(modeloTipoMed);
-        try {
-            rsPres = objMedicamento.listarPresentaciones();
-            while (rsPres.next()) {
-
-                modeloTipoMed.addElement(rsPres.getString("presentacion"));
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al listar las presentaciones: " + e.getMessage());
-        }
-    }
-=======
->>>>>>> ea5406278a6706ad2f131a75c1e0b4481a2ecb08
 
     private void usarBotonesMedicamento(boolean buscar, boolean registrar, boolean modificar, boolean eliminar, boolean limpiar, boolean disponibilidad) {
         btnBuscar.setEnabled(buscar);
@@ -346,7 +330,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(txtCosto, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(31, 31, 31)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14)
@@ -466,11 +450,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-<<<<<<< HEAD
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE))
-=======
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE))
->>>>>>> ea5406278a6706ad2f131a75c1e0b4481a2ecb08
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
@@ -785,7 +765,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
 
     private void txtIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) { 
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
             try {
                 if (txtId.getText().trim().isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Ingrese un ID válido.", "Error", JOptionPane.WARNING_MESSAGE);
@@ -800,11 +780,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                     txtCosto.setText(String.valueOf(rsEsp.getDouble("costo")));
                     cbxTipoMedicamento.setSelectedItem(rsEsp.getString("tipo_medicamento"));
                     spnStock.setValue(rsEsp.getInt("stock"));
-<<<<<<< HEAD
-                    cbxTipoMedicamento.setSelectedItem(rsEsp.getString("presentacion"));
-=======
                     txtPresentacion.setText(rsEsp.getString("presentacion"));
->>>>>>> ea5406278a6706ad2f131a75c1e0b4481a2ecb08
                     chkVigencia.setSelected(rsEsp.getBoolean("vigencia"));
                     rsEsp.close();
 
@@ -854,10 +830,7 @@ public class jdMntMedicamento extends javax.swing.JDialog {
                     txtNombre.setText(rsEsp.getString("nombre"));
                     txtCosto.setText(rsEsp.getString("costo"));
                     spnStock.setValue(rsEsp.getInt("stock"));
-<<<<<<< HEAD
-=======
                     txtPresentacion.setText(rsEsp.getString("presentacion"));
->>>>>>> ea5406278a6706ad2f131a75c1e0b4481a2ecb08
                     chkVigencia.setSelected(rsEsp.getBoolean("vigencia"));
 
                     rsEsp.close();
