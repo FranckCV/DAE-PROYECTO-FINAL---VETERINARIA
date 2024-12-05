@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptVacunasXEspecie" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8946e49e-bc0d-4a83-b85a-2d7d7a24c820">
+	<property name="ireport.zoom" value="2.415765000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="NombreEspecie" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+  v.id,
+  v.nombre as Vacuna,
+  v.dosis_x_kgpeso,
+  CASE
+     when v.disponibilidad = true THEN 'Disponible'
+     when v.disponibilidad = true THEN 'No Disponible'
+	END AS disponibilidad,
+   es.nombre as Especie
+from
+  vacuna v
+inner join
+  especie es
+on
+  v.especie_id = es.id
+where es.nombre ilike $P{NombreEspecie}
+order by v.id]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="vacuna" class="java.lang.String"/>
+	<field name="dosis_x_kgpeso" class="java.math.BigDecimal"/>
+	<field name="disponibilidad" class="java.lang.String"/>
+	<field name="especie" class="java.lang.String"/>
+	<variable name="vacuna_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{vacuna}]]></variableExpression>
+	</variable>
+	<variable name="vacuna_2" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{vacuna}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="89" splitType="Stretch">
+			<staticText>
+				<reportElement x="68" y="12" width="431" height="35" forecolor="#003399" uuid="3b86a0df-b6e0-4f7c-9c7a-e24daf4ad425"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vacunas por Especie]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="87" width="555" height="1" uuid="b688ee93-d7ca-445a-993f-49f337878194"/>
+				<graphicElement>
+					<pen lineWidth="3.0" lineColor="#3366FF"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="65" width="79" height="22" uuid="48dfc3f2-26e4-4375-9ef3-7f930df9ead9"/>
+				<textElement>
+					<font fontName="Century Gothic" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Especie:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="69" y="68" width="70" height="18" uuid="8089d485-996c-4e85-9fea-1755e7ddfefa"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{especie}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="499" y="70" width="38" height="18" uuid="9cedf539-beae-4280-aecb-a07e5e8dead2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{vacuna_2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="444" y="65" width="79" height="22" uuid="9f596b23-4e37-4eb2-bd45-5ea2c3d1fd33"/>
+				<textElement>
+					<font fontName="Century Gothic" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="17" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="47" height="20" uuid="3f399b21-cea5-4291-9399-10eefec5595b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="79" y="10" width="100" height="20" uuid="04ff9bde-5e66-40f5-b638-70b36edea5df"/>
+				<textElement>
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="10" width="123" height="20" uuid="6ff680b4-e77c-4cbf-adbc-0ee7c1ac1fd6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dosis por Kg de Peso]]></text>
+			</staticText>
+			<line>
+				<reportElement x="54" y="10" width="1" height="18" uuid="ad185099-b501-4c64-bcef-60aa1c981708"/>
+			</line>
+			<staticText>
+				<reportElement x="410" y="8" width="100" height="20" uuid="a259cbce-81f4-4500-9d4f-15a1b1f19a8b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Disponibilidad]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="6" width="47" height="20" uuid="78b29117-9d57-44ef-b7ec-f912abe67b01"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="6" width="138" height="20" uuid="8878f99e-8dff-437a-8047-ad84db5f19ba"/>
+				<textFieldExpression><![CDATA[$F{vacuna}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="8" width="105" height="20" uuid="44969faf-82cb-4489-a2f1-903facf9f8f5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{dosis_x_kgpeso}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="54" y="8" width="1" height="18" uuid="ba1e951f-0720-4a3c-8a8f-8d165f7e4e8b"/>
+			</line>
+			<line>
+				<reportElement x="0" y="1" width="555" height="1" uuid="14447481-d5a4-416f-8053-bc192fdb52de"/>
+			</line>
+			<textField>
+				<reportElement x="400" y="8" width="123" height="20" uuid="490a702b-c6f4-4575-9aeb-aca19c7fc49d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Century Gothic" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{disponibilidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="11" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="273" y="0" width="100" height="20" uuid="9ab808a7-c0e0-4810-88de-9fd2e1bdb3bd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="469" y="0" width="70" height="20" uuid="4495718f-414d-49a7-b4a4-988052a8d0d5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pag. "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="539" y="0" width="40" height="20" uuid="cc379dbe-30df-44f3-949c-805cf4e2f2c1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="217" height="20" uuid="6b1ca8a0-d891-4fb3-9603-6f45cd8d4046"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Elaborado por Leonardo Guzmán Salazar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="34" width="217" height="20" uuid="7524d9f1-db88-464d-bd00-3822f558ac88"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[rptVacunasXEspecie]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptGananciasMensuales_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2f80592e-15fe-4b05-b3cb-cd55a548061f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parAnioSub" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    -- Fin de mes (último día del mes)
+    (DATE_TRUNC('month', c.fecha) + INTERVAL '1 month' - INTERVAL '1 day')::DATE AS fin_mes,
+
+    -- Nombre del mes en español (mantenido el nombre original 'nombre_mes')
+    TO_CHAR(DATE_TRUNC('month', c.fecha), 'TMMonth') AS nombre_mes,
+
+    -- Abreviación del mes en español (mantenido el nombre original 'abreviacion_mes')
+    CASE EXTRACT(MONTH FROM c.fecha)
+        WHEN 1 THEN 'Ene'
+        WHEN 2 THEN 'Feb'
+        WHEN 3 THEN 'Mar'
+        WHEN 4 THEN 'Abr'
+        WHEN 5 THEN 'May'
+        WHEN 6 THEN 'Jun'
+        WHEN 7 THEN 'Jul'
+        WHEN 8 THEN 'Ago'
+        WHEN 9 THEN 'Sep'
+        WHEN 10 THEN 'Oct'
+        WHEN 11 THEN 'Nov'
+        WHEN 12 THEN 'Dic'
+    END AS abreviacion_mes,
+
+    -- Nombre de la serie (Medicamentos)
+    'Medicamentos' AS nombre_serie,
+
+    -- Valor de los medicamentos
+    ROUND(SUM(CASE
+                WHEN dm.medicamento_id IS NOT NULL
+                THEN dm.cantidad * m.costo
+                ELSE 0
+              END), 2) AS valor
+
+FROM
+    COMPROBANTE c
+LEFT JOIN CITA ci ON c.CITAid = ci.id
+LEFT JOIN DETALLE_CITA dc ON ci.id = dc.cita_id
+LEFT JOIN DETALLE_SERVICIO ds ON dc.detalle_servicio_serv_id = ds.servicio_id AND dc.detalle_servicio_med_id = ds.medico_id
+LEFT JOIN SERVICIO s ON ds.servicio_id = s.id
+LEFT JOIN DETALLE_MEDICAMENTO dm ON dm.detalle_cita_id = dc.cita_id
+                                  AND dm.detalle_servicio_servicio_id = dc.detalle_servicio_serv_id
+                                  AND dm.detalle_servicio_medico_id = dc.detalle_servicio_med_id
+LEFT JOIN MEDICAMENTO m ON dm.medicamento_id = m.id
+
+WHERE
+    EXTRACT(YEAR FROM c.fecha) = $P{parAnioSub}
+
+GROUP BY
+    DATE_TRUNC('month', c.fecha), EXTRACT(MONTH FROM c.fecha), c.fecha
+
+UNION ALL
+
+SELECT
+    -- Fin de mes (último día del mes)
+    (DATE_TRUNC('month', c.fecha) + INTERVAL '1 month' - INTERVAL '1 day')::DATE AS fin_mes,
+
+    -- Nombre del mes en español (mantenido el nombre original 'nombre_mes')
+    TO_CHAR(DATE_TRUNC('month', c.fecha), 'TMMonth') AS nombre_mes,
+
+    -- Abreviación del mes en español (mantenido el nombre original 'abreviacion_mes')
+    CASE EXTRACT(MONTH FROM c.fecha)
+        WHEN 1 THEN 'Ene'
+        WHEN 2 THEN 'Feb'
+        WHEN 3 THEN 'Mar'
+        WHEN 4 THEN 'Abr'
+        WHEN 5 THEN 'May'
+        WHEN 6 THEN 'Jun'
+        WHEN 7 THEN 'Jul'
+        WHEN 8 THEN 'Ago'
+        WHEN 9 THEN 'Sep'
+        WHEN 10 THEN 'Oct'
+        WHEN 11 THEN 'Nov'
+        WHEN 12 THEN 'Dic'
+    END AS abreviacion_mes,
+
+    -- Nombre de la serie (Servicios)
+    'Servicios' AS nombre_serie,
+
+    -- Valor de los servicios
+    ROUND(SUM(CASE
+                WHEN dc.detalle_servicio_serv_id IS NOT NULL
+                THEN s.costo
+                ELSE 0
+              END), 2) AS valor
+
+FROM
+    COMPROBANTE c
+LEFT JOIN CITA ci ON c.CITAid = ci.id
+LEFT JOIN DETALLE_CITA dc ON ci.id = dc.cita_id
+LEFT JOIN DETALLE_SERVICIO ds ON dc.detalle_servicio_serv_id = ds.servicio_id AND dc.detalle_servicio_med_id = ds.medico_id
+LEFT JOIN SERVICIO s ON ds.servicio_id = s.id
+LEFT JOIN DETALLE_MEDICAMENTO dm ON dm.detalle_cita_id = dc.cita_id
+                                  AND dm.detalle_servicio_servicio_id = dc.detalle_servicio_serv_id
+                                  AND dm.detalle_servicio_medico_id = dc.detalle_servicio_med_id
+LEFT JOIN MEDICAMENTO m ON dm.medicamento_id = m.id
+
+WHERE
+    EXTRACT(YEAR FROM c.fecha) = $P{parAnioSub}
+
+GROUP BY
+    DATE_TRUNC('month', c.fecha), EXTRACT(MONTH FROM c.fecha), c.fecha
+
+ORDER BY
+    fin_mes, nombre_serie;]]>
+	</queryString>
+	<field name="fin_mes" class="java.sql.Date"/>
+	<field name="nombre_mes" class="java.lang.String"/>
+	<field name="abreviacion_mes" class="java.lang.String"/>
+	<field name="nombre_serie" class="java.lang.String"/>
+	<field name="valor" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="9" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="4" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="316" splitType="Stretch">
+			<barChart>
+				<chart>
+					<reportElement x="0" y="7" width="555" height="287" uuid="4b8c4933-3baa-406e-aa89-a62b37e5c7cd"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{nombre_serie}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{abreviacion_mes}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{valor}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>

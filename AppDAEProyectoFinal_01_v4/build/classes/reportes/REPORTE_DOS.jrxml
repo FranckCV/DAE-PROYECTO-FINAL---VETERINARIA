@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="REPORTE_DOS" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b5a35392-36af-40f7-b7ed-4636b55238fe">
+	<property name="ireport.zoom" value="1.1000000000000005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
+	<parameter name="fechaInicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFin" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    M.id AS medico_id,
+    CONCAT(M.nombres, ' ', M.apePaterno, ' ', M.apeMaterno) AS nombre_medico,
+    CAST(COUNT(DC.cita_id) AS INTEGER) AS total_citas,
+    TO_CHAR(MIN(C.fecha_cita), 'DD-MM-YYYY') AS primera_cita,
+    TO_CHAR(MAX(C.fecha_cita), 'DD-MM-YYYY') AS ultima_cita,
+    ROUND((COUNT(DC.cita_id) * 100.0) / SUM(COUNT(DC.cita_id)) OVER (), 2) AS porcentaje_citas
+FROM
+    MEDICO M
+JOIN DETALLE_SERVICIO DS
+    ON M.id = DS.medico_id
+JOIN DETALLE_CITA DC
+    ON DS.servicio_id = DC.detalle_servicio_serv_id
+   AND DS.medico_id = DC.detalle_servicio_med_id
+JOIN CITA C
+    ON DC.cita_id = C.id
+WHERE
+    C.fecha_cita BETWEEN $P{fechaInicio} AND $P{fechaFin}
+GROUP BY
+    M.id, M.nombres, M.apePaterno, M.apeMaterno
+ORDER BY
+    M.id ASC;
+]]>
+	</queryString>
+	<field name="medico_id" class="java.lang.Integer"/>
+	<field name="nombre_medico" class="java.lang.String"/>
+	<field name="total_citas" class="java.lang.Integer"/>
+	<field name="primera_cita" class="java.lang.String"/>
+	<field name="ultima_cita" class="java.lang.String"/>
+	<field name="porcentaje_citas" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="67" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="67" forecolor="#003399" uuid="97418aea-6911-4ee6-b02f-7bd0e072e302"/>
+				<textElement textAlignment="Center">
+					<font fontName="Century Gothic" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CITAS ATENDIDAS  POR CADA MÉDICO EN UN PERIODO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="48" uuid="a3b1c9b8-ac81-437f-b5fc-3664f0f30064"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<text><![CDATA[Este reporte muestra el número total de citas atendidas por cada médico en un período específico, junto con las fechas de la primera y última cita para cada médico. Los datos son filtrados según el rango de fechas proporcionado a través de los parámetros de entrada fechaInicio y fechaFin. ]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="65" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="47" height="20" uuid="1f0a94f6-fa92-44de-be07-0c6fa7738c05"/>
+				<textElement>
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Periodo: ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false">
+				<reportElement x="47" y="0" width="52" height="20" uuid="325e33bf-a180-4510-9f8d-a50315a5045c"/>
+				<textElement>
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd-MM-yyyy").format($P{fechaInicio})]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="151" y="0" width="58" height="20" uuid="3b530fb8-fe7a-4ba2-a59c-19395ad6c9d8"/>
+				<textElement>
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd-MM-yyyy").format($P{fechaFin})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="45" width="56" height="15" uuid="727b9d9b-b78e-4ad5-a6f7-147176e5ceea"/>
+				<textElement>
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Médico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="99" y="45" width="110" height="15" uuid="c3757a01-cb6e-486e-a1e0-01a48873234e"/>
+				<textElement>
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre del Médico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="487" y="45" width="67" height="15" uuid="cf91f3c2-3148-4d78-9ef0-db53c03ada13"/>
+				<textElement>
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de Citas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="256" y="45" width="66" height="15" uuid="fcb0197a-ade5-45eb-b28f-7776f86305ee"/>
+				<textElement>
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Primera Cita]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="376" y="46" width="61" height="15" uuid="532da83c-543a-4d96-ba61-66333434b489"/>
+				<textElement>
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Última Cita]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="60" width="554" height="1" uuid="136e8c90-7efb-4fbf-8c66-2d70b6325331"/>
+				<graphicElement>
+					<pen lineWidth="3.0" lineColor="#0033CC"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="112" y="0" width="29" height="20" uuid="475147a7-e7b7-4993-9d8d-3c51745d1930"/>
+				<textElement>
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<text><![CDATA[hasta]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="45" width="554" height="1" uuid="f5fe3b68-ab0e-4887-a5dc-3a06d6fe1f42"/>
+				<graphicElement>
+					<pen lineWidth="3.0" lineColor="#0033CC"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="99" y="0" width="100" height="20" uuid="988360a1-21f3-4b4a-afa5-5acf210a7154"/>
+				<textElement>
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_medico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="256" y="0" width="87" height="20" uuid="3a0c373d-bdb8-4e1c-8add-37898c50b7e1"/>
+				<textElement>
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{primera_cita}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="0" width="55" height="20" uuid="5587b653-4def-4df5-a658-cbc0018344f7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medico_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="376" y="0" width="61" height="20" uuid="82924d4b-7bdc-4462-9c09-b16db4263b5b"/>
+				<textElement>
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ultima_cita}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="487" y="0" width="67" height="20" uuid="e64f74f4-b9cb-4d47-a959-878084866d1e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_citas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="27" width="177" height="20" uuid="a880b8ca-f42e-45a8-a053-e39bd24c74ce"/>
+				<textElement>
+					<font fontName="Century Gothic" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Elaborador por: Tirsa Rios Olazábal]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="231" y="27" width="91" height="20" uuid="df5f21d4-9807-456f-87cc-6007f6042272"/>
+				<textElement>
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="463" y="27" width="70" height="20" uuid="2d8b51d7-f4a6-4996-b98e-caf81585665c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pag. "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="534" y="27" width="21" height="20" uuid="af78bdb0-1ac4-4ea3-b895-351a6a42fa08"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="802" splitType="Stretch">
+			<pieChart>
+				<chart>
+					<reportElement x="0" y="79" width="555" height="391" uuid="a1e5287f-3094-4d55-93d2-dd1fbf24f377"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{nombre_medico}]]></keyExpression>
+					<valueExpression><![CDATA[$F{total_citas}]]></valueExpression>
+					<labelExpression><![CDATA[$F{nombre_medico} +" (" + Math.round($F{porcentaje_citas}) + "%)"]]></labelExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<staticText>
+				<reportElement x="0" y="30" width="555" height="36" uuid="cab4a76e-91cd-49b8-b9d3-4af0546aefd5"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<text><![CDATA[Este gráfico circular muestra la distribución de las citas atendidas por cada médico en el período seleccionado, permitiendo visualizar la participación de cada médico en el total de citas.]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="244" y="782" width="91" height="20" uuid="90b65a8c-e720-42a2-af40-401c9076bd95"/>
+				<textElement>
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="463" y="782" width="70" height="20" uuid="48563f00-d28c-4a30-945f-19c999b396c3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pag. "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="533" y="782" width="21" height="20" uuid="871080a5-6910-4fa5-82de-7c4b597218f3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="782" width="177" height="20" uuid="99417690-fbf2-4697-9dc7-84381797b43a"/>
+				<textElement>
+					<font fontName="Century Gothic" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Elaborador por: Tirsa Rios Olazábal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="0" width="554" height="20" uuid="7c7606ed-851b-40ac-bb9c-4e453eceec08"/>
+				<textElement textAlignment="Center">
+					<font fontName="Century Gothic" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gráfico de número citas por Doctor]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

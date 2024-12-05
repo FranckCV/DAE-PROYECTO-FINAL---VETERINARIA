@@ -375,7 +375,6 @@ public class jdRepCitasPendientesPorMedico extends javax.swing.JDialog {
             contenedor.setLayout(new BorderLayout());
             contenedor.removeAll();
             Map parametros = new HashMap();
-            System.out.println("Lo que llega a mostrar: "+medico_id);
             parametros.put(
                     par,
                     medico_id
