@@ -346,6 +346,20 @@ public class Utilidad {
         );
         return valor;
     }
+    
+    public static int mensajeConfirmar() {
+        int valor = JOptionPane.showOptionDialog(
+                null,
+                "¿Los datos son correctos?",
+                "Confirmación ",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesAgregarMedicamentos,
+                opcionesAgregarMedicamentos[0]
+        );
+        return valor;
+    }
 
     public static int mensajeConfirmarAgregarServicio(String entidad) {
         int valor = JOptionPane.showOptionDialog(

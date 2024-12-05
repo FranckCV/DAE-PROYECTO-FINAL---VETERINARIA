@@ -585,7 +585,7 @@ public class jdAniadirServicio extends javax.swing.JDialog {
                 try {
                     pasarDatos(codSer, codMed, horaEntrada, horaSalida, notaAdicional);
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(rootPane, "Cantidad no válida", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(rootPane, "Ocurrió un error", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         }

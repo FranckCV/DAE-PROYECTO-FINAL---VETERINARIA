@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptGananciasMensuales" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="03c6db41-a61d-47a9-8156-5cf8253961a8">
 	<property name="ireport.zoom" value="1.6105100000000037"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="623"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="parAnioReporte" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -242,6 +242,20 @@ ORDER BY
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<textField pattern="MM/dd/yyyy">
+				<reportElement x="221" y="3" width="53" height="20" uuid="76474fda-358f-4f24-97a4-936df1900673"/>
+				<textElement>
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm a">
+				<reportElement x="275" y="3" width="57" height="20" uuid="6cc8c542-0824-41e8-94ef-0afaac79bba4"/>
+				<textElement>
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>
@@ -265,7 +279,7 @@ ORDER BY
 			<staticText>
 				<reportElement x="0" y="0" width="555" height="27" uuid="856f8df7-86c2-497f-a464-ab73c9e09fba"/>
 				<textElement textAlignment="Center">
-					<font fontName="Century Gothic" size="20"/>
+					<font fontName="Century Gothic" size="20" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Gráfico Ingresos totales por mes]]></text>
 			</staticText>
@@ -279,7 +293,7 @@ ORDER BY
 			<staticText>
 				<reportElement x="0" y="282" width="555" height="27" uuid="2a6c54df-61d5-498b-aec4-d18048919946"/>
 				<textElement textAlignment="Center">
-					<font fontName="Century Gothic" size="20"/>
+					<font fontName="Century Gothic" size="20" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Gráfico ingresos por servicios y medicamentos]]></text>
 			</staticText>

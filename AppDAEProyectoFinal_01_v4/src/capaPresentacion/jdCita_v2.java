@@ -20,6 +20,8 @@ import java.awt.Color;
 import java.awt.Frame;
 import javax.swing.SwingUtilities;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -83,7 +85,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         cboEstadoCita.setEditable(false);
         jdcDiaCita.setEnabled(false);
         jdcDiaCita.setOpaque(false);
-        jdcDiaCita.setBackground(Color.WHITE); 
+        jdcDiaCita.setBackground(Color.WHITE);
         jdcDiaCita.setBorder(BorderFactory.createEmptyBorder());
     }
 
@@ -135,16 +137,16 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
         tblDetalleMedicamento.setModel(modelo);
 
-        ocultarColumna(tblDetalleMedicamento, 0);  // Ocultar "ID MEDICAMENTO"
-        ocultarColumna(tblDetalleMedicamento, 1);  // Ocultar "ID SERVICIO"
+        ocultarColumna(tblDetalleMedicamento, 0);
+        ocultarColumna(tblDetalleMedicamento, 1);
         ocultarColumna(tblDetalleMedicamento, 2);
         tblDetalleMedicamento.getColumnModel().getColumn(3).setPreferredWidth(250);
 
-        alinearIzquierda(tblDetalleMedicamento, 3);  // MEDICAMENTO
-        alinearDerecha(tblDetalleMedicamento, 4);  // DOSIS
-        alinearIzquierda(tblDetalleMedicamento, 5);  // INDICACIÓN
-        alinearDerecha(tblDetalleMedicamento, 6);    // CANTIDAD
-        alinearDerecha(tblDetalleMedicamento, 7);    // COSTO
+        alinearIzquierda(tblDetalleMedicamento, 3);
+        alinearDerecha(tblDetalleMedicamento, 4);
+        alinearIzquierda(tblDetalleMedicamento, 5);
+        alinearDerecha(tblDetalleMedicamento, 6);
+        alinearDerecha(tblDetalleMedicamento, 7);
 
     }
 
@@ -452,6 +454,31 @@ public class jdCita_v2 extends javax.swing.JDialog {
         return objMedico.obtenerIDconDoc(docMedico);
     }
 
+    private java.util.Date convertirHoraAFecha(String hora) throws Exception {
+        // Detectamos si es AM o PM
+        String amPm = hora.substring(hora.length() - 2).trim();
+        int horas = Integer.parseInt(hora.substring(0, 2).trim());
+        int minutos = Integer.parseInt(hora.substring(3, 5).trim());
+
+        if (amPm.equalsIgnoreCase("PM") && horas != 12) {
+            horas += 12;
+        } else if (amPm.equalsIgnoreCase("AM") && horas == 12) {
+            horas = 0;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, horas);
+        calendar.set(Calendar.MINUTE, minutos);
+        calendar.set(Calendar.SECOND, 0);
+
+        return calendar.getTime();
+    }
+
+    private String formatearHora(java.util.Date fecha) {
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+        return formatoHora.format(fecha);
+    }
+
     private void agregarDetalleCita(String horaE, String horaS, String notita) {
         try {
             String docMedico = txtDocMedico.getText().trim();
@@ -490,17 +517,23 @@ public class jdCita_v2 extends javax.swing.JDialog {
 //            if (notaAdicional == null) {
 //                notaAdicional = ""; // Establece un valor por defecto si se cancela el cuadro de diálogo
 //            }
-            String horaInicio = horaE;
-            String horaFin = horaS;
+//            String horaInicio = horaE;
+//            String horaFin = horaS;
             String notaAdicional = notita;
+            java.util.Date entradaDate = convertirHoraAFecha(horaE);
+            java.util.Date salidaDate = convertirHoraAFecha(horaS);
+
+            // Formatear las horas
+            String horaEntradaFormateada = formatearHora(entradaDate);
+            String horaSalidaFormateada = formatearHora(salidaDate);
 
             objDetalleCita.insertarDetalleServicioSiNoExiste(
                     Integer.parseInt(txtNumero.getText().trim()),
                     tblDetalleServicio,
                     Integer.parseInt(txtCodServicio.getText()),
                     objMedico.obtenerIDconDoc(docMedico),
-                    horaInicio,
-                    horaFin,
+                    horaEntradaFormateada,
+                    horaSalidaFormateada,
                     notaAdicional
             );
 
@@ -559,8 +592,8 @@ public class jdCita_v2 extends javax.swing.JDialog {
                 // Verifica que los parámetros sean válidos
                 if (medicamento != 0 && cantidad != 0 && dosis != 0) {
                     // Confirmación del usuario
-                    if (JOptionPane.showConfirmDialog(this, "¿Los datos son correctos?", "Confirmar",
-                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    int valor = Utilidad.mensajeConfirmar();
+                    if (valor == 0) {
 
                         int stock = objMedicamento.getStock(medicamento);
                         DefaultTableModel modelito = (DefaultTableModel) tblDetalleMedicamento.getModel();
@@ -2036,7 +2069,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         int codTablaMed = Integer.parseInt(codigos[1].trim());
 
         cboServicios_PANEL_MEDIC.setSelectedItem(cboServicios.getSelectedItem());
-        txtNombreMedico1_PANEL_MEDIC.setText(cboMedicos.getSelectedItem().toString());
+//        txtNombreMedico1_PANEL_MEDIC.setText(cboMedicos.getSelectedItem().toString());
 
 //        int codTablaServicio = codigoTablaSer;
 //        int codTablaMedico = codTablaMed;
@@ -2066,7 +2099,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         ResultSet rsDetalle;
         try {
             if (txtDocMedico.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor rellenar los campos");
+                JOptionPane.showMessageDialog(this, "Por favor rellenar los campos", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 jdColocarHora objAniadirServicio
                         = new jdColocarHora((Frame) SwingUtilities.getWindowAncestor(this), true);
