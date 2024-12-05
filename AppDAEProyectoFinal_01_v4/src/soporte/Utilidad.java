@@ -491,7 +491,62 @@ public class Utilidad {
                 "La informacion del " + entidad.toLowerCase() + " \"" + nombre + "\" no se encuentra vigente para esta operación. "
         );
     }
+    
+    public static Object mensajeInputSpinnerDecimal(String titulo , String texto){
+        JSpinner spinner = new JSpinner();
+        validarSpinnerNumerosDecimales(spinner);
 
+        Object[] message = {
+            texto, 
+            spinner
+        };
+
+        // Mostrar el JOptionPane con el componente personalizado
+        int option = JOptionPane.showOptionDialog(
+            null, 
+            message, 
+            titulo, 
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            opcionesDisponibilidad,
+            opcionesDisponibilidad[0]
+        );
+
+        if (option == JOptionPane.OK_OPTION) {            
+            return spinner.getValue();
+        }
+        return null;
+    }
+    
+    public static Object mensajeInputSpinnerEntero(String titulo , String texto){
+        JSpinner spinner = new JSpinner();
+        validarSpinnerNumerosPositivos(spinner);
+
+        Object[] message = {
+            texto, 
+            spinner
+        };
+
+        // Mostrar el JOptionPane con el componente personalizado
+        int option = JOptionPane.showOptionDialog(
+            null, 
+            message, 
+            titulo, 
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            opcionesDisponibilidad,
+            opcionesDisponibilidad[0]
+        );
+
+        if (option == JOptionPane.OK_OPTION) {            
+            return spinner.getValue();
+        }
+        return null;
+    }
+    
+    
 //    Validaciones con Base de Datos
     public static boolean validarEliminacionForanea(String tabla, int valor_id) throws Exception {
         clsJDBC objConectar = new clsJDBC();
@@ -697,9 +752,6 @@ public class Utilidad {
 //        table.getColumnModel().getColumn(0).getHeaderValue().toString().equals(nombreColumn);
 //}
 //    
-    
-    
-    
     
     public static void atajoTecladoBoton(JDialog dialog, JButton boton, char tecla, String nombreAccion) {
         // Para ejecutar el botón con CTRL + tecla
