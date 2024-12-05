@@ -293,6 +293,17 @@ public class Utilidad {
         JFormattedTextField txt = ((JSpinner.NumberEditor) spn.getEditor()).getTextField();
         ((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
     }
+    
+    public static void validarSpinnerNumerosDecimales(JSpinner spn) {
+        SpinnerNumberModel model = new SpinnerNumberModel(0.00, 0.00, null, 0.10);
+        spn.setModel(model);
+        
+        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spn, "0.00");
+        spn.setEditor(editor);
+        
+        JFormattedTextField txt = ((JSpinner.NumberEditor) spn.getEditor()).getTextField();
+        ((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
+    }
 
     public static void validarCampoTextoDocIdentidad(java.awt.event.KeyEvent evt) {
         int key = evt.getKeyChar();

@@ -188,6 +188,8 @@ public class jdCustodiaMasc extends javax.swing.JDialog {
         modeloM.addColumn("Sexo");
         modeloM.addColumn("Raza");
         tblMascotas.setModel(modeloM);
+        Utilidad.alineacionDerechaColumnaTabla(tblMascotas, 0);
+        Utilidad.alineacionDerechaColumnaTabla(tblMascotas, 2);
 
         try {
             if (txtMas.getText().isEmpty()) {
@@ -236,7 +238,7 @@ public class jdCustodiaMasc extends javax.swing.JDialog {
         modeloM.addColumn("Especie ID"); // Columna oculta para el código de especie
         tblMascotas.setModel(modeloM);
         Utilidad.alineacionDerechaColumnaTabla(tblMascotas, 0);
-        Utilidad.alineacionDerechaColumnaTabla(tblMascotas, 3);
+        Utilidad.alineacionDerechaColumnaTabla(tblMascotas, 2);
         try {
             rsMas = objCus.listarMascotasVig();
             while (rsMas.next()) {

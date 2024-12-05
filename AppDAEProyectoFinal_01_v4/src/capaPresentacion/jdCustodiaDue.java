@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import soporte.Utilidad;
 
 /**
  *
@@ -208,6 +209,7 @@ modeloD.addColumn("Id");
         modeloD.addColumn("Teléfono");
 
         tblDuenos.setModel(modeloD);
+        Utilidad.alineacionDerechaColumnaTabla(tblDuenos, 0);
         try {
             rsDue = objCus.listarDueniosVIg();
             while (rsDue.next()) {
