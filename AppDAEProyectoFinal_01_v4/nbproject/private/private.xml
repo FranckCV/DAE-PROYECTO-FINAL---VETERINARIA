@@ -3,42 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/D:/Descargas/veterinaria_dae/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMntVacuna_v2.java</file>
-            <file>file:/D:/Descargas/veterinaria_dae/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jsDetalleVacunacion_v2.java</file>
-            <file>file:/D:/Descargas/veterinaria_dae/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdRepMasctXduenio_v2.java</file>
-=======
-<<<<<<< HEAD
-            <file>file:/D:/Descargas/veterinaria_dae/DAE-PROYECTO-FINAL---VETERINARIA/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMntEspecie.java</file>
-=======
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMntRaza.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMantMascota_v2.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdColocarHora.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdRptMejoresMedicos.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/AppProyectoFinal.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdRepVacunasXEspecie.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdRepServiciosMasSolicitados.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMntMedicamento.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/frmMenuPrincipal.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdAniadirServicio.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdComprobante.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdRepMedicamentosXRangoPrecio.java</file>
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMntEspecie.java</file>
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMntEstadoCita.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaNegocio/clsRaza.java</file>
-<<<<<<< HEAD
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdRptMedCitas_v2.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdCustodia1_v2.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdAniadirMedicamento.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jsDetalleVacunacion_v2.java</file>
-            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdCustodiaDue_v2.java</file>
-=======
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/AppProyectoFinal.java</file>
+            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdRepVacunasXEspecie.java</file>
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdMntMedicamento.java</file>
             <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/frmMenuPrincipal.java</file>
->>>>>>> 58d9ef3ec168076397d89c7918df32670e8e1c94
->>>>>>> 1ed4024dd3d42761e93ea334bbec07eb54de378d
->>>>>>> 079c731679924a28b5210e6be0502613a664b110
+            <file>file:/C:/Users/Leona/OneDrive/Documentos/NetBeansProjects/DAE-PROYECTO-FINAL---VETERINARIA-main/DAE-PROYECTO-FINAL---VETERINARIA-1/AppDAEProyectoFinal_01_v4/src/capaPresentacion/jdRepMedicamentosXRangoPrecio.java</file>
         </group>
     </open-files>
 </project-private>
