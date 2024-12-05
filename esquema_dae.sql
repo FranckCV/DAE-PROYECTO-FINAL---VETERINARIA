@@ -1306,7 +1306,7 @@ INSERT INTO TIPO_MEDICAMENTO (id, nomtipo) VALUES
 (2, 'Analgésico'),
 (3, 'Antiparasitario'),
 (4, 'Antiinflamatorio'),
-(5, 'Vacuna');
+(5, 'Suplemento');
 
 
 INSERT INTO MEDICAMENTO (id, nombre, costo, stock, presentacion, vigencia, tipo_medicamento_id) VALUES 

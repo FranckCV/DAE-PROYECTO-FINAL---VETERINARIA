@@ -92,6 +92,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mnuCita = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         mnuReportes = new javax.swing.JMenu();
+        mnuCitasPendientesPorMedicoId = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -124,7 +125,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
 
         panel.setBackground(new java.awt.Color(255, 255, 255));
-        // panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -459,6 +459,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(mnuCitas);
 
         mnuReportes.setText("Reportes");
+
+        mnuCitasPendientesPorMedicoId.setText("Citas pendientes por médico");
+        mnuCitasPendientesPorMedicoId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCitasPendientesPorMedicoIdActionPerformed(evt);
+            }
+        });
+        mnuReportes.add(mnuCitasPendientesPorMedicoId);
 
         jMenuItem7.setText("Historial Clinico");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
@@ -843,6 +851,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_menuRepServicioMasSolicitadoActionPerformed
 
+    private void mnuCitasPendientesPorMedicoIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCitasPendientesPorMedicoIdActionPerformed
+        // TODO add your handling code here:
+        jdRepCitasPendientesPorMedico objFrm = new jdRepCitasPendientesPorMedico(this, true);
+        objFrm.setVisible(true);
+        objFrm.setLocationRelativeTo(this);
+    }//GEN-LAST:event_mnuCitasPendientesPorMedicoIdActionPerformed
+
     private void login() {
         jdInicioSesionVet objForm = new jdInicioSesionVet(this, true);
         objForm.setLocationRelativeTo(this);
@@ -918,6 +933,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuCambiarUsuario;
     private javax.swing.JMenuItem mnuCita;
     private javax.swing.JMenu mnuCitas;
+    private javax.swing.JMenuItem mnuCitasPendientesPorMedicoId;
     private javax.swing.JMenuItem mnuCustodia;
     private javax.swing.JMenuItem mnuDueño;
     private javax.swing.JMenuItem mnuEspecialidad;

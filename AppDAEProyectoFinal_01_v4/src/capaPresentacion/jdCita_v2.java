@@ -81,12 +81,34 @@ public class jdCita_v2 extends javax.swing.JDialog {
         jdcDiaCita.setFont(new java.awt.Font("Century Gothic", 0, 12));
         jdcDiaCita.setDateFormatString("dd/MM/yyyy");
 
+        txtNombreDuenio.setEditable(false);
+        txtTelefono.setEditable(false);
+        txtNotaMascota.setEditable(false);
+        txtNotaMascota.setEditable(false);
+        cboServicios.setEditable(false);
+        cboServicios.setEditable(false);
+        txtCodServicio.setEditable(false);
+        jdcDiaCita.setOpaque(false);
+        txtNumero.setEditable(false);
+        cboServicios.setEditable(false);
+        txtDocMedico.setEditable(false);
+        txtCodMascota.setEditable(false);
+
+        txtNombreMascota.setEditable(false);
+        txtTotal.setEditable(false);
+        txtSubtotal.setEditable(false);
+        txtIgv.setEditable(false);
+        txtNombreMedico1_PANEL_MEDIC.setEditable(false);
+
         txtNumero.setEditable(false);
         cboEstadoCita.setEditable(false);
         jdcDiaCita.setEnabled(false);
         jdcDiaCita.setOpaque(false);
         jdcDiaCita.setBackground(Color.WHITE);
         jdcDiaCita.setBorder(BorderFactory.createEmptyBorder());
+        txtCodServicio.setEditable(false);
+        txtDocMedico.setEditable(false);
+        txtANotaAdicional.setEditable(false);
     }
 
     private void llenarCboEstadoCita() {
@@ -330,18 +352,20 @@ public class jdCita_v2 extends javax.swing.JDialog {
         ResultSet rsPendientes;
 
         try {
-            rsPendientes = objCita.listarCitasPendientesOrdenadasFechaActual();
+            rsPendientes = objCita.listarCitasPendientesOrdenadasFechaActual3();
             DefaultTableModel modelo = new DefaultTableModel();
 
             modelo.addColumn("ID");
             modelo.addColumn("DNI");
             modelo.addColumn("FECHA");
+            modelo.addColumn("MASCOTA");
 
             while (rsPendientes.next()) {
-                Object[] fila = new Object[3];
+                Object[] fila = new Object[4];
                 fila[0] = rsPendientes.getString("id_cita");
                 fila[1] = rsPendientes.getString("doc_identidad");
                 fila[2] = rsPendientes.getDate("fecha_cita");
+                fila[3] = rsPendientes.getString("mascota_nombre");
 
                 modelo.addRow(fila);
             }
@@ -349,6 +373,8 @@ public class jdCita_v2 extends javax.swing.JDialog {
             tblCitasPendientes.setModel(modelo);
 
             ocultarColumna(tblCitasPendientes, 0);
+            ocultarColumna(tblCitasPendientes, 2);
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage() + "...");
         }
@@ -387,19 +413,21 @@ public class jdCita_v2 extends javax.swing.JDialog {
     private void llenarTablaCitasPendientesDNI() {
         ResultSet rsPendientes;
         try {
-            rsPendientes = objCita.listarCitasPendientesPorDNI2(txtDNITabla.getText());
+            rsPendientes = objCita.listarCitasPendientesPorDNI3(txtDNITabla.getText());
 
             DefaultTableModel modelo = new DefaultTableModel();
 
             modelo.addColumn("ID");
             modelo.addColumn("DNI");
             modelo.addColumn("FECHA");
+            modelo.addColumn("MASCOTA");
 
             while (rsPendientes.next()) {
-                Object[] fila = new Object[3];
+                Object[] fila = new Object[4];
                 fila[0] = rsPendientes.getString("id_cita");
                 fila[1] = rsPendientes.getString("doc_identidad");
                 fila[2] = rsPendientes.getDate("fecha_cita");
+                fila[3] = rsPendientes.getString("nombre_mascota");
 
                 modelo.addRow(fila);
             }
@@ -415,6 +443,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
 //            tblCitasPendientes.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
 //            tblCitasPendientes.getTableHeader().getColumnModel().getColumn(0).setWidth(0);
             ocultarColumna(tblCitasPendientes, 0);
+            ocultarColumna(tblCitasPendientes, 2);
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage() + "...");
@@ -648,6 +677,8 @@ public class jdCita_v2 extends javax.swing.JDialog {
         txtCodServicio.setText("");
         txtDocMedico.setText("");
         txtDosis.setText("");
+        txtDNITabla.setText("");
+        txtNombreMedico1_PANEL_MEDIC.setText("");
 
         txtIgv.setText("");
         txtIndicacion.setText("");
@@ -2495,7 +2526,9 @@ public class jdCita_v2 extends javax.swing.JDialog {
             // Establecer id_cita en la instancia
             System.out.println(objComprobante_interfaz.getIdCita());
 
+            objComprobante_interfaz.setLocationRelativeTo(this);
             objComprobante_interfaz.setVisible(true);
+
             JOptionPane.showMessageDialog(this, "La cita finalizó");
             limpiarTodoAlFinalizar();
 //            limpiarTodoAlTerminar();
