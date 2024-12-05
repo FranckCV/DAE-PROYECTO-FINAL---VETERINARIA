@@ -16,14 +16,20 @@ import capaNegocio.clsMedicamento;
 import capaNegocio.clsMedico;
 import capaNegocio.clsRaza;
 import capaNegocio.clsServicio;
+import java.awt.Color;
 import java.awt.Frame;
 import javax.swing.SwingUtilities;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import org.apache.bcel.generic.AALOAD;
 import org.hibernate.cfg.annotations.reflection.XMLContext;
@@ -66,8 +72,43 @@ public class jdCita_v2 extends javax.swing.JDialog {
         actualizarResumenes();
         calcularTotales();
 
-        txtDocMedico.setText("");
+        formatoIncial();
 
+    }
+
+    private void formatoIncial() {
+        txtDocMedico.setText("");
+        jdcDiaCita.setFont(new java.awt.Font("Century Gothic", 0, 12));
+        jdcDiaCita.setDateFormatString("dd/MM/yyyy");
+
+        txtNombreDuenio.setEditable(false);
+        txtTelefono.setEditable(false);
+        txtNotaMascota.setEditable(false);
+        txtNotaMascota.setEditable(false);
+        cboServicios.setEditable(false);
+        cboServicios.setEditable(false);
+        txtCodServicio.setEditable(false);
+        jdcDiaCita.setOpaque(false);
+        txtNumero.setEditable(false);
+        cboServicios.setEditable(false);
+        txtDocMedico.setEditable(false);
+        txtCodMascota.setEditable(false);
+
+        txtNombreMascota.setEditable(false);
+        txtTotal.setEditable(false);
+        txtSubtotal.setEditable(false);
+        txtIgv.setEditable(false);
+        txtNombreMedico1_PANEL_MEDIC.setEditable(false);
+
+        txtNumero.setEditable(false);
+        cboEstadoCita.setEditable(false);
+        jdcDiaCita.setEnabled(false);
+        jdcDiaCita.setOpaque(false);
+        jdcDiaCita.setBackground(Color.WHITE);
+        jdcDiaCita.setBorder(BorderFactory.createEmptyBorder());
+        txtCodServicio.setEditable(false);
+        txtDocMedico.setEditable(false);
+        txtANotaAdicional.setEditable(false);
     }
 
     private void llenarCboEstadoCita() {
@@ -86,6 +127,24 @@ public class jdCita_v2 extends javax.swing.JDialog {
         }
     }
 
+    private void alinearIzquierda(JTable tablita, int columna) {
+        DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+        leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
+        tablita.getColumnModel().getColumn(columna).setCellRenderer(leftRenderer);
+    }
+
+    private void alinearDerecha(JTable tablita, int columna) {
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+        tablita.getColumnModel().getColumn(columna).setCellRenderer(rightRenderer);
+    }
+
+    private void alinearCentro(JTable tablita, int columna) {
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tablita.getColumnModel().getColumn(columna).setCellRenderer(centerRenderer);
+    }
+
     private void llenarTablaInicialMedicamento() {
         // Crear el modelo de la tabla
         DefaultTableModel modelo = new DefaultTableModel();
@@ -100,10 +159,16 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
         tblDetalleMedicamento.setModel(modelo);
 
-        ocultarColumna(tblDetalleMedicamento, 0);  // Ocultar "ID MEDICAMENTO"
-        ocultarColumna(tblDetalleMedicamento, 1);  // Ocultar "ID SERVICIO"
+        ocultarColumna(tblDetalleMedicamento, 0);
+        ocultarColumna(tblDetalleMedicamento, 1);
         ocultarColumna(tblDetalleMedicamento, 2);
         tblDetalleMedicamento.getColumnModel().getColumn(3).setPreferredWidth(250);
+
+        alinearIzquierda(tblDetalleMedicamento, 3);
+        alinearDerecha(tblDetalleMedicamento, 4);
+        alinearIzquierda(tblDetalleMedicamento, 5);
+        alinearDerecha(tblDetalleMedicamento, 6);
+        alinearDerecha(tblDetalleMedicamento, 7);
 
     }
 
@@ -177,6 +242,13 @@ public class jdCita_v2 extends javax.swing.JDialog {
         tblDetalleServicio.getTableHeader().setReorderingAllowed(false); //no mover los headers
 
         llenarTablaDetalleServicio_PANEL_MEDIC();
+
+        alinearIzquierda(tblDetalleServicio, 1);  // MEDICAMENTO
+        alinearIzquierda(tblDetalleServicio, 2);  // DOSIS
+        alinearIzquierda(tblDetalleServicio, 3);  // INDICACIÓN
+        alinearIzquierda(tblDetalleServicio, 4);    // CANTIDAD
+        alinearDerecha(tblDetalleServicio, 5);
+
     }
 
     private void llenarTablaInicialServicio2() {
@@ -280,33 +352,29 @@ public class jdCita_v2 extends javax.swing.JDialog {
         ResultSet rsPendientes;
 
         try {
-            rsPendientes = objCita.listarCitasPendientesOrdenadas();
+            rsPendientes = objCita.listarCitasPendientesOrdenadasFechaActual3();
             DefaultTableModel modelo = new DefaultTableModel();
 
             modelo.addColumn("ID");
             modelo.addColumn("DNI");
             modelo.addColumn("FECHA");
+            modelo.addColumn("MASCOTA");
 
             while (rsPendientes.next()) {
-                Object[] fila = new Object[3];
+                Object[] fila = new Object[4];
                 fila[0] = rsPendientes.getString("id_cita");
                 fila[1] = rsPendientes.getString("doc_identidad");
                 fila[2] = rsPendientes.getDate("fecha_cita");
+                fila[3] = rsPendientes.getString("mascota_nombre");
 
                 modelo.addRow(fila);
             }
 
             tblCitasPendientes.setModel(modelo);
 
-//            tblCitasPendientes.getColumnModel().getColumn(0).setPreferredWidth(100);
-//            tblCitasPendientes.getColumnModel().getColumn(1).setPreferredWidth(150);
-//            tblCitasPendientes.getColumnModel().getColumn(0).setMaxWidth(0);
-//            tblCitasPendientes.getColumnModel().getColumn(0).setMinWidth(0);
-//            tblCitasPendientes.getColumnModel().getColumn(0).setWidth(0);
-//            tblCitasPendientes.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
-//            tblCitasPendientes.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
-//            tblCitasPendientes.getTableHeader().getColumnModel().getColumn(0).setWidth(0);
             ocultarColumna(tblCitasPendientes, 0);
+            ocultarColumna(tblCitasPendientes, 2);
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage() + "...");
         }
@@ -328,24 +396,38 @@ public class jdCita_v2 extends javax.swing.JDialog {
         ocultarColumna(tblMedicamentoResumen, 2);
         ocultarColumna(tblMedicamentoResumen, 4);
         ocultarColumna(tblMedicamentoResumen, 5);
+
+        alinearIzquierda(tblMedicamentoResumen, 3);  // MEDICAMENTO
+        alinearIzquierda(tblMedicamentoResumen, 4);  // DOSIS
+        alinearIzquierda(tblMedicamentoResumen, 5);  // INDICACIÓN
+        alinearDerecha(tblMedicamentoResumen, 6);    // CANTIDAD
+        alinearDerecha(tblMedicamentoResumen, 7);
+
+        alinearIzquierda(tblServicioResumen, 1);  // MEDICAMENTO
+        alinearDerecha(tblServicioResumen, 2);  // DOSIS
+        alinearIzquierda(tblServicioResumen, 3);  // INDICACIÓN
+        alinearIzquierda(tblServicioResumen, 4);    // CANTIDAD
+        alinearDerecha(tblServicioResumen, 5);
     }
 
     private void llenarTablaCitasPendientesDNI() {
         ResultSet rsPendientes;
         try {
-            rsPendientes = objCita.listarCitasPendientesPorDNI(txtDNITabla.getText());
+            rsPendientes = objCita.listarCitasPendientesPorDNI3(txtDNITabla.getText());
 
             DefaultTableModel modelo = new DefaultTableModel();
 
             modelo.addColumn("ID");
             modelo.addColumn("DNI");
             modelo.addColumn("FECHA");
+            modelo.addColumn("MASCOTA");
 
             while (rsPendientes.next()) {
-                Object[] fila = new Object[3];
+                Object[] fila = new Object[4];
                 fila[0] = rsPendientes.getString("id_cita");
                 fila[1] = rsPendientes.getString("doc_identidad");
                 fila[2] = rsPendientes.getDate("fecha_cita");
+                fila[3] = rsPendientes.getString("nombre_mascota");
 
                 modelo.addRow(fila);
             }
@@ -361,6 +443,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
 //            tblCitasPendientes.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
 //            tblCitasPendientes.getTableHeader().getColumnModel().getColumn(0).setWidth(0);
             ocultarColumna(tblCitasPendientes, 0);
+            ocultarColumna(tblCitasPendientes, 2);
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage() + "...");
@@ -398,6 +481,31 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
     private int obtenerIdMedico(String docMedico) throws Exception {
         return objMedico.obtenerIDconDoc(docMedico);
+    }
+
+    private java.util.Date convertirHoraAFecha(String hora) throws Exception {
+        // Detectamos si es AM o PM
+        String amPm = hora.substring(hora.length() - 2).trim();
+        int horas = Integer.parseInt(hora.substring(0, 2).trim());
+        int minutos = Integer.parseInt(hora.substring(3, 5).trim());
+
+        if (amPm.equalsIgnoreCase("PM") && horas != 12) {
+            horas += 12;
+        } else if (amPm.equalsIgnoreCase("AM") && horas == 12) {
+            horas = 0;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, horas);
+        calendar.set(Calendar.MINUTE, minutos);
+        calendar.set(Calendar.SECOND, 0);
+
+        return calendar.getTime();
+    }
+
+    private String formatearHora(java.util.Date fecha) {
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+        return formatoHora.format(fecha);
     }
 
     private void agregarDetalleCita(String horaE, String horaS, String notita) {
@@ -438,17 +546,23 @@ public class jdCita_v2 extends javax.swing.JDialog {
 //            if (notaAdicional == null) {
 //                notaAdicional = ""; // Establece un valor por defecto si se cancela el cuadro de diálogo
 //            }
-            String horaInicio = horaE;
-            String horaFin = horaS;
+//            String horaInicio = horaE;
+//            String horaFin = horaS;
             String notaAdicional = notita;
+            java.util.Date entradaDate = convertirHoraAFecha(horaE);
+            java.util.Date salidaDate = convertirHoraAFecha(horaS);
+
+            // Formatear las horas
+            String horaEntradaFormateada = formatearHora(entradaDate);
+            String horaSalidaFormateada = formatearHora(salidaDate);
 
             objDetalleCita.insertarDetalleServicioSiNoExiste(
                     Integer.parseInt(txtNumero.getText().trim()),
                     tblDetalleServicio,
                     Integer.parseInt(txtCodServicio.getText()),
                     objMedico.obtenerIDconDoc(docMedico),
-                    horaInicio,
-                    horaFin,
+                    horaEntradaFormateada,
+                    horaSalidaFormateada,
                     notaAdicional
             );
 
@@ -486,14 +600,15 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
     private void agregarMedicamento(int medicamento, int cantidad, float dosis, String indicacion) {
         ResultSet rs = null; //aqui hay problema
-
+        int codigoTablaSer = 0;
+        int codTablaMed = 0;
         String cadena = String.valueOf(tblDetalleServicio_PANEL_MEDIC.getValueAt(tblDetalleServicio_PANEL_MEDIC.getSelectedRow(), 0));
         if (!cadena.isEmpty()) {
             try {
                 String[] codigos = cadena.split(" - ");
                 if (codigos.length == 2) {
-                    int codigoTablaSer = Integer.parseInt(codigos[0].trim());
-                    int codTablaMed = Integer.parseInt(codigos[1].trim());
+                    codigoTablaSer = Integer.parseInt(codigos[0].trim());
+                    codTablaMed = Integer.parseInt(codigos[1].trim());
                     // Aquí puedes usar los valores de codigoTablaSer y codTablaMed
                 } else {
                     System.out.println("La cadena no tiene el formato esperado.");
@@ -506,12 +621,12 @@ public class jdCita_v2 extends javax.swing.JDialog {
                 // Verifica que los parámetros sean válidos
                 if (medicamento != 0 && cantidad != 0 && dosis != 0) {
                     // Confirmación del usuario
-                    if (JOptionPane.showConfirmDialog(this, "¿Los datos son correctos?", "Confirmar",
-                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    int valor = Utilidad.mensajeConfirmar();
+                    if (valor == 0) {
 
                         int stock = objMedicamento.getStock(medicamento);
                         DefaultTableModel modelito = (DefaultTableModel) tblDetalleMedicamento.getModel();
-                        int idMed = objMedico.obtenerIDconDoc(txtDocMedico.getText());
+//                        int idMed = objMedico.obtenerIDconDoc(txtDocMedico.getText());
                         System.out.println("funka antes validar");
 
                         if (modelito.getRowCount() != 0) {
@@ -522,7 +637,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
                                 if (medicamento_id == medicamento
                                         && servicio_id == objServicio.obtenerID(cboServicios_PANEL_MEDIC.getSelectedItem().toString())
-                                        && medico_id == idMed) {
+                                        && medico_id == codTablaMed) {
                                     modelito.removeRow(i);
                                     break;
                                 }
@@ -535,8 +650,8 @@ public class jdCita_v2 extends javax.swing.JDialog {
                             // Agrega nueva fila con los datos del medicamento
                             modelito.addRow(new Object[]{
                                 medicamento, // Código de medicamento
-                                txtCodServicio.getText(), // Código de servicio
-                                idMed, // ID del médico
+                                codigoTablaSer, // Código de servicio
+                                codTablaMed, // ID del médico
                                 rs.getString("nombre"),
                                 dosis, // Dosis
                                 indicacion, // Indicaciones
@@ -562,6 +677,8 @@ public class jdCita_v2 extends javax.swing.JDialog {
         txtCodServicio.setText("");
         txtDocMedico.setText("");
         txtDosis.setText("");
+        txtDNITabla.setText("");
+        txtNombreMedico1_PANEL_MEDIC.setText("");
 
         txtIgv.setText("");
         txtIndicacion.setText("");
@@ -577,7 +694,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         txtTotal.setText("");
 
         spnCantidad.setValue(0);
-        jDateChooser1.setDate(null);
+        jdcDiaCita.setDate(null);
 
         cboServicios.setSelectedIndex(0);
         cboMedicos.setSelectedIndex(0);
@@ -639,7 +756,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         txtIndicacion.setText("");
         txtDosis.setText("");
     }
-    
+
     private void llenarDetalleMedicamentosEnTabla() {
         ResultSet rsDetalleMedicamento;
         ResultSet rsMedicamento;
@@ -680,7 +797,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         cboEstadoCita = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jdcDiaCita = new com.toedter.calendar.JDateChooser();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCitasPendientes = new javax.swing.JTable();
@@ -788,7 +905,10 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(204, 255, 255));
 
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel1.setText("Nro de cita:");
+
+        txtNumero.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         btnBuscarCita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/buscar-pequeño.png"))); // NOI18N
         btnBuscarCita.addActionListener(new java.awt.event.ActionListener() {
@@ -797,8 +917,10 @@ public class jdCita_v2 extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel3.setText("Estado:");
 
+        cboEstadoCita.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cboEstadoCita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboEstadoCita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -806,7 +928,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
             }
         });
 
-        jLabel5.setText("Fecha");
+        jLabel5.setText("Fecha:");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -826,7 +948,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jdcDiaCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
         jPanel3Layout.setVerticalGroup(
@@ -835,7 +957,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
                 .addGap(12, 12, 12)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jdcDiaCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
@@ -921,9 +1043,15 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel27.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel27.setText("Servicio:");
 
+        jLabel28.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel28.setText("Médico:");
+
+        txtCodServicio.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+
+        txtDocMedico.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         btnEliminarServicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/eliminar.png"))); // NOI18N
         btnEliminarServicio.addActionListener(new java.awt.event.ActionListener() {
@@ -939,6 +1067,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
             }
         });
 
+        cboServicios.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cboServicios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboServicios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -946,6 +1075,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
             }
         });
 
+        cboMedicos.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cboMedicos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboMedicos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1002,13 +1132,25 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel11.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel11.setText("Dueño:");
 
+        txtNombreDuenio.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+
+        jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel13.setText("Teléfono:");
 
+        txtTelefono.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+
+        txtCodMascota.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+
+        jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel12.setText("Nota:");
 
+        jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel14.setText("Mascota:");
+
+        txtNotaMascota.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -1058,6 +1200,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
+        tblDetalleServicio.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         tblDetalleServicio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -1095,6 +1238,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
 
+        btnTerminar2.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnTerminar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/flecha derecha.png"))); // NOI18N
         btnTerminar2.setText("Ir a resumen");
         btnTerminar2.addActionListener(new java.awt.event.ActionListener() {
@@ -1103,6 +1247,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
             }
         });
 
+        jButton9.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/eliminar.png"))); // NOI18N
         jButton9.setText("Cancelar");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
@@ -1111,6 +1256,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
             }
         });
 
+        jButton10.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/conector/Recursos/salir.png"))); // NOI18N
         jButton10.setText("Salir");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
@@ -1145,8 +1291,10 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
         jPanel14.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel32.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel32.setText("Nota adicional de la cita:");
 
+        txtANotaAdicional.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtANotaAdicional.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtANotaAdicionalActionPerformed(evt);
@@ -1683,7 +1831,13 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
         jLabel15.setText("IGV:");
 
+        txtSubtotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        txtIgv.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
         jLabel16.setText("Total:");
+
+        txtTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         txtANotaAdicional1.setColumns(20);
         txtANotaAdicional1.setRows(5);
@@ -1946,7 +2100,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         int codTablaMed = Integer.parseInt(codigos[1].trim());
 
         cboServicios_PANEL_MEDIC.setSelectedItem(cboServicios.getSelectedItem());
-        txtNombreMedico1_PANEL_MEDIC.setText(cboMedicos.getSelectedItem().toString());
+//        txtNombreMedico1_PANEL_MEDIC.setText(cboMedicos.getSelectedItem().toString());
 
 //        int codTablaServicio = codigoTablaSer;
 //        int codTablaMedico = codTablaMed;
@@ -1976,7 +2130,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
         ResultSet rsDetalle;
         try {
             if (txtDocMedico.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor rellenar los campos");
+                JOptionPane.showMessageDialog(this, "Por favor rellenar los campos", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 jdColocarHora objAniadirServicio
                         = new jdColocarHora((Frame) SwingUtilities.getWindowAncestor(this), true);
@@ -2090,7 +2244,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
                     cboEstadoCita.setSelectedItem(rsEstadoCita.getString("nombre_estado"));
                 }
 
-                jDateChooser1.setDate(fechaCita);
+                jdcDiaCita.setDate(fechaCita);
                 txtANotaAdicional.setText(observacionCita);
 
                 //                txtCodDuenio.setText(String.valueOf(codDuenio));
@@ -2214,8 +2368,8 @@ public class jdCita_v2 extends javax.swing.JDialog {
 
 //        calcularTotales();
 ////////////////////////////////////////////////aaaaaaaaaaaaaaaaaaaaaaaaaa///////////////////////////////////////
-        if (txtCodServicio.getText().isEmpty() || txtDocMedico.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Indicar el servicio y el médico por favor");
+        if (tblDetalleServicio_PANEL_MEDIC.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccionar un servicio de la tabla por favor");
         } else {
             // Verificar si todos los campos de medicamento están llenos
             if (!txtCodMedicamento.getText().isEmpty()
@@ -2360,7 +2514,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
             String tipo;
 
             String num = objComprobante.generarNumeroSerieComprobante();
-            java.util.Date utilDate = jDateChooser1.getDate();
+            java.util.Date utilDate = jdcDiaCita.getDate();
             java.sql.Date fecha = new java.sql.Date(utilDate.getTime());
 
             objComprobante.registrarComprobante("B", num, Float.parseFloat(txtTotal.getText()), fecha,
@@ -2372,7 +2526,9 @@ public class jdCita_v2 extends javax.swing.JDialog {
             // Establecer id_cita en la instancia
             System.out.println(objComprobante_interfaz.getIdCita());
 
+            objComprobante_interfaz.setLocationRelativeTo(this);
             objComprobante_interfaz.setVisible(true);
+
             JOptionPane.showMessageDialog(this, "La cita finalizó");
             limpiarTodoAlFinalizar();
 //            limpiarTodoAlTerminar();
@@ -2412,7 +2568,6 @@ public class jdCita_v2 extends javax.swing.JDialog {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton9;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2477,6 +2632,7 @@ public class jdCita_v2 extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private com.toedter.calendar.JDateChooser jdcDiaCita;
     private javax.swing.JLabel lblCitaPersona;
     private javax.swing.JSpinner spnCantidad;
     private javax.swing.JTable tblCitasPendientes;

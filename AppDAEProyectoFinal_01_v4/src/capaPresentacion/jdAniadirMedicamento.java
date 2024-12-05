@@ -8,6 +8,8 @@ import capaNegocio.clsMedicamento;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import soporte.Utilidad;
 
@@ -46,13 +48,13 @@ public class jdAniadirMedicamento extends javax.swing.JDialog {
             rsMedicamentos = objMedicamento.filtrar(txtNombreMedicamento.getText());
             while (rsMedicamentos.next()) {
                 String vigencia;
-                
+
                 if (rsMedicamentos.getBoolean("vigencia")) {
                     vigencia = "VIGENTE";
                 } else {
                     vigencia = "NO VIGENTE";
                 }
-                
+
                 modelo.addRow(new Object[]{rsMedicamentos.getInt("ID"),
                     rsMedicamentos.getString("nombre"),
                     rsMedicamentos.getString("costo"),
@@ -66,15 +68,40 @@ public class jdAniadirMedicamento extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, e.getMessage() + " uuu");
         }
         tblMedicamentos.setModel(modelo);
-        
+
         ocultarColumna(tblMedicamentos, 0);
         ocultarColumna(tblMedicamentos, 4);
         ocultarColumna(tblMedicamentos, 6);
         tblMedicamentos.getColumnModel().getColumn(1).setPreferredWidth(250);
+
         
+        alinearDerecha(2); // Alinear COSTO a la derecha
+        alinearDerecha(3); // Alinear STOCK a la derecha
+        alinearIzquierda(1);  // Alinear NOMBRE a la izquierda
+        alinearIzquierda(4); 
+        alinearIzquierda(5); 
+        alinearCentro(6); 
     }
     
-     private void ocultarColumna(JTable tabla, int indiceColumna) {
+    private void alinearIzquierda(int columna) {
+        DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+        leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
+        tblMedicamentos.getColumnModel().getColumn(columna).setCellRenderer(leftRenderer);
+    }
+
+    private void alinearDerecha(int columna) {
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+        tblMedicamentos.getColumnModel().getColumn(columna).setCellRenderer(rightRenderer);
+    }
+
+    private void alinearCentro(int columna) {
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tblMedicamentos.getColumnModel().getColumn(columna).setCellRenderer(centerRenderer);
+    }
+
+    private void ocultarColumna(JTable tabla, int indiceColumna) {
         tabla.getColumnModel().getColumn(indiceColumna).setMaxWidth(0);
         tabla.getColumnModel().getColumn(indiceColumna).setMinWidth(0);
         tabla.getColumnModel().getColumn(indiceColumna).setWidth(0);
@@ -135,7 +162,6 @@ public class jdAniadirMedicamento extends javax.swing.JDialog {
     private void initComponents() {
 
         txtNombreMedicamento = new javax.swing.JTextField();
-        btnBusqueda = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMedicamentos = new javax.swing.JTable();
 
@@ -145,13 +171,6 @@ public class jdAniadirMedicamento extends javax.swing.JDialog {
         txtNombreMedicamento.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNombreMedicamentoKeyReleased(evt);
-            }
-        });
-
-        btnBusqueda.setText("Búsqueda Avanzada");
-        btnBusqueda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBusquedaActionPerformed(evt);
             }
         });
 
@@ -181,8 +200,7 @@ public class jdAniadirMedicamento extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtNombreMedicamento)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
-                    .addComponent(btnBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -191,10 +209,8 @@ public class jdAniadirMedicamento extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(txtNombreMedicamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBusqueda)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -203,27 +219,6 @@ public class jdAniadirMedicamento extends javax.swing.JDialog {
     private void txtNombreMedicamentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreMedicamentoKeyReleased
         listarMedicamentos();
     }//GEN-LAST:event_txtNombreMedicamentoKeyReleased
-
-    private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
-//        jdBusquedaAvanzada objConsulta
-//        = new jdBusquedaAvanzada((Frame) SwingUtilities.getWindowAncestor(this), true);
-//        objConsulta.setBuscando(true);
-//        objConsulta.setLocationRelativeTo(this);
-//        objConsulta.setVisible(true);
-//
-//        int cod = objConsulta.getCod();
-//        if (cod > 0) {
-//            String ctd = String.valueOf(JOptionPane.showInputDialog(rootPane, "Ingrese la cantidad:"));
-//
-//            if (ctd != "null") {
-//                try {
-//                    pasarDatos(cod, Integer.parseInt(ctd));
-//                } catch (Exception e) {
-//                    JOptionPane.showMessageDialog(rootPane, "Cantidad no válida");
-//                }
-//            }
-//        }
-    }//GEN-LAST:event_btnBusquedaActionPerformed
 
     private void tblMedicamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMedicamentosMouseClicked
         int cod = Integer.parseInt(String.valueOf(tblMedicamentos.getValueAt(tblMedicamentos.getSelectedRow(), 0)));
@@ -239,7 +234,6 @@ public class jdAniadirMedicamento extends javax.swing.JDialog {
     }//GEN-LAST:event_tblMedicamentosMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBusqueda;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblMedicamentos;
     private javax.swing.JTextField txtNombreMedicamento;

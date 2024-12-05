@@ -174,4 +174,13 @@ public class clsMedicamento {
         }
     }
 
+    public ResultSet listarPresentaciones() throws Exception {
+        strSQL = "SELECT DISTINCT presentacion FROM medicamento ORDER BY presentacion";
+        try {
+            return objConectar.consultarBD(strSQL);
+        } catch (Exception e) {
+            throw new Exception("Error al listar las presentaciones --> " + e.getMessage());
+        }
+    }
+
 }
