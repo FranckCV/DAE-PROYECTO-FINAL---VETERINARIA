@@ -71,6 +71,10 @@ public class jdMntVacuna_v2 extends javax.swing.JDialog {
         modelo.addColumn("Especie");
         modelo.addColumn("Disponible");
         tblVacunas.setModel(modelo);
+        Utilidad.alineacionDerechaColumnaTabla(tblVacunas, 0, 50);
+        Utilidad.alineacionDerechaColumnaTabla(tblVacunas, 2, 50);
+        Utilidad.tamañoColumnaTablaxPos(tblVacunas, 0, 50);
+        Utilidad.tamañoColumnaTablaxPos(tblVacunas, 2, 50);
 
         try {
             rsVac = objVacuna.listarVacunas();
